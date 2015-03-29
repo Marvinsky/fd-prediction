@@ -23,6 +23,8 @@ class MergeAndShrinkHeuristic : public Heuristic {
 protected:
     virtual void initialize();
     virtual int compute_heuristic(const GlobalState &state);
+    virtual string get_heur_name() {string temp = "merge_and_shrink"; return temp;}
+
 public:
     MergeAndShrinkHeuristic(const Options &opts);
     ~MergeAndShrinkHeuristic();

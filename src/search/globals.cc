@@ -403,3 +403,10 @@ int g_num_previously_generated_plans = 0;
 bool g_is_part_of_anytime_portfolio = false;
 RandomNumberGenerator g_rng(2011); // Use an arbitrary default seed.
 StateRegistry *g_state_registry = 0;
+
+//Prediction A* = Dijkstra + ss + kre
+string domain_name = "temp";
+string problem_name2 = "temp";
+string heuristic_name2 = "temp";
+int ss_probes = 0;
+

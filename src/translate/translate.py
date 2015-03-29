@@ -645,9 +645,16 @@ def main():
     dump_statistics(sas_task)
 
     with timers.timing("Writing output"):
-        with open("output.sas", "w") as output_file:
+        print("\nfile: %s" %options.file)
+        with open(options.file+".sas", "w") as output_file:
+            print(options.file, file=output_file) 
             sas_task.output(output_file)
     print("Done! %s" % timer)
+    tarefa = options.soloProblema
+    dominio = options.soloDominio
+    heuristica = options.heuristic
+    line = dominio + " " + tarefa + " " + heuristica
+    print("Line! %s" %line)
 
 
 if __name__ == "__main__":

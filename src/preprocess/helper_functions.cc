@@ -19,7 +19,7 @@ using namespace std;
 static const int SAS_FILE_VERSION = 3;
 static const int PRE_FILE_VERSION = SAS_FILE_VERSION;
 
-
+string name;
 void check_magic(istream &in, string magic) {
     string word;
     in >> word;
@@ -37,6 +37,7 @@ void check_magic(istream &in, string magic) {
 
 void read_and_verify_version(istream &in) {
     int version;
+    in >> name;
     check_magic(in, "begin_version");
     in >> version;
     check_magic(in, "end_version");
@@ -171,7 +172,7 @@ void generate_cpp_input(bool /*solvable_in_poly_time*/,
        since the planner doesn't handle it specially any more anyway. */
 
     ofstream outfile;
-    outfile.open("output", ios::out);
+    outfile.open(name.c_str(), ios::out);
 
     outfile << "begin_version" << endl;
     outfile << PRE_FILE_VERSION << endl;

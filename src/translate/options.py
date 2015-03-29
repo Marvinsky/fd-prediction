@@ -11,6 +11,14 @@ def parse_args():
     argparser.add_argument(
         "task", help="path to task pddl file")
     argparser.add_argument(
+	"file", help="file to named the output")
+    argparser.add_argument(
+	"soloDominio", help="only domain name")
+    argparser.add_argument(
+	"soloProblema", help="only problem name")
+    argparser.add_argument(
+	"heuristic", help="heuristic name to find a directory")
+    argparser.add_argument(
         "--relaxed", dest="generate_relaxed_task", action="store_true",
         help="output relaxed task (no delete effects)")
     argparser.add_argument(

@@ -34,6 +34,7 @@ class CanonicalPDBsHeuristic : public Heuristic {
 protected:
     virtual void initialize();
     virtual int compute_heuristic(const GlobalState &state);
+    virtual string get_heur_name() {string temp = "ipdb"; return temp;}
 public:
     CanonicalPDBsHeuristic(const Options &opts);
     virtual ~CanonicalPDBsHeuristic();

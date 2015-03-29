@@ -83,4 +83,10 @@ extern StateRegistry *g_state_registry;
 
 extern const std::shared_ptr<AbstractTask> g_root_task();
 
+//prediction A* = Dijksta + ss + kre
+extern std::string domain_name;
+extern std::string problem_name2;
+extern std::string heuristic_name2;
+extern int ss_probes;
+
 #endif

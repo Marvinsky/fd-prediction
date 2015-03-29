@@ -230,6 +230,18 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
             ++i;
             OptionParser p(args[i], dry_run);
             engine = p.start_parsing<SearchEngine *>();
+        } else if (arg.compare("--global_probes") == 0) {
+            ++i;
+            ss_probes = std::stoi(args[i]);
+        } else if (arg.compare("--domain_name") == 0) {
+            ++i;
+            domain_name = args[i];
+        } else if (arg.compare("--problem_name") == 0) {
+            ++i;
+            problem_name2 = args[i];
+        } else if (arg.compare("--heuristic_name") == 0) {
+            ++i;
+            heuristic_name2 = args[i];
         } else if (arg.compare("--random-seed") == 0) {
             if (is_last)
                 throw ArgError("missing argument after --random-seed");

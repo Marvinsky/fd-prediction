@@ -23,6 +23,7 @@ class HSPMaxHeuristic : public RelaxationHeuristic {
 protected:
     virtual void initialize();
     virtual int compute_heuristic(const GlobalState &state);
+    virtual string get_heur_name() {string temp = "hmax"; return temp;}
 public:
     HSPMaxHeuristic(const Options &options);
     ~HSPMaxHeuristic();

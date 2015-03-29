@@ -6,6 +6,10 @@
 #include "task_proxy.h"
 
 #include <vector>
+#include <string>
+#include <iostream>
+
+using namespace std;
 
 class GlobalOperator;
 class GlobalState;
@@ -56,6 +60,10 @@ public:
     virtual void evaluate(int g, bool preferred);
     virtual bool dead_end_is_reliable() const;
     virtual void get_involved_heuristics(std::set<Heuristic *> &hset) {hset.insert(this); }
+
+    //Prediction A* = Dijkstra + ss + kre
+    virtual string get_heur_name() {string temp = "No Name"; return temp;}
+
 
     void set_evaluator_value(int val);
     OperatorCost get_cost_type() const {return cost_type; }
