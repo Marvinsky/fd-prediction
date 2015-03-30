@@ -306,9 +306,9 @@ int EagerSearch::returnMinF(vector<int> levels) {
 
 void EagerSearch::generateExpandedReport() {
 	cout<<"nodes_expanded.size() = "<<nodes_expanded.size()<<endl;
-	vector<int> levels;
-	map<int, int> mlevels;
-	int count_level = 0;
+	vector<int> levels; //Obtain all F_boundaries
+	map<int, int> mlevels; //Count nodes using key = f-value
+	int count_level = 1;
 	for (map<Node2, double>::iterator iter = nodes_expanded.begin(); iter != nodes_expanded.end(); iter++) {
 
 		Node2 n = iter->first;
@@ -318,15 +318,14 @@ void EagerSearch::generateExpandedReport() {
 			mlevels.insert(pair<int, int>(n.getF(), count_level));
 			count_level++;
 		}
-
 	}
 
 	int depth = returnMaxF(levels);
-	//int minDepth = returnMinF(levels);
-	cout<<"mlevels.size() = "<<mlevels.size()<<endl;
+	cout<<"depth = "<<depth<<endl;
+	cout<<"F_boundary = "<<F_boundary<<endl;
+	cout<<"mlevels.<size() = "<<mlevels.size()<<endl;
 	cout<<"count_level = "<<count_level<<endl;
-	map<int, int> m;
-	
+
 	string dominio = domain_name;
 	string tarefa = problem_name2;
 	string heuristica = heuristic_name2;
@@ -347,6 +346,8 @@ void EagerSearch::generateExpandedReport() {
 	outputFile<<"\ttotalniveles: "<<mlevels.size()<<"\n";
 	outputFile<<"\tf-value\t\t#nodesByLevel\t\ttime\t\t#nodesExpanded\n";
 
+
+	map<int, int> m; // Count nodes using f-value
 	for (int i = 0; i <= depth; i++) {
 		int k = 0;
 		for (map<Node2, double>::iterator iter = nodes_expanded.begin(); iter != nodes_expanded.end(); iter++) {
