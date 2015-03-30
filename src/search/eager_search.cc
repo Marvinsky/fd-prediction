@@ -11,6 +11,11 @@
 #include <cassert>
 #include <cstdlib>
 #include <set>
+
+//A* prediction
+#include <iostream>
+#include <fstream>
+
 using namespace std;
 
 EagerSearch::EagerSearch(
@@ -69,6 +74,12 @@ void EagerSearch::initialize() {
 
     assert(!heuristics.empty());
 
+//A* prediction initialization
+    double count_nodes = 1.0;
+    count_last_nodes_generated = 0;
+    first_time_in_solved = false;
+    time_level.reset();
+
     const GlobalState &initial_state = g_initial_state();
     for (size_t i = 0; i < heuristics.size(); ++i)
         heuristics[i]->evaluate(initial_state);
@@ -87,6 +98,9 @@ void EagerSearch::initialize() {
         search_progress.check_h_progress(0);
         SearchNode node = search_space.get_node(initial_state);
         node.open_initial(heuristics[0]->get_value());
+        
+        Node2 node2(node.get_h() + node.get_real_g(), node.get_real_g());
+        nodes_expanded.insert(pair<Node2, double>(node2, count_nodes));
 
         open_list->insert(initial_state.get_id());
     }
@@ -106,8 +120,25 @@ SearchStatus EagerSearch::step() {
     SearchNode node = n.first;
 
     GlobalState s = node.get_state();
-    if (check_goal_and_set_plan(s))
-        return SOLVED;
+    if (check_goal_and_set_plan(s)) {
+       int last_level = search_progress.return_lastjump_f_value();
+       F_boundary = last_level;
+       first_time_in_solved = true;
+       return IN_PROGRESS;
+    }
+
+    if (first_time_in_solved) {
+       int last_level = search_progress.return_lastjump_f_value();
+       if (F_boundary == last_level) {
+          count_last_nodes_generated += 1;
+          return IN_PROGRESS;
+       } else {
+          cout<<"count_last_nodes_generated = "<<count_last_nodes_generated<<endl;
+          generateExpandedReport();
+          return SOLVED;
+       }
+    }
+
 
     vector<const GlobalOperator *> applicable_ops;
     set<const GlobalOperator *> preferred_ops;
@@ -196,6 +227,24 @@ SearchStatus EagerSearch::step() {
             succ_node.open(succ_h, node, op);
 
             open_list->insert(succ_state.get_id());
+
+            //A* prediction
+            Node2 node2(succ_h + succ_node.get_real_g(), succ_node.get_real_g());
+            std::pair<std::map<Node2, double>::iterator, bool> ret;
+            std::map<Node2, double>::iterator it;
+
+            ret = nodes_expanded.insert(pair<Node2, double>(node2, count_nodes));
+            it = ret.first;
+
+            if (ret.second) {
+               count_nodes = 1.0; 
+            } else {
+               double q = it->second;
+               q++;
+               it->second = q;
+            }
+
+
             if (search_progress.check_h_progress(succ_node.get_g())) {
                 reward_progress();
             }
@@ -233,6 +282,110 @@ SearchStatus EagerSearch::step() {
     return IN_PROGRESS;
 }
 
+
+int EagerSearch::returnMaxF(vector<int> levels) {
+	int max = levels.at(0);
+	for (size_t i = 0; i < levels.size(); i++) {
+		if (max < levels.at(i)) {
+			max = levels.at(i);
+		}
+	}
+	return max;
+}
+
+
+int EagerSearch::returnMinF(vector<int> levels) {
+	int min = levels.at(0);
+	for (size_t i = 0; i < levels.size(); i++) {
+		if (min > levels.at(i)) {
+			min = levels.at(i);
+		}
+	}
+	return min;
+}
+
+void EagerSearch::generateExpandedReport() {
+	cout<<"nodes_expanded.size() = "<<nodes_expanded.size()<<endl;
+	vector<int> levels;
+	map<int, int> mlevels;
+	int count_level = 0;
+	for (map<Node2, double>::iterator iter = nodes_expanded.begin(); iter != nodes_expanded.end(); iter++) {
+
+		Node2 n = iter->first;
+		levels.push_back(n.getF());
+		map<int, int>::iterator iter2 = mlevels.find(n.getF());
+		if ((iter2 == mlevels.end()) && n.getF() <= F_boundary) {
+			mlevels.insert(pair<int, int>(n.getF(), count_level));
+			count_level++;
+		}
+
+	}
+
+	int depth = returnMaxF(levels);
+	//int minDepth = returnMinF(levels);
+	cout<<"mlevels.size() = "<<mlevels.size()<<endl;
+	cout<<"count_level = "<<count_level<<endl;
+	map<int, int> m;
+	
+	string dominio = domain_name;
+	string tarefa = problem_name2;
+	string heuristica = heuristic_name2;
+	cout<<"dominio = "<<dominio<<endl;
+	cout<<"tarefa = "<<tarefa<<endl;
+	cout<<"heuristica = "<<heuristica<<endl;
+
+	string directoryDomain = "mkdir /home/marvin/marvin/test/"+heuristica+"/krereport/"+dominio;
+	if (system(directoryDomain.c_str())) {
+		cout<<"Directory created successfully."<<endl;
+	}
+
+
+	string nBL = "/home/marvin/marvin/test/"+heuristica+"/krereport/"+dominio+"/"+tarefa;
+	ofstream outputFile;
+	outputFile.open(nBL.c_str(), ios::out);
+	outputFile<<"\t\t"<<nBL.c_str()<<"\n";
+	outputFile<<"\ttotalniveles: "<<mlevels.size()<<"\n";
+	outputFile<<"\tf-value\t\t#nodesByLevel\t\ttime\t\t#nodesExpanded\n";
+
+	for (int i = 0; i <= depth; i++) {
+		int k = 0;
+		for (map<Node2, double>::iterator iter = nodes_expanded.begin(); iter != nodes_expanded.end(); iter++) {
+			
+			Node2 n = iter->first;
+			if (i == n.getF()) {
+				k = k + iter->second;
+			}
+		}
+
+		map<int, int>::iterator iter = m.find(i);
+		if (iter == m.end()) {
+			m.insert(pair<int, int>(i, k));
+		}
+	
+	}
+
+
+	cout<<"print v_timer"<<endl;
+	for (size_t i = 0; i < v_timer.size(); i++) {
+		cout<<v_timer.at(i)<<endl;
+	}
+	int sum = 0;
+	int count_v_timer = 0;
+	for (map<int, int>::iterator iter = m.begin(); iter != m.end(); iter++) {
+		int f = iter->first;
+		int q = iter->second;
+		if ((f <= F_boundary) && (q != 0) ) {
+			cout<<"f = "<<f<<"\tq = "<<q<<endl;
+			sum = sum + q;
+			outputFile<<"\t"<<f<<"\t\t"<<q<<"\t\t\t"<<v_timer.at(count_v_timer)<<"\t\t\t"<<sum<<"\n";
+			count_v_timer++;
+		}
+	}
+	
+	outputFile.close();
+}
+
+
 pair<SearchNode, bool> EagerSearch::fetch_next_node() {
     /* TODO: The bulk of this code deals with multi-path dependence,
        which is a bit unfortunate since that is a special case that
@@ -245,6 +398,7 @@ pair<SearchNode, bool> EagerSearch::fetch_next_node() {
     while (true) {
         if (open_list->empty()) {
             cout << "Completely explored state space -- no solution!" << endl;
+            generateExpandedReport();
             // HACK! HACK! we do this because SearchNode has no default/copy constructor
             SearchNode dummy_node = search_space.get_node(g_initial_state());
             return make_pair(dummy_node, false);
@@ -319,7 +473,12 @@ void EagerSearch::update_jump_statistic(const SearchNode &node) {
         heuristics[0]->set_evaluator_value(node.get_h());
         f_evaluator->evaluate(node.get_g(), false);
         int new_f_value = f_evaluator->get_value();
-        search_progress.report_f_value(new_f_value);
+
+	if (search_progress.updated_lastjump_f_value(new_f_value)) {
+		 double level_update_time = (double)time_level();
+		 v_timer.push_back(level_update_time);
+		 search_progress.report_f_value(new_f_value);
+	}
     }
 }
 

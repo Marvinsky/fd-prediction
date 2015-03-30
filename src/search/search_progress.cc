@@ -41,6 +41,14 @@ void SearchProgress::report_f_value(int f) {
     }
 }
 
+bool SearchProgress::updated_lastjump_f_value(int f) {
+	if (f > lastjump_f_value) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 void SearchProgress::get_initial_h_values() {
     for (size_t i = 0; i < heuristics.size(); ++i) {
         initial_h_values.push_back(heuristics[i]->get_heuristic());
@@ -128,3 +136,9 @@ void SearchProgress::print_statistics() const {
              << lastjump_generated_states << " state(s)." << endl;
     }
 }
+
+int SearchProgress::return_lastjump_f_value() {
+	return lastjump_f_value;
+}
+
+

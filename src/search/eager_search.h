@@ -12,6 +12,10 @@
 
 #include "open_lists/open_list.h"
 
+//A* prediction
+#include "../ss/node2.h"
+#include <map>
+
 class GlobalOperator;
 class Heuristic;
 class Options;
@@ -26,6 +30,15 @@ class EagerSearch : public SearchEngine {
     OpenList<StateID> *open_list;
     ScalarEvaluator *f_evaluator;
 
+
+//A* prediction
+    map<Node2, double> nodes_expanded;
+    vector<double> v_timer;
+    double count_nodes;
+    bool first_time_in_solved;
+    int F_boundary;
+    double count_last_nodes_generated;
+    Timer time_level;
 protected:
     SearchStatus step();
     std::pair<SearchNode, bool> fetch_next_node();
@@ -46,6 +59,11 @@ public:
     void statistics() const;
 
     void dump_search_space();
+
+//A* prediction
+    void generateExpandedReport();
+    int returnMaxF(vector<int> levels);
+    int returnMinF(vector<int> levels);
 };
 
 #endif

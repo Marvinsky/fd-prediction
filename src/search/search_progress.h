@@ -72,6 +72,10 @@ public:
     void print_f_line() const;
     void print_h_line(int g) const;
     void print_statistics() const;
+
+//A* prediction
+    int return_lastjump_f_value();
+    bool updated_lastjump_f_value(int f);
 };
 
 #endif
