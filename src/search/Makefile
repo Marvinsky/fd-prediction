@@ -46,6 +46,7 @@ HEADERS = \
           delegating_task.h \
           domain_transition_graph.h \
           eager_search.h \
+          eager_dijkstra_search.h \
           enforced_hill_climbing_search.h \
           equivalence_relation.h \
           exact_timer.h \
@@ -237,7 +238,9 @@ endif
 CXXFLAGS =
 CXXFLAGS += -g
 CXXFLAGS += $(BITWIDTHOPT)
-CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -Wno-deprecated -Werror
+CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -Wno-deprecated
+##CXXFLAGS += -std=c++11 -Wall -Wextra -pedantic -Wno-deprecated -Werror
+
 
 CXXFLAGS += -Iext
 ifeq ($(DOWNWARD_OS), osx)

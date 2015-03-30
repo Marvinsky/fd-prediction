@@ -20,6 +20,9 @@ SearchProgress::SearchProgress() {
     lastjump_generated_states = 0;
 
     lastjump_f_value = -1;
+    //A* prediction
+    fetch_first_node = true;
+    lastjump_f_value2 = -1;
 }
 
 SearchProgress::~SearchProgress() {
@@ -31,8 +34,29 @@ void SearchProgress::add_heuristic(Heuristic *h) {
 }
 
 void SearchProgress::report_f_value(int f) {
+    lastjump_f_value2 = lastjump_f_value;
     if (f > lastjump_f_value) {
         lastjump_f_value = f;
+        if (fetch_first_node) {
+	   
+		int expanded_by_level = (expanded_states == 0)?evaluated_states:expanded_states;
+
+		cout<<"generated_by_level = "<<generated_states<<endl;
+		cout<<"expanded_by_level = "<<expanded_by_level<<endl;
+	} else {
+
+		int generated_by_level = generated_states - lastjump_generated_states;
+		cout<<"generated_by_level = "<<generated_by_level<<endl;
+		int expanded_by_level = expanded_states - lastjump_expanded_states;
+		cout<<"expanded_by_level = "<<expanded_by_level<<endl;
+	
+		cout<<"fnivel: "<<lastjump_f_value2<<endl;
+		cout<<"nodesGeneratedByLevel: "<<expanded_by_level<<endl;
+		cout<<" time0: "<<g_timer()<<endl;
+		cout<<"nodesGeneratedToTheLevel: "<<expanded_states<<endl;
+        }	
+
+
         print_f_line();
         lastjump_expanded_states = expanded_states;
         lastjump_reopened_states = reopened_states;

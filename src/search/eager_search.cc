@@ -75,7 +75,7 @@ void EagerSearch::initialize() {
     assert(!heuristics.empty());
 
 //A* prediction initialization
-    double count_nodes = 1.0;
+    count_nodes = 1.0;
     count_last_nodes_generated = 0;
     first_time_in_solved = false;
     time_level.reset();
