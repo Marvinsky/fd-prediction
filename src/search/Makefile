@@ -161,6 +161,8 @@ HEADERS += pdbs/canonical_pdbs_heuristic.h \
            pdbs/zero_one_pdbs_heuristic.h \
 
 
+HEADERS += dfs/dfs_search.h \
+
 HEADERS += ss/type_child.h \
            ss/type_children.h \
            ss/type.h \
