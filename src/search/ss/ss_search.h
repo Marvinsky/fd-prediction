@@ -15,6 +15,8 @@
 #include "../randomc/randomc.h"
 #include "../randomc/mersenne.cpp"
 #include "../state_id.h"
+#include "../timer.h"
+
 
 class GlobalOperator;
 class Heuristic;
@@ -78,14 +80,12 @@ private:
 	Timer search_time;
 	Timer level_time; //time required to expand an entire level
 
+        //A* prediction using ss:
 	TypeSystem * sampler;
-
         CRandomMersenne* RanGen2;
+        Timer ss_timer;
+        double ss_timer_value;
 
-
-	//void restart();
-	//void jump();
-	//bool global_restart();
 	void report_progress();
 
 protected:

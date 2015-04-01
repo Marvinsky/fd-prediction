@@ -195,7 +195,7 @@ SearchStatus DFSSearch::step() {
                   search_progress.inc_generated();
 
 
-                  SSNode succ_node(child.get_id(), succ_h, g + 1);
+                  SSNode succ_node(child.get_id(), succ_h, g + get_adjusted_cost(*op));
                   //cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.get_g_value()<<", f = "<<succ_h + succ_node.get_g_value()<<"\n";
 
                   if (succ_h + succ_node.get_g_value() <= depth) {

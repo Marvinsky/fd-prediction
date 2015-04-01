@@ -55,7 +55,9 @@ void SSSearch::predict(int probes) {
             cout<<"prePre = "<<totalPrediction<<endl;
             cout<<"**********"<<endl;
         }
+        ss_timer_value = ss_timer();
         cout<<"\ntotalPrediction : "<<totalPrediction<<"\n";
+        cout<<"ss_timer: "<<ss_timer_value<<endl;
         generateGeneratedReport();
         generateExpandedReport();
 }
@@ -293,7 +295,7 @@ void SSSearch::generateExpandedReport() {
         output.open(outputFile.c_str());
         output<<"\t"<<outputFile.c_str()<<"\n" ;
         output<<"predictionSS: "<<totalPrediction<<"\n";
-        output<<"threshold: "<<threshold<<"\n";
+        output<<"ss_timer: "<<ss_timer_value<<"\n";
         
 
         if (system(dirDomain.c_str())) {
@@ -372,7 +374,7 @@ void SSSearch::initialize() {
 	cout << "SSSearch ..." << endl;
 	search_time.reset();
 	level_time.reset();
-        
+        ss_timer.reset(); 
 	//queue.clear();
 	// evaluating the initial state
 	heuristic->evaluate(g_initial_state());
