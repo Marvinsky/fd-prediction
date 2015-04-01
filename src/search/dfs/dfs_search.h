@@ -56,6 +56,7 @@ private:
     string heuristic_name;
     stack<SSNode> queue;
     map<Node2, double> collector;
+    Timer ida_timer;
 
 protected:
     SearchStatus step();

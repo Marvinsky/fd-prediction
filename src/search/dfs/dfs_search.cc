@@ -75,6 +75,9 @@ void DFSSearch::initialize() {
 
     assert(!heuristics.empty());
 
+    //DFS
+    ida_timer.reset();
+
     const GlobalState &initial_state = g_initial_state();
     for (size_t i = 0; i < heuristics.size(); ++i)
         heuristics[i]->evaluate(initial_state);
@@ -133,6 +136,11 @@ SearchStatus DFSSearch::step() {
               StateID state_id = nodecp.get_id();
 
               Node2 node2(nodecp.get_h_value() + g, g);
+              int new_f_value = nodecp.get_h_value() + g;
+	      if (search_progress.updated_lastjump_f_value(new_f_value)) {
+                 search_progress.report_f_value(new_f_value);
+              }
+
  
 	      /*if (collector.insert(pair<Node2, double>(node2, count_nodes)).second) {
                  count_nodes = 1;
@@ -198,7 +206,9 @@ SearchStatus DFSSearch::step() {
                   }
               }
         }
- 
+
+        double ida_timer_value = ida_timer();
+        cout<<"ida_timer: "<<ida_timer()<<endl; 
         cout<<"end expansion of nodes finished."<<endl;
         cout<<"Total of nodes expanded: "<<count_nodes<<endl;
         
@@ -236,7 +246,7 @@ SearchStatus DFSSearch::step() {
     	output.open(outputFile.c_str());
     	output<<"\t"<<outputFile.c_str()<<"\n";
     	output<<"totalniveles: "<<depth<<"\n";
-    	output<<"threshold: "<<depth<<"\n\n";
+    	output<<"ida_timer: "<<ida_timer_value<<"\n\n";
 
     	for (int i = 0; i <= depth; i++) {
        		int k = 0;
