@@ -55,7 +55,8 @@ private:
     int depth;
     string heuristic_name;
     stack<SSNode> queue;
-    map<Node2, double> collector;
+    map<Node2, double> expanded;
+    map<Node2, double> generated;
     Timer ida_timer;
 
 protected:

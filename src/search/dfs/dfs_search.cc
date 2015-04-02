@@ -125,7 +125,7 @@ SearchStatus DFSSearch::step() {
         depth = 2*h_initial;
 	cout<<"depth ="<<depth<<endl;
         queue.push(node);
-        double count_nodes = 1.0;
+        double count_nodes = 0.0;
 
         while (!queue.empty()) {
               SSNode nodecp = queue.top();
@@ -141,15 +141,19 @@ SearchStatus DFSSearch::step() {
                  search_progress.report_f_value(new_f_value);
               }
 
- 
-	      /*if (collector.insert(pair<Node2, double>(node2, count_nodes)).second) {
-                 count_nodes = 1;
-              } else {
-                 map<Node2, double>::iterator iter = collector.find(node2);
-                 int q = iter->second;
-                 q++;
-                 iter->second = q;
-              }*/
+
+	      //count nodes expanded
+              std::pair<std::map<Node2, double>::iterator, bool> ret0;
+              std::map<Node2, double>::iterator it0;
+
+              ret0 = expanded.insert(pair<Node2, double>(node2, 1));
+              it0 = ret0.first;
+
+              if (ret0.second) {
+
+	      } else {
+		it0->second += 1;
+	      } 
 
               count_nodes++;
 
@@ -167,7 +171,7 @@ SearchStatus DFSSearch::step() {
 
               std::map<Node2, double>::iterator it;
               
-              ret = collector.insert(std::pair<Node2, double>(node2, amount));
+              ret = generated.insert(std::pair<Node2, double>(node2, amount));
               it = ret.first;
 
               if (ret.second) {
@@ -210,17 +214,25 @@ SearchStatus DFSSearch::step() {
         double ida_timer_value = ida_timer();
         cout<<"ida_timer: "<<ida_timer()<<endl; 
         cout<<"end expansion of nodes finished."<<endl;
-        cout<<"Total of nodes expanded: "<<count_nodes<<endl;
-        
-        double nodes_total = 0;
-        for (map<Node2, double>::iterator iter = collector.begin(); iter != collector.end(); iter++) {
+        cout<<"Total of nodes expanded counter marvinsky: "<<count_nodes<<endl;
+       
+        double nodes_total_expanded = 0;
+	
+	for (map<Node2, double>::iterator iter = expanded.begin(); iter != expanded.end(); iter++) {
+            double q = iter->second;
+            nodes_total_expanded += q;
+        }
+        cout<<"Total of nodes expanded: "<<nodes_total_expanded<<endl;
+ 
+        double nodes_total_generated = 0;
+        for (map<Node2, double>::iterator iter = generated.begin(); iter != generated.end(); iter++) {
             
   	    double q = iter->second;
-            nodes_total += q;  
+            nodes_total_generated += q;  
         }
-        cout<<"Total of nodes generated: "<<nodes_total<<endl;
-        cout<<"collector.size() = "<<collector.size()<<endl;
-
+        cout<<"Total of nodes generated: "<<nodes_total_generated<<endl;
+        cout<<"generated.size() = "<<generated.size()<<endl;
+        generated.clear();
 
         ofstream output;
     	string dominio = domain_name;
@@ -245,14 +257,14 @@ SearchStatus DFSSearch::step() {
     	cout<<"outputFile = "<<outputFile.c_str()<<endl;
     	output.open(outputFile.c_str());
     	output<<"\t"<<outputFile.c_str()<<"\n";
-    	output<<"totalniveles: "<<depth<<"\n";
+    	output<<"nodes_expanded: "<<nodes_total_expanded<<"\n";
     	output<<"ida_timer: "<<ida_timer_value<<"\n\n";
 
     	for (int i = 0; i <= depth; i++) {
        		int k = 0;
        		vector<int> f;
        		vector<double> q;
-       		for (map<Node2, double>::iterator iter = collector.begin(); iter != collector.end(); iter++) {
+       		for (map<Node2, double>::iterator iter = expanded.begin(); iter != expanded.end(); iter++) {
            		Node2 n = iter->first;
            		if (i == n.getL()) {
               		    k++;
@@ -274,7 +286,7 @@ SearchStatus DFSSearch::step() {
        		cout<<"\n";
     	}
     	output.close();
-    
+        expanded.clear(); 
    	return SOLVED;
 }
 
