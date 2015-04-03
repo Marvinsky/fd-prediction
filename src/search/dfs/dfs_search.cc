@@ -138,24 +138,29 @@ SearchStatus DFSSearch::step() {
 
               Node2 node2(nodecp.getHvalue() + g_real, level);
               int new_f_value = nodecp.getHvalue() + g_real;
-	      if (search_progress.updated_lastjump_f_value(new_f_value)) {
-                 search_progress.report_f_value(new_f_value);
-              }
+              //cout<<"new_f_value = "<<new_f_value<<endl;
+	      //if (search_progress.updated_lastjump_f_value(new_f_value)) {
+                 //search_progress.report_f_value(new_f_value);
+              //}
 
 	      //count nodes expanded
-              std::pair<std::map<Node2, double>::iterator, bool> ret0;
-              std::map<Node2, double>::iterator it0;
+              if (new_f_value <= depth) {
+		std::pair<std::map<Node2, double>::iterator, bool> ret0;
+              	std::map<Node2, double>::iterator it0;
 
-              ret0 = expanded.insert(pair<Node2, double>(node2, 1));
-              it0 = ret0.first;
+              	ret0 = expanded.insert(pair<Node2, double>(node2, 1));
+              	it0 = ret0.first;
 
-              if (ret0.second) {
+              	if (ret0.second) {
 
-	      } else {
-		it0->second += 1;
-	      } 
+	      	} else {
+		  it0->second += 1;
+	      	} 
 
-              count_nodes++;
+              	count_nodes++;
+              }
+           
+              
 
               std::vector<const GlobalOperator *> applicable_ops;
 
@@ -203,7 +208,7 @@ SearchStatus DFSSearch::step() {
                   //cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.get_g_value()<<", f = "<<succ_h + succ_node.get_g_value()<<"\n";
 
                   if (succ_h + succ_node.getGreal() <= depth) {
-                     //cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.get_g_value()<<", f = "<<succ_h + succ_node.get_g_value()<<"\n";
+                     //cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<"\n";
                      queue.push(succ_node);
                   } else {
                      //cout<<"\tpruned!\n";

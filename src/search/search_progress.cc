@@ -43,6 +43,7 @@ void SearchProgress::report_f_value(int f) {
 
 		cout<<"generated_by_level = "<<generated_states<<endl;
 		cout<<"expanded_by_level = "<<expanded_by_level<<endl;
+                fetch_first_node = false;
 	} else {
 
 		int generated_by_level = generated_states - lastjump_generated_states;
