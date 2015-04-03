@@ -115,7 +115,7 @@ void SSSearch::probe()
 
 
 		queue.erase( rt );
-                //cout<<nraiz<<": Raiz: h = "<<out.getH()<<" g = "<<out.getLevel()<<" f = "<<out.getH() + out.getLevel()<<" w  = "<<s.getWeight()<<endl;   
+                cout<<nraiz<<": Raiz: h = "<<out.getH()<<", g = "<<g_real<<", f = "<<out.getH() + g_real<<", level = "<<level<<", w  = "<<s.getWeight()<<endl;   
                 nraiz++;                
                 
 		vweight.push_back(s);
@@ -123,28 +123,28 @@ void SSSearch::probe()
 	        
                 //Insert each node.
                 Node2 node2(out.getH() + g_real, level);
-
+                int new_f_value = out.getH() + g_real;
                 //count nodes expanded
+                if (new_f_value <= threshold) {
+			std::pair<std::map<Node2, double>::iterator, bool> ret0;
 
-                std::pair<std::map<Node2, double>::iterator, bool> ret0;
+                	std::map<Node2, double>::iterator it0;
 
-                std::map<Node2, double>::iterator it0;
+                	ret0 = expanded.insert(pair<Node2, double>(node2, s.getWeight()));
+                	it0 = ret0.first;
 
-                ret0 = expanded.insert(pair<Node2, double>(node2, s.getWeight()));
-                it0 = ret0.first;
-
-                if (ret0.second) {
-                    //cout<<"new node expanded is added."<<endl;
-                } else {
-                    //cout<<"node expanded is being updated."<<endl;
-                    it0->second += s.getWeight();
-                    //cout<<"it0->second = "<<it0->second<<endl;
+                	if (ret0.second) {
+                    	   //cout<<"new node expanded is added."<<endl;
+                	} else {
+                    	   //cout<<"node expanded is being updated."<<endl;
+                    	   it0->second += s.getWeight();
+                    	   //cout<<"it0->second = "<<it0->second<<endl;
+                	}
+                	//end count node
                 }
 
-                //end count node
- 
 		int h = -1;
-		double w = (double)s.getWeight();
+		double w = s.getWeight();
 		//cout<<"w = "<<w<<endl;
  
                 std::vector<const GlobalOperator*> applicable_ops;
@@ -169,6 +169,7 @@ void SSSearch::probe()
                    //cout<<"new = "<<it->second<<endl;
                 }
                  //end count nodes generated
+                cout<<"\t__________________begin Childs_________________\n";
 		for (size_t i = 0; i < applicable_ops.size(); ++i)
 		{
                         const GlobalOperator *op = applicable_ops[i];
@@ -182,7 +183,7 @@ void SSSearch::probe()
 
 			}	
                         
-			//cout<<"\tChild: h = "<< h <<" g = "<< g + 1 <<" f = "<< h + g + 1 <<" w = "<<w<<endl; 
+			cout<<"\tChild_"<<(i+1)<<" : h = "<< h <<", g = "<< g_real + get_adjusted_cost(*op) <<", f = "<< h + g_real + get_adjusted_cost(*op) <<", level = "<<level+1<< ", w = "<<w<<endl; 
 
                         if (h + g_real + get_adjusted_cost(*op) <= threshold) {
 			   Type object = sampler->getType(child.get_id(), h,  1);
@@ -194,18 +195,21 @@ void SSSearch::probe()
                            child_node.setId(child_state_id);
                            child_node.setWeight(w);
                            child_node.setGreal(g_real + get_adjusted_cost(*op));
-                           //cout<<"\tChild: h = "<<object.getH()<<" g = "<<object.getLevel()<<" f = "<<object.getH() + object.getLevel()<<"\n"; 
+                           cout<<"\t\tChild f<=threshold: h = "<<object.getH()<<" g = "<<child_node.getGreal()<<" f = "<<object.getH() + child_node.getGreal()<<", level = "<<level+1<< ", w = "<<w<<endl; 
+ 
 			   
 
                            map<Type, SSNode>::iterator queueIt = queue.find( object );
 			   if( queueIt != queue.end() )
 			   {
-
-                                //cout<<"\tis duplicate: h = "<<queueIt->first.getH()<<" g = "<<queueIt->first.getLevel()<<" f = "<< queueIt->first.getH()   +  queueIt->first.getLevel()<<"\n";
                                 SSNode snode = queueIt->second;
+
+                                cout<<"\t\tThe duplicate node is: h = "<<queueIt->first.getH()<<", g = "<<snode.getGreal()<<", f = "<< queueIt->first.getH() + snode.getGreal()<<", w = "<<snode.getWeight()<<", level = "<<queueIt->first.getLevel()<<"\n";
+                                
 				double wa = (double)snode.getWeight();
 				//snode.setWeight( wa + w);
-                                queueIt->second.setWeight(wa + w); 
+                                queueIt->second.setWeight(wa + w); // set w the node that already exists
+                                cout<<"\t\tbefore ss process starts, the w of the duplicate node is updated to: "<<queueIt->second.getWeight()<<endl; 
                                 //std::pair<std::map<Type, SSNode>::iterator, bool> ret0;
 
                                 //ret0 = queue.insert(pair<Type, SSNode>(object, snode));
@@ -221,39 +225,60 @@ void SSSearch::probe()
                                 
 				if (a < prob) 
 				{
-                                        //cout<<"\t\tAdded even though is duplicate.\n";
+                                        cout<<"\t\tAdded even though is duplicate.\n";
+                                        /*child_node.setWeight(wa + w);
                                         
+					std::pair<std::map<Type, SSNode>::iterator, bool> ret2;
+
+                			std::map<Type, SSNode>::iterator it2;
+
+                			ret2 = queue.insert(pair<Type, SSNode>(object, child_node));
+                			it2 = ret2.first;
+
+                			if (ret2.second) {
+                    	   			cout<<"\t\tanswer1: new type is added."<<endl;
+                			} else {
+                    	   			cout<<"\t\tanswer2: w of the node that already exists is updated ";
+                    	   			it2->second.setWeight(child_node.getWeight());
+                    	   			cout<<"\t\twith = "<<it2->second.getWeight()<<endl;
+                			}
+                                        */
+                                       
+                                                                               
 				        child_node.setWeight( wa + w);
-                                        
-                                        std::pair<std::map<Type, SSNode>::iterator, bool> ret;
+                                        cout<<"\t\tthe w is updated to = "<<child_node.getWeight()<<endl;
+                                        std::pair<std::map<Type, SSNode>::iterator, bool> ret2;
                                      	queue.erase(object); 
+                                        
+                                        ret2 = queue.insert( pair<Type, SSNode>( object, child_node ));      
 
-                                        ret = queue.insert( pair<Type, SSNode>( object, child_node ));      
-
-                                        queueIt = ret.first;
+                                        queueIt = ret2.first;
                                         queueIt->second.setWeight(child_node.getWeight());
                                         
                                       	
 				} else {
-                                        //cout<<"\t\tNot added.\n";
+                                        cout<<"\t\tNot added.\n";
+                                        cout<<"\t\tbut the w is updated for the node that already exists to: "<<queueIt->second.getWeight()<<endl;
                                 }
 			   } 
 			   else
 			   {
-                                //cout<<"\t\tNew node added\n";
+                                cout<<"\t\tNew node added\n";
 				queue.insert( pair<Type, SSNode>( object, child_node ) );
                                 //cout<<"\t\tchild_node.getWeight() = "<<child_node.getWeight()<<"\n";
                                 //S.insert( pair<Type, double>( object,12.44 ) );
                                 
-                                //cout<<"\t\tChild: h = "<< h <<" g = "<< g + 1 <<" f = "<< h + g + 1 << " threshold: " << threshold <<" w = "<<child_node.getWeight()<<endl;
+                                cout<<"\t\tChild: h = "<< h <<", g = "<< g_real + get_adjusted_cost(*op) <<", f = "<< h + g_real + get_adjusted_cost(*op) << " threshold: " << threshold <<" w = "<<child_node.getWeight()<<endl;
                            }
                         }
 			else 
 			{
-				//cout << "\tNode was pruned!" << endl;
-				//cout<<"\tChild: h = "<< h <<" g = "<< g + 1 <<" f = "<< h + g + 1 << " threshold: " << threshold <<"\n";
+				cout << "\t\tNode was pruned!" << endl;
+				cout<<"\t\tChild: h = "<< h <<" g = "<< g_real + get_adjusted_cost(*op) <<", f = "<< h + g_real + get_adjusted_cost(*op) << ", threshold: " << threshold <<"\n";
 			}
+                        cout<<"\tend Child_"<<(i+1)<<"\n";
 		}
+                cout<<"\t__________________end Childs_________________\n";
 	}
         
 }
