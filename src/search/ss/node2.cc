@@ -26,14 +26,6 @@ void Node2::setL(int l) {
 	this->level = l;
 }
 
-int Node2::getQ() {
-	return this->q_value;
-}
-
-void Node2::setQ(int q) {
-	this->q_value = q;
-}
-
 bool operator< (const Node2 &n1, const Node2 &n2) {
 	if (n1.f_value != n2.f_value) {
            return n1.f_value < n2.f_value;

@@ -120,7 +120,7 @@ SearchStatus DFSSearch::step() {
         cout<<"h_initial = "<<h_initial<<endl;
         
         StateID initial_state_id = initial_state.get_id();
-        SSNode node(initial_state_id, h_initial, 0);
+        SSNode node(initial_state_id, h_initial,  0, 0); //set the h_value, g_real and the level
     
         depth = 2*h_initial;
 	cout<<"depth ="<<depth<<endl;
@@ -129,18 +129,18 @@ SearchStatus DFSSearch::step() {
 
         while (!queue.empty()) {
               SSNode nodecp = queue.top();
-              int g = nodecp.get_g_value();
-              //cout<<"Raiz: h = "<<nodecp.get_h_value()<<", g = "<<g<<", f = "<<nodecp.get_h_value() + g<<"\n";
+              int g_real = nodecp.getLevel();
+              int level = nodecp.getGreal();
+              //cout<<"Raiz: h = "<<nodecp.getHvalue()<<", g_real = "<<g_real<<", f = "<<nodecp.getHvalue() + g_real<<"\n";
 	      queue.pop();
 
               StateID state_id = nodecp.get_id();
 
-              Node2 node2(nodecp.get_h_value() + g, g);
-              int new_f_value = nodecp.get_h_value() + g;
+              Node2 node2(nodecp.getHvalue() + g_real, level);
+              int new_f_value = nodecp.getHvalue() + g_real;
 	      if (search_progress.updated_lastjump_f_value(new_f_value)) {
                  search_progress.report_f_value(new_f_value);
               }
-
 
 	      //count nodes expanded
               std::pair<std::map<Node2, double>::iterator, bool> ret0;
@@ -166,7 +166,7 @@ SearchStatus DFSSearch::step() {
 
               double amount = (double)applicable_ops.size();
 
-              //Inserting
+              //count nodes generated
 	      std::pair<std::map<Node2, double>::iterator, bool> ret;
 
               std::map<Node2, double>::iterator it;
@@ -199,10 +199,10 @@ SearchStatus DFSSearch::step() {
                   search_progress.inc_generated();
 
 
-                  SSNode succ_node(child.get_id(), succ_h, g + get_adjusted_cost(*op));
+                  SSNode succ_node(child.get_id(), succ_h, g_real + get_adjusted_cost(*op), level + 1);
                   //cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.get_g_value()<<", f = "<<succ_h + succ_node.get_g_value()<<"\n";
 
-                  if (succ_h + succ_node.get_g_value() <= depth) {
+                  if (succ_h + succ_node.getGreal() <= depth) {
                      //cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.get_g_value()<<", f = "<<succ_h + succ_node.get_g_value()<<"\n";
                      queue.push(succ_node);
                   } else {
@@ -214,7 +214,7 @@ SearchStatus DFSSearch::step() {
         double ida_timer_value = ida_timer();
         cout<<"ida_timer: "<<ida_timer()<<endl; 
         cout<<"end expansion of nodes finished."<<endl;
-        cout<<"Total of nodes expanded counter marvinsky: "<<count_nodes<<endl;
+        cout<<"Total of nodes expanded by counter marvinsky: "<<count_nodes<<endl;
        
         double nodes_total_expanded = 0;
 	

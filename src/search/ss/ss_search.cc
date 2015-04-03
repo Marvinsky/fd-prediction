@@ -52,7 +52,7 @@ void SSSearch::predict(int probes) {
             totalPrediction = totalPrediction + (p - totalPrediction)/(i + 1);
             cout<<"**********"<<endl;
             cout<<"p = "<<p<<endl;
-            cout<<"prePre = "<<totalPrediction<<endl;
+            cout<<"prePre_"<<(i+1)<<" = "<<totalPrediction<<endl;
             cout<<"**********"<<endl;
         }
         ss_timer_value = ss_timer();
@@ -87,6 +87,7 @@ void SSSearch::probe()
         StateID initial_state_id = initial_state.get_id();
         node.setId(initial_state_id);
         node.setWeight(1.0);
+        node.setGreal(0);  // g_real value of the node
 	/*
 	 * Seeding the prediction with the children of the start state
 	 *
@@ -94,7 +95,7 @@ void SSSearch::probe()
 	Type type = sampler->getType(node.getId(), initial_value, 1);
           
  
-	type.setLevel( 0 );
+	type.setLevel( 0 ); // level where the node is located
 
 	queue.insert( pair<Type, SSNode>( type, node ) );
 
@@ -104,7 +105,8 @@ void SSSearch::probe()
 	{
 		Type out = queue.begin()->first;
 		SSNode s = queue.begin()->second;
-               	int g = (int)out.getLevel();
+               	int g_real = s.getGreal();
+                int level =  out.getLevel();
 
                 //printQueue();
 
@@ -120,7 +122,7 @@ void SSSearch::probe()
 		
 	        
                 //Insert each node.
-                Node2 node2(out.getH() + g, g);
+                Node2 node2(out.getH() + g_real, level);
 
                 //count nodes expanded
 
@@ -132,11 +134,11 @@ void SSSearch::probe()
                 it0 = ret0.first;
 
                 if (ret0.second) {
-                    cout<<"new node expanded is added."<<endl;
+                    //cout<<"new node expanded is added."<<endl;
                 } else {
-                    cout<<"node expanded is being updated."<<endl;
+                    //cout<<"node expanded is being updated."<<endl;
                     it0->second += s.getWeight();
-                    cout<<"it0->second = "<<it0->second<<endl;
+                    //cout<<"it0->second = "<<it0->second<<endl;
                 }
 
                 //end count node
@@ -160,11 +162,11 @@ void SSSearch::probe()
 
 
                 if (ret.second) {
-                   cout<<"new node is added."<<endl;
+                   //cout<<"new node is added."<<endl;
                 } else {
-                   cout<<"old is being updated."<<endl;
+                   //cout<<"old is being updated."<<endl;
                    it->second += amount*w;
-                   cout<<"new = "<<it->second<<endl;
+                   //cout<<"new = "<<it->second<<endl;
                 }
                  //end count nodes generated
 		for (size_t i = 0; i < applicable_ops.size(); ++i)
@@ -182,16 +184,16 @@ void SSSearch::probe()
                         
 			//cout<<"\tChild: h = "<< h <<" g = "<< g + 1 <<" f = "<< h + g + 1 <<" w = "<<w<<endl; 
 
-                        if (h + g + 1 <= threshold) {
+                        if (h + g_real + get_adjusted_cost(*op) <= threshold) {
 			   Type object = sampler->getType(child.get_id(), h,  1);
 			    
-                           object.setLevel( g + 1 );
+                           object.setLevel( level + 1 );
 
                            SSNode child_node;
                            StateID child_state_id = child.get_id();
                            child_node.setId(child_state_id);
                            child_node.setWeight(w);
-
+                           child_node.setGreal(g_real + get_adjusted_cost(*op));
                            //cout<<"\tChild: h = "<<object.getH()<<" g = "<<object.getLevel()<<" f = "<<object.getH() + object.getLevel()<<"\n"; 
 			   
 
@@ -216,9 +218,6 @@ void SSSearch::probe()
                           	 
                                 double a = (( double )rand_100) / 100;
                                 //cout<<"a = "<<a<<" prob = "<<prob<<endl;
-                                
-                                
-                                
                                 
 				if (a < prob) 
 				{
@@ -358,7 +357,7 @@ void SSSearch::printQueue() {
 	for (map<Type, SSNode>::iterator iter = queue.begin(); iter !=  queue.end(); iter++) {
             Type t = iter->first;
             SSNode t2  = iter->second;
-            cout<<"\t\t h = "<<t.getH()<<" g = "<<t.getLevel()<<" f = "<<t.getH() + t.getLevel()<<" w = "<<t2.getWeight()<<"\n"; 
+            cout<<"\t\t h = "<<t.getH()<<" g = "<<t.getLevel()<<" f = "<<t.getH() + t2.getGreal()<<" w = "<<t2.getWeight()<<"\n"; 
         }
         cout<<"\n";
         cout<<"\nEnd PrintQueue\n";

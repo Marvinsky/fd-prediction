@@ -38,13 +38,16 @@ class SSNode{
 private:
 	StateID id;
 	double weight;
+        int g_real;
 public:
-        SSNode(): id(StateID::no_state), weight(0.0){}
-        SSNode(StateID identifier, double w) : id(identifier), weight(w){}
+        SSNode(): id(StateID::no_state), weight(0.0), g_real(0){}
+        SSNode(StateID identifier, double w, int g) : id(identifier), weight(w), g_real(g){}
         StateID getId() const {return this->id;}
         void setId(StateID identifier) {this->id = identifier;}
         double getWeight()  {return this->weight;}
-        void setWeight(double w) {this->weight = w;} 
+        void setWeight(double w) {this->weight = w;}
+        int getGreal() const {return this->g_real;}
+        void setGreal(int g) {this->g_real = g;}
 };
 
 class SSSearch : public SearchEngine {
