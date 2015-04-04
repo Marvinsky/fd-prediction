@@ -182,9 +182,9 @@ void SSSearch::probe()
 				h = heuristic->get_heuristic();
 
 			}	
-                        
+                        cout<<"\tthe cost get_adjusted_cost(*op) = "<<get_adjusted_cost(*op)<<"\n";
 			cout<<"\tChild_"<<(i+1)<<" : h = "<< h <<", g = "<< g_real + get_adjusted_cost(*op) <<", f = "<< h + g_real + get_adjusted_cost(*op) <<", level = "<<level+1<< ", w = "<<w<<endl; 
-
+                        
                         if (h + g_real + get_adjusted_cost(*op) <= threshold) {
 			   Type object = sampler->getType(child.get_id(), h,  1);
 			    
@@ -195,7 +195,7 @@ void SSSearch::probe()
                            child_node.setId(child_state_id);
                            child_node.setWeight(w);
                            child_node.setGreal(g_real + get_adjusted_cost(*op));
-                           cout<<"\t\tChild f<=threshold: h = "<<object.getH()<<" g = "<<child_node.getGreal()<<" f = "<<object.getH() + child_node.getGreal()<<", level = "<<level+1<< ", w = "<<w<<endl; 
+                           cout<<"\t\tChild f<=threshold: h = "<<object.getH()<<" g = "<<child_node.getGreal()<<" f = "<<object.getH() + child_node.getGreal()<<", level = "<<level+1<<", get_adjusted_cost(*op) = "<<get_adjusted_cost(*op)<<   ", w = "<<w<<endl; 
  
 			   
 
