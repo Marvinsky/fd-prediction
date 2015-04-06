@@ -23,6 +23,7 @@ SearchProgress::SearchProgress() {
     //A* prediction
     fetch_first_node = true;
     lastjump_f_value2 = -1;
+    lastjump_f_value_sscc = -1;
 }
 
 SearchProgress::~SearchProgress() {
@@ -64,6 +65,23 @@ void SearchProgress::report_f_value(int f) {
         lastjump_evaluated_states = evaluated_states;
         lastjump_generated_states = generated_states;
     }
+}
+
+bool SearchProgress::showReportLastjump(int f) {
+        bool flag = false;
+        if (f > lastjump_f_value_sscc) {
+             lastjump_f_value_sscc = f;
+             flag = true;
+        }
+        return flag;
+}
+
+bool SearchProgress::updated_lastjump_f_value_sscc(int f) {
+        if (f > lastjump_f_value_sscc) {
+                return true;
+        } else {
+                return false;
+        }
 }
 
 bool SearchProgress::updated_lastjump_f_value(int f) {

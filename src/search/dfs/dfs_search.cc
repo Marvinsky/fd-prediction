@@ -138,10 +138,17 @@ SearchStatus DFSSearch::step() {
 
               Node2 node2(nodecp.getHvalue() + g_real, level);
               int new_f_value = nodecp.getHvalue() + g_real;
-              //cout<<"new_f_value = "<<new_f_value<<endl;
-	      //if (search_progress.updated_lastjump_f_value(new_f_value)) {
-                 //search_progress.report_f_value(new_f_value);
-              //}
+
+              
+	      if (search_progress.updated_lastjump_f_value_sscc(new_f_value)) {
+
+                 bool flag = search_progress.showReportLastjump(new_f_value);
+                 if (flag)  {
+                        cout<<"f_boundary = "<<new_f_value;
+                        generateExpandedReport(false);                 
+                        generateGeneratedReport(false);
+                 }
+              }
 
 	      //count nodes expanded
               if (new_f_value <= depth) {
@@ -187,7 +194,16 @@ SearchStatus DFSSearch::step() {
                  //cout<<"new = "<<it->second<<endl;
               }
                
- 
+	      /*if (search_progress.updated_lastjump_f_value_sscc(new_f_value)) {
+
+                 bool flag = search_progress.showReportLastjump(new_f_value);
+                 if (flag)  {
+                        cout<<"f_boundary = "<<new_f_value;
+                        generateExpandedReport(false);
+                        generateGeneratedReport(false);
+                 }
+              }*/
+
 	      for (size_t i = 0; i < applicable_ops.size(); ++i) {
                   const GlobalOperator *op = applicable_ops[i];
                   GlobalState child =  g_state_registry->get_successor_state(global_state, *op);
@@ -229,14 +245,7 @@ SearchStatus DFSSearch::step() {
         }
         cout<<"Total of nodes expanded: "<<nodes_total_expanded<<endl;
  
-        double nodes_total_generated = 0;
-        for (map<Node2, double>::iterator iter = generated.begin(); iter != generated.end(); iter++) {
-            
-  	    double q = iter->second;
-            nodes_total_generated += q;  
-        }
-        cout<<"Total of nodes generated: "<<nodes_total_generated<<endl;
-        cout<<"generated.size() = "<<generated.size()<<endl;
+        generateGeneratedReport(true); 
         generated.clear();
 
         ofstream output;
@@ -293,6 +302,36 @@ SearchStatus DFSSearch::step() {
     	output.close();
         expanded.clear(); 
    	return SOLVED;
+}
+
+void DFSSearch::generateGeneratedReport(bool flag) {
+        double nodes_total_generated = 0;
+        for (map<Node2, double>::iterator iter = generated.begin(); iter != generated.end(); iter++) {
+
+            double q = iter->second;
+            nodes_total_generated += q;
+        }
+
+        if (flag) {
+                cout<<"Total of nodes generated: "<<nodes_total_generated<<endl;
+        } else {
+                cout<<", Parcial of nodes generated: "<<nodes_total_generated<<endl;
+        }
+
+}
+
+void DFSSearch::generateExpandedReport(bool flag) {
+        double nodes_total_expanded = 0;
+        for (map<Node2, double>::iterator iter = expanded.begin(); iter != expanded.end(); iter++) {
+            double q = iter->second;
+            nodes_total_expanded += q;
+        }
+
+        if (flag) {
+                cout<<"Total of nodes expanded: "<<nodes_total_expanded<<endl;
+        } else {
+                cout<<", Parcial of nodes expanded: "<<nodes_total_expanded<<endl;
+        }
 }
 
 pair<SearchNode, bool> DFSSearch::fetch_next_node() {

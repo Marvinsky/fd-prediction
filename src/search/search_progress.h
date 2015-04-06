@@ -37,6 +37,7 @@ private:
 
 //A* prediction
     int lastjump_f_value2;
+    int lastjump_f_value_sscc;
     bool fetch_first_node;
 
 public:
@@ -78,9 +79,11 @@ public:
     void print_h_line(int g) const;
     void print_statistics() const;
 
-//A* prediction
+//A* prediction wit sscc
     int return_lastjump_f_value();
     bool updated_lastjump_f_value(int f);
+    bool updated_lastjump_f_value_sscc(int f);
+    bool showReportLastjump(int f);
 };
 
 #endif
