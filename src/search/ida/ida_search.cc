@@ -198,17 +198,17 @@ SearchStatus IDASearch::step() {
     	cout<<"tarefa = "<<tarefa<<endl;
     	cout<<"heuristica = "<<heuristica<<endl;
 
-    	string directoryDomain = "mkdir /home/marvin/marvin/testdfs/"+heuristica+"/reportdfs/"+dominio;
+    	string directoryDomain = "mkdir /home/marvin/marvin/ida/"+heuristica+"/reportida/"+dominio;
     	if (system(directoryDomain.c_str())) {
            cout<<dominio.c_str()<<" directory created."<<endl;
         }
 
-    	string directoryFdist = "mkdir /home/marvin/marvin/testdfs/"+heuristica+"/reportdfs/"+dominio+"/fdist/";
+    	string directoryFdist = "mkdir /home/marvin/marvin/ida/"+heuristica+"/reportida/"+dominio+"/fdist/";
     	if (system(directoryFdist.c_str())) {
            cout<<"fdist created."<<endl;
         }
 
-    	string outputFile = "/home/marvin/marvin/testdfs/"+heuristica+"/reportdfs/"+dominio+"/fdist/"+tarefa;
+    	string outputFile = "/home/marvin/marvin/ida/"+heuristica+"/reportida/"+dominio+"/fdist/"+tarefa;
     	cout<<"outputFile = "<<outputFile.c_str()<<endl;
     	output.open(outputFile.c_str());
     	output<<"\t"<<outputFile.c_str()<<"\n";

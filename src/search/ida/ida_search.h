@@ -45,12 +45,6 @@ public:
 
 class IDASearch : public SearchEngine {
 private:
-    // Search Behavior parameters
-    bool reopen_closed_nodes; // whether to reopen closed nodes upon finding lower g paths
-    bool use_multi_path_dependence;
-    bool mark_children_as_finished;
-
-    ScalarEvaluator *f_evaluator;
 
     //DFS
     int depth;
@@ -65,8 +59,6 @@ protected:
     void print_heuristic_values(const std::vector<int> &values) const;
 
     std::vector<Heuristic *> heuristics;
-    std::vector<Heuristic *> preferred_operator_heuristics;
-    std::vector<Heuristic *> estimate_heuristics;
 
     virtual void initialize();
     
