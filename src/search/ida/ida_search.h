@@ -1,6 +1,9 @@
 #ifndef IDA_SEARCH_H
 #define IDA_SEARCH_H
 
+#define INT_MAX   2147483647
+
+
 #include <vector>
 #include <map>
 
@@ -18,6 +21,9 @@
 #include <random>
 #include <iostream>
 #include <stack>
+
+#include <limits>
+
 
 class GlobalOperator;
 class Heuristic;
@@ -54,6 +60,14 @@ private:
     map<Node2, double> generated;
     Timer ida_timer;
 
+    //IDA*
+    int best_soln_sofar;
+    int nodes_expanded_for_bound;
+    int nodes_generated_for_bound;
+    int nodes_expanded_for_start_state;
+    int nodes_generated_for_start_state;
+    //int next_bound;
+
 protected:
     SearchStatus step();
     void print_heuristic_values(const std::vector<int> &values) const;
@@ -67,6 +81,8 @@ public:
 
     void generateGeneratedReport(bool flag);
     void generateExpandedReport(bool flag);
+    int idastar(SSNode node);
+    int dfs_heur(SSNode node, int bound, int &next_bound, int g_real);
 };
 
 #endif

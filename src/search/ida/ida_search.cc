@@ -45,7 +45,9 @@ IDASearch::IDASearch(
 void IDASearch::initialize() {
     //DFS
     ida_timer.reset();
-
+    best_soln_sofar = INT_MAX/2;
+    nodes_expanded_for_start_state = 0;
+    nodes_generated_for_start_state = 0;
 }
 
 SearchStatus IDASearch::step() {
@@ -62,187 +64,131 @@ SearchStatus IDASearch::step() {
         
         StateID initial_state_id = initial_state.get_id();
         SSNode node(initial_state_id, h_initial,  0, 0); //set the h_value, g_real and the level
-    
-        depth = 2*h_initial;
-	cout<<"depth ="<<depth<<endl;
-        queue.push(node);
-        double count_nodes = 0.0;
 
-        while (!queue.empty()) {
-              SSNode nodecp = queue.top();
-              int g_real = nodecp.getLevel();
-              int level = nodecp.getGreal();
-              //cout<<"Raiz: h = "<<nodecp.getHvalue()<<", g_real = "<<g_real<<", f = "<<nodecp.getHvalue() + g_real<<"\n";
-	      queue.pop();
+        int total_d = 0;
+        int total_expanded = 0;
+	int total_generated = 0;
 
-              StateID state_id = nodecp.get_id();
-
-              Node2 node2(nodecp.getHvalue() + g_real, level);
-              int new_f_value = nodecp.getHvalue() + g_real;
-
-              
-	      if (search_progress.updated_lastjump_f_value_sscc(new_f_value)) {
-
-                 bool flag = search_progress.showReportLastjump(new_f_value);
-                 if (flag)  {
-                        cout<<"f_boundary = "<<new_f_value;
-                        generateExpandedReport(false);                 
-                        generateGeneratedReport(false);
-                 }
-              }
-
-	      //count nodes expanded
-              if (new_f_value <= depth) {
-		std::pair<std::map<Node2, double>::iterator, bool> ret0;
-              	std::map<Node2, double>::iterator it0;
-
-              	ret0 = expanded.insert(pair<Node2, double>(node2, 1));
-              	it0 = ret0.first;
-
-              	if (ret0.second) {
-
-	      	} else {
-		  it0->second += 1;
-	      	} 
-
-              	count_nodes++;
-              }
-           
-              
-
-              std::vector<const GlobalOperator *> applicable_ops;
-
-              GlobalState global_state = g_state_registry->lookup_state(nodecp.get_id());                
-              g_successor_generator->generate_applicable_ops(global_state, applicable_ops);
-              
+        int d;
+	d = idastar(node);
+        if (d == INT_MAX) {
+		//Solution not found
+		cout<<"Solution NOT FOUND"<<endl;
+		cout<<", expanded nodes = "<<nodes_expanded_for_start_state;
+		cout<<", generated nodes = "<<nodes_generated_for_start_state<<"\n";
+	} else {
+                //Solution found
+		cout<<"SOLUTION FOUND"<<endl;
+		cout<<"\tcost = "<<d;
+		cout<<", expanded nodes = "<<nodes_expanded_for_start_state;
+		cout<<", generated nodes = "<<nodes_generated_for_start_state<<"\n";
+	}
+	total_d += d;
+	total_expanded += nodes_expanded_for_start_state;
+	total_generated += nodes_generated_for_start_state;
 
 
-              double amount = (double)applicable_ops.size();
-
-              //count nodes generated
-	      std::pair<std::map<Node2, double>::iterator, bool> ret;
-
-              std::map<Node2, double>::iterator it;
-              
-              ret = generated.insert(std::pair<Node2, double>(node2, amount));
-              it = ret.first;
-
-              if (ret.second) {
-                 //cout<<"new node is added."<<endl;
-              }  else {
-                 //cout<<"node is updated."<<endl;
-                 it->second += amount;
-                 //cout<<"new = "<<it->second<<endl;
-              }
-               
-	      /*if (search_progress.updated_lastjump_f_value_sscc(new_f_value)) {
-
-                 bool flag = search_progress.showReportLastjump(new_f_value);
-                 if (flag)  {
-                        cout<<"f_boundary = "<<new_f_value;
-                        generateExpandedReport(false);
-                        generateGeneratedReport(false);
-                 }
-              }*/
-
-	      for (size_t i = 0; i < applicable_ops.size(); ++i) {
-                  const GlobalOperator *op = applicable_ops[i];
-                  GlobalState child =  g_state_registry->get_successor_state(global_state, *op);
-
-                  
-                  int hmax_value = 0; 
-                  for (size_t i = 0; i < heuristics.size(); i++) {
-            	      heuristics[i]->evaluate(child);
-            	      hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
-        	  }	   
-
-                  int succ_h = hmax_value;
-
-                  search_progress.inc_generated();
+	cout<<"\n\tTotal depth: "<<total_d;
+	cout<<", expansion: "<<total_expanded;
+	cout<<", generation: "<<total_generated;
+	cout<<"\n";
 
 
-                  SSNode succ_node(child.get_id(), succ_h, g_real + get_adjusted_cost(*op), level + 1);
-                  //cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.get_g_value()<<", f = "<<succ_h + succ_node.get_g_value()<<"\n";
 
-                  if (succ_h + succ_node.getGreal() <= depth) {
-                     //cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<"\n";
-                     queue.push(succ_node);
-                  } else {
-                     //cout<<"\tpruned!\n";
-                  }
-              }
+	return SOLVED;
+}
+
+int IDASearch::idastar(SSNode node) {
+	int bound, next_bound,  done;
+
+        GlobalState global_state = g_state_registry->lookup_state(node.get_id());
+	if (check_goal_and_set_plan(global_state)) {
+		cout<<"line 90 solution-found."<<endl;
+                return 0; 
         }
+	best_soln_sofar = INT_MAX;
+	bound =  node.getHvalue();
 
-        double ida_timer_value = ida_timer();
-        cout<<"ida_timer: "<<ida_timer()<<endl; 
-        cout<<"end expansion of nodes finished."<<endl;
-        cout<<"Total of nodes expanded by counter marvinsky: "<<count_nodes<<endl;
-       
-        double nodes_total_expanded = 0;
-	
-	for (map<Node2, double>::iterator iter = expanded.begin(); iter != expanded.end(); iter++) {
-            double q = iter->second;
-            nodes_total_expanded += q;
-        }
-        cout<<"Total of nodes expanded: "<<nodes_total_expanded<<endl;
- 
-        generateGeneratedReport(true); 
-        generated.clear();
+	while (1) {
+		next_bound = INT_MAX;
+		nodes_expanded_for_bound = 0;
+		nodes_generated_for_bound = 0;
+		done = dfs_heur(node, bound, next_bound, 0);
+		cout<<"\tbound = "<<bound;
+		cout<<", nodes_expanded_for_bound = "<<nodes_expanded_for_bound;
+		cout<<", nodes_generated_for_bound = "<<nodes_generated_for_bound;
+		cout<<"\n";
+		nodes_expanded_for_start_state += nodes_expanded_for_bound;
+		nodes_generated_for_start_state += nodes_generated_for_bound;
+		cout<<"done = "<<done<<endl;
+		if (done) {
+			cout<<"break the application because done = "<<done<<endl;
+			break;
+		}
+		bound = next_bound;
+		cout<<"the new bound is = "<<bound<<endl;
+                cout<<"best_soln_sofar = "<<best_soln_sofar<<endl;
+		if (best_soln_sofar <= bound) {
+			cout<<"break the application because best_soln_sofar <= bound"<<endl;
+			break;
+		}
+	}
+	return best_soln_sofar;
+}
 
-        ofstream output;
-    	string dominio = domain_name;
-    	string tarefa =  problem_name2;
-    	string heuristica = heuristic_name2;
-    	cout<<"changing the code."<<endl;
-    	cout<<"dominio = "<<dominio<<endl;
-    	cout<<"tarefa = "<<tarefa<<endl;
-    	cout<<"heuristica = "<<heuristica<<endl;
+int IDASearch::dfs_heur(SSNode node, int bound, int &next_bound, int g_real) {
+	nodes_expanded_for_bound++;
+        cout<<"node expanded: h = "<<node.getHvalue()<<", g_real = "<<node.getGreal()<<", f = "<<node.getHvalue() + node.getGreal()<<"\n";
+	std::vector<const GlobalOperator *> applicable_ops;
+        GlobalState global_state = g_state_registry->lookup_state(node.get_id());
+        g_successor_generator->generate_applicable_ops(global_state, applicable_ops);
+        cout<<"applicable_ops.size() = "<<applicable_ops.size()<<endl;
+	cout<<"--------------childs-------------\n";
+        for (size_t i = 0; i < applicable_ops.size(); i++) {
+            nodes_generated_for_bound++;
 
-    	string directoryDomain = "mkdir /home/marvin/marvin/ida/"+heuristica+"/reportida/"+dominio;
-    	if (system(directoryDomain.c_str())) {
-           cout<<dominio.c_str()<<" directory created."<<endl;
-        }
+	    const GlobalOperator *op = applicable_ops[i];
+            GlobalState child =  g_state_registry->get_successor_state(global_state, *op);
+	                
+	    int hmax_value = 0; 
+            for (size_t i = 0; i < heuristics.size(); i++) {
+                heuristics[i]->evaluate(child);
+                hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
+            }
+            int succ_h = hmax_value;
+            search_progress.inc_generated();
+            SSNode succ_node(child.get_id(), succ_h, g_real + get_adjusted_cost(*op), node.getLevel()+ 1);
+	    cout<<"\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<"\n";
 
-    	string directoryFdist = "mkdir /home/marvin/marvin/ida/"+heuristica+"/reportida/"+dominio+"/fdist/";
-    	if (system(directoryFdist.c_str())) {
-           cout<<"fdist created."<<endl;
-        }
-
-    	string outputFile = "/home/marvin/marvin/ida/"+heuristica+"/reportida/"+dominio+"/fdist/"+tarefa;
-    	cout<<"outputFile = "<<outputFile.c_str()<<endl;
-    	output.open(outputFile.c_str());
-    	output<<"\t"<<outputFile.c_str()<<"\n";
-    	output<<"nodes_expanded: "<<nodes_total_expanded<<"\n";
-    	output<<"ida_timer: "<<ida_timer_value<<"\n\n";
-
-    	for (int i = 0; i <= depth; i++) {
-       		int k = 0;
-       		vector<int> f;
-       		vector<double> q;
-       		for (map<Node2, double>::iterator iter = expanded.begin(); iter != expanded.end(); iter++) {
-           		Node2 n = iter->first;
-           		if (i == n.getL()) {
-              		    k++;
-              		    f.push_back(n.getF());
-              		    q.push_back(iter->second);
-           	        }      
-                }
-       		cout<<"g:"<<i<<"\n";
-       		output<<"g:"<<i<<"\n";
-
-       		cout<<"size: "<<k<<"\n";
-       		output<<"size: "<<k<<"\n";
-
-       		for (size_t j = 0; j < f.size(); j++) {
-           		cout<<"\tf: "<<f.at(j)<<"\tq: "<<q.at(j)<<"\n";
-           		output<<"\tf: "<<f.at(j)<<"\tq: "<<q.at(j)<<"\n";
-       		}
-       		output<<"\n";
-       		cout<<"\n";
-    	}
-    	output.close();
-        expanded.clear(); 
-   	return SOLVED;
+	    if (check_goal_and_set_plan(child)) {
+		cout<<"\tSolution-found in dfs_heur."<<endl;
+                best_soln_sofar = min(best_soln_sofar, g_real + get_adjusted_cost(*op));
+		cout<<"\tbest_soln_sofar = "<<best_soln_sofar<<endl;
+		if (best_soln_sofar <= bound) {
+	           cout<<"\tbest_soln_sofar <= bound => return 1;"<<endl;
+                   return  1;
+		} else {
+		   continue;
+		}
+            } else {
+		cout<<"\t\tthe soluton WAS NOT found."<<endl;
+		if (g_real + get_adjusted_cost(*op) + succ_h > bound) {
+			next_bound = min(next_bound, g_real + get_adjusted_cost(*op) + succ_h);
+			cout<<"\t\tnext_bound = "<<next_bound<<endl;
+		} else {
+			cout<<"\t\tcall dfs again."<<endl;
+			if (dfs_heur(succ_node, bound, next_bound, g_real + get_adjusted_cost(*op))) {
+				cout<<"\t\tdfs_heur is executed again and return 1;"<<endl;
+				return 1;
+			} else {
+				cout<<"\t\tdfs_heur is not returning true."<<endl;
+			}
+		}
+	    }
+	}
+	cout<<"-------------end Childs-----------\n";
+	cout<<"return 0;"<<endl;
+	return 0;
 }
 
 void IDASearch::generateGeneratedReport(bool flag) {
@@ -274,7 +220,6 @@ void IDASearch::generateExpandedReport(bool flag) {
                 cout<<", Parcial of nodes expanded: "<<nodes_total_expanded<<endl;
         }
 }
-
 
 void IDASearch::print_heuristic_values(const vector<int> &values) const {
     for (size_t i = 0; i < values.size(); ++i) {
