@@ -45,8 +45,6 @@ HEADERS = \
           countdown_timer.h \
           delegating_task.h \
           domain_transition_graph.h \
-          eager_search.h \
-          eager_dijkstra_search.h \
           enforced_hill_climbing_search.h \
           equivalence_relation.h \
           exact_timer.h \
@@ -160,6 +158,10 @@ HEADERS += pdbs/canonical_pdbs_heuristic.h \
            pdbs/util.h \
            pdbs/zero_one_pdbs_heuristic.h \
 
+
+HEADERS += astar/eager_search.h \
+
+HEADERS += dijkstra/eager_dijkstra_search.h \
 
 HEADERS += dfs/dfs_search.h \
 
