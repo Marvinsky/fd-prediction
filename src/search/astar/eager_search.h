@@ -16,6 +16,9 @@
 #include "../ss/node2.h"
 #include <map>
 
+#include <iostream>
+#include <fstream>
+
 class GlobalOperator;
 class Heuristic;
 class Options;
@@ -39,6 +42,30 @@ class EagerSearch : public SearchEngine {
     int F_boundary;
     double count_last_nodes_generated;
     Timer time_level;
+
+//Velocity-Based Search Speed Estimator
+    
+    int initial_value;
+    int total_min;
+    int nodes_expanded_for_start_state;
+    int nodes_generated_for_start_state;
+    Timer search_time;
+    Timer level_time; //time required to expand an entire level
+    double target_search_velocity;
+    double V; // Search velocity - it is calcultated based the number of nodes generated
+    double search_speed; // Search velocity - it is calculated based the number of nodes expanded
+    double SEv;  //Future search effort or search effort estimation
+    double VeSP; //Velocity Search Progress Estimator
+
+    ofstream outputFile2;
+    
+    //Vacillation-Based Search Speed Estimator   
+    //TODO: There is no enough information about DAS
+    
+    //Path-Based Progress Estimator
+    //Unit-cost Domains
+    double NPBP; //Naive path-based progress estimator
+
 protected:
     SearchStatus step();
     std::pair<SearchNode, bool> fetch_next_node();
@@ -64,6 +91,12 @@ public:
     void generateExpandedReport();
     int returnMaxF(vector<int> levels);
     int returnMinF(vector<int> levels);
+
+
+//Speed Progress
+    void reportProgress();
+    //int generatedSoFar();
+    //int expandedSoFar();
 };
 
 #endif

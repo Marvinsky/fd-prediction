@@ -31,7 +31,7 @@ class EagerDijkstraSearch : public SearchEngine {
     ScalarEvaluator *f_evaluator;
 
 
-//A* prediction
+//Dijkstra Algorithm
     map<Node2, double> nodes_expanded;
     vector<double> v_timer;
     double count_nodes;
@@ -39,6 +39,9 @@ class EagerDijkstraSearch : public SearchEngine {
     int F_boundary;
     double count_last_nodes_generated;
     Timer time_level;
+ 
+    int nodes_expanded_for_start_state;
+    int nodes_generated_for_start_state;
 protected:
     SearchStatus step();
     std::pair<SearchNode, bool> fetch_next_node();

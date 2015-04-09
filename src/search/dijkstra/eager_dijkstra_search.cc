@@ -74,11 +74,14 @@ void EagerDijkstraSearch::initialize() {
 
     assert(!heuristics.empty());
 
-//A* prediction initialization
+//Dijkstra initialization
     count_nodes = 1;
     count_last_nodes_generated = 0;
     first_time_in_solved = false;
     time_level.reset();
+    
+    nodes_expanded_for_start_state = 0;
+    nodes_generated_for_start_state = 0;
 
     const GlobalState &initial_state = g_initial_state();
     for (size_t i = 0; i < heuristics.size(); ++i)
@@ -98,6 +101,7 @@ void EagerDijkstraSearch::initialize() {
         search_progress.check_h_progress(0);
         SearchNode node = search_space.get_node(initial_state);
         node.open_initial(heuristics[0]->get_value());
+        node.set_level(0);
 
         open_list->insert(initial_state.get_id());
     }
@@ -111,13 +115,19 @@ void EagerDijkstraSearch::statistics() const {
 
 SearchStatus EagerDijkstraSearch::step() {
     pair<SearchNode, bool> n = fetch_next_node();
+    nodes_expanded_for_start_state++;
+
     if (!n.second) {
         return FAILED;
     }
     SearchNode node = n.first;
 
-    //A* prediction
-    Node2 node2(node.get_h() + node.get_real_g(), node.get_real_g());
+    //Dijkstra Algorithm
+    int level = node.get_level();
+
+    Node2 node2(node.get_h() + node.get_real_g(), level);
+    cout<<"node expanded: h = "<<node.get_h()<<", g_real = "<<node.get_real_g()<<", f = "<<node.get_h() + node.get_real_g()<<", level = "<<level<<"\n";
+
     std::pair<std::map<Node2, double>::iterator, bool> ret;
     std::map<Node2, double>::iterator it;
 
@@ -142,10 +152,12 @@ SearchStatus EagerDijkstraSearch::step() {
        int last_level = search_progress.return_lastjump_f_value();
        if (F_boundary == last_level) {
           count_last_nodes_generated += 1;
+          nodes_generated_for_start_state++;
           return IN_PROGRESS;
        } else {
-          cout<<"count_last_nodes_generated = "<<count_last_nodes_generated<<endl;
-          
+          cout<<"\n\tcount_last_nodes_generated = "<<count_last_nodes_generated<<endl;
+          cout<<"total_nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
+          cout<<"total_nodes_generated_for_start_state = "<<nodes_generated_for_start_state<<endl;
           double level_update_time = time_level();
           v_timer.push_back(level_update_time);
           generateExpandedReport();
@@ -171,8 +183,9 @@ SearchStatus EagerDijkstraSearch::step() {
         }
     }
     search_progress.inc_evaluations(preferred_operator_heuristics.size());
-
+    cout<<"--------------begin childs-----------------\n";
     for (size_t i = 0; i < applicable_ops.size(); ++i) {
+	nodes_generated_for_start_state++;
         const GlobalOperator *op = applicable_ops[i];
 
         if ((node.get_real_g() + op->get_cost()) >= bound)
@@ -239,7 +252,8 @@ SearchStatus EagerDijkstraSearch::step() {
                 }
             }
             succ_node.open(succ_h, node, op);
-
+            succ_node.set_level(level + 1);
+            cout<<"\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.get_real_g()<<", f = "<<succ_h + succ_node.get_real_g()<<", level = "<<succ_node.get_level()<<"\n";
             open_list->insert(succ_state.get_id());
 
             if (search_progress.check_h_progress(succ_node.get_g())) {
@@ -275,7 +289,7 @@ SearchStatus EagerDijkstraSearch::step() {
             }
         }
     }
-
+    cout<<"-------------end childs------------\n";
     return IN_PROGRESS;
 }
 
@@ -324,7 +338,6 @@ void EagerDijkstraSearch::generateExpandedReport() {
 
 	double sum = 0;
 	int count_v_timer = 0;
-	cout<<"nodes_expanded.size() = "<<nodes_expanded.size()<<endl;
 	size_t index_count = 0;
 	for (map<Node2, double>::iterator iter = nodes_expanded.begin(); iter != nodes_expanded.end(); iter++) {
 		
@@ -364,6 +377,9 @@ pair<SearchNode, bool> EagerDijkstraSearch::fetch_next_node() {
             cout << "Completely explored state space -- no solution!" << endl;
             double level_update_time = time_level();
 	    v_timer.push_back(level_update_time);
+	    cout<<"\n\tcount_last_nodes_generated = "<<count_last_nodes_generated<<endl;
+            cout<<"total_nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
+            cout<<"total_nodes_generated_for_start_state = "<<nodes_generated_for_start_state<<endl;
             generateExpandedReport();
             // HACK! HACK! we do this because SearchNode has no default/copy constructor
             SearchNode dummy_node = search_space.get_node(g_initial_state());

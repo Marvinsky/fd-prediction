@@ -15,6 +15,8 @@
 //A* prediction
 #include <iostream>
 #include <fstream>
+#include <iomanip>
+
 
 using namespace std;
 
@@ -80,6 +82,10 @@ void EagerSearch::initialize() {
     first_time_in_solved = false;
     time_level.reset();
 
+//Speed Progress
+    nodes_expanded_for_start_state = 0;
+    nodes_generated_for_start_state = 0;
+
     const GlobalState &initial_state = g_initial_state();
     for (size_t i = 0; i < heuristics.size(); ++i)
         heuristics[i]->evaluate(initial_state);
@@ -98,12 +104,44 @@ void EagerSearch::initialize() {
         search_progress.check_h_progress(0);
         SearchNode node = search_space.get_node(initial_state);
         node.open_initial(heuristics[0]->get_value());
-        
-        Node2 node2(node.get_h() + node.get_real_g(), node.get_real_g());
-        nodes_expanded.insert(pair<Node2, double>(node2, count_nodes));
+        //Speed Progress
+        node.set_level(0);
+        initial_value = node.get_h();
+	total_min = initial_value;
+        cout<<"total_min_initialize = "<<total_min<<endl;
+	cout<<"search_time() = "<<(double)search_time()<<endl;
+        target_search_velocity = (double)total_min/(double)search_time();
+        cout<<"target_search_velocity = "<<target_search_velocity<<endl;
 
+
+        Node2 node2(node.get_h() + node.get_real_g(), 0);
+        //nodes_expanded.insert(pair<Node2, double>(node2, count_nodes));
+        
         open_list->insert(initial_state.get_id());
     }
+
+//********************speed progress************************
+      string dominio = domain_name;
+      string tarefa = problem_name2;
+      string heuristica = heuristic_name2;
+      cout<<"dominio = "<<dominio<<endl;
+      cout<<"tarefa = "<<tarefa<<endl;
+      cout<<"heuristica = "<<heuristica<<endl;
+
+      string directoryDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/speed";
+      if (system(directoryDomain.c_str())) {
+         cout<<"Directory created successfully."<<endl;
+      }
+      
+      string nBL = "/home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/speed/"+tarefa; 
+
+      //ofstream outputFile;
+      outputFile2.open(nBL.c_str(), ios::out);
+      outputFile2<<"\t\t"<<nBL.c_str()<<"\n";
+      outputFile2<<"\tinitial_value: "<<initial_value<<"\n";
+       
+      outputFile2<<"\th_min\tgen\texp\t\tV\t\tSEv\t\tVeSP\t\tNPBP\n";
+    //************************************************************
 }
 
 
@@ -113,11 +151,35 @@ void EagerSearch::statistics() const {
 }
 
 SearchStatus EagerSearch::step() {
+
     pair<SearchNode, bool> n = fetch_next_node();
+    nodes_expanded_for_start_state++;
+
     if (!n.second) {
         return FAILED;
     }
     SearchNode node = n.first;
+
+    //A* prediction - If the node is inserted in open list then it would be expanded.
+    int level = node.get_level();
+        
+    Node2 node2(node.get_h() + node.get_real_g(), node.get_level());
+    cout<<"node expanded: h = "<<node.get_h()<<", g_real = "<<node.get_real_g()<<", f = "<<node.get_h() + node.get_real_g()<<", level = "<<level<<"\n";
+
+    //Inserting nodes to the expanded structure.
+    std::pair<std::map<Node2, double>::iterator, bool> ret;
+    std::map<Node2, double>::iterator it;
+
+    ret = nodes_expanded.insert(pair<Node2, double>(node2, count_nodes));
+    it = ret.first;
+
+    if (ret.second) {
+       count_nodes = 1.0; 
+    } else {
+       double q = it->second;
+       q++;
+       it->second = q;
+    }
 
     GlobalState s = node.get_state();
     if (check_goal_and_set_plan(s)) {
@@ -131,14 +193,16 @@ SearchStatus EagerSearch::step() {
        int last_level = search_progress.return_lastjump_f_value();
        if (F_boundary == last_level) {
           count_last_nodes_generated += 1;
-          return IN_PROGRESS;
+          nodes_generated_for_start_state++;
        } else {
-          cout<<"count_last_nodes_generated = "<<count_last_nodes_generated<<endl;
+          cout<<"\ncount_last_nodes_generated = "<<count_last_nodes_generated<<endl;
+          cout<<"total_nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
+	  cout<<"total_nodes_generated_for_start_state = "<<nodes_generated_for_start_state<<endl;	
           generateExpandedReport();
+          outputFile2.close();
           return SOLVED;
        }
     }
-
 
     vector<const GlobalOperator *> applicable_ops;
     set<const GlobalOperator *> preferred_ops;
@@ -157,8 +221,9 @@ SearchStatus EagerSearch::step() {
         }
     }
     search_progress.inc_evaluations(preferred_operator_heuristics.size());
-
+    cout<<"-------------------beging childs-------------------\n";
     for (size_t i = 0; i < applicable_ops.size(); ++i) {
+	nodes_generated_for_start_state++;
         const GlobalOperator *op = applicable_ops[i];
 
         if ((node.get_real_g() + op->get_cost()) >= bound)
@@ -225,25 +290,32 @@ SearchStatus EagerSearch::step() {
                 }
             }
             succ_node.open(succ_h, node, op);
-
+            succ_node.set_level(level + 1);
             open_list->insert(succ_state.get_id());
+            cout<<"\t Child_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.get_real_g()<<", f = "<<succ_h + succ_node.get_real_g()<<", level = "<<succ_node.get_level()<<"\n";
 
-            //A* prediction
-            Node2 node2(succ_h + succ_node.get_real_g(), succ_node.get_real_g());
-            std::pair<std::map<Node2, double>::iterator, bool> ret;
-            std::map<Node2, double>::iterator it;
-
-            ret = nodes_expanded.insert(pair<Node2, double>(node2, count_nodes));
-            it = ret.first;
-
-            if (ret.second) {
-               count_nodes = 1.0; 
-            } else {
-               double q = it->second;
-               q++;
-               it->second = q;
+	    if (succ_h < total_min) {
+               total_min = succ_h;
+               
+               int diff = initial_value - total_min;
+               //cout<<"\tinitial_value = "<<initial_value<<endl;
+               //cout<<"\ttotal_min = "<<total_min<<endl;
+               //cout<<"\tdiff = "<<initial_value - total_min<<endl;
+               cout<<"\tpartial nodes_generated_for_start_state = "<<nodes_generated_for_start_state<<endl;
+               cout<<"\tpartial nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
+               V = (double)diff/(double)nodes_generated_for_start_state;
+               search_speed = (double)diff/(double)nodes_expanded_for_start_state;
+               SEv = (double)total_min/V;
+               VeSP = (double)nodes_generated_for_start_state/(double)(nodes_generated_for_start_state + SEv);
+               
+               //Unit-cost domains
+               //cout<<"\tsucc_node.get_real_g() = "<<succ_node.get_real_g()<<endl;
+               //cout<<"\tsucc_node.get_h() = "<<succ_node.get_h()<<endl;
+               //cout<<"\tf = "<<succ_node.get_real_g() + succ_node.get_h()<<endl;
+               NPBP = (double)succ_node.get_real_g()/(double)(succ_node.get_real_g() + succ_node.get_h());
+               //cout<<"\tNPBP = "<<NPBP<<endl;
+               reportProgress();
             }
-
 
             if (search_progress.check_h_progress(succ_node.get_g())) {
                 reward_progress();
@@ -278,7 +350,7 @@ SearchStatus EagerSearch::step() {
             }
         }
     }
-
+    cout<<"-----------------end all Childs-----------------\n";
     return IN_PROGRESS;
 }
 
@@ -304,6 +376,26 @@ int EagerSearch::returnMinF(vector<int> levels) {
 	return min;
 }
 
+/*int EagerSearch::generatedSoFar() {
+     
+      int count_nodes = 0;
+      for (map<Node2, int>::iterator iter = collector.begin(); iter !=  collector.end(); iter++) {
+          int k = iter->second;
+          count_nodes += k;
+      }
+      return count_nodes;
+}
+
+int EagerSearch::expandedSoFar() {
+      int count_nodes = 0;
+      for (map<Node2, int>::iterator iter = collector2.begin(); iter !=  collector2.end(); iter++) {
+          int k = iter->second;
+          count_nodes += k;
+      }
+      return count_nodes;
+}
+*/
+
 void EagerSearch::generateExpandedReport() {
 	cout<<"nodes_expanded.size() = "<<nodes_expanded.size()<<endl;
 	vector<int> levels; //Obtain all F_boundaries
@@ -323,7 +415,6 @@ void EagerSearch::generateExpandedReport() {
 	int depth = returnMaxF(levels);
 	cout<<"depth = "<<depth<<endl;
 	cout<<"F_boundary = "<<F_boundary<<endl;
-	cout<<"mlevels.<size() = "<<mlevels.size()<<endl;
 	cout<<"count_level = "<<count_level<<endl;
 
 	string dominio = domain_name;
@@ -386,6 +477,16 @@ void EagerSearch::generateExpandedReport() {
 	outputFile.close();
 }
 
+void EagerSearch::reportProgress() {
+       
+       cout<<"V = "<<V<<endl;
+       cout<<"search_speed = "<<search_speed<<endl;
+       cout<<"SEv = "<<SEv<<endl;
+       cout<<"VeSP = "<<VeSP<<endl;
+
+      outputFile2<<"\t"<<total_min<<"\t"<<nodes_generated_for_start_state<<"\t"<<nodes_expanded_for_start_state<<"\t\t"<<std::setprecision(2)<<V<<"\t\t"<<SEv<<"\t\t"<<VeSP<<"\t\t"<<NPBP<<"\n";
+      //outputFile2.close();
+}
 
 pair<SearchNode, bool> EagerSearch::fetch_next_node() {
     /* TODO: The bulk of this code deals with multi-path dependence,
@@ -402,6 +503,7 @@ pair<SearchNode, bool> EagerSearch::fetch_next_node() {
             generateExpandedReport();
             // HACK! HACK! we do this because SearchNode has no default/copy constructor
             SearchNode dummy_node = search_space.get_node(g_initial_state());
+            dummy_node.set_level(0);
             return make_pair(dummy_node, false);
         }
         vector<int> last_key_removed;
