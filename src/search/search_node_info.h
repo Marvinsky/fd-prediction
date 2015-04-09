@@ -17,11 +17,11 @@ struct SearchNodeInfo {
     StateID parent_state_id;
     const GlobalOperator *creating_operator;
     int real_g;
-
+    int level;
     SearchNodeInfo()
         : status(NEW), g(-1), h(-1), h_is_dirty(false),
           parent_state_id(StateID::no_state), creating_operator(0),
-          real_g(-1) {
+          real_g(-1), level(-1) {
     }
 };
 

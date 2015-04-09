@@ -61,6 +61,16 @@ void SearchNode::clear_h_dirty() {
     info.h_is_dirty = false;
 }
 
+
+//Speed Progress Implementation
+int SearchNode::get_level() const {
+    return info.level;
+}
+
+void SearchNode::set_level(int l) {
+    info.level = l;
+}
+
 void SearchNode::open_initial(int h) {
     assert(info.status == SearchNodeInfo::NEW);
     info.status = SearchNodeInfo::OPEN;

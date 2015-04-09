@@ -158,6 +158,7 @@ HEADERS += pdbs/canonical_pdbs_heuristic.h \
            pdbs/util.h \
            pdbs/zero_one_pdbs_heuristic.h \
 
+HEADERS += speed/speed_progress.h \
 
 HEADERS += astar/eager_search.h \
 

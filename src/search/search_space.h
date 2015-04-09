@@ -36,6 +36,10 @@ public:
     int get_g() const;
     int get_real_g() const;
     int get_h() const;
+//Speed Progress Implementation
+    int get_level() const;
+    void set_level(int l);
+
 
     void open_initial(int h);
     void open(int h, const SearchNode &parent_node,
