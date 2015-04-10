@@ -143,7 +143,7 @@ void SSSearch::probe()
                 	//end count node
                 }
 
-		int h = -1;
+		int h = INT_MAX/2;
 		double w = s.getWeight();
 		//cout<<"w = "<<w<<endl;
  
@@ -181,6 +181,8 @@ void SSSearch::probe()
 			{
 				h = heuristic->get_heuristic();
 
+			} else {
+				cout<<"\tThe child is dead end."<<endl;
 			}	
                         cout<<"\tthe cost get_adjusted_cost(*op) = "<<get_adjusted_cost(*op)<<"\n";
 			cout<<"\tChild_"<<(i+1)<<" : h = "<< h <<", g = "<< g_real + get_adjusted_cost(*op) <<", f = "<< h + g_real + get_adjusted_cost(*op) <<", level = "<<level+1<< ", w = "<<w<<endl; 
