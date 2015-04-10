@@ -108,13 +108,14 @@ int IDASearch::idastar(SSNode node) {
         }
 	best_soln_sofar = INT_MAX;
 	bound =  node.getHvalue();
-
+        int count_bound = 1;
 	while (1) {
 		next_bound = INT_MAX;
 		nodes_expanded_for_bound = 0;
 		nodes_generated_for_bound = 0;
 		done = dfs_heur(node, bound, next_bound, 0);
-		cout<<"\tbound = "<<bound;
+                cout<<"\t time_"<<count_bound<<" = "<<g_timer;
+		cout<<", bound_"<<count_bound<<" = "<<bound;
 		cout<<", nodes_expanded_for_bound = "<<nodes_expanded_for_bound;
 		cout<<", nodes_generated_for_bound = "<<nodes_generated_for_bound;
 		cout<<"\n";
@@ -132,6 +133,7 @@ int IDASearch::idastar(SSNode node) {
 			cout<<"break the application because best_soln_sofar <= bound"<<endl;
 			break;
 		}
+		count_bound++;
 	}
 	return best_soln_sofar;
 }
