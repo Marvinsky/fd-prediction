@@ -242,7 +242,10 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
         } else if (arg.compare("--heuristic_name") == 0) {
             ++i;
             heuristic_name2 = args[i];
-        } else if (arg.compare("--random-seed") == 0) {
+        } else if (arg.compare("--F_boundary") == 0) {
+	    ++i;
+	    f_boundary = std::stoi(args[i]);
+	} else if (arg.compare("--random-seed") == 0) {
             if (is_last)
                 throw ArgError("missing argument after --random-seed");
             ++i;

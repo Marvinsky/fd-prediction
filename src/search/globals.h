@@ -88,5 +88,5 @@ extern std::string domain_name;
 extern std::string problem_name2;
 extern std::string heuristic_name2;
 extern int ss_probes;
-
+extern int f_boundary;
 #endif

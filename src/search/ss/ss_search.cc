@@ -80,7 +80,14 @@ void SSSearch::probe()
 	initial_value = heuristic->get_value();
 
         //for the open domains the heuristic is set to six
-        threshold = 2*initial_value;
+	cout<<"f_boundary = "<<f_boundary<<endl;
+
+        if (f_boundary) {
+	   threshold = f_boundary;
+	} else {
+           threshold = 2*initial_value;
+	}
+	cout<<"threshold = "<<threshold<<endl;
 
         SSNode node;
         const GlobalState &initial_state = g_initial_state();
