@@ -33,20 +33,20 @@ class ScalarEvaluator;
 class SSNode {
 private:
         StateID id;
-        int h_value;
-        int g_real;
-        int level;
+        unsigned long long h_value;
+        unsigned long long g_real;
+        unsigned long long level;
 public:
         SSNode() : id(StateID::no_state), h_value(-1),  g_real(-1), level(-1) {}     
-	SSNode(StateID identifier,int h, int g, int l) : id(identifier), h_value(h), g_real(g), level(l) {}
+	SSNode(StateID identifier, unsigned long long h, unsigned long long g, unsigned long long l) : id(identifier), h_value(h), g_real(g), level(l) {}
         StateID get_id() {return this->id;}
         void set_id(StateID identifier) {this->id = identifier;}
-        int getHvalue() {return this->h_value;}
-        void setHvalue(int h) {this->h_value = h;}
-        int getGreal() {return this->g_real;}
-        void setGreal(int g) {this->g_real = g;}
-        int getLevel() {return this->level;}
-        void setLevel(int l) {this->level = l;}
+        unsigned long long getHvalue() {return this->h_value;}
+        void setHvalue(unsigned long long h) {this->h_value = h;}
+        unsigned long long getGreal() {return this->g_real;}
+        void setGreal(unsigned long long g) {this->g_real = g;}
+        unsigned long long getLevel() {return this->level;}
+        void setLevel(unsigned long long l) {this->level = l;}
 };
 
 class IDASearch : public SearchEngine {
@@ -80,7 +80,7 @@ public:
     IDASearch(const Options &opts);
 
     int idastar(SSNode node);
-    int dfs_heur(SSNode node, int bound, int &next_bound, int g_real);
+    int dfs_heur(SSNode node, unsigned long long bound, unsigned long long &next_bound, unsigned long long g_real);
 
     //BFS
     queue<SSNode> BFS(SSNode root);        
