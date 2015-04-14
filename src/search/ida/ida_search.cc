@@ -140,6 +140,7 @@ int IDASearch::idastar(SSNode node) {
 
 int IDASearch::dfs_heur(SSNode node, int bound, int &next_bound, int g_real) {
 	nodes_expanded_for_bound++;
+	cout<<"bound = "<<bound<<", next_bound = "<<next_bound<<endl;
         cout<<"node expanded: h = "<<node.getHvalue()<<", g_real = "<<node.getGreal()<<", f = "<<node.getHvalue() + node.getGreal()<<"\n";
 	std::vector<const GlobalOperator *> applicable_ops;
         GlobalState global_state = g_state_registry->lookup_state(node.get_id());
@@ -177,7 +178,6 @@ int IDASearch::dfs_heur(SSNode node, int bound, int &next_bound, int g_real) {
 			SSNode ncp = buffer.front();
                         StateID new_state_id = ncp.get_id();
 			int new_g_real = ncp.getGreal();
-			int new_succ_h = ncp.getHvalue();
 			int new_level = ncp.getLevel();
 
 			cout<<"\tremove node: h = "<<ncp.getHvalue()<<", g_real = "<<ncp.getGreal()<<", f  = "<<ncp.getHvalue() + ncp.getGreal()<<", level = "<<ncp.getLevel()<<"\n";
@@ -205,7 +205,7 @@ int IDASearch::dfs_heur(SSNode node, int bound, int &next_bound, int g_real) {
 				//Begin
 	    			if (check_goal_and_set_plan(new_child)) {
 					cout<<"\tSolution-found in dfs_heur."<<endl;
-                			best_soln_sofar = min(best_soln_sofar, new_g_real + get_adjusted_cost(*op));
+                			best_soln_sofar = min(best_soln_sofar, new_g_real + get_adjusted_cost(*op2));
 					cout<<"\tbest_soln_sofar = "<<best_soln_sofar<<endl;
 					if (best_soln_sofar <= bound) {
 	           				cout<<"\tbest_soln_sofar <= bound => return 1;"<<endl;
@@ -214,13 +214,15 @@ int IDASearch::dfs_heur(SSNode node, int bound, int &next_bound, int g_real) {
 		   				continue;
 					}
             			} else {
-					cout<<"\t\tthe soluton WAS NOT found."<<endl;
-					if (new_g_real + get_adjusted_cost(*op) + new_succ_h > bound) {
-						next_bound = min(next_bound, new_g_real + get_adjusted_cost(*op) + new_succ_h);
+					cout<<"\t\tthe soluton WAS NOT found. bound = "<<bound<<"\n";
+					cout<<"\t\tnew_g_real = "<<new_g_real<<", get_adjusted_cost(*op2) = "<<get_adjusted_cost(*op2)<<", succ_h2 = "<<succ_h2<<", sum = "<<new_g_real + get_adjusted_cost(*op2) + succ_h2<<"\n";
+
+					if (new_g_real + get_adjusted_cost(*op2) + succ_h2 > bound) {
+						next_bound = min(next_bound, new_g_real + get_adjusted_cost(*op2) + succ_h2);
 						cout<<"\t\tnext_bound = "<<next_bound<<endl;
 					} else {
 						cout<<"\t\tcall dfs again."<<endl;
-						if (dfs_heur(succ_node2, bound, next_bound, new_g_real + get_adjusted_cost(*op))) {
+						if (dfs_heur(succ_node2, bound, next_bound, new_g_real + get_adjusted_cost(*op2))) {
 							cout<<"\t\tdfs_heur is executed again and return 1;"<<endl;
 							return 1;
 						} else {
@@ -230,6 +232,7 @@ int IDASearch::dfs_heur(SSNode node, int bound, int &next_bound, int g_real) {
 	    			} //End check_goal
 			} //End for applicable_ops2
 		} //End while
+		cout<<"Finish buffer\n";
 	    } else {
 		if (check_goal_and_set_plan(child)) {
 			cout<<"\tSolution-found in dfs_heur."<<endl;
