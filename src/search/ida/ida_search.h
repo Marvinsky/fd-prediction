@@ -20,7 +20,7 @@
 
 #include <random>
 #include <iostream>
-#include <stack>
+#include <queue>
 
 #include <limits>
 
@@ -55,7 +55,7 @@ private:
     //DFS
     int depth;
     string heuristic_name;
-    stack<SSNode> queue;
+    queue<SSNode> buffer;
     map<Node2, double> expanded;
     map<Node2, double> generated;
     Timer ida_timer;
@@ -79,10 +79,11 @@ protected:
 public:
     IDASearch(const Options &opts);
 
-    void generateGeneratedReport(bool flag);
-    void generateExpandedReport(bool flag);
     int idastar(SSNode node);
     int dfs_heur(SSNode node, int bound, int &next_bound, int g_real);
+
+    //BFS
+    queue<SSNode> BFS(SSNode root);        
 };
 
 #endif
