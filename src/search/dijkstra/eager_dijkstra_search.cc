@@ -153,7 +153,6 @@ SearchStatus EagerDijkstraSearch::step() {
        if (F_boundary == last_level) {
           count_last_nodes_generated += 1;
           nodes_generated_for_start_state++;
-          return IN_PROGRESS;
        } else {
           cout<<"\n\tcount_last_nodes_generated = "<<count_last_nodes_generated<<endl;
           cout<<"total_nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
