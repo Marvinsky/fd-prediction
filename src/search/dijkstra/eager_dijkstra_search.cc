@@ -157,8 +157,7 @@ SearchStatus EagerDijkstraSearch::step() {
           cout<<"\n\tcount_last_nodes_generated = "<<count_last_nodes_generated<<endl;
           cout<<"total_nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
           cout<<"total_nodes_generated_for_start_state = "<<nodes_generated_for_start_state<<endl;
-	  double level_update_time = time_level();
-	  v_timer.push_back(level_update_time);
+	  
           generateExpandedReport();
           return SOLVED;
        }
@@ -366,7 +365,6 @@ void EagerDijkstraSearch::generateExpandedReport() {
                 }
         }
 	int sum = 0;
-        int count_v_timer = 0;
         for (map<int, int>::iterator iter = m.begin(); iter != m.end(); iter++) {
                 int f = iter->first;
                 int q = iter->second;
@@ -391,8 +389,6 @@ pair<SearchNode, bool> EagerDijkstraSearch::fetch_next_node() {
     while (true) {
         if (open_list->empty()) {
             cout << "Completely explored state space -- no solution!" << endl;
-	    double level_update_time = time_level();
-	    v_timer.push_back(level_update_time);
 	    cout<<"\n\tcount_last_nodes_generated = "<<count_last_nodes_generated<<endl;
             cout<<"total_nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
             cout<<"total_nodes_generated_for_start_state = "<<nodes_generated_for_start_state<<endl;
@@ -473,8 +469,6 @@ void EagerDijkstraSearch::update_jump_statistic(const SearchNode &node) {
         int new_f_value = f_evaluator->get_value();
 
 	if (search_progress.updated_lastjump_f_value(new_f_value)) {
-		 double level_update_time = time_level();
-		 v_timer.push_back(level_update_time);
 		 search_progress.report_f_value(new_f_value);
 	}
     }

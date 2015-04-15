@@ -33,7 +33,6 @@ class EagerDijkstraSearch : public SearchEngine {
 
 //Dijkstra Algorithm
     map<Node2, double> nodes_expanded;
-    vector<double> v_timer;
     double count_nodes;
     bool first_time_in_solved;
     int F_boundary;
