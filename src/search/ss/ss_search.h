@@ -11,7 +11,8 @@
 #include "type_system.h"
 #include "node2.h"
 
-#include "map"
+#include <map>
+#include <queue>
 
 #include "../randomc/randomc.h"
 #include "../randomc/mersenne.cpp"
@@ -24,9 +25,7 @@ class Heuristic;
 class Options;
 class ScalarEvaluator;
 
-
 using namespace std;
-
 
 class SSNode{
 private:
@@ -36,23 +35,33 @@ private:
 public:
         SSNode(): id(StateID::no_state), weight(0.0), g_real(0){}
         SSNode(StateID identifier, double w, int g) : id(identifier), weight(w), g_real(g){}
-        StateID getId() const {return this->id;}
-        void setId(StateID identifier) {this->id = identifier;}
+        StateID get_id() const {return this->id;}
+        void set_id(StateID identifier) {this->id = identifier;}
         double getWeight()  {return this->weight;}
         void setWeight(double w) {this->weight = w;}
         int getGreal() const {return this->g_real;}
         void setGreal(int g) {this->g_real = g;}
 };
 
-class SSSearch : public SearchEngine {
-public: 
+
+class SSQueue {
 private:
-	
-	std::map<int, SSNode> open;
+	SSNode node;
+	Type type;
+public:
+	SSNode getNode() const {return this->node;}
+	void setNode(SSNode n) {this->node = n;}
+	Type getT() const {return this->type;}
+	void setT(Type t) {this->type = t;}
+};
+
+
+class SSSearch : public SearchEngine { 
+private:
+
 	map<Type, SSNode> queue; 
         vector<SSNode> vweight;
         std::map<Node2, double> expanded;
-
         std::map<Node2, double> generated;
         double totalPrediction;         
 
@@ -67,7 +76,8 @@ private:
 	TypeSystem * sampler;
         CRandomMersenne* RanGen2;
         Timer ss_timer;
-        double ss_timer_value;	
+        double ss_timer_value;
+	std::queue<SSQueue> buffer;
 
 protected:
 
@@ -83,6 +93,8 @@ public:
         double getProbingResult();
         void probe();
         void predict(int probes);
+	//BFS
+	std::queue<SSQueue> BFS(SSNode root, Type type);
 };
 
 #endif /*MRW_H_*/
