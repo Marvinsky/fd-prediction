@@ -157,8 +157,8 @@ SearchStatus EagerDijkstraSearch::step() {
           cout<<"\n\tcount_last_nodes_generated = "<<count_last_nodes_generated<<endl;
           cout<<"total_nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
           cout<<"total_nodes_generated_for_start_state = "<<nodes_generated_for_start_state<<endl;
-          double level_update_time = time_level();
-          v_timer.push_back(level_update_time);
+	  double level_update_time = time_level();
+	  v_timer.push_back(level_update_time);
           generateExpandedReport();
           return SOLVED;
        }
@@ -315,7 +315,21 @@ int EagerDijkstraSearch::returnMinF(vector<int> levels) {
 }
 
 void EagerDijkstraSearch::generateExpandedReport() {
+	vector<int> levels; //Obtain all F_boundaries
+        map<int, int> mlevels; //Count nodes using key = f-value
+        int count_level = 0;
+        for (map<Node2, double>::iterator iter = nodes_expanded.begin(); iter != nodes_expanded.end(); iter++) {
 
+                Node2 n = iter->first;
+                levels.push_back(n.getL());
+                map<int, int>::iterator iter2 = mlevels.find(n.getL());
+                if ((iter2 == mlevels.end())) {
+			count_level++;
+                        mlevels.insert(pair<int, int>(n.getL(), count_level));
+                }
+        }
+	int depth = returnMaxF(levels);	
+	cout<<"depth = "<<depth<<endl;
 	string dominio = domain_name;
 	string tarefa = problem_name2;
 	string heuristica = heuristic_name2;
@@ -334,29 +348,32 @@ void EagerDijkstraSearch::generateExpandedReport() {
 	outputFile<<"\t\t"<<nBL.c_str()<<"\n";
 	outputFile<<"\ttotalniveles: "<<nodes_expanded.size()<<"\n";
 	outputFile<<"\tf\t\t#Nodes_by_level\t\tRuntime(s)\t#Nodes_to_the_level\n";
+	
+	map<int, int> m; // Count nodes using f-value
+        for (int i = 0; i <= depth; i++) {
+                int k = 0;
+                for (map<Node2, double>::iterator iter = nodes_expanded.begin(); iter != nodes_expanded.end(); iter++) {
 
-	double sum = 0;
-	int count_v_timer = 0;
-	size_t index_count = 0;
-	for (map<Node2, double>::iterator iter = nodes_expanded.begin(); iter != nodes_expanded.end(); iter++) {
+                        Node2 n = iter->first;
+                        if (i == n.getL()) {
+                                k = k + iter->second;
+                        }
+                }
 		
-		Node2 n = iter->first;
-		sum = sum + iter->second;
-		outputFile<<"\t"<<n.getL()<<"\t\t\t"<<iter->second<<"\t\t"<<v_timer.at(count_v_timer)<<"\t\t"<<sum<<"\n";
-		cout<<"\t"<<n.getL()<<"\t\t"<<iter->second<<"\t\t"<<v_timer.at(count_v_timer)<<"\t\t"<<sum<<"\n";
-		if ((nodes_expanded.size()-1) == index_count) {
-			//What about printing here.
-			cout<<"fnivel: "<<n.getL()<<endl;
-			cout<<"nodesGeneratedByLevel: "<<iter->second<<endl;
-			cout<<" time0: "<<v_timer.at(count_v_timer)<<endl;
-			cout<<"nodesGeneratedToTheLevel: "<<sum<<endl;
-			//end what about printing here
-		}		
-
-
-		index_count++;
-		count_v_timer++;
-	}
+                map<int, int>::iterator iter = m.find(i);
+                if (iter == m.end()) {
+                        m.insert(pair<int, int>(i, k));
+                }
+        }
+	int sum = 0;
+        int count_v_timer = 0;
+        for (map<int, int>::iterator iter = m.begin(); iter != m.end(); iter++) {
+                int f = iter->first;
+                int q = iter->second;
+                sum = sum + q;
+                cout<<"\t"<<f<<"\t\t"<<q<<"\t\t\t"<<1<<"\t\t\t"<<sum<<"\n";
+                outputFile<<"\t"<<f<<"\t\t"<<q<<"\t\t\t"<<1<<"\t\t\t"<<sum<<"\n";
+        }
 	
 	outputFile.close();
 }
@@ -374,7 +391,7 @@ pair<SearchNode, bool> EagerDijkstraSearch::fetch_next_node() {
     while (true) {
         if (open_list->empty()) {
             cout << "Completely explored state space -- no solution!" << endl;
-            double level_update_time = time_level();
+	    double level_update_time = time_level();
 	    v_timer.push_back(level_update_time);
 	    cout<<"\n\tcount_last_nodes_generated = "<<count_last_nodes_generated<<endl;
             cout<<"total_nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
