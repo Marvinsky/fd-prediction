@@ -12,14 +12,7 @@
 #include <iostream>
 #include <fstream>
 
-SSSearch::SSSearch(const Options &opts) : SearchEngine(opts), current_state(g_initial_state()) {
-	//rg = opts.get<double>("rg");
-	//rl = opts.get<double>("rl");
-	//lookahead = opts.get<int>("lookahead");
-	//beamsize = opts.get<int>("beamsize");
-	//maxlevels = opts.get<int>("maxlevels");
-	//timelimit = opts.get<int>("timelimit");
-	
+SSSearch::SSSearch(const Options &opts) : SearchEngine(opts), current_state(g_initial_state()) {	
 	ScalarEvaluator * evaluator = opts.get<ScalarEvaluator *>("eval");
 	std::set<Heuristic *> hset;
 	evaluator->get_involved_heuristics(hset);
@@ -234,25 +227,7 @@ void SSSearch::probe()
                                 
 				if (a < prob) 
 				{
-                                        cout<<"\t\tAdded even though is duplicate.\n";
-                                        /*child_node.setWeight(wa + w);
-                                        
-					std::pair<std::map<Type, SSNode>::iterator, bool> ret2;
-
-                			std::map<Type, SSNode>::iterator it2;
-
-                			ret2 = queue.insert(pair<Type, SSNode>(object, child_node));
-                			it2 = ret2.first;
-
-                			if (ret2.second) {
-                    	   			cout<<"\t\tanswer1: new type is added."<<endl;
-                			} else {
-                    	   			cout<<"\t\tanswer2: w of the node that already exists is updated ";
-                    	   			it2->second.setWeight(child_node.getWeight());
-                    	   			cout<<"\t\twith = "<<it2->second.getWeight()<<endl;
-                			}
-                                        */
-                                       
+                                        cout<<"\t\tAdded even though is duplicate.\n"; 
                                                                                
 				        child_node.setWeight( wa + w);
                                         cout<<"\t\tthe w is updated to = "<<child_node.getWeight()<<endl;
@@ -275,7 +250,6 @@ void SSSearch::probe()
                                 cout<<"\t\tNew node added\n";
 				queue.insert( pair<Type, SSNode>( object, child_node ) );
                                 //cout<<"\t\tchild_node.getWeight() = "<<child_node.getWeight()<<"\n";
-                                //S.insert( pair<Type, double>( object,12.44 ) );
                                 
                                 cout<<"\t\tChild: h = "<< h <<", g = "<< g_real + get_adjusted_cost(*op) <<", f = "<< h + g_real + get_adjusted_cost(*op) << " threshold: " << threshold <<" w = "<<child_node.getWeight()<<endl;
                            }
@@ -397,46 +371,15 @@ void SSSearch::printQueue() {
         cout<<"\nEnd PrintQueue\n";
 }
 
-
-void SSSearch::report_progress()
-{
-	cout << "h_min: " << total_min << " depth: " << depth << " #states: " << queue.size() << " time: " << search_time << endl;
-}
-
 void SSSearch::initialize() {
 	cout << "SSSearch ..." << endl;
-	search_time.reset();
-	level_time.reset();
-        ss_timer.reset(); 
-	//queue.clear();
-	// evaluating the initial state
-	heuristic->evaluate(g_initial_state());
-	if (heuristic->is_dead_end())
-	{
-		assert(heuristic->dead_ends_are_reliable());
-		cout << "Initial state is a dead end." << endl;
-		exit(0);
-	}
-	initial_value = heuristic->get_value();
-	total_min = initial_value;
-       
-	progress = true;
-	cout << "Initial heuristic value: ";
-	cout << initial_value << endl;
-	depth = 0;
-	report_progress();
-	depth ++;
+        ss_timer.reset();	
 }
 
 static SearchEngine *_parse(OptionParser &parser) {
         
 	parser.add_option<ScalarEvaluator *>("eval");
-	//parser.add_option<double>("rg", DEFAULT_SS_RG, "the global restarting rate");
-	//parser.add_option<double>("rl", DEFAULT_SS_RL, "the local restarting rate");
-	//parser.add_option<int>("lookahead", DEFAULT_SS_LOOKAHEAD, "lookahead that defines the type system being used");
-	//parser.add_option<int>("beamsize", DEFAULT_SS_BEAMSIZE, "maximum number of nodes expanded by level");
-	//parser.add_option<int>("maxlevels", DEFAULT_SS_MAXLEVELS, "maximum number of nodes expanded by level");
-	//parser.add_option<int>("timelimit", DEFAULT_SS_TIMELIMIT, "time limit in seconds to solve the problem");
+	
 	SearchEngine::add_options_to_parser(parser);
 	Options opts = parser.parse();
 	SSSearch *engine = 0;
