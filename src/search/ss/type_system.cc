@@ -17,7 +17,7 @@ TypeSystem::~TypeSystem()
 
 }
 
-void TypeSystem::sample(StateID id, int parent_heuristic, TypeChildren& type_children, int type, int current_level)
+void TypeSystem::sample(StateID id, unsigned long long parent_heuristic, TypeChildren& type_children, int type, int current_level)
 {
 	if(current_level == type)
 	{
@@ -60,7 +60,7 @@ void TypeSystem::sample(StateID id, int parent_heuristic, TypeChildren& type_chi
 	}
 }
 
-Type TypeSystem::getType(StateID id, int h, int type)
+Type TypeSystem::getType(StateID id, unsigned long long h, int type)
 {
         GlobalState state = g_state_registry->lookup_state(id);
 

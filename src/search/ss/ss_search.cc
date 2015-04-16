@@ -105,8 +105,8 @@ void SSSearch::probe()
 	{
 		Type out = queue.begin()->first;
 		SSNode s = queue.begin()->second;
-               	int g_real = s.getGreal();
-                int level =  out.getLevel();
+               	unsigned long long g_real = s.getGreal();
+                unsigned long long level =  out.getLevel();
 
                 //printQueue();
 
@@ -123,7 +123,7 @@ void SSSearch::probe()
 	        
                 //Insert each node.
                 Node2 node2(out.getH() + g_real, level);
-                int new_f_value = out.getH() + g_real;
+                unsigned long long new_f_value = out.getH() + g_real;
                 //count nodes expanded
                 if (new_f_value <= threshold) {
 			std::pair<std::map<Node2, double>::iterator, bool> ret0;
@@ -143,7 +143,7 @@ void SSSearch::probe()
                 	//end count node
                 }
 
-		int h = INT_MAX/2;
+		unsigned long long h = INT_MAX/2;
 		double w = s.getWeight();
 		//cout<<"w = "<<w<<endl;
  
@@ -201,19 +201,19 @@ void SSSearch::probe()
  
 			   
 			   if (get_adjusted_cost(*op) == 0) {
-				cout<<"get_adjusted_cost(*op) == 0\n";
+				cout<<"\t\tget_adjusted_cost(*op) == 0\n";
 			   	buffer = BFS(child_node, object);
 				while (!buffer.empty()) {
 					SSQueue sst = buffer.front();
 					SSNode node = sst.getNode();
 					Type t = sst.getT();
-					int new_g_real = node.getGreal();
-					int new_level = t.getLevel();
+					unsigned long long new_g_real = node.getGreal();
+					unsigned long long new_level = t.getLevel();
 					StateID new_state_id = node.get_id();
 					double w2 = node.getWeight();
 					buffer.pop();
 
-					cout<<"\n\t\tNode restored: h = "<<t.getH()<<", g_real = "<<node.getGreal()<<", f = "<<t.getH() + node.getGreal()<<", level = "<<t.getLevel()<<"\n";
+					cout<<"\n\t\tNode restored: h = "<<t.getH()<<", g_real = "<<node.getGreal()<<", f = "<<t.getH() + node.getGreal()<<", level = "<<t.getLevel()<<", w = "<<w2<<"\n";
 
 					std::vector<const GlobalOperator *> applicable_ops2;
                         		GlobalState global_state2 = g_state_registry->lookup_state(new_state_id);
@@ -240,18 +240,20 @@ void SSSearch::probe()
 
 						Type object2 = sampler->getType(new_child_state_id, succ_h2, 1);
 						object2.setLevel(new_level + 1);
+						cout<<"\n\t\tzc: Child_"<<(j+1)<<" : h = "<<succ_h2<<", g_real = "<<new_g_real + get_adjusted_cost(*op2)<<", f = "<<succ_h2 + new_g_real + get_adjusted_cost(*op2)<<", level = "<<object2.getLevel()<<", w = "<<w2<<"\n\n";
+
 
 						map<Type, SSNode>::iterator queueIt = queue.find( object2 );
 			   			if( queueIt != queue.end() )
 			   			{
                                 			SSNode snode = queueIt->second;
 
-                                			cout<<"\t\tzc: The duplicate node is: h = "<<queueIt->first.getH()<<", g = "<<snode.getGreal()<<", f = "<< queueIt->first.getH() + snode.getGreal()<<", w = "<<snode.getWeight()<<", level = "<<queueIt->first.getLevel()<<"\n";
+                                			cout<<"\t\t\tzc: The duplicate node is: h = "<<queueIt->first.getH()<<", g = "<<snode.getGreal()<<", f = "<< queueIt->first.getH() + snode.getGreal()<<", w = "<<snode.getWeight()<<", level = "<<queueIt->first.getLevel()<<"\n";
                                 
 							double wa = (double)snode.getWeight();
 							//snode.setWeight( wa + w);
                                 			queueIt->second.setWeight(wa + w2); // set w the node that already exists
-                                			cout<<"\t\tzc: before ss process starts, the w of the duplicate node is updated to: "<<queueIt->second.getWeight()<<endl; 
+                                			cout<<"\t\t\tzc: before ss process starts, the w of the duplicate node is updated to: "<<queueIt->second.getWeight()<<endl; 
                                 			//std::pair<std::map<Type, SSNode>::iterator, bool> ret0;
                                 			//ret0 = queue.insert(pair<Type, SSNode>(object, snode));
                                 			//cout<<"\tsnode.getWeight() = "<<snode.getWeight()<<endl;
@@ -264,9 +266,9 @@ void SSSearch::probe()
                                 
 							if (a < prob) 
 							{
-                                        			cout<<"\t\tzc: Added even though is duplicate.\n";                               
+                                        			cout<<"\t\t\tzc: Added even though is duplicate.\n";                               
 				        			succ_node2.setWeight( wa + w2);
-                                        			cout<<"\t\tzc: the w is updated to = "<<succ_node2.getWeight()<<endl;
+                                        			cout<<"\t\t\tzc: the w is updated to = "<<succ_node2.getWeight()<<endl;
                                         			std::pair<std::map<Type, SSNode>::iterator, bool> ret3;
                                      				queue.erase(object2); 
                                         
@@ -274,17 +276,17 @@ void SSSearch::probe()
                                         			queueIt = ret3.first;
                                         			queueIt->second.setWeight(succ_node2.getWeight());
 							} else {
-                                        			cout<<"\t\tzc: Not added.\n";
-                                        			cout<<"\t\tbut the w is updated for the node that already exists to: "<<queueIt->second.getWeight()<<endl;
+                                        			cout<<"\t\t\tzc: Not added.\n";
+                                        			cout<<"\t\t\tbut the w is updated for the node that already exists to: "<<queueIt->second.getWeight()<<endl;
                                 			}
 			   			} 
 			   			else
 			   			{
-                                			cout<<"\t\tzc: New node added.\n";
-							queue.insert( pair<Type, SSNode>( object, succ_node2 ) );
+                                			cout<<"\t\t\tzc: New node added.\n";
+							queue.insert( pair<Type, SSNode>( object2, succ_node2 ) );
                                 			//cout<<"\t\tsucc_node2.getWeight() = "<<succ_node2.getWeight()<<"\n";
                                 
-                                			cout<<"\t\tzc: Child: h = "<< succ_h2 <<", g_real = "<< new_g_real + get_adjusted_cost(*op2) <<", f = "<< succ_h2 + new_g_real + get_adjusted_cost(*op2) << " threshold: " << threshold <<" w = "<<succ_node2.getWeight()<<endl;
+                                			cout<<"\t\t\tzc: Child: h = "<< succ_h2 <<", g_real = "<< new_g_real + get_adjusted_cost(*op2) <<", f = "<< succ_h2 + new_g_real + get_adjusted_cost(*op2) << " threshold: " << threshold <<" w = "<<succ_node2.getWeight()<<endl;
                            			}// End queueIt != queue.end()
 					}//End applicable_ops2
 				}
@@ -359,18 +361,19 @@ std::queue<SSQueue> SSSearch::BFS(SSNode root, Type type) {
         while (!D.empty()) {
                 cout<<"\t\t\tD.size() = "<<D.size()<<endl;
                 SSNode nodecp = D.front();
-                int g_real = nodecp.getGreal();
+                unsigned long long g_real = nodecp.getGreal();
                 StateID state_id = nodecp.get_id();
-                int level = type.getLevel();
-                cout<<"\n\t\t\tBFS: Node expanded: h = "<<type.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<type.getH() + nodecp.getGreal()<<", level = "<<level<<"\n";
+                unsigned long long level = type.getLevel();
+		double w = nodecp.getWeight();
+                cout<<"\n\t\t\tBFS: Node expanded: h = "<<type.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<type.getH() + nodecp.getGreal()<<", level = "<<level<<", w = "<<w<<"\n";
                 D.pop();
 
                 std::vector<const GlobalOperator *> applicable_ops;
                 //Recover the global_state
                 GlobalState global_state = g_state_registry->lookup_state(state_id);
                 g_successor_generator->generate_applicable_ops(global_state, applicable_ops);
-                cout<<"BFS: applicable_ops.size() = "<<applicable_ops.size()<<endl;
-                cout<<"--------------childs-------------\n";
+                cout<<"\t\t\tBFS: applicable_ops.size() = "<<applicable_ops.size()<<endl;
+                cout<<"\t\t\t--------------childs-------------\n";
 		for (size_t i = 0; i < applicable_ops.size(); i++) {
 
                         const GlobalOperator *op = applicable_ops[i];
@@ -382,13 +385,13 @@ std::queue<SSQueue> SSSearch::BFS(SSNode root, Type type) {
                                 hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
                         }
 
-                        int succ_h = hmax_value;
-                        SSNode succ_node(child.get_id(), succ_h, g_real + get_adjusted_cost(*op));
+                        unsigned long long succ_h = hmax_value;
+                        SSNode succ_node(child.get_id(), w, g_real + get_adjusted_cost(*op));
                         	
 			Type object = sampler->getType(child.get_id(), succ_h,  1);
-                        object.setLevel( level + 1 );
+                      	object.setLevel( level + 1 );
 
-			cout<<"\t\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<object.getLevel()<<"\n";
+			cout<<"\t\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<object.getLevel()<<", w = "<<w<<"\n";
 			SSQueue ssqueue;
 			ssqueue.setNode(succ_node);
 			ssqueue.setT(object);
@@ -400,9 +403,9 @@ std::queue<SSQueue> SSSearch::BFS(SSNode root, Type type) {
                                 L.push(ssqueue);
                         }
                 }
-                cout<<"-------------End childs------------\n";
+                cout<<"\t\t\t-------------End childs------------\n";
         }
-        cout<<"D.empty() == "<<D.empty()<<endl;
+        cout<<"\t\t\tD.empty() == "<<D.empty()<<endl;
         return L;
 }
 
@@ -453,7 +456,7 @@ void SSSearch::generateExpandedReport() {
            cout<<"Directory: fdist created."<<endl;
         }
         cout<<"print."<<endl;
-        for (int i = 0; i <= threshold; i++) {
+        for (size_t i = 0; i <= threshold; i++) {
             int k = 0;
             vector<long> f;
             vector<double> q;

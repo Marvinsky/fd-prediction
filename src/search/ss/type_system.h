@@ -19,7 +19,7 @@ using namespace::std;
 class TypeSystem {
 private:
 
-	void sample(StateID id, int parent_heuristic, TypeChildren& children, int type, int current_level);
+	void sample(StateID id, unsigned long long parent_heuristic, TypeChildren& children, int type, int current_level);
 	short* getEmptyFeatures(int lookahead);
 	Heuristic* heuristic;
 	int best_h;
@@ -28,7 +28,7 @@ public:
 	TypeSystem(Heuristic* heuristic);
 	~TypeSystem();
 
-	Type getType(StateID id, int h, int type);
+	Type getType(StateID id, unsigned long long h, int type);
 };
 
 #endif

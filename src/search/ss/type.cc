@@ -13,7 +13,7 @@ Type::Type()
 	this->best_h = -1;
 }
 
-Type::Type(long parent, int heuristic)
+Type::Type(long parent, unsigned long long heuristic)
 {
 	this->p      = parent;
 	this->h      = heuristic;

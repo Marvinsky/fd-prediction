@@ -31,16 +31,16 @@ class SSNode{
 private:
 	StateID id;
 	double weight;
-        int g_real;
+        unsigned long long g_real;
 public:
         SSNode(): id(StateID::no_state), weight(0.0), g_real(0){}
-        SSNode(StateID identifier, double w, int g) : id(identifier), weight(w), g_real(g){}
+        SSNode(StateID identifier, double w, unsigned long long g) : id(identifier), weight(w), g_real(g){}
         StateID get_id() const {return this->id;}
         void set_id(StateID identifier) {this->id = identifier;}
         double getWeight()  {return this->weight;}
         void setWeight(double w) {this->weight = w;}
-        int getGreal() const {return this->g_real;}
-        void setGreal(int g) {this->g_real = g;}
+        unsigned long long getGreal() const {return this->g_real;}
+        void setGreal(unsigned long long g) {this->g_real = g;}
 };
 
 
@@ -68,8 +68,8 @@ private:
 	std::vector<Heuristic*> heuristics; 
 	Heuristic* heuristic;
 
-	int initial_value;
-        int threshold;
+	unsigned long long initial_value;
+        unsigned long long threshold;
         GlobalState current_state;
 
         //A* prediction using ss:

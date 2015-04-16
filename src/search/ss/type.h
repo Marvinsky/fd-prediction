@@ -12,8 +12,8 @@ class Type {
 private:
 	TypeChildren children;
 	long p;
-	int h;
-	int level;
+	unsigned long long h;
+	unsigned long long level;
 	int best_h;
 	double distance;
 	int label;
@@ -22,7 +22,7 @@ private:
 public:
 
 	Type();
-	Type(long parent, int heuristic);
+	Type(long parent, unsigned long long heuristic);
 
 	void addAddtionalInfo(int);
 	const TypeChildren& getChildren() const {return children;}
@@ -38,12 +38,12 @@ public:
         //bool operator<(const Type &rhs) const;        
 
 
-	int getH() const {return h;}
-	void setH(int i) {h = i;}
+	unsigned long long getH() const {return h;}
+	void setH(unsigned long long i) {h = i;}
 	int getP() const {return p;}
 	void setP(int i) {p = i;}
-	int getLevel() const {return level;}
-	void setLevel(int i) {level = i;}
+	unsigned long long getLevel() const {return level;}
+	void setLevel(unsigned long long i) {level = i;}
 	double getDistance() const {return distance;}
 	void setDistance(double i) {distance = i;}
 	int getLabel() const {return label;}
