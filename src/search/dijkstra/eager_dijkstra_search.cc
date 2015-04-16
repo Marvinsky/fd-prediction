@@ -345,7 +345,7 @@ void EagerDijkstraSearch::generateExpandedReport() {
 	ofstream outputFile;
 	outputFile.open(nBL.c_str(), ios::out);
 	outputFile<<"\t\t"<<nBL.c_str()<<"\n";
-	outputFile<<"\ttotalniveles: "<<nodes_expanded.size()<<"\n";
+	outputFile<<"\ttotalniveles: "<<(depth + 1)<<"\n";
 	outputFile<<"\tf\t\t#Nodes_by_level\t\tRuntime(s)\t#Nodes_to_the_level\n";
 	
 	map<int, int> m; // Count nodes using f-value
