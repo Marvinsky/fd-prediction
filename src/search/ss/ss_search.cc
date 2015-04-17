@@ -203,15 +203,31 @@ void SSSearch::probe()
 			   if (get_adjusted_cost(*op) == 0) {
 				cout<<"\t\tget_adjusted_cost(*op) == 0\n";
 			   	buffer = BFS(child_node, object);
-				while (!buffer.empty()) {
-					SSQueue sst = buffer.front();
+
+				/*std::set<SSQueue>::iterator it;
+				for (it = buffer.begin(); it != buffer.end(); it++) {
+					
+					SSQueue sst = *it;
 					SSNode node = sst.getNode();
 					Type t = sst.getT();
 					double new_g_real = node.getGreal();
 					double new_level = t.getLevel();
 					StateID new_state_id = node.get_id();
 					double w2 = node.getWeight();
-					buffer.pop();
+
+					cout<<"\n\t\tNode restored: h = "<<t.getH()<<", g_real = "<<node.getGreal()<<", f = "<<t.getH() + node.getGreal()<<", level = "<<t.getLevel()<<", w = "<<w2<<", stateID,: "<<new_state_id<<"\n";
+				}*/
+
+				std::set<SSQueue>::iterator it;
+				for (it = buffer.begin(); it != buffer.end(); it++) {
+					
+					SSQueue sst = *it;
+					SSNode node = sst.getNode();
+					Type t = sst.getT();
+					double new_g_real = node.getGreal();
+					double new_level = t.getLevel();
+					StateID new_state_id = node.get_id();
+					double w2 = node.getWeight();
 
 					cout<<"\n\t\tNode restored: h = "<<t.getH()<<", g_real = "<<node.getGreal()<<", f = "<<t.getH() + node.getGreal()<<", level = "<<t.getLevel()<<", w = "<<w2<<"\n";
 
@@ -289,7 +305,8 @@ void SSSearch::probe()
                                 			cout<<"\t\t\tzc: Child: h = "<< succ_h2 <<", g_real = "<< new_g_real + get_adjusted_cost(*op2) <<", f = "<< succ_h2 + new_g_real + get_adjusted_cost(*op2) << " threshold: " << threshold <<" w = "<<succ_node2.getWeight()<<endl;
                            			}// End queueIt != queue.end()
 					}//End applicable_ops2
-				}
+				}   //End for set lopp
+				buffer.clear();
 			   } else {
 				map<Type, SSNode>::iterator queueIt = queue.find( object );
 			   	if( queueIt != queue.end() )
@@ -352,10 +369,9 @@ void SSSearch::probe()
         
 }
 
-std::queue<SSQueue> SSSearch::BFS(SSNode root, Type type) {
+std::set<SSQueue, classcomp> SSSearch::BFS(SSNode root, Type type) {
+	std::set<SSQueue, classcomp> L;
 	std::queue<SSNode> D;
-        std::queue<SSQueue> L;
-        cout<<"\n\t\t\tD.size() before insert root: "<<D.size()<<endl;
         D.push(root);
         cout<<"\t\t\tD.size() = "<<D.size()<<endl;
         while (!D.empty()) {
@@ -365,7 +381,7 @@ std::queue<SSQueue> SSSearch::BFS(SSNode root, Type type) {
                 StateID state_id = nodecp.get_id();
                 double level = type.getLevel();
 		double w = nodecp.getWeight();
-                cout<<"\n\t\t\tBFS: Node expanded: h = "<<type.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<type.getH() + nodecp.getGreal()<<", level = "<<level<<", w = "<<w<<"\n";
+                cout<<"\n\t\t\tBFS: Node expanded: h = "<<type.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<type.getH() + nodecp.getGreal()<<", level = "<<level<<", w = "<<w<<", stateID,:"<<state_id<<"\n";
                 D.pop();
 
                 std::vector<const GlobalOperator *> applicable_ops;
@@ -391,7 +407,7 @@ std::queue<SSQueue> SSSearch::BFS(SSNode root, Type type) {
 			Type object = sampler->getType(child.get_id(), succ_h,  1);
                       	object.setLevel( level + 1 );
 
-			cout<<"\t\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<object.getLevel()<<", w = "<<w<<"\n";
+			cout<<"\t\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<object.getLevel()<<", w = "<<w<<", stateID,:"<<child.get_id()<<"\n";
 			SSQueue ssqueue;
 			ssqueue.setNode(succ_node);
 			ssqueue.setT(object);
@@ -400,7 +416,7 @@ std::queue<SSQueue> SSSearch::BFS(SSNode root, Type type) {
                                 D.push(succ_node);
                         } else {
                                 cout<<"\t\t\tcost != 0\n";
-                                L.push(ssqueue);
+                                L.insert(ssqueue);
                         }
                 }
                 cout<<"\t\t\t-------------End childs------------\n";
@@ -408,6 +424,8 @@ std::queue<SSQueue> SSSearch::BFS(SSNode root, Type type) {
         cout<<"\t\t\tD.empty() == "<<D.empty()<<endl;
         return L;
 }
+
+
 
 void SSSearch::generateGeneratedReport() {
        double count_nodes = 0;
@@ -463,7 +481,7 @@ void SSSearch::generateExpandedReport() {
             for (map<Node2, double>::iterator iter = expanded.begin(); iter != expanded.end(); iter++) {
                  Node2 n = iter->first;
                 
-                 if (i == n.getL()) {
+                 if (i == (size_t)n.getL()) {
                     k++;
                     f.push_back(n.getF());
                     q.push_back(((double)iter->second)/(double)ss_probes);
