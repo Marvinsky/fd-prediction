@@ -105,8 +105,8 @@ void SSSearch::probe()
 	{
 		Type out = queue.begin()->first;
 		SSNode s = queue.begin()->second;
-               	unsigned long long g_real = s.getGreal();
-                unsigned long long level =  out.getLevel();
+               	double g_real = s.getGreal();
+                double level =  out.getLevel();
 
                 //printQueue();
 
@@ -123,7 +123,7 @@ void SSSearch::probe()
 	        
                 //Insert each node.
                 Node2 node2(out.getH() + g_real, level);
-                unsigned long long new_f_value = out.getH() + g_real;
+                double new_f_value = out.getH() + g_real;
                 //count nodes expanded
                 if (new_f_value <= threshold) {
 			std::pair<std::map<Node2, double>::iterator, bool> ret0;
@@ -143,7 +143,7 @@ void SSSearch::probe()
                 	//end count node
                 }
 
-		unsigned long long h = INT_MAX/2;
+		double h = INT_MAX/2;
 		double w = s.getWeight();
 		//cout<<"w = "<<w<<endl;
  
@@ -207,8 +207,8 @@ void SSSearch::probe()
 					SSQueue sst = buffer.front();
 					SSNode node = sst.getNode();
 					Type t = sst.getT();
-					unsigned long long new_g_real = node.getGreal();
-					unsigned long long new_level = t.getLevel();
+					double new_g_real = node.getGreal();
+					double new_level = t.getLevel();
 					StateID new_state_id = node.get_id();
 					double w2 = node.getWeight();
 					buffer.pop();
@@ -361,9 +361,9 @@ std::queue<SSQueue> SSSearch::BFS(SSNode root, Type type) {
         while (!D.empty()) {
                 cout<<"\t\t\tD.size() = "<<D.size()<<endl;
                 SSNode nodecp = D.front();
-                unsigned long long g_real = nodecp.getGreal();
+                double g_real = nodecp.getGreal();
                 StateID state_id = nodecp.get_id();
-                unsigned long long level = type.getLevel();
+                double level = type.getLevel();
 		double w = nodecp.getWeight();
                 cout<<"\n\t\t\tBFS: Node expanded: h = "<<type.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<type.getH() + nodecp.getGreal()<<", level = "<<level<<", w = "<<w<<"\n";
                 D.pop();
@@ -385,7 +385,7 @@ std::queue<SSQueue> SSSearch::BFS(SSNode root, Type type) {
                                 hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
                         }
 
-                        unsigned long long succ_h = hmax_value;
+                        double succ_h = hmax_value;
                         SSNode succ_node(child.get_id(), w, g_real + get_adjusted_cost(*op));
                         	
 			Type object = sampler->getType(child.get_id(), succ_h,  1);

@@ -99,7 +99,7 @@ SearchStatus IDASearch::step() {
 }
 
 int IDASearch::idastar(SSNode node) {
-	unsigned long long bound, next_bound;
+	double bound, next_bound;
 	int  done;
 
         GlobalState global_state = g_state_registry->lookup_state(node.get_id());
@@ -139,7 +139,7 @@ int IDASearch::idastar(SSNode node) {
 	return best_soln_sofar;
 }
 
-int IDASearch::dfs_heur(SSNode node, unsigned long long bound, unsigned long long &next_bound, unsigned long long g_real) {
+int IDASearch::dfs_heur(SSNode node, double bound, double &next_bound, double g_real) {
 	nodes_expanded_for_bound++;
 	cout<<"bound = "<<bound<<", next_bound = "<<next_bound<<endl;
         cout<<"node expanded: h = "<<node.getHvalue()<<", g_real = "<<node.getGreal()<<", f = "<<node.getHvalue() + node.getGreal()<<"\n";
@@ -178,8 +178,8 @@ int IDASearch::dfs_heur(SSNode node, unsigned long long bound, unsigned long lon
 		while (!buffer.empty()) {
 			SSNode ncp = buffer.front();
                         StateID new_state_id = ncp.get_id();
-			unsigned long long new_g_real = ncp.getGreal();
-			unsigned long long new_level = ncp.getLevel();
+			double new_g_real = ncp.getGreal();
+			double new_level = ncp.getLevel();
 
 			cout<<"\tExpanded node that comes from BFS: h = "<<ncp.getHvalue()<<", g_real = "<<ncp.getGreal()<<", f  = "<<ncp.getHvalue() + ncp.getGreal()<<", level = "<<ncp.getLevel()<<"\n";
 			buffer.pop();
