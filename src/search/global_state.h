@@ -49,6 +49,7 @@ public:
 
     void dump_pddl() const;
     void dump_fdr() const;
+    void dump_inline() const;
 };
 
 #endif

@@ -66,7 +66,6 @@ SearchStatus BFSSearch::step() {
         depth = 2*h_initial;
 	cout<<"depth ="<<depth<<endl;
         buffer.push(node);
-        double count_nodes = 0.0;
 
         while (!buffer.empty()) {
               SSNode nodecp = buffer.front();

@@ -7,6 +7,9 @@
 #include <algorithm>
 #include <iostream>
 #include <cassert>
+
+#include <map>
+#include <stdio.h>
 using namespace std;
 
 
@@ -39,3 +42,21 @@ void GlobalState::dump_fdr() const {
         cout << "  #" << i << " [" << g_variable_name[i] << "] -> "
              << (*this)[i] << endl;
 }
+
+void GlobalState::dump_inline() const {
+        cout<<"S: ";
+        fflush(NULL);
+
+        map<int, int> variables;
+        int numb = 0;
+        for (size_t i = 0; i < g_variable_domain.size(); i++) {
+            string str_temp = g_variable_name[i].substr(3);
+            numb = atoi(str_temp.c_str());
+            //variables[numb] = static_cast<int>(g_variable_name[i]);
+            variables[numb] = atoi(g_variable_name[i].c_str());
+        }
+        for (size_t i = 0; i< g_variable_domain.size(); i++) {
+            cout<<variables[i]<<",";
+        }
+}
+
