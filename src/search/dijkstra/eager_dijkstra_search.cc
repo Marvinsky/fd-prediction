@@ -364,13 +364,22 @@ void EagerDijkstraSearch::generateExpandedReport() {
                         m.insert(pair<int, int>(i, k));
                 }
         }
+
 	int sum = 0;
+	size_t index_count = 0;
         for (map<int, int>::iterator iter = m.begin(); iter != m.end(); iter++) {
                 int f = iter->first;
                 int q = iter->second;
                 sum = sum + q;
                 cout<<"\t"<<f<<"\t\t"<<q<<"\t\t\t"<<1<<"\t\t\t"<<sum<<"\n";
                 outputFile<<"\t"<<f<<"\t\t"<<q<<"\t\t\t"<<1<<"\t\t\t"<<sum<<"\n";
+		if ((m.size() - 1) ==  index_count) {
+			cout<<"fnivel: "<<f<<endl;
+                	cout<<"nodesGeneratedByLevel: "<<q<<endl;
+                	cout<<" time0: "<<1<<endl;
+                	cout<<"nodesGeneratedToTheLevel: "<<sum<<endl;
+		}
+		index_count++;
         }
 	
 	outputFile.close();
