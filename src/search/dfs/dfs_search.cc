@@ -70,9 +70,9 @@ SearchStatus DFSSearch::step() {
 
         while (!queue.empty()) {
               SSNode nodecp = queue.top();
-              int g_real = nodecp.getLevel();
-              int level = nodecp.getGreal();
-              //cout<<"Raiz: h = "<<nodecp.getHvalue()<<", g_real = "<<g_real<<", f = "<<nodecp.getHvalue() + g_real<<"\n";
+              int g_real = nodecp.getGreal();
+              int level = nodecp.getLevel();
+              cout<<"Raiz: h = "<<nodecp.getHvalue()<<", g_real = "<<g_real<<", f = "<<nodecp.getHvalue() + g_real<<"\n";
 	      queue.pop();
 
               StateID state_id = nodecp.get_id();
@@ -162,7 +162,7 @@ SearchStatus DFSSearch::step() {
 
 
                   SSNode succ_node(child.get_id(), succ_h, g_real + get_adjusted_cost(*op), level + 1);
-                  //cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.get_g_value()<<", f = "<<succ_h + succ_node.get_g_value()<<"\n";
+                  cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<"\n";
 
                   if (succ_h + succ_node.getGreal() <= depth) {
                      //cout<<"\tNode generated: h = "<<succ_h<<", g = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<"\n";
