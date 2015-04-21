@@ -137,12 +137,13 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 	cout<<"\n\t\tbound = "<<bound;
 	cout<<"\t\tnext_bound = "<<next_bound<<"\n";
 
+	int g_real = 0, h_value = 0, level = 0;
 	while (!queue.empty()) {
 		nodes_expanded_for_bound++;
 		SSNode nodecp = queue.top();
-		int g_real = nodecp.getGreal();
-		int h_value = nodecp.getHvalue();
-		int level = nodecp.getLevel();
+		g_real = nodecp.getGreal();
+		h_value = nodecp.getHvalue();
+		level = nodecp.getLevel();
 		queue.pop();
 		
 		StateID state_id = nodecp.get_id();
@@ -174,7 +175,10 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
             		search_progress.inc_generated();
             		
 			SSNode succ_node(child.get_id(), succ_h, g_real + cost_op, level+ 1);
-            		cout<<"\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", StateID = "<<child.get_id()<<"\n";
+            		//cout<<"\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", StateID = "<<child.get_id()<<"\n";
+						
+			child.dump_inline();	
+			fflush(NULL);
 
 			if (cost_op == 0) {
 				cout<<"\tget_adjusted_cost(*op) == 0\n";
