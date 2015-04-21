@@ -31,14 +31,18 @@ IDASearch::IDASearch(
         }
         assert(heuristics.size() == 1);
 
+
         int max_h = 0;
         for (size_t i = 0; i < heuristics.size(); i++) {
             heuristics[i]->evaluate(g_initial_state());
-            int aux = heuristics[i]->get_heuristic();
-            if (max_h < aux) {
-                max_h = aux;
-            }
+	    if (!heuristics[i]->is_dead_end()) {
+		max_h = max(max_h, heuristics[i]->get_heuristic());
+	    } else {
+		max_h = INT_MAX/2;
+		break;
+	    }
         }
+
         cout<<"max_h(constructor) = "<<max_h<<endl;
 }
 
@@ -59,8 +63,14 @@ SearchStatus IDASearch::step() {
         int hmax = 0; 
         for (size_t i = 0; i < heuristics.size(); i++) {
             heuristics[i]->evaluate(initial_state);
-            hmax = max(hmax, heuristics[i]->get_heuristic());
+	    if (!heuristics[i]->is_dead_end()) {
+		hmax = max(hmax, heuristics[i]->get_heuristic());
+	    } else {
+		hmax = INT_MAX/2;
+		break;
+	    }
         }
+
         int h_initial = hmax;
         cout<<"h_initial = "<<h_initial<<endl;
         
@@ -169,6 +179,9 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
                       		heuristics[i]->evaluate(child);
 				if (!heuristics[i]->is_dead_end()) {
 					hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
+				} else {
+					hmax_value = INT_MAX/2;
+					break;
 				}
                   	}
 
@@ -218,6 +231,9 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
                                         		heuristics[i]->evaluate(new_child);
                                         		if (!heuristics[i]->is_dead_end()) {
 								hmax_value2 = max(hmax_value2, heuristics[i]->get_heuristic());
+							} else {
+								hmax_value2 = INT_MAX/2;
+								break;
 							}
                                 		}
                                 		int succ_h2 = hmax_value2;
@@ -317,7 +333,12 @@ set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
                         int hmax_value = 0;
                         for (size_t i = 0; i < heuristics.size(); i++) {
                                 heuristics[i]->evaluate(child);
-                                hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
+				if (!heuristics[i]->is_dead_end()) {
+			 		hmax_value = max(hmax_value, heuristics[i]->get_heuristic());	
+				} else {
+					hmax_value = INT_MAX/2;
+					break;
+				}
                         }
                         int succ_h = hmax_value;
                         SSNode succ_node(child.get_id(), succ_h, g_real + get_adjusted_cost(*op), level + 1);
