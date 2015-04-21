@@ -237,7 +237,9 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 							}
                                 		}
                                 		int succ_h2 = hmax_value2;
-                                		SSNode succ_node2(new_child.get_id(), succ_h2, new_g_real + get_adjusted_cost(*op2), new_level + 1);
+						int cost_op2 = get_adjusted_cost(*op2);
+
+                                		SSNode succ_node2(new_child.get_id(), succ_h2, new_g_real + cost_op2, new_level + 1);
 
 						if (check_goal_and_set_plan(new_child)) {
 							cout<<"\t\tSolution Found!"<<endl;
@@ -248,13 +250,13 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 							return best_soln_sofar;
 						} else {
 							cout<<"\t\tThe solution was not found."<<endl;
-							if (new_g_real + cost_op + succ_h2 <= bound) {
+							if (new_g_real + cost_op2 + succ_h2 <= bound) {
 								cout<<"\t\tInserting to the queue f <= bound"<<endl;
 								queue.push(succ_node2);
 							} else {
 								cout<<"\t\tFinding the next_bound"<<endl;
-								if (next_bound >  new_g_real + cost_op + succ_h2) {
-									next_bound =  new_g_real + cost_op + succ_h2;
+								if (next_bound >  new_g_real + cost_op2 + succ_h2) {
+									next_bound =  new_g_real + cost_op2 + succ_h2;
 									cout<<"\t\tnext_bound = "<<next_bound<<endl;
 								}
 							}
