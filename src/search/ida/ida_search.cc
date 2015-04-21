@@ -297,9 +297,7 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 }
 
 set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
-        std::set<SSNode, classcomp> L;
-	std::queue<SSNode> empty;
-	std::swap(D, empty);
+        set<SSNode, classcomp> L;	
         D.push(root);
         cout<<"\t\t\tD.size() = "<<D.size()<<endl;
 	int g_real = 0, level = 0;
