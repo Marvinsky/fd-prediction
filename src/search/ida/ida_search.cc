@@ -343,7 +343,8 @@ set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
 				}
                         }
                         int succ_h = hmax_value;
-                        SSNode succ_node(child.get_id(), succ_h, g_real + get_adjusted_cost(*op), level + 1);
+			int cost_op = get_adjusted_cost(*op);
+                        SSNode succ_node(child.get_id(), succ_h, g_real + cost_op, level + 1);
 
                         cout<<"\t\t\tBFSChild state:(";
                         child.dump_inline();
@@ -352,8 +353,7 @@ set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
 
                         cout<<"\t\t\tBFSChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<succ_node.getLevel()<<", stateID,: "<<child.get_id()<<"\n";
 
-
-			if (get_adjusted_cost(*op) == 0) {
+			if (cost_op == 0) {
                                 cout<<"\t\t\tcost = 0\n";
                                 D.push(succ_node);
                         } else {
