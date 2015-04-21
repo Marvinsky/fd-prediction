@@ -6,6 +6,9 @@
 
 #include <vector>
 #include <map>
+#include <stack>
+#include <set>
+#include <queue>
 
 #include "../evaluator.h"
 #include "../global_state.h"
@@ -20,9 +23,9 @@
 
 #include <random>
 #include <iostream>
-#include <stack>
-
 #include <limits>
+
+using namespace std;
 
 
 class GlobalOperator;
@@ -33,20 +36,38 @@ class ScalarEvaluator;
 class SSNode {
 private:
         StateID id;
-        int h_value;
-        int g_real;
-        int level;
+        double h_value;
+        double g_real;
+        double level;
 public:
         SSNode() : id(StateID::no_state), h_value(-1),  g_real(-1), level(-1) {}     
-	SSNode(StateID identifier,int h, int g, int l) : id(identifier), h_value(h), g_real(g), level(l) {}
-        StateID get_id() {return this->id;}
+	SSNode(StateID identifier, double h, double g, double l) : id(identifier), h_value(h), g_real(g), level(l) {}
+        StateID get_id() const {return this->id;}
         void set_id(StateID identifier) {this->id = identifier;}
-        int getHvalue() {return this->h_value;}
-        void setHvalue(int h) {this->h_value = h;}
-        int getGreal() {return this->g_real;}
-        void setGreal(int g) {this->g_real = g;}
-        int getLevel() {return this->level;}
-        void setLevel(int l) {this->level = l;}
+        double getHvalue() const {return this->h_value;}
+        void setHvalue(double h) {this->h_value = h;}
+        double getGreal() const {return this->g_real;}
+        void setGreal(double g) {this->g_real = g;}
+        double getLevel() const {return this->level;}
+        void setLevel(double l) {this->level = l;}
+};
+
+bool fncomp (SSNode lhs, SSNode rhs) {
+
+        if (lhs.get_id().hash() != rhs.get_id().hash()) {
+                return lhs.get_id().hash() < rhs.get_id().hash();
+        }
+        return false;
+}
+
+struct classcomp {
+        bool operator() (const SSNode& lhs, const SSNode& rhs) const {
+
+                if (lhs.get_id().hash() != rhs.get_id().hash()) {
+                        return lhs.get_id().hash() < rhs.get_id().hash();
+                }
+                return false;
+        }
 };
 
 class IDASearch : public SearchEngine {
@@ -55,6 +76,7 @@ private:
     //DFS
     int depth;
     string heuristic_name;
+    set<SSNode, classcomp> buffer;
     map<Node2, double> expanded;
     map<Node2, double> generated;
     Timer ida_timer;
@@ -67,6 +89,7 @@ private:
     int nodes_generated_for_start_state;
     int next_bound;
     bool SOLUTION_FOUND;
+    std::queue<SSNode> D;
     //int next_bound;
 
 protected:
@@ -78,12 +101,11 @@ protected:
     virtual void initialize();
     
 public:
-    IDASearch(const Options &opts);
-
-    void generateGeneratedReport(bool flag);
-    void generateExpandedReport(bool flag);
+    IDASearch(const Options &opts); 
     int idastar(SSNode node);
-    int dfs_heur(SSNode node, int bound, int next_bound);
+    int dfs_heur(SSNode node, double bound, double next_bound);
+    //BFS
+    set<SSNode, classcomp> BFS(SSNode root);
 };
 
 #endif
