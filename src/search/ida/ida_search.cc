@@ -239,22 +239,22 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
                                 		int succ_h2 = hmax_value2;
                                 		SSNode succ_node2(new_child.get_id(), succ_h2, new_g_real + get_adjusted_cost(*op2), new_level + 1);
 
-						if (check_goal_and_set_plan(child)) {
+						if (check_goal_and_set_plan(new_child)) {
 							cout<<"\t\tSolution Found!"<<endl;
 							SOLUTION_FOUND = true;
-		 					if (best_soln_sofar > succ_h + succ_node.getGreal()) {
-								best_soln_sofar = succ_h + succ_node.getGreal(); 
+		 					if (best_soln_sofar > succ_h2 + succ_node2.getGreal()) {
+								best_soln_sofar = succ_h2 + succ_node2.getGreal(); 
 							}
 							return best_soln_sofar;
 						} else {
 							cout<<"\t\tThe solution was not found."<<endl;
-							if (g_real + cost_op + succ_h <= bound) {
+							if (new_g_real + cost_op + succ_h2 <= bound) {
 								cout<<"\t\tInserting to the queue f <= bound"<<endl;
-								queue.push(succ_node);
+								queue.push(succ_node2);
 							} else {
 								cout<<"\t\tFinding the next_bound"<<endl;
-								if (next_bound >  g_real + cost_op + succ_h) {
-									next_bound =  g_real + cost_op + succ_h;
+								if (next_bound >  new_g_real + cost_op + succ_h2) {
+									next_bound =  new_g_real + cost_op + succ_h2;
 									cout<<"\t\tnext_bound = "<<next_bound<<endl;
 								}
 							}
