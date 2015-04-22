@@ -80,7 +80,6 @@ private:
     int depth;
     string heuristic_name;
     set<SSNode, classcomp> buffer;
-    set<SSNode, classcomp> check;
     map<Node2, double> expanded;
     map<Node2, double> generated;
     Timer ida_timer;
