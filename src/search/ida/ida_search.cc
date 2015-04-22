@@ -165,7 +165,13 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
         	GlobalState global_state = g_state_registry->lookup_state(state_id);
         	g_successor_generator->generate_applicable_ops(global_state, applicable_ops);
 		
-		cout<<"Node expanded: h = "<<h_value<<", g_real = "<<g_real<<", f = "<<h_value + g_real<<", level = "<<level<<", StateID = "<<state_id<<"\n";
+		cout<<"RootNode expanded: h = "<<h_value<<", g_real = "<<g_real<<", f = "<<h_value + g_real<<", level = "<<level<<", StateID = "<<state_id<<"\n";
+		cout<<"RootNode_state_";
+		cout<<": state_id:"<<global_state.get_id()<<":";
+                global_state.dump_inline();
+		fflush(NULL);
+
+
 
 		cout<<"applicable_ops.size() = "<<applicable_ops.size()<<endl;
 		cout<<"------------------Child----------------\n\n";
@@ -190,17 +196,22 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
             		search_progress.inc_generated();
             		
 			SSNode succ_node(child.get_id(), succ_h, g_real + cost_op, level+ 1);
-            		cout<<"\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", StateID = "<<child.get_id()<<"\n";
-			cout<<"\t\tChild_state:(";
+            		cout<<"\t\tRootChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", StateID = "<<child.get_id()<<"\n";
+			cout<<"\t\tChild_state_"<<(i+1);
+			cout<<": state_id:"<<child.get_id()<<":";
                 	child.dump_inline();
-                	cout<<"),state_id:"<<child.get_id()<<"\n";
 			fflush(NULL);
 
 			if (cost_op == 0) {
-				cout<<"\tget_adjusted_cost(*op) == 0\n";
+				cout<<"\t\tget_adjusted_cost(*op) == 0\n";
                 		buffer = BFS(succ_node);
                 		std::set<SSNode>::iterator it;
-			
+				/*for (it = buffer.begin(); it != buffer.end(); it++) {
+                        		SSNode ncp = *it;
+					cout<<"\t\tExpanded node that comes from BFS: h = "<<ncp.getHvalue()<<", g_real = "<<ncp.getGreal()<<", f  = "<<ncp.getHvalue() + ncp.getGreal()<<", level = "<<ncp.getLevel()<<", StateID = "<<ncp.get_id()<<"\n";
+				}*/
+
+					
 				double new_g_real = 0, new_level = 0;
 				std::vector<const GlobalOperator *> applicable_ops2;
 				for (it = buffer.begin(); it != buffer.end(); it++) {
@@ -214,9 +225,9 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
                         		applicable_ops2.clear();
                         		GlobalState global_state2 = g_state_registry->lookup_state(new_state_id);
                         		g_successor_generator->generate_applicable_ops(global_state2, applicable_ops2);
-                        		cout<<"\t\tExpanded node that comes from BFS:(";
+                        		cout<<"\t\tExpanded node that comes from BFS:";
+					cout<<": state_id:"<<global_state2.get_id()<<":";
                 			global_state2.dump_inline();
-                			cout<<"),state_id:"<<global_state2.get_id()<<"\n";
 					fflush(NULL);
 
 					cout<<"\t\tapplicable_ops.size() = "<<applicable_ops2.size()<<endl;
@@ -297,20 +308,20 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 }
 
 set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
-        set<SSNode, classcomp> L;	
+        set<SSNode, classcomp> L;
+	set<SSNode, classcomp> check;
+	check.insert(root);	
         D.push(root);
-        cout<<"\t\t\tD.size() = "<<D.size()<<endl;
 	int g_real = 0, level = 0;
 	std::vector<const GlobalOperator *> applicable_ops;	
         while (!D.empty()) {
-                cout<<"\t\t\tD.size() = "<<D.size()<<endl;
                 SSNode nodecp = D.front();
                 g_real = nodecp.getGreal();
                 StateID state_id = nodecp.get_id();
                 level = nodecp.getLevel();
                 
 
-		cout<<"\t\t\tBFSNode expanded: h = "<<nodecp.getHvalue()<<", g_real = "<<nodecp.getGreal()<<", f = "<<nodecp.getHvalue() + nodecp.getGreal()<<", level = "<<level<<", stateID,: "<<state_id<<"\n";
+		cout<<"\t\tBFSNode expanded: h = "<<nodecp.getHvalue()<<", g_real = "<<nodecp.getGreal()<<", f = "<<nodecp.getHvalue() + nodecp.getGreal()<<", level = "<<level<<", stateID,: "<<state_id<<"\n";
 
                 D.pop();
 		applicable_ops.clear();
@@ -318,18 +329,22 @@ set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
                 GlobalState global_state = g_state_registry->lookup_state(state_id);
                 g_successor_generator->generate_applicable_ops(global_state, applicable_ops);
 
-                cout<<"\nBFSExpanded state:(";
+		cout<<"\t\tBFSExpanded state:";
+		cout<<": state_id:"<<global_state.get_id()<<":";
                 global_state.dump_inline();
-                cout<<"),state_id:"<<global_state.get_id()<<"\n";
 		fflush(NULL);
 
-
-                cout<<"\t\t\tBFS: applicable_ops.size() = "<<applicable_ops.size()<<endl;
-                cout<<"\t\t\t--------------childs-------------\n";
+                cout<<"\n\t\tBFS: applicable_ops.size() = "<<applicable_ops.size()<<endl;
+                cout<<"\t\t--------------childs-------------\n";
                 for (size_t i = 0; i < applicable_ops.size(); i++) {
 			const GlobalOperator *op = applicable_ops[i];
                         GlobalState child =  g_state_registry->get_successor_state(global_state, *op);
 
+			cout<<"\n\t\t\tBFSChild_"<<(i+1);
+			cout<<": state_id:"<<child.get_id()<<":";
+                        child.dump_inline();
+			fflush(NULL);
+		
                         int hmax_value = 0;
                         for (size_t i = 0; i < heuristics.size(); i++) {
                                 heuristics[i]->evaluate(child);
@@ -344,24 +359,30 @@ set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
 			int cost_op = get_adjusted_cost(*op);
                         SSNode succ_node(child.get_id(), succ_h, g_real + cost_op, level + 1);
 
-                        cout<<"\t\t\tBFSChild state:(";
-                        child.dump_inline();
-                        cout<<"),state_id:"<<child.get_id()<<"\n";
-			fflush(NULL);
+                       
 
                         cout<<"\t\t\tBFSChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<succ_node.getLevel()<<", stateID,: "<<child.get_id()<<"\n";
 
-			if (cost_op == 0) {
-                                cout<<"\t\t\tcost = 0\n";
-                                D.push(succ_node);
-                        } else {
-                                cout<<"\t\t\tcost != 0\n";
-                                L.insert(succ_node);
-                        }
+			std::pair<std::set<SSNode, classcomp>::iterator, bool> p;
+			p = check.insert(succ_node);
+
+			if (p.second) {
+				cout<<"\t\t\tNew node : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<succ_node.getLevel()<<", stateID,: "<<child.get_id()<<"\n";
+				if (cost_op == 0) {
+                                	cout<<"\t\t\tcost = 0\n";
+                                	D.push(succ_node);
+                        	} else {
+                                	cout<<"\t\t\tcost != 0\n";
+                                	L.insert(succ_node);
+                        	}
+			} else {
+				cout<<"\t\t\tnode with StateID,: = "<<child.get_id()<<" already exists. Then no added."<<endl;
+			}
                 }
-                cout<<"\t\t\t-------------End childs------------\n";
+                cout<<"\t\t-------------End childs------------\n";
         }
-        cout<<"\t\t\tD.empty() == "<<D.empty()<<endl;
+	check.clear();
+        cout<<"\t\tD.empty() == "<<D.empty()<<endl;
         return L;
 }
 

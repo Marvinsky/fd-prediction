@@ -62,8 +62,11 @@ bool fncomp (SSNode lhs, SSNode rhs) {
 
 struct classcomp {
         bool operator() (const SSNode& lhs, const SSNode& rhs) const {
-
+		//cout<<"lhs.get_id().hash() = "<<lhs.get_id().hash();
+		//cout<<"\trhs.get_id().hash() = "<<rhs.get_id().hash()<<"\n";
                 if (lhs.get_id().hash() != rhs.get_id().hash()) {
+			//bool flag = lhs.get_id().hash() < rhs.get_id().hash();
+			//cout<<"\t\treturn "<<flag<<"\n\n";
                         return lhs.get_id().hash() < rhs.get_id().hash();
                 }
                 return false;
