@@ -175,7 +175,8 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 
 		cout<<"applicable_ops.size() = "<<applicable_ops.size()<<endl;
 		cout<<"------------------Child----------------\n\n";
-		
+		L.clear();
+		check.clear();
 		for (size_t i = 0; i < applicable_ops.size(); ++i) {
 			nodes_generated_for_bound++;
                   	const GlobalOperator *op = applicable_ops[i];
@@ -204,9 +205,9 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 
 			if (cost_op == 0) {
 				cout<<"\t\tget_adjusted_cost(*op) == 0\n";
-                		buffer = BFS(succ_node);
-                		std::set<SSNode>::iterator it;
-				/*for (it = buffer.begin(); it != buffer.end(); it++) {
+                		L = BFS(succ_node);
+                		std::set<SSNode, classcomp>::iterator it;
+				/*for (it = L.begin(); it != L.end(); it++) {
                         		SSNode ncp = *it;
 					cout<<"\t\tExpanded node that comes from BFS: h = "<<ncp.getHvalue()<<", g_real = "<<ncp.getGreal()<<", f  = "<<ncp.getHvalue() + ncp.getGreal()<<", level = "<<ncp.getLevel()<<", StateID = "<<ncp.get_id()<<"\n";
 				}*/
@@ -214,7 +215,7 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 					
 				double new_g_real = 0, new_level = 0;
 				std::vector<const GlobalOperator *> applicable_ops2;
-				for (it = buffer.begin(); it != buffer.end(); it++) {
+				for (it = L.begin(); it != L.end(); it++) {
                         		SSNode ncp = *it;
                         		StateID new_state_id = ncp.get_id();
                         		new_g_real = ncp.getGreal();
@@ -273,9 +274,7 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 							}
 						} //End check goal
 					} //End for applicable_ops2
-				} //End set buffer
-				
-				buffer.clear();
+				} //End set L
 			} else { //else cost_op != 0
 				if (check_goal_and_set_plan(child)) {
 					cout<<"\t\tSolution Found!"<<endl;
@@ -308,10 +307,8 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 }
 
 set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
-        set<SSNode, classcomp> L;
-	set<SSNode, classcomp> check;
 
-	check.insert(root);	
+       	check.insert(root);	
         D.push(root);
 	int g_real = 0, level = 0;
 	std::vector<const GlobalOperator *> applicable_ops;	
@@ -347,27 +344,25 @@ set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
 			fflush(NULL);
 		
                         int hmax_value = 0;
-                        for (size_t i = 0; i < heuristics.size(); i++) {
-                                heuristics[i]->evaluate(child);
-				if (!heuristics[i]->is_dead_end()) {
-			 		hmax_value = max(hmax_value, heuristics[i]->get_heuristic());	
-				} else {
-					hmax_value = INT_MAX/2;
-					break;
-				}
-                        }
-                        int succ_h = hmax_value;
+                        
 			int cost_op = get_adjusted_cost(*op);
-                        SSNode succ_node(child.get_id(), succ_h, g_real + cost_op, level + 1);
-
-                       
-
-                        cout<<"\t\t\tBFSChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<succ_node.getLevel()<<", stateID,: "<<child.get_id()<<"\n";
-
+                        SSNode succ_node(child.get_id(), hmax_value, g_real + cost_op, level + 1);
 			std::pair<std::set<SSNode, classcomp>::iterator, bool> p;
 			p = check.insert(succ_node);
-
 			if (p.second) {
+				for (size_t i = 0; i < heuristics.size(); i++) {
+                                	heuristics[i]->evaluate(child);
+					if (!heuristics[i]->is_dead_end()) {
+			 			hmax_value = max(hmax_value, heuristics[i]->get_heuristic());	
+					} else {
+						hmax_value = INT_MAX/2;
+						break;
+					}
+                        	}
+                        	int succ_h = hmax_value;
+
+				succ_node.setHvalue(succ_h);
+
 				cout<<"\t\t\tNew node : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<succ_node.getLevel()<<", stateID,: "<<child.get_id()<<"\n";
 				if (cost_op == 0) {
                                 	cout<<"\t\t\tcost = 0\n";
@@ -382,7 +377,6 @@ set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
                 }
                 cout<<"\t\t-------------End childs------------\n";
         }
-	check.clear();	
         cout<<"\t\tD.empty() == "<<D.empty()<<endl;
         return L;
 }
