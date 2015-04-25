@@ -81,6 +81,7 @@ private:
     string heuristic_name;
     set<SSNode, classcomp> check;
     set<SSNode, classcomp> L;
+    set<SSNode, classcomp> LCheck;
     map<Node2, double> expanded;
     map<Node2, double> generated;
     Timer ida_timer;

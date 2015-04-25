@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <set>
 
 #include "../evaluator.h"
 #include "../global_state.h"
@@ -33,14 +34,23 @@ private:
 public:
         SSNode() : id(StateID::no_state), h_value(-1),  g_real(-1), level(-1) {}     
 	SSNode(StateID identifier,int h, int g, int l) : id(identifier), h_value(h), g_real(g), level(l) {}
-        StateID get_id() {return this->id;}
+        StateID get_id() const {return this->id;}
         void set_id(StateID identifier) {this->id = identifier;}
-        int getHvalue() {return this->h_value;}
+        int getHvalue() const {return this->h_value;}
         void setHvalue(int h) {this->h_value = h;}
-        int getGreal() {return this->g_real;}
+        int getGreal() const {return this->g_real;}
         void setGreal(int g) {this->g_real = g;}
-        int getLevel() {return this->level;}
+        int getLevel() const {return this->level;}
         void setLevel(int l) {this->level = l;}
+};
+
+struct classcomp {
+        bool operator() (const SSNode& lhs, const SSNode& rhs) const {
+                if (lhs.get_id().hash() != rhs.get_id().hash()) { 
+                        return lhs.get_id().hash() < rhs.get_id().hash();
+                }
+                return false;
+        }
 };
 
 class BFSSearch : public SearchEngine {
@@ -50,6 +60,7 @@ private:
     int depth;
     string heuristic_name;
     queue<SSNode> buffer;
+    set<SSNode, classcomp> check;
     map<Node2, double> expanded;
     map<Node2, double> generated;
     Timer ida_timer;

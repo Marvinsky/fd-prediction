@@ -86,25 +86,27 @@ SearchStatus BFSSearch::step() {
                   const GlobalOperator *op = applicable_ops[i];
                   GlobalState child =  g_state_registry->get_successor_state(global_state, *op);
                   int hmax_value = 0; 
-                  for (size_t i = 0; i < heuristics.size(); i++) {
-            	      heuristics[i]->evaluate(child);
-            	      hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
-        	  }	   
-
-                  int succ_h = hmax_value;
-
                   search_progress.inc_generated();
 
-
-                  SSNode succ_node(child.get_id(), succ_h, g_real + get_adjusted_cost(*op), level + 1);
-
-                  cout<<"\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g = "<<g_real + get_adjusted_cost(*op)<<", f = "<<succ_h + g_real + get_adjusted_cost(*op)<<"\n";
-                  if (succ_h + succ_node.getGreal() <= depth) {
-                       cout<<"\t\t\tNode generated: h = "<<succ_h<<", g = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<"\n";
-                     buffer.push(succ_node);
-                  } else {
-                     cout<<"\t\t\tpruned!\n";
-                  }
+                  SSNode succ_node(child.get_id(), hmax_value, g_real + get_adjusted_cost(*op), level + 1);
+		  std::pair<std::set<SSNode, classcomp>::iterator, bool> p;
+		  p = check.insert(succ_node);
+		  if (p.second) {
+			for (size_t i = 0; i < heuristics.size(); i++) {
+            	      		heuristics[i]->evaluate(child);
+            	      		hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
+        	  	}	   
+                  	int succ_h = hmax_value;
+			succ_node.setHvalue(succ_h);
+	
+			cout<<"\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g = "<<g_real + get_adjusted_cost(*op)<<", f = "<<succ_h + g_real + get_adjusted_cost(*op)<<"\n";
+                  	if (succ_h + succ_node.getGreal() <= depth) {
+                       		cout<<"\t\t\tNode generated: h = "<<succ_h<<", g = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<"\n";
+                     		buffer.push(succ_node);
+                  	} else {
+                     		cout<<"\t\t\tpruned!\n";
+                  	}
+		  }
 		  cout<<"\t\tEnd child_"<<(i+1)<<"\n";
               }
 	      cout<<"------------------------End Childs--------------------\n";
