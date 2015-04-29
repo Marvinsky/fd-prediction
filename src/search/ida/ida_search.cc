@@ -426,7 +426,19 @@ set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
 						cout<<"\t\t\tnew already exists in the L"<<endl;
 					} else {
 						cout<<"\t\t\tnew node added to the L"<<endl;
+						cout<<"\t\t\th = "<<succ_node.getHvalue()<<", g = "<<succ_node.getGreal()<<", level = "<<succ_node.getLevel()<<", StateID = "<<succ_node.get_id();
+						cout<<" : ";
+                        			child.dump_inline();
+						fflush(NULL);
+						std::set<SSNode, classcomp>::iterator it;
+						cout<<"\t\t\t\tL list."<<endl;
+						for (it = L.begin(); it != L.end(); it++) {
+							SSNode n = *it;
+							cout<<"\t\t\t\th = "<<n.getHvalue()<<" g = "<<n.getGreal()<<", level = "<<n.getLevel()<<", StateID = "<<n.get_id()<<"\n";
+						}
+						cout<<"\n";
 						L.insert(succ_node);
+						cout<<"\t\t\tAfter insert."<<endl;
 					}	
 					//LCheck.insert(succ_node);
                         	}
