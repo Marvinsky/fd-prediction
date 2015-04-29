@@ -97,7 +97,6 @@ private:
     int nodes_generated_for_bound;
     int nodes_expanded_for_start_state;
     int nodes_generated_for_start_state;
-    int next_bound;
     bool SOLUTION_FOUND;
     std::queue<SSNode> D;
     //int next_bound;

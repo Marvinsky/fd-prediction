@@ -52,7 +52,6 @@ void IDASearch::initialize() {
     best_soln_sofar = INT_MAX/2;
     nodes_expanded_for_start_state = 0;
     nodes_generated_for_start_state = 0;
-    next_bound = 0;
     SOLUTION_FOUND = false; 
 }
 
@@ -81,7 +80,7 @@ SearchStatus IDASearch::step() {
         int total_expanded = 0;
 	int total_generated = 0;
 
-        int d;
+        int d = 0;
 	d = idastar(node);
         if (d == INT_MAX) {
 		//Solution not found
@@ -111,22 +110,22 @@ SearchStatus IDASearch::step() {
 }
 
 int IDASearch::idastar(SSNode node) {
-	double bound;
+	double bound = 0, next_bound = 0, pivot = 0;
 
         GlobalState global_state = g_state_registry->lookup_state(node.get_id());
 	if (check_goal_and_set_plan(global_state)) {
-		cout<<"line 90 solution-found."<<endl;
-                return 0; 
+		cout<<"line solution-found."<<endl;
+                return node.getHvalue() + node.getGreal(); 
         }
 	best_soln_sofar = INT_MAX;
 	bound =  node.getHvalue();
         int count_bound = 1;
 	
 	while (!SOLUTION_FOUND) {
-		next_bound = INT_MAX;
+		pivot = INT_MAX;
 		nodes_expanded_for_bound = 0;
 		nodes_generated_for_bound = 0;
-		next_bound = dfs_heur(node, bound, next_bound);
+		next_bound = dfs_heur(node, bound, pivot);
                 cout<<"\t time_"<<count_bound<<" = "<<g_timer;
 		cout<<", bound_"<<count_bound<<" = "<<bound;
 		cout<<", nodes_expanded_for_bound = "<<nodes_expanded_for_bound;
@@ -134,21 +133,22 @@ int IDASearch::idastar(SSNode node) {
 		cout<<"\n";
 		nodes_expanded_for_start_state += nodes_expanded_for_bound;
 		nodes_generated_for_start_state += nodes_generated_for_bound;
-		bound = next_bound;	
+		bound = next_bound;
+		if (best_soln_sofar <= bound) {
+			break;
+		}	
 		count_bound++;
-		//g_state_registry = new StateRegistry;
 	}
 	return best_soln_sofar;
 }
 
 int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 	queue.push(node);
-	cout<<"MARVINSKYMARVINSKYMARVINSKYMARVINSKYMARVINSKYMARVINSKY\n\n";
+	cout<<"\n==========================Next Iteration===============================\n\n";
 	cout<<"\n\t\tbound = "<<bound;
 	cout<<"\t\tnext_bound = "<<next_bound<<"\n";
 
 	double g_real = 0, h_value = 0, level = 0;
-	//GlobalState global_state;
 	std::vector<const GlobalOperator *> applicable_ops;
 	while (!queue.empty()) {
 		nodes_expanded_for_bound++;
@@ -218,8 +218,6 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 					new_h_value = ncp.getHvalue();
 					new_g_real = ncp.getGreal();
 				
-					//loopIt.insert(ncp);
-				
                         		cout<<"\t\tValidate node that comes from BFS: h = "<<ncp.getHvalue()<<", g_real = "<<ncp.getGreal()<<", f  = "<<ncp.getHvalue() + ncp.getGreal()<<", level = "<<ncp.getLevel()<<", StateID = "<<new_state_id<<"\n";
                         		GlobalState global_state2 = g_state_registry->lookup_state(new_state_id);
 
@@ -244,78 +242,39 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 							}
 						}
 					} //End check goal
-
 				} //End set L
 			} else { //else cost_op != 0
 				std::pair<std::set<SSNode, classcomp>::iterator, bool> repeat;
 				repeat = check.insert(succ_node);
 
 				if (repeat.second) {
-				if (check_goal_and_set_plan(child)) {
-					cout<<"\t\t\tSolution Found!_1_2"<<endl;
-					SOLUTION_FOUND = true;
-		 			if (best_soln_sofar > succ_h + succ_node.getGreal()) {
-						best_soln_sofar = succ_h + succ_node.getGreal(); 
-					}
-					return best_soln_sofar;
-				} else {
-					cout<<"\t\t\tThe solution was not found.1_2"<<endl;
-					if (g_real + cost_op + succ_h <= bound) {
-						cout<<"\t\t\tInserting to the queue f <= bound_1_2"<<endl;
-						queue.push(succ_node);
+					if (check_goal_and_set_plan(child)) {
+						cout<<"\t\t\tSolution Found!_1_2"<<endl;
+						SOLUTION_FOUND = true;
+		 				if (best_soln_sofar > succ_h + succ_node.getGreal()) {
+							best_soln_sofar = succ_h + succ_node.getGreal(); 
+						}
+						return best_soln_sofar;
 					} else {
-						cout<<"\t\t\tFinding the next_bound_1_2"<<endl;
-						if (next_bound >  g_real + cost_op + succ_h) {
-							next_bound =  g_real + cost_op + succ_h;
-							cout<<"\t\t\tnext_bound_1_2 = "<<next_bound<<endl;
+						cout<<"\t\t\tThe solution was not found.1_2"<<endl;
+						if (g_real + cost_op + succ_h <= bound) {
+							cout<<"\t\t\tInserting to the queue f <= bound_1_2"<<endl;
+							queue.push(succ_node);
+						} else {
+							cout<<"\t\t\tFinding the next_bound_1_2"<<endl;
+							if (next_bound >  g_real + cost_op + succ_h) {
+								next_bound =  g_real + cost_op + succ_h;
+								cout<<"\t\t\tnext_bound_1_2 = "<<next_bound<<endl;
+							}
 						}
 					}
-				}
 				} else {
 					cout<<"\t\t\tAlready exist in the check validator."<<endl;
 				}
-			} //cost validation
-			
-			/*std::set<SSNode, classcomp>::iterator it;
-			double new_g_real = 0, new_h_value = 0;
-			std::vector<const GlobalOperator *> applicable_ops2;
-				
-			for (it = L.begin(); it != L.end(); it++) {
-                        	SSNode ncp = *it;
-                        	StateID new_state_id = ncp.get_id();
-				new_h_value = ncp.getHvalue();
-				new_g_real = ncp.getGreal();
-				loopIt.insert(ncp);	
-                        	cout<<"\t\tValidate node that comes from BFS: h = "<<ncp.getHvalue()<<", g_real = "<<ncp.getGreal()<<", f  = "<<ncp.getHvalue() + ncp.getGreal()<<", level = "<<ncp.getLevel()<<", StateID = "<<new_state_id<<"\n";
-
-                        	applicable_ops2.clear();
-                        	GlobalState global_state2 = g_state_registry->lookup_state(new_state_id);
-
-				if (check_goal_and_set_plan(global_state2)) {
-					cout<<"\t\t\tSolution Found!_1_1"<<endl;
-					SOLUTION_FOUND = true;
-		 			if (best_soln_sofar > new_h_value + new_g_real) {
-						best_soln_sofar = new_h_value + new_g_real; 
-					}
-					return best_soln_sofar;
-				} else {
-					cout<<"\t\t\tThe solution was not found.1_1"<<endl;
-					if (new_g_real + new_h_value <= bound) {		
-						cout<<"\t\t\tInserting to the queue f <= bound_1_1"<<endl;
-						queue.push(ncp);	
-					} else {
-						cout<<"\t\t\tFinding the next_bound_1_1"<<endl;
-						if (next_bound >  new_g_real + new_h_value) {
-							next_bound =  new_g_real + new_h_value;
-							cout<<"\t\t\tnext_bound_1_1 = "<<next_bound<<endl;
-						}
-					}
-				} //End check goal
-			}
-			*/
+			} //cost validation	
 			cout<<"\t\t\tEnd Child_"<<(i+1)<<"\n\n";
 		}//End for applicable
-		printStack();
+		//printStack();
 		cout<<"-----------------End Childs------------------\n\n";
 	}//End while
 
@@ -340,14 +299,8 @@ void IDASearch::printStack() {
 	}
 }
 
-
-
-
 void IDASearch::BFS(SSNode root) {
-	//std::pair<std::set<SSNode, classcomp>::iterator, bool> p2;
-	//p2 = check.insert(root);
 	check.insert(root);
-	//if (p2.second) {
         D.push(root);
 	int g_real = 0, level = 0;
 	std::vector<const GlobalOperator *> applicable_ops;	
@@ -356,8 +309,6 @@ void IDASearch::BFS(SSNode root) {
                 g_real = nodecp.getGreal();
                 StateID state_id = nodecp.get_id();
                 level = nodecp.getLevel();
-                
-
 		cout<<"\t\tBFSNode expanded: h = "<<nodecp.getHvalue()<<", g_real = "<<nodecp.getGreal()<<", f = "<<nodecp.getHvalue() + nodecp.getGreal()<<", level = "<<level<<", stateID,: "<<state_id<<"\n";
 
                 D.pop();
@@ -435,9 +386,7 @@ void IDASearch::BFS(SSNode root) {
                 cout<<"\t\t-------------End childs------------\n";
         }
         cout<<"\t\tD.empty() == "<<D.empty()<<endl;
-	//}
 	cout<<"Before Return L\n"<<endl;
-        //return L;
 }
 
 
