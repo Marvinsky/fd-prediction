@@ -86,7 +86,6 @@ private:
     string heuristic_name;
     set<SSNode, classcomp> check;
     set<SSNode, classcomp> L;
-    set<SSNode, classcomp> LCheck;
     stack<SSNode> queue;
     map<Node2, double> expanded;
     map<Node2, double> generated;
@@ -116,7 +115,7 @@ public:
     int idastar(SSNode node);
     int dfs_heur(SSNode node, double bound, double next_bound);
     //BFS
-    set<SSNode, classcomp> BFS(SSNode root);
+    void BFS(SSNode root);
     void printStack();
 };
 

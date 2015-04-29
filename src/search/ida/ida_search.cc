@@ -174,8 +174,6 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 		cout<<"------------------Child----------------\n\n";
 		L.clear();
 		check.clear();
-		//check.insert(nodecp);
-		//set<SSNode, classcomp> loopIt;
 		
 		for (size_t i = 0; i < applicable_ops.size(); ++i) {
 			nodes_generated_for_bound++;
@@ -210,8 +208,7 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 			fflush(NULL);
 			if (cost_op == 0) {
 				cout<<"\t\tget_adjusted_cost(*op) == 0\n";
-				//L.clear();
-                		L = BFS(succ_node);		
+                		BFS(succ_node);		
 				std::set<SSNode, classcomp>::iterator it;
 				double new_g_real = 0, new_h_value = 0;
 				
@@ -238,8 +235,6 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 						if (new_g_real + new_h_value <= bound) {
 								
 							cout<<"\t\t\tInserting to the queue f <= bound_1_1"<<endl;
-							//L.clear();
-							//check.clear();
 							queue.push(ncp);	
 						} else {
 							cout<<"\t\t\tFinding the next_bound_1_1"<<endl;
@@ -251,7 +246,6 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 					} //End check goal
 
 				} //End set L
-				//L.clear();
 			} else { //else cost_op != 0
 				std::pair<std::set<SSNode, classcomp>::iterator, bool> repeat;
 				repeat = check.insert(succ_node);
@@ -267,15 +261,8 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 				} else {
 					cout<<"\t\t\tThe solution was not found.1_2"<<endl;
 					if (g_real + cost_op + succ_h <= bound) {
-						//std::set<SSNode, classcomp>::iterator p2 = LCheck.find(succ_node);
-						//if (p2 == LCheck.end()) {
-							cout<<"\t\t\tInserting to the queue f <= bound_1_2"<<endl;
-							//L.clear();
-							//check.clear();
-							queue.push(succ_node);
-						//} else {
-							//cout<<"\t\t\tAlready exists in the LCheck BFS._1_2"<<endl;					
-						//}
+						cout<<"\t\t\tInserting to the queue f <= bound_1_2"<<endl;
+						queue.push(succ_node);
 					} else {
 						cout<<"\t\t\tFinding the next_bound_1_2"<<endl;
 						if (next_bound >  g_real + cost_op + succ_h) {
@@ -356,7 +343,7 @@ void IDASearch::printStack() {
 
 
 
-set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
+void IDASearch::BFS(SSNode root) {
 	//std::pair<std::set<SSNode, classcomp>::iterator, bool> p2;
 	//p2 = check.insert(root);
 	check.insert(root);
@@ -439,8 +426,7 @@ set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
 						cout<<"\n";
 						L.insert(succ_node);
 						cout<<"\t\t\tAfter insert."<<endl;
-					}	
-					//LCheck.insert(succ_node);
+					}
                         	}
 			} else {
 				cout<<"\t\t\tnode with StateID,: = "<<child.get_id()<<" already exists. Then no added."<<endl;
@@ -451,7 +437,7 @@ set<SSNode, classcomp> IDASearch::BFS(SSNode root) {
         cout<<"\t\tD.empty() == "<<D.empty()<<endl;
 	//}
 	cout<<"Before Return L\n"<<endl;
-        return L;
+        //return L;
 }
 
 

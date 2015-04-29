@@ -69,8 +69,8 @@ SearchStatus BFSSearch::step() {
 
         while (!buffer.empty()) {
               SSNode nodecp = buffer.front();
-              int g_real = nodecp.getLevel();
-              int level = nodecp.getGreal();
+              int g_real = nodecp.getGreal();
+              int level = nodecp.getLevel();
               cout<<"\tRaiz: h = "<<nodecp.getHvalue()<<", g_real = "<<g_real<<", f = "<<nodecp.getHvalue() + g_real<<", level = "<<level<<"\n";
 	      buffer.pop();
 
