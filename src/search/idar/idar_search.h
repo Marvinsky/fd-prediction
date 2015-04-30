@@ -55,9 +55,6 @@ private:
     //DFS
     int depth;
     string heuristic_name;
-    stack<Node> queue;
-    map<Node2, double> expanded;
-    map<Node2, double> generated;
     Timer ida_timer;
 
     //IDA*

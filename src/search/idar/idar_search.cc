@@ -34,10 +34,11 @@ IDARSearch::IDARSearch(
         int max_h = 0;
         for (size_t i = 0; i < heuristics.size(); i++) {
             heuristics[i]->evaluate(g_initial_state());
-            int aux = heuristics[i]->get_heuristic();
-            if (max_h < aux) {
-                max_h = aux;
-            }
+            if (!heuristics[i]->is_dead_end()) {
+		max_h = max(max_h, heuristics[i]->get_heuristic());
+	    } else {
+		max_h = INT_MAX/2;
+	    }
         }
         cout<<"max_h(constructor) = "<<max_h<<endl;
 }
@@ -57,7 +58,11 @@ SearchStatus IDARSearch::step() {
         int hmax = 0; 
         for (size_t i = 0; i < heuristics.size(); i++) {
             heuristics[i]->evaluate(initial_state);
-            hmax = max(hmax, heuristics[i]->get_heuristic());
+	    if (!heuristics[i]->is_dead_end()) {
+		hmax = max(hmax, heuristics[i]->get_heuristic());
+	    } else {
+		hmax = INT_MAX/2;
+	    }
         }
         int h_initial = hmax;
         cout<<"h_initial = "<<h_initial<<endl;
@@ -69,7 +74,7 @@ SearchStatus IDARSearch::step() {
         int total_expanded = 0;
 	int total_generated = 0;
 
-        int d;
+        int d = 0;
 	d = idastar(node);
         if (d == INT_MAX) {
 		//Solution not found
@@ -103,7 +108,7 @@ int IDARSearch::idastar(Node node) {
 
         GlobalState global_state = g_state_registry->lookup_state(node.get_id());
 	if (check_goal_and_set_plan(global_state)) {
-		cout<<"line 90 solution-found."<<endl;
+		cout<<"line solution-found."<<endl;
                 return 0; 
         }
 	best_soln_sofar = INT_MAX;
@@ -155,8 +160,13 @@ int IDARSearch::dfs_heur(Node node, double bound, double &next_bound, double g_r
 	    int hmax_value = 0; 
             for (size_t i = 0; i < heuristics.size(); i++) {
                 heuristics[i]->evaluate(child);
-                hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
+		if (!heuristics[i]->is_dead_end()) {
+			hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
+		} else {
+			hmax_value = INT_MAX/2;
+		}
             }
+
             int succ_h = hmax_value;
             search_progress.inc_generated();
             Node succ_node(child.get_id(), succ_h, g_real + get_adjusted_cost(*op), node.getLevel()+ 1);
