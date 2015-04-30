@@ -63,18 +63,19 @@ bool fncomp (SSNode lhs, SSNode rhs) {
 struct classcomp {
         bool operator() (const SSNode& lhs, const SSNode& rhs) const {
 		//return lhs.get_id().hash() < rhs.get_id().hash();
-		cout<<"\t\t\tlhs.get_id() = "<<lhs.get_id()<<"\n";
-		cout<<"\t\t\tlhs.get_id().hash() = "<<lhs.get_id().hash()<<"\n";
-		cout<<"\t\t\trhs.get_id() = "<<rhs.get_id()<<"\n";
-		cout<<"\t\t\trhs.get_id().hash() = "<<rhs.get_id().hash()<<"\n";
-		cout<<"\t\t\t______________________________\n";
+		//cout<<"\t\t\tlhs.get_id() = "<<lhs.get_id()<<"\n";
+		//cout<<"\t\t\tlhs.get_id().hash() = "<<lhs.get_id().hash()<<"\n";
+		//cout<<"\t\t\trhs.get_id() = "<<rhs.get_id()<<"\n";
+		//cout<<"\t\t\trhs.get_id().hash() = "<<rhs.get_id().hash()<<"\n";
+		//cout<<"\t\t\t______________________________\n";
 		return lhs.get_id() < rhs.get_id();
-                if (lhs.get_id().hash() != rhs.get_id().hash()) {
+                /*if (lhs.get_id().hash() != rhs.get_id().hash()) {
 			bool flag = lhs.get_id().hash() < rhs.get_id().hash();
 			cout<<"\t\t\t\t "<<flag<<"\n\n";
                         return lhs.get_id().hash() < rhs.get_id().hash();
                 }
                 return false;
+		*/
         }
 };
 
@@ -116,6 +117,7 @@ public:
     //BFS
     void BFS(SSNode root);
     void printStack();
+    void printSet(std::set<SSNode, classcomp> S);
 };
 
 #endif

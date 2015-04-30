@@ -118,7 +118,7 @@ int IDASearch::idastar(SSNode node) {
                 return node.getHvalue() + node.getGreal(); 
         }
 	best_soln_sofar = INT_MAX;
-	bound =  node.getHvalue();
+	bound =  35;//node.getHvalue();
         int count_bound = 1;
 	
 	while (!SOLUTION_FOUND) {
@@ -206,12 +206,17 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 			cout<<": state_id:"<<child.get_id()<<":";
                 	child.dump_inline();
 			fflush(NULL);
+
+			std::pair<std::set<SSNode, classcomp>::iterator, bool> repeat;
+			repeat = check.insert(succ_node);
+
+			if (repeat.second) {
 			if (cost_op == 0) {
 				cout<<"\t\tget_adjusted_cost(*op) == 0\n";
                 		BFS(succ_node);		
+				if (L.size() != 0) {
 				std::set<SSNode, classcomp>::iterator it;
 				double new_g_real = 0, new_h_value = 0;
-				
 				for (it = L.begin(); it != L.end(); it++) {
                         		SSNode ncp = *it;
                         		StateID new_state_id = ncp.get_id();
@@ -243,11 +248,8 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 						}
 					} //End check goal
 				} //End set L
-			} else { //else cost_op != 0
-				std::pair<std::set<SSNode, classcomp>::iterator, bool> repeat;
-				repeat = check.insert(succ_node);
-
-				if (repeat.second) {
+				}
+			} else { //else cost_op != 0	
 					if (check_goal_and_set_plan(child)) {
 						cout<<"\t\t\tSolution Found!_1_2"<<endl;
 						SOLUTION_FOUND = true;
@@ -267,14 +269,14 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 								cout<<"\t\t\tnext_bound_1_2 = "<<next_bound<<endl;
 							}
 						}
-					}
-				} else {
-					cout<<"\t\t\tAlready exist in the check validator."<<endl;
-				}
-			} //cost validation	
+					}	
+			} //cost validation
+			} else {
+				cout<<"\t\tsucc_node already exist in the check.\n";
+			}	
 			cout<<"\t\t\tEnd Child_"<<(i+1)<<"\n\n";
 		}//End for applicable
-		//printStack();
+		printStack();
 		cout<<"-----------------End Childs------------------\n\n";
 	}//End while
 
@@ -283,20 +285,23 @@ int IDASearch::dfs_heur(SSNode node, double bound, double next_bound) {
 }
 
 void IDASearch::printStack() {
-	cout<<"\t\tBegin printStack."<<endl;
-	stack<SSNode> r;
+	cout<<"\t\tBegin printStack. queue.size() = "<<queue.size()<<endl;
+	std::stack<SSNode> r;
+	cout<<"\t\tqueue.empty() = "<<queue.empty()<<endl;
+	int count = 0;
 	while (!queue.empty()) {
+		cout<<"\t\t\t"<<++count<<endl;
 		SSNode n = queue.top();
 		cout<<"\t\t\tstateId = "<<n.get_id()<<" h = "<<n.getHvalue()<<", g = "<<n.getGreal()<<", f = "<<n.getHvalue() + n.getGreal()<<"\n";
 		queue.pop();
 		r.push(n);
 	}
-	cout<<"\t\tEnd printStack."<<endl;
 	while (!r.empty()) {
 		SSNode n = r.top();
 		queue.push(n);
 		r.pop();
 	}
+	cout<<"\t\tEnd printStack."<<endl;
 }
 
 void IDASearch::BFS(SSNode root) {
@@ -339,6 +344,10 @@ void IDASearch::BFS(SSNode root) {
                         SSNode succ_node(child.get_id(), hmax_value, g_real + cost_op, level + 1);
 			std::pair<std::set<SSNode, classcomp>::iterator, bool> p;
 			p = check.insert(succ_node);
+			std::set<SSNode, classcomp>::iterator it0;
+			//cout<<"\n\t\t\tCheck List After Insert:\n";	
+		        //printSet(check);	
+			cout<<"\n";
 			if (p.second) {
 				for (size_t i = 0; i < heuristics.size(); i++) {
                                 	heuristics[i]->evaluate(child);
@@ -361,22 +370,20 @@ void IDASearch::BFS(SSNode root) {
                                 	cout<<"\t\t\tcost != 0\n";
 					std::set<SSNode, classcomp>::iterator iter = L.find(succ_node);
 					if (iter != L.end()) {
-						cout<<"\t\t\tnew already exists in the L"<<endl;
+						cout<<"\t\t\talready exists in the L"<<endl;
 					} else {
-						cout<<"\t\t\tnew node added to the L"<<endl;
+						cout<<"\t\t\tnew node will be add to the L: "<<endl;
 						cout<<"\t\t\th = "<<succ_node.getHvalue()<<", g = "<<succ_node.getGreal()<<", level = "<<succ_node.getLevel()<<", StateID = "<<succ_node.get_id();
 						cout<<" : ";
                         			child.dump_inline();
 						fflush(NULL);
-						std::set<SSNode, classcomp>::iterator it;
-						cout<<"\t\t\t\tL list."<<endl;
-						for (it = L.begin(); it != L.end(); it++) {
-							SSNode n = *it;
-							cout<<"\t\t\t\th = "<<n.getHvalue()<<" g = "<<n.getGreal()<<", level = "<<n.getLevel()<<", StateID = "<<n.get_id()<<"\n";
-						}
+						//cout<<"\t\t\tBefore insert."<<endl;
+					        //printSet(L);	
 						cout<<"\n";
 						L.insert(succ_node);
-						cout<<"\t\t\tAfter insert."<<endl;
+						//cout<<"\t\t\tInserting...."<<endl;
+						//cout<<"\t\t\tAfter insert."<<endl;
+						//printSet(L);
 					}
                         	}
 			} else {
@@ -388,6 +395,17 @@ void IDASearch::BFS(SSNode root) {
         cout<<"\t\tD.empty() == "<<D.empty()<<endl;
 	cout<<"Before Return L\n"<<endl;
 }
+
+void IDASearch::printSet(std::set<SSNode, classcomp> S) {
+	cout<<"\t\t\t\t______________printSet_____________\n";
+	std::set<SSNode, classcomp>::iterator it2;
+	for (it2 = S.begin(); it2 != S.end(); it2++) {
+		SSNode n = *it2;
+		cout<<"\t\t\t\th = "<<n.getHvalue()<<" g = "<<n.getGreal()<<", level = "<<n.getLevel()<<", StateID = "<<n.get_id()<<"\n";
+	}
+	cout<<"\t\t\t\t__________End printSet_____________\n";
+}
+
 
 
 void IDASearch::print_heuristic_values(const vector<int> &values) const {
