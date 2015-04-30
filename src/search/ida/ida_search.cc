@@ -118,7 +118,7 @@ int IDASearch::idastar(SSNode node) {
                 return node.getHvalue() + node.getGreal(); 
         }
 	best_soln_sofar = INT_MAX;
-	bound =  35;//node.getHvalue();
+	bound =  node.getHvalue();
         int count_bound = 1;
 	
 	while (!SOLUTION_FOUND) {
