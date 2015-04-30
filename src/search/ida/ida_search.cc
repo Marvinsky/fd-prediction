@@ -344,7 +344,7 @@ void IDASearch::BFS(SSNode root) {
                         SSNode succ_node(child.get_id(), hmax_value, g_real + cost_op, level + 1);
 			std::pair<std::set<SSNode, classcomp>::iterator, bool> p;
 			p = check.insert(succ_node);
-			std::set<SSNode, classcomp>::iterator it0;
+			//std::set<SSNode, classcomp>::iterator it0;
 			//cout<<"\n\t\t\tCheck List After Insert:\n";	
 		        //printSet(check);	
 			cout<<"\n";
