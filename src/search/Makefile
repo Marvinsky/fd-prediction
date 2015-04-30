@@ -168,6 +168,8 @@ HEADERS += dfs/dfs_search.h \
 
 HEADERS += ida/ida_search.h \
 
+HEADERS += idar/idar_search.h \
+
 HEADERS += bfs/bfs_search.h \
 
 HEADERS += original/eager_search_original.h \
