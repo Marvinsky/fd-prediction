@@ -145,7 +145,6 @@ void SSSearch::probe()
 
 		double h = INT_MAX/2;
 		double w = s.getWeight();
-		//cout<<"w = "<<w<<endl;
  
                 std::vector<const GlobalOperator*> applicable_ops;
                 GlobalState global_state = g_state_registry->lookup_state(s.get_id()); 
@@ -170,6 +169,8 @@ void SSSearch::probe()
                 }
                  //end count nodes generated
                 cout<<"\t__________________begin Childs_________________\n";
+		L.clear();
+		check.clear();
 		for (size_t i = 0; i < applicable_ops.size(); ++i)
 		{
                         const GlobalOperator *op = applicable_ops[i];
@@ -202,111 +203,66 @@ void SSSearch::probe()
 			   
 			   if (get_adjusted_cost(*op) == 0) {
 				cout<<"\t\tget_adjusted_cost(*op) == 0\n";
-			   	buffer = BFS(child_node, object);
-
-				/*std::set<SSQueue>::iterator it;
-				for (it = buffer.begin(); it != buffer.end(); it++) {
-					
-					SSQueue sst = *it;
-					SSNode node = sst.getNode();
-					Type t = sst.getT();
-					double new_g_real = node.getGreal();
-					double new_level = t.getLevel();
-					StateID new_state_id = node.get_id();
-					double w2 = node.getWeight();
-
-					cout<<"\n\t\tNode restored: h = "<<t.getH()<<", g_real = "<<node.getGreal()<<", f = "<<t.getH() + node.getGreal()<<", level = "<<t.getLevel()<<", w = "<<w2<<", stateID,: "<<new_state_id<<"\n";
-				}*/
+			   	BFS(child_node, object);
 
 				std::set<SSQueue>::iterator it;
-				for (it = buffer.begin(); it != buffer.end(); it++) {
-					
+				for (it = L.begin(); it != L.end(); it++) {	
 					SSQueue sst = *it;
 					SSNode node = sst.getNode();
 					Type t = sst.getT();
 					double new_g_real = node.getGreal();
-					double new_level = t.getLevel();
 					StateID new_state_id = node.get_id();
 					double w2 = node.getWeight();
 
 					cout<<"\n\t\tNode restored: h = "<<t.getH()<<", g_real = "<<node.getGreal()<<", f = "<<t.getH() + node.getGreal()<<", level = "<<t.getLevel()<<", w = "<<w2<<"\n";
-
-					std::vector<const GlobalOperator *> applicable_ops2;
                         		GlobalState global_state2 = g_state_registry->lookup_state(new_state_id);
-                        		g_successor_generator->generate_applicable_ops(global_state2, applicable_ops2);
-                        		cout<<"\t\tapplicable_ops.size() = "<<applicable_ops2.size()<<endl;
-                        		cout<<"\t\t--------------childs-------------\n";
+                           			
+					map<Type, SSNode>::iterator queueIt = queue.find( t );
+			   		if( queueIt != queue.end() )
+			   		{
+                                	SSNode snode = queueIt->second;
 
-					for (size_t j = 0; j < applicable_ops2.size(); j++) {
-                                		const GlobalOperator *op2 = applicable_ops2[j];
-                                		GlobalState new_child =  g_state_registry->get_successor_state(global_state2, *op2);
-
-                                		int hmax_value2 = 0;
-                                		for (size_t i = 0; i < heuristics.size(); i++) {
-                                        		heuristics[i]->evaluate(new_child);
-                                        		hmax_value2 = max(hmax_value2, heuristics[i]->get_heuristic());
-                                		}
-                                		int succ_h2 = hmax_value2;
-
-                                		SSNode succ_node2;
-                           			StateID new_child_state_id = new_child.get_id();
-                           			succ_node2.set_id(new_child_state_id);
-                           			succ_node2.setWeight(w2);
-                           			succ_node2.setGreal(new_g_real + get_adjusted_cost(*op2));
-
-						Type object2 = sampler->getType(new_child_state_id, succ_h2, 1);
-						object2.setLevel(new_level + 1);
-						cout<<"\n\t\tzc: Child_"<<(j+1)<<" : h = "<<succ_h2<<", g_real = "<<new_g_real + get_adjusted_cost(*op2)<<", f = "<<succ_h2 + new_g_real + get_adjusted_cost(*op2)<<", level = "<<object2.getLevel()<<", w = "<<w2<<"\n\n";
-
-
-						map<Type, SSNode>::iterator queueIt = queue.find( object2 );
-			   			if( queueIt != queue.end() )
-			   			{
-                                			SSNode snode = queueIt->second;
-
-                                			cout<<"\t\t\tzc: The duplicate node is: h = "<<queueIt->first.getH()<<", g = "<<snode.getGreal()<<", f = "<< queueIt->first.getH() + snode.getGreal()<<", w = "<<snode.getWeight()<<", level = "<<queueIt->first.getLevel()<<"\n";
+                                		cout<<"\t\t\tzc: The duplicate node is: h = "<<queueIt->first.getH()<<", g = "<<snode.getGreal()<<", f = "<< queueIt->first.getH() + snode.getGreal()<<", w = "<<snode.getWeight()<<", level = "<<queueIt->first.getLevel()<<"\n";
                                 
-							double wa = (double)snode.getWeight();
-							//snode.setWeight( wa + w);
-                                			queueIt->second.setWeight(wa + w2); // set w the node that already exists
-                                			cout<<"\t\t\tzc: before ss process starts, the w of the duplicate node is updated to: "<<queueIt->second.getWeight()<<endl; 
-                                			//std::pair<std::map<Type, SSNode>::iterator, bool> ret0;
-                                			//ret0 = queue.insert(pair<Type, SSNode>(object, snode));
-                                			//cout<<"\tsnode.getWeight() = "<<snode.getWeight()<<endl;
-                                			//queueIt->second.setWeight(snode.getWeight());
-							double prob = ( double )w2 / (double)( wa + w2);
-							int rand_100 =  RanGen2->IRandom(0, 99);  //(int)g_rng.next(100);
+						double wa = (double)snode.getWeight();
+						//snode.setWeight( wa + w);
+                                		queueIt->second.setWeight(wa + w2); // set w the node that already exists
+                                		cout<<"\t\t\tzc: before ss process starts, the w of the duplicate node is updated to: "<<queueIt->second.getWeight()<<endl; 
+                                		//std::pair<std::map<Type, SSNode>::iterator, bool> ret0;
+                                		//ret0 = queue.insert(pair<Type, SSNode>(object, snode));
+                                		//cout<<"\tsnode.getWeight() = "<<snode.getWeight()<<endl;
+                                		//queueIt->second.setWeight(snode.getWeight());
+						double prob = ( double )w2 / (double)( wa + w2);
+						int rand_100 =  RanGen2->IRandom(0, 99);  //(int)g_rng.next(100);
                           	 
-                                			double a = (( double )rand_100) / 100;
-                                			//cout<<"a = "<<a<<" prob = "<<prob<<endl;
+                                		double a = (( double )rand_100) / 100;
+                                		//cout<<"a = "<<a<<" prob = "<<prob<<endl;
                                 
-							if (a < prob) 
-							{
-                                        			cout<<"\t\t\tzc: Added even though is duplicate.\n";                               
-				        			succ_node2.setWeight( wa + w2);
-                                        			cout<<"\t\t\tzc: the w is updated to = "<<succ_node2.getWeight()<<endl;
-                                        			std::pair<std::map<Type, SSNode>::iterator, bool> ret3;
-                                     				queue.erase(object2); 
+						if (a < prob) 
+						{
+                                        		cout<<"\t\t\tzc: Added even though is duplicate.\n";                               
+				        		node.setWeight( wa + w2);
+                                        		cout<<"\t\t\tzc: the w is updated to = "<<node.getWeight()<<endl;
+                                        		std::pair<std::map<Type, SSNode>::iterator, bool> ret3;
+                                     			queue.erase(t); 
                                         
-                                        			ret3 = queue.insert( pair<Type, SSNode>( object2, succ_node2 ));      
-                                        			queueIt = ret3.first;
-                                        			queueIt->second.setWeight(succ_node2.getWeight());
-							} else {
-                                        			cout<<"\t\t\tzc: Not added.\n";
-                                        			cout<<"\t\t\tbut the w is updated for the node that already exists to: "<<queueIt->second.getWeight()<<endl;
-                                			}
-			   			} 
-			   			else
-			   			{
-                                			cout<<"\t\t\tzc: New node added.\n";
-							queue.insert( pair<Type, SSNode>( object2, succ_node2 ) );
-                                			//cout<<"\t\tsucc_node2.getWeight() = "<<succ_node2.getWeight()<<"\n";
+                                        		ret3 = queue.insert( pair<Type, SSNode>( t, node ));      
+                                        		queueIt = ret3.first;
+                                        		queueIt->second.setWeight(node.getWeight());
+						} else {
+                                        		cout<<"\t\t\tzc: Not added.\n";
+                                        		cout<<"\t\t\tbut the w is updated for the node that already exists to: "<<queueIt->second.getWeight()<<endl;
+                                		}
+			   		} 
+			   		else
+			   		{
+                                		cout<<"\t\t\tzc: New node added.\n";
+						queue.insert( pair<Type, SSNode>( t, node ) );
+                                		//cout<<"\t\tsucc_node2.getWeight() = "<<succ_node2.getWeight()<<"\n";
                                 
-                                			cout<<"\t\t\tzc: Child: h = "<< succ_h2 <<", g_real = "<< new_g_real + get_adjusted_cost(*op2) <<", f = "<< succ_h2 + new_g_real + get_adjusted_cost(*op2) << " threshold: " << threshold <<" w = "<<succ_node2.getWeight()<<endl;
-                           			}// End queueIt != queue.end()
-					}//End applicable_ops2
+                                		cout<<"\t\t\tzc: Child: h = "<< t.getH() <<", g_real = "<< new_g_real <<", f = "<< t.getH() + new_g_real << " threshold: " << threshold <<" w = "<<node.getWeight()<<endl;
+                           		}// End queueIt != queue.end()
 				}   //End for set lopp
-				buffer.clear();
 			   } else {
 				map<Type, SSNode>::iterator queueIt = queue.find( object );
 			   	if( queueIt != queue.end() )
@@ -369,13 +325,16 @@ void SSSearch::probe()
         
 }
 
-std::set<SSQueue, classcomp> SSSearch::BFS(SSNode root, Type type) {
-	std::set<SSQueue, classcomp> L;
+void SSSearch::BFS(SSNode root, Type type) {
 	std::queue<SSNode> D;
         D.push(root);
+	SSQueue s1;
+	s1.setNode(root);
+	s1.setT(type);
+	check.insert(s1);
+
         cout<<"\t\t\tD.size() = "<<D.size()<<endl;
         while (!D.empty()) {
-                cout<<"\t\t\tD.size() = "<<D.size()<<endl;
                 SSNode nodecp = D.front();
                 double g_real = nodecp.getGreal();
                 StateID state_id = nodecp.get_id();
@@ -395,34 +354,52 @@ std::set<SSQueue, classcomp> SSSearch::BFS(SSNode root, Type type) {
                         const GlobalOperator *op = applicable_ops[i];
                         GlobalState child =  g_state_registry->get_successor_state(global_state, *op);
 
-                        int hmax_value = 0;
-                        for (size_t i = 0; i < heuristics.size(); i++) {
-                                heuristics[i]->evaluate(child);
-                                hmax_value = max(hmax_value, heuristics[i]->get_heuristic());
-                        }
+                        int hmin_value = 0;
+			int cost_op = get_adjusted_cost(*op);
+			SSNode succ_node(child.get_id(), w, g_real + cost_op);
 
-                        double succ_h = hmax_value;
-                        SSNode succ_node(child.get_id(), w, g_real + get_adjusted_cost(*op));
-                        	
-			Type object = sampler->getType(child.get_id(), succ_h,  1);
+			Type object = sampler->getType(child.get_id(), hmin_value,  1);
                       	object.setLevel( level + 1 );
 
-			cout<<"\t\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<object.getLevel()<<", w = "<<w<<", stateID,:"<<child.get_id()<<"\n";
-			SSQueue ssqueue;
-			ssqueue.setNode(succ_node);
-			ssqueue.setT(object);
-                        if (get_adjusted_cost(*op) == 0) {
-                                cout<<"\t\t\tcost = 0\n";
-                                D.push(succ_node);
-                        } else {
-                                cout<<"\t\t\tcost != 0\n";
-                                L.insert(ssqueue);
-                        }
+			SSQueue s2;
+			s2.setNode(succ_node);
+			s2.setT(object);
+			std::pair<std::set<SSQueue, classcomp>::iterator, bool> r1;
+			r1 = check.insert(s2);
+
+			if (r1.second) {
+				for (size_t i = 0; i < heuristics.size(); i++) {
+                                	heuristics[i]->evaluate(child);
+					if (!heuristics[i]->is_dead_end()) {
+						hmin_value = min(hmin_value, heuristics[i]->get_heuristic());
+					} else {
+						hmin_value = INT_MAX/2;
+					}
+                        	}
+
+                        	double succ_h = hmin_value;
+				object.setH(succ_h);
+				
+				SSQueue s3;
+				s3.setNode(succ_node);
+				s3.setT(object);
+
+				cout<<"\t\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<object.getLevel()<<", w = "<<w<<", stateID,:"<<child.get_id()<<"\n";
+
+				if (cost_op == 0) {
+					cout<<"\t\t\tcost = 0, then is inserted to the D.\n";
+					D.push(succ_node);			
+				} else {
+					cout<<"\t\t\tcost != 0, then is inserted to the L.\n";
+					L.insert(s3);
+				}
+			} else {
+				cout<<"\t\t\tSSQueue with id = "<<child.get_id()<<" already exists.\n";
+			}
                 }
                 cout<<"\t\t\t-------------End childs------------\n";
         }
         cout<<"\t\t\tD.empty() == "<<D.empty()<<endl;
-        return L;
 }
 
 

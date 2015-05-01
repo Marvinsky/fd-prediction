@@ -55,47 +55,9 @@ public:
 	void setT(Type t) {this->type = t;}
 };
 
-bool fncomp (SSQueue lhs, SSQueue rhs) {
-
-        if (lhs.getNode().get_id().hash() != rhs.getNode().get_id().hash()) {
-                return lhs.getNode().get_id().hash() < rhs.getNode().get_id().hash();
-        }
-
-        /*if (lhs.getHvalue() != rhs.getHvalue()) {
-                return lhs.getHvalue() < rhs.getHvalue();
-        }
-
-        if (lhs.getGreal() != rhs.getGreal()) {
-                return lhs.getGreal() < rhs.getGreal();
-        }
-
-        if (lhs.getLevel() != rhs.getLevel()) {
-                return lhs.getLevel() < rhs.getLevel();
-        }*/
-
-        return false;
-}
-
 struct classcomp {
         bool operator() (const SSQueue& lhs, const SSQueue& rhs) const {
-
-                if (lhs.getNode().get_id().hash() != rhs.getNode().get_id().hash()) {
-                        return lhs.getNode().get_id().hash() < rhs.getNode().get_id().hash();
-                }
-
-                /*if (lhs.getHvalue() != rhs.getHvalue()) {
-                        return lhs.getHvalue() < rhs.getHvalue();
-                }
-
-                if (lhs.getGreal() != rhs.getGreal()) {
-                        return lhs.getGreal() < rhs.getGreal();
-                }
-
-                if (lhs.getLevel() != rhs.getLevel()) {
-                        return lhs.getLevel() < rhs.getLevel();
-                }*/
-
-                return false;
+		return lhs.getNode().get_id().hash() < rhs.getNode().get_id().hash(); 
         }
 };
 
@@ -121,7 +83,10 @@ private:
         CRandomMersenne* RanGen2;
         Timer ss_timer;
         double ss_timer_value;
-	std::set<SSQueue, classcomp> buffer;
+	
+	//IDA* - BFS
+	std::set<SSQueue, classcomp> L;
+	std::set<SSQueue, classcomp> check;
 
 protected:
 
@@ -138,7 +103,7 @@ public:
         void probe();
         void predict(int probes);
 	//BFS
-	std::set<SSQueue, classcomp> BFS(SSNode root, Type type);
+	void BFS(SSNode root, Type type);
 };
 
 #endif /*MRW_H_*/

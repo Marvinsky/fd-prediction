@@ -78,6 +78,7 @@ SearchStatus IDAISearch::step() {
 
         int d = 0;
 	d = idastar(node);
+	cout<<"d = "<<d<<"\n";
         if (d == INT_MAX) {
 		//Solution not found
 		cout<<"Solution NOT FOUND"<<endl;
@@ -91,6 +92,7 @@ SearchStatus IDAISearch::step() {
 		cout<<", generated nodes = "<<nodes_generated_for_start_state<<"\n";
 	}
 	total_d += d;
+	cout<<"total_d = "<<total_d<<"\n";
 	total_expanded += nodes_expanded_for_start_state;
 	total_generated += nodes_generated_for_start_state;
 
@@ -110,7 +112,7 @@ int IDAISearch::idastar(Node node) {
 
         GlobalState global_state = g_state_registry->lookup_state(node.get_id());
 	if (check_goal_and_set_plan(global_state)) {
-		cout<<"line solution-found."<<endl;
+		cout<<"solution_found_1"<<endl;
                 return 0; 
         }
 	best_soln_sofar = INT_MAX;
@@ -130,14 +132,14 @@ int IDAISearch::idastar(Node node) {
 		nodes_generated_for_start_state += nodes_generated_for_bound;
 		cout<<"done = "<<done<<endl;
 		if (done) {
-			cout<<"break the application because done = "<<done<<endl;
+			//cout<<"break the application because done = "<<done<<endl;
 			break;
 		}
 		bound = next_bound;
-		cout<<"the new bound is = "<<bound<<endl;
-                cout<<"best_soln_sofar = "<<best_soln_sofar<<endl;
+		//cout<<"the new bound is = "<<bound<<endl;
+                //cout<<"best_soln_sofar = "<<best_soln_sofar<<endl;
 		if (best_soln_sofar <= bound) {
-			cout<<"break the application because best_soln_sofar <= bound"<<endl;
+			//cout<<"break the application because best_soln_sofar <= bound"<<endl;
 			break;
 		}
 		count_bound++;
@@ -155,12 +157,12 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
 		double g_real = ncp.getGreal();
 		buffer.pop();
 
-		cout<<"node expanded: h = "<<ncp.getHvalue()<<", g_real = "<<ncp.getGreal()<<", f = "<<ncp.getHvalue() + ncp.getGreal()<<"\n";
+		//cout<<"node expanded: h = "<<ncp.getHvalue()<<", g_real = "<<ncp.getGreal()<<", f = "<<ncp.getHvalue() + ncp.getGreal()<<"\n";
 		std::vector<const GlobalOperator *> applicable_ops;
         	GlobalState global_state = g_state_registry->lookup_state(ncp.get_id());
         	g_successor_generator->generate_applicable_ops(global_state, applicable_ops);
-        	cout<<"applicable_ops.size() = "<<applicable_ops.size()<<endl;
-		cout<<"--------------childs-------------\n";
+        	//cout<<"applicable_ops.size() = "<<applicable_ops.size()<<endl;
+		//cout<<"--------------childs-------------\n";
 		L.clear();
 		check.clear();
         	for (size_t i = 0; i < applicable_ops.size(); i++) {
@@ -181,7 +183,7 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
             		}
             		int succ_h = hmax_value;
 			Node succ_node(child.get_id(), succ_h, g_real + cost_op, node.getLevel()+ 1);
-	    		cout<<"\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<"\n";
+	    		//cout<<"\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<"\n";
 
 			if (cost_op == 0) {
 				BFS(succ_node);
@@ -193,29 +195,33 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
 					new_g_real = n.getGreal();
 					new_h_value = n.getHvalue();
 		
-					cout<<"\t\tNode from BFS: h "<<new_h_value<<", g = "<<new_g_real<<", f = "<<new_h_value + new_g_real<<", level = "<<n.getLevel()<<", stateID = "<<new_state_id<<"\n";
+					//cout<<"\t\tNode from BFS: h "<<new_h_value<<", g = "<<new_g_real<<", f = "<<new_h_value + new_g_real<<", level = "<<n.getLevel()<<", stateID = "<<new_state_id<<"\n";
 
 					GlobalState global_state2 = g_state_registry->lookup_state(new_state_id);
 
 					if (check_goal_and_set_plan(global_state2)) {
-						cout<<"\tSolution-found in dfs_heur."<<endl;
-						if (best_soln_sofar > new_g_real) {
-							best_soln_sofar = new_g_real;
+						cout<<"\tsolution_found_2"<<endl;
+						cout<<"best_soln_sofar = "<<best_soln_sofar<<"\n";
+						cout<<"new_g_real = "<<new_g_real<<"\n";
+						cout<<"new_h_value = "<<new_h_value<<"\n";
+						if (best_soln_sofar > bound) {
+							best_soln_sofar = bound;
 						}
-						cout<<"\tbest_soln_sofar = "<<best_soln_sofar<<endl;
-						if (best_soln_sofar <= bound) {
-	           					cout<<"\tbest_soln_sofar <= bound => return 1;"<<endl;
+						//cout<<"\tbest_soln_sofar = "<<best_soln_sofar<<endl;
+						/*if (best_soln_sofar <= bound) {
+	           					//cout<<"\tbest_soln_sofar <= bound => return 1;"<<endl;
                    					return  1;
 						} else {
 		   					continue;
-						}
+						}*/
+						return 1;
             				} else {
-						cout<<"\t\tthe soluton WAS NOT found."<<endl;
+						//cout<<"\t\tthe soluton WAS NOT found."<<endl;
 						if (new_g_real + new_h_value > bound) {
 							if (next_bound > new_g_real + new_h_value) {
 								next_bound = new_g_real + new_h_value;
 							}
-							cout<<"\t\tnext_bound = "<<next_bound<<endl;
+							//cout<<"\t\tnext_bound = "<<next_bound<<endl;
 						} else {
 							buffer.push(n);
 						}
@@ -223,33 +229,38 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
 				} //End for set L
 			} else {
 				if (check_goal_and_set_plan(child)) {
-					cout<<"\tSolution-found in dfs_heur."<<endl;
+					cout<<"\tsolution_found_3"<<endl;
+					cout<<"best_soln_sofar = "<<best_soln_sofar<<"\n";
+					cout<<"g_real = "<<g_real<<"\n";
+					cout<<"cost_op = "<<cost_op<<"\n";
+					cout<<"succ_h = "<<succ_h<<"\n";
 					if (best_soln_sofar > g_real + cost_op) {
 						best_soln_sofar = g_real + cost_op;
 					}
 					cout<<"\tbest_soln_sofar = "<<best_soln_sofar<<endl;
-					if (best_soln_sofar <= bound) {
-	           				cout<<"\tbest_soln_sofar <= bound => return 1;"<<endl;
+					/*if (best_soln_sofar <= bound) {
+	           				//cout<<"\tbest_soln_sofar <= bound => return 1;"<<endl;
                    				return  1;
 					} else {
 		   				continue;
-					}
+					}*/
+					return 1;
             			} else {
-					cout<<"\t\tthe soluton WAS NOT found."<<endl;
+					//cout<<"\t\tthe soluton WAS NOT found."<<endl;
 					if (g_real + cost_op + succ_h > bound) {
 						if (next_bound > g_real + cost_op + succ_h) {
 							next_bound = g_real + cost_op + succ_h;
 						}
-						cout<<"\t\tnext_bound = "<<next_bound<<endl;
+						//cout<<"\t\tnext_bound = "<<next_bound<<endl;
 					} else {
 						buffer.push(succ_node);
 					}
 	    			}//End check goal
 			}
 		}//End for applicable ops
-		cout<<"-------------end Childs-----------\n";
+		//cout<<"-------------end Childs-----------\n";
 	}
-	cout<<"return 0;"<<endl;
+	//cout<<"return 0;"<<endl;
 	return 0;
 }
 
@@ -265,7 +276,7 @@ void IDAISearch::BFS(Node root) {
 		g_real = nodecp.getGreal();
                 StateID state_id = nodecp.get_id();
                 level = nodecp.getLevel();
-                cout<<"\t\tBFSNode expanded: h = "<<nodecp.getHvalue()<<", g_real = "<<nodecp.getGreal()<<", f = "<<nodecp.getHvalue() + nodecp.getGreal()<<", level = "<<level<<", stateID,: "<<state_id<<"\n";
+                //cout<<"\t\tBFSNode expanded: h = "<<nodecp.getHvalue()<<", g_real = "<<nodecp.getGreal()<<", f = "<<nodecp.getHvalue() + nodecp.getGreal()<<", level = "<<level<<", stateID,: "<<state_id<<"\n";
 		expand.pop();
 
 		applicable_ops.clear();
@@ -273,21 +284,21 @@ void IDAISearch::BFS(Node root) {
                 GlobalState global_state = g_state_registry->lookup_state(state_id);
                 g_successor_generator->generate_applicable_ops(global_state, applicable_ops);
 
-                cout<<"\t\tBFSExpanded state:";
-                cout<<": state_id:"<<global_state.get_id()<<":";
-                global_state.dump_inline();
-                fflush(NULL);
+                //cout<<"\t\tBFSExpanded state:";
+                //cout<<": state_id:"<<global_state.get_id()<<":";
+                //global_state.dump_inline();
+                //fflush(NULL);
 
-                cout<<"\n\t\tBFS: applicable_ops.size() = "<<applicable_ops.size()<<endl;
-                cout<<"\t\t--------------childs-------------\n";
+                //cout<<"\n\t\tBFS: applicable_ops.size() = "<<applicable_ops.size()<<endl;
+                //cout<<"\t\t--------------childs-------------\n";
 
 		for (size_t i = 0; i < applicable_ops.size(); i++) {
                         const GlobalOperator *op = applicable_ops[i];
                         GlobalState child =  g_state_registry->get_successor_state(global_state, *op);
-                        cout<<"\n\t\t\tBFSChild_"<<(i+1);
-                        cout<<": state_id:"<<child.get_id()<<":";
-                        child.dump_inline();
-                        fflush(NULL);
+                        //cout<<"\n\t\t\tBFSChild_"<<(i+1);
+                        //cout<<": state_id:"<<child.get_id()<<":";
+                        //child.dump_inline();
+                        //fflush(NULL);
 
                         int hmax_value = 0;
 			int cost_op = get_adjusted_cost(*op);
@@ -308,7 +319,7 @@ void IDAISearch::BFS(Node root) {
                                 int succ_h = hmax_value;
                                 succ_node.setHvalue(succ_h);				
 
-                                cout<<"\t\t\tNew node : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<succ_node.getLevel()<<", stateID,: "<<child.get_id()<<"\n";
+                                //cout<<"\t\t\tNew node : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<succ_node.getLevel()<<", stateID,: "<<child.get_id()<<"\n";
 
 				if (cost_op == 0) {
 					expand.push(succ_node);
@@ -316,7 +327,7 @@ void IDAISearch::BFS(Node root) {
 					L.insert(succ_node);
 				}
 			} else {
-				cout<<"\t\t\tnode with stateID = "<<child.get_id()<<"\n";
+				//cout<<"\t\t\tnode with stateID = "<<child.get_id()<<"\n";
 			}
 		}
 	}//End while
