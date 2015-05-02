@@ -48,11 +48,13 @@ void SSSearch::predict(int probes) {
             cout<<"prePre_"<<(i+1)<<" = "<<totalPrediction<<endl;
             cout<<"**********"<<endl;
         }
-        ss_timer_value = ss_timer();
+        ss_timer_value = ss_timer();	
         cout<<"\ntotalPrediction : "<<totalPrediction<<"\n";
-        cout<<"ss_timer: "<<ss_timer_value<<endl;
-        generateGeneratedReport();
+        cout<<"ss_timer: "<<ss_timer_value<<endl; 
+	cout<<"\nthreshold : "<<threshold<<"\n";
+	generateGeneratedReport();
         generateExpandedReport();
+	
 }
 
 void SSSearch::probe()
@@ -63,14 +65,19 @@ void SSSearch::probe()
 
         queue.clear();
 	// evaluating the initial state
-	heuristic->evaluate(g_initial_state());
-	if (heuristic->is_dead_end())
-	{
-		assert(heuristic->dead_ends_are_reliable());
-		cout << "Initial state is a dead end." << endl;
-		exit(0);
+	
+	int hmin_initial = INT_MAX/2;
+	for (size_t i = 0; i < heuristics.size(); i++) {
+		heuristics[i]->evaluate(g_initial_state());
+		if (!heuristics[i]->is_dead_end())
+		{
+			hmin_initial = min(hmin_initial, heuristics[i]->get_heuristic());
+		} else {
+			hmin_initial = INT_MAX/2;
+			break;
+		}
 	}
-	initial_value = heuristic->get_value();
+	initial_value = hmin_initial;
 
         //for the open domains the heuristic is set to six
 	cout<<"f_boundary = "<<f_boundary<<endl;
@@ -143,7 +150,6 @@ void SSSearch::probe()
                 	//end count node
                 }
 
-		double h = INT_MAX/2;
 		double w = s.getWeight();
  
                 std::vector<const GlobalOperator*> applicable_ops;
@@ -176,15 +182,18 @@ void SSSearch::probe()
                         const GlobalOperator *op = applicable_ops[i];
                         GlobalState child = g_state_registry->get_successor_state(global_state, *op);
 
-                        heuristic->evaluate(child);	
-
-			if(!heuristic->is_dead_end())
-			{
-				h = heuristic->get_heuristic();
-
-			} else {
-				cout<<"\tThe child is dead end."<<endl;
-			}	
+			int min_heur = INT_MAX/2;
+			for (size_t i = 0; i < heuristics.size(); i++) {
+				heuristics[i]->evaluate(child);
+				if (!heuristics[i]->is_dead_end()) {
+					min_heur = min(min_heur, heuristics[i]->get_heuristic());
+				} else {
+					min_heur = INT_MAX/2;
+					break;
+				}
+			}
+			int h = min_heur;
+			
                         cout<<"\tthe cost get_adjusted_cost(*op) = "<<get_adjusted_cost(*op)<<"\n";
 			cout<<"\tChild_"<<(i+1)<<" : h = "<< h <<", g = "<< g_real + get_adjusted_cost(*op) <<", f = "<< h + g_real + get_adjusted_cost(*op) <<", level = "<<level+1<< ", w = "<<w<<endl;
                         
@@ -354,7 +363,7 @@ void SSSearch::BFS(SSNode root, Type type) {
                         const GlobalOperator *op = applicable_ops[i];
                         GlobalState child =  g_state_registry->get_successor_state(global_state, *op);
 
-                        int hmin_value = 0;
+                        int hmin_value = INT_MAX/2;
 			int cost_op = get_adjusted_cost(*op);
 			SSNode succ_node(child.get_id(), w, g_real + cost_op);
 
@@ -374,6 +383,7 @@ void SSSearch::BFS(SSNode root, Type type) {
 						hmin_value = min(hmin_value, heuristics[i]->get_heuristic());
 					} else {
 						hmin_value = INT_MAX/2;
+						break;
 					}
                         	}
 
