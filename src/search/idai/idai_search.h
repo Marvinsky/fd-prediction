@@ -73,7 +73,7 @@ private:
     //IDA* bfs
     set<Node, classcomp> check;
     set<Node, classcomp> L;
-
+    bool found_solution;
 
 protected:
     SearchStatus step();

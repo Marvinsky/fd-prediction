@@ -57,7 +57,7 @@ public:
 
 struct classcomp {
         bool operator() (const SSQueue& lhs, const SSQueue& rhs) const {
-		return lhs.getNode().get_id().hash() < rhs.getNode().get_id().hash(); 
+		return lhs.getNode().get_id() < rhs.getNode().get_id(); 
         }
 };
 
