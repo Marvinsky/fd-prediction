@@ -61,6 +61,11 @@ struct classcomp {
         }
 };
 
+struct classcomp2 {
+        bool operator() (const SSNode& lhs, const SSNode& rhs) const {
+		return lhs.get_id() < rhs.get_id(); 
+        }
+};
 
 class SSSearch : public SearchEngine { 
 private:
@@ -86,7 +91,7 @@ private:
 	
 	//IDA* - BFS
 	std::set<SSQueue, classcomp> L;
-	std::set<SSQueue, classcomp> check;
+	std::set<SSNode, classcomp2> check;
 
 protected:
 

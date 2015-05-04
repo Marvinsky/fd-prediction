@@ -23,7 +23,7 @@ SSSearch::SSSearch(const Options &opts) : SearchEngine(opts), current_state(g_in
 	heuristic = heuristics[0];
 
 	sampler = new TypeSystem(heuristic);
-	this->RanGen2 = new CRandomMersenne((unsigned)time(NULL));        
+	this->RanGen2 = new CRandomMersenne(1);        
 }
 
 SSSearch::~SSSearch() {
@@ -50,8 +50,9 @@ void SSSearch::predict(int probes) {
         }
         ss_timer_value = ss_timer();	
         cout<<"\ntotalPrediction : "<<totalPrediction<<"\n";
-        cout<<"ss_timer: "<<ss_timer_value<<endl; 
-	cout<<"\nthreshold : "<<threshold<<"\n";
+        cout<<"ss_timer: "<<ss_timer_value<<"\n";
+	cout<<"probes: "<<probes<<"\n"; 
+	cout<<"threshold : "<<threshold<<"\n";
 	generateGeneratedReport();
         generateExpandedReport();
 	
@@ -212,8 +213,9 @@ void SSSearch::probe()
 			   
 			   if (get_adjusted_cost(*op) == 0) {
 				cout<<"\t\tget_adjusted_cost(*op) == 0\n";
+				fflush(NULL);
 			   	BFS(child_node, object);
-
+				cout<<"after BFS in the ss."<<endl;
 				std::set<SSQueue>::iterator it;
 				for (it = L.begin(); it != L.end(); it++) {	
 					SSQueue sst = *it;
@@ -337,10 +339,10 @@ void SSSearch::probe()
 void SSSearch::BFS(SSNode root, Type type) {
 	std::queue<SSNode> D;
         D.push(root);
-	SSQueue s1;
-	s1.setNode(root);
-	s1.setT(type);
-	check.insert(s1);
+	//SSQueue s1;
+	//s1.setNode(root);
+	//s1.setT(type);
+	check.insert(root);
 
         cout<<"\t\t\tD.size() = "<<D.size()<<endl;
         while (!D.empty()) {
@@ -350,7 +352,8 @@ void SSSearch::BFS(SSNode root, Type type) {
                 double level = type.getLevel();
 		double w = nodecp.getWeight();
                 cout<<"\n\t\t\tBFS: Node expanded: h = "<<type.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<type.getH() + nodecp.getGreal()<<", level = "<<level<<", w = "<<w<<", stateID,:"<<state_id<<"\n";
-                D.pop();
+                
+		D.pop();
 
                 std::vector<const GlobalOperator *> applicable_ops;
                 //Recover the global_state
@@ -367,14 +370,11 @@ void SSSearch::BFS(SSNode root, Type type) {
 			int cost_op = get_adjusted_cost(*op);
 			SSNode succ_node(child.get_id(), w, g_real + cost_op);
 
-			Type object = sampler->getType(child.get_id(), hmin_value,  1);
-                      	object.setLevel( level + 1 );
-
-			SSQueue s2;
-			s2.setNode(succ_node);
-			s2.setT(object);
-			std::pair<std::set<SSQueue, classcomp>::iterator, bool> r1;
-			r1 = check.insert(s2);
+			//SSQueue s2;
+			//s2.setNode(succ_node);
+			//s2.setT(object);
+			std::pair<std::set<SSNode, classcomp2>::iterator, bool> r1;
+			r1 = check.insert(succ_node);
 
 			if (r1.second) {
 				for (size_t i = 0; i < heuristics.size(); i++) {
@@ -388,7 +388,8 @@ void SSSearch::BFS(SSNode root, Type type) {
                         	}
 
                         	double succ_h = hmin_value;
-				object.setH(succ_h);
+				Type object = sampler->getType(child.get_id(), succ_h,  1);
+                      		object.setLevel( level + 1 );
 				
 				SSQueue s3;
 				s3.setNode(succ_node);
@@ -406,10 +407,13 @@ void SSSearch::BFS(SSNode root, Type type) {
 			} else {
 				cout<<"\t\t\tSSQueue with id = "<<child.get_id()<<" already exists.\n";
 			}
-                }
+                }//end for
                 cout<<"\t\t\t-------------End childs------------\n";
+	fflush(NULL);
         }
-        cout<<"\t\t\tD.empty() == "<<D.empty()<<endl;
+	cout<<"\t\t\tbefore memory error."<<endl;
+        cout<<"\t\t\tis std::queue empty? D.empty() == "<<D.empty()<<endl;
+	cout<<"\t\t\t return L.size() = "<<L.size()<<endl;
 }
 
 
