@@ -14,6 +14,7 @@
 #include <map>
 #include <queue>
 #include <set>
+#include <deque>
 
 #include "../randomc/randomc.h"
 #include "../randomc/mersenne.cpp"

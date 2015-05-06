@@ -337,8 +337,9 @@ void SSSearch::probe()
 }
 
 void SSSearch::BFS(SSNode root, Type type) {
-	std::queue<SSNode> D;
-        D.push(root);
+	//std::queue<SSNode> D;
+	std::deque<SSNode> D;
+        D.push_back(root);
 	//SSQueue s1;
 	//s1.setNode(root);
 	//s1.setT(type);
@@ -353,7 +354,7 @@ void SSSearch::BFS(SSNode root, Type type) {
 		double w = nodecp.getWeight();
                 cout<<"\n\t\t\tBFS: Node expanded: h = "<<type.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<type.getH() + nodecp.getGreal()<<", level = "<<level<<", w = "<<w<<", stateID,:"<<state_id<<"\n";
                 
-		D.pop();
+		D.pop_front();
 
                 std::vector<const GlobalOperator *> applicable_ops;
                 //Recover the global_state
@@ -399,7 +400,7 @@ void SSSearch::BFS(SSNode root, Type type) {
 
 				if (cost_op == 0) {
 					cout<<"\t\t\tcost = 0, then is inserted to the D.\n";
-					D.push(succ_node);			
+					D.push_back(succ_node);			
 				} else {
 					cout<<"\t\t\tcost != 0, then is inserted to the L.\n";
 					L.insert(s3);
