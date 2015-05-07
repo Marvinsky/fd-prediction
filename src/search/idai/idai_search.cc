@@ -119,6 +119,27 @@ int IDAISearch::idastar(Node node) {
 	best_soln_sofar = INT_MAX;
 	bound =  node.getHvalue();
         int count_bound = 1;
+
+	ofstream outputFile;
+	string dominio = domain_name;
+      	string tarefa = problem_name2;
+      	string heuristica = heuristic_name2;
+      	cout<<"dominio = "<<dominio<<endl;
+      	cout<<"tarefa = "<<tarefa<<endl;
+      	cout<<"heuristica = "<<heuristica<<endl;
+
+	string directoryDomain = "mkdir /home/marvin/marvin/idai/"+heuristica+"/reportidai/"+dominio;
+      	if (system(directoryDomain.c_str())) {
+         	cout<<"Directory created successfully."<<endl;
+      	}
+
+      	string nBL = "/home/marvin/marvin/idai/"+heuristica+"/reportidai/"+dominio+"/"+tarefa;
+
+	outputFile.open(nBL.c_str(), ios::out);
+	outputFile<<"\t\t"<<nBL.c_str()<<"\n";
+	outputFile<<"h_initial: "<<bound<<"\n";
+	outputFile<<"\ttime\t\tbound\t\texp\t\tgen\n";
+
 	while (1) {
 		next_bound = INT_MAX;
 		nodes_expanded_for_bound = 0;
@@ -129,11 +150,13 @@ int IDAISearch::idastar(Node node) {
 		cout<<", nodes_expanded_for_bound: "<<nodes_expanded_for_bound;
 		cout<<", nodes_generated_for_bound: "<<nodes_generated_for_bound;
 		cout<<"\n";
+		outputFile<<"\t"<<g_timer<<"\t\t"<<bound<<"\t\t"<<nodes_expanded_for_bound<<"\t\t"<<nodes_generated_for_bound<<"\n";
 		nodes_expanded_for_start_state += nodes_expanded_for_bound;
 		nodes_generated_for_start_state += nodes_generated_for_bound;
 		//cout<<"done = "<<done<<endl;
 		if (done) {
 			//cout<<"break the application because done = "<<done<<endl;
+			outputFile.close();
 			break;
 		}
 		bound = next_bound;
@@ -141,6 +164,7 @@ int IDAISearch::idastar(Node node) {
                 //cout<<"best_soln_sofar = "<<best_soln_sofar<<endl;
 		if (best_soln_sofar <= bound) {
 			//cout<<"break the application because best_soln_sofar <= bound"<<endl;
+			outputFile.close();
 			break;
 		}
 		count_bound++;
