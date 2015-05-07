@@ -89,4 +89,5 @@ extern std::string problem_name2;
 extern std::string heuristic_name2;
 extern int ss_probes;
 extern int f_boundary;
+extern bool is_mov_bound;
 #endif
