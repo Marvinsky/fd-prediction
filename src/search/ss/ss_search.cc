@@ -466,7 +466,8 @@ void SSSearch::generateExpandedReport() {
             double n = iter->second;
             total_nodes += n;
         }
-        cout<<"count nodes expanded : "<<(double)total_nodes/(double)ss_probes<<endl;
+	double predictionExpanded = (double)total_nodes/(double)ss_probes;
+        cout<<"count nodes expanded : "<<predictionExpanded <<endl;
 
         cout<<"dominio = "<<dominio<<endl;
         cout<<"tarefa = "<<tarefa<<endl;
@@ -487,8 +488,9 @@ void SSSearch::generateExpandedReport() {
         ofstream output;
 
         output.open(outputFile.c_str());
-        output<<"\t"<<outputFile.c_str()<<"\n" ;
-        output<<"predictionSS: "<<totalPrediction<<"\n";
+        output<<"\t"<<outputFile.c_str()<<"\n";
+        //output<<"predictionSS: "<<totalPrediction<<"\n";
+        output<<"predictionSS: "<<predictionExpanded<<"\n";
         output<<"ss_timer: "<<ss_timer_value<<"\n";
         
 
