@@ -338,24 +338,28 @@ void SSSearch::probe()
 
 void SSSearch::BFS(SSNode root, Type type) {
 	//std::queue<SSNode> D;
-	std::deque<SSNode> D;
-        D.push_back(root);
-	//SSQueue s1;
-	//s1.setNode(root);
-	//s1.setT(type);
+	std::deque<SSQueue> D;
+	SSQueue s1;
+	s1.setNode(root);
+	s1.setT(type);
+        D.push_back(s1);
+	
 	check.insert(root);
 	
-	double weight = root.getWeight();
-	int counter = 0;
+	//double weight = root.getWeight();
+	//int counter = 0;
         //cout<<"\t\t\tD.size() = "<<D.size()<<endl;
         while (!D.empty()) {
-                SSNode nodecp = D.front();
+		SSQueue sq = D.front();
+                SSNode nodecp = sq.getNode();
+		Type t = sq.getT();
+
                 double g_real = nodecp.getGreal();
                 StateID state_id = nodecp.get_id();
-                double level = type.getLevel();
 		double w = nodecp.getWeight();
-                //cout<<"\n\t\t\tBFS: Node expanded: h = "<<type.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<type.getH() + nodecp.getGreal()<<", level = "<<level<<", w = "<<w<<", stateID,:"<<state_id<<"\n";
-                counter++;
+                double level = t.getLevel();
+                //cout<<"\n\t\t\tBFS: Node expanded: h = "<<t.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<t.getH() + nodecp.getGreal()<<", level = "<<level<<", w = "<<w<<", stateID,:"<<state_id<<"\n";
+                //counter++;
 		D.pop_front();
 
                 std::vector<const GlobalOperator *> applicable_ops;
@@ -373,9 +377,6 @@ void SSSearch::BFS(SSNode root, Type type) {
 			int cost_op = get_adjusted_cost(*op);
 			SSNode succ_node(child.get_id(), w, g_real + cost_op);
 
-			//SSQueue s2;
-			//s2.setNode(succ_node);
-			//s2.setT(object);
 			std::pair<std::set<SSNode, classcomp2>::iterator, bool> r1;
 			r1 = check.insert(succ_node);
 
@@ -402,7 +403,7 @@ void SSSearch::BFS(SSNode root, Type type) {
 				if (succ_h + succ_node.getGreal() <= threshold) {
 					if (cost_op == 0) {
 						//cout<<"\t\t\tcost = 0, then is inserted to the D.\n";
-						D.push_back(succ_node);			
+						D.push_back(s3);			
 					} else {
 						//cout<<"\t\t\tcost != 0, then is inserted to the L.\n";
 						L.insert(s3);
@@ -415,7 +416,7 @@ void SSSearch::BFS(SSNode root, Type type) {
                 //cout<<"\t\t\t-------------End childs------------\n";
 	//fflush(NULL);
         }
-	double result = counter*weight;
+	/*double result = counter*weight;
 	root.setWeight(result);
 	vweight.push_back(root);
 
@@ -439,7 +440,7 @@ void SSSearch::BFS(SSNode root, Type type) {
                     //cout<<"it0->second = "<<it0->second<<endl;
                 }
                 //end count node
-        }
+        }*/
 	//cout<<"\t\t\tbefore memory error."<<endl;
         //cout<<"\t\t\tis std::queue empty? D.empty() == "<<D.empty()<<endl;
 	//cout<<"\t\t\t return L.size() = "<<L.size()<<endl;

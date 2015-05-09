@@ -310,7 +310,7 @@ void IDAISearch::BFS(Node root, double bound) {
 	int g_real = 0, level = 0;
 	//int counter = 0;
 	while (!expand.empty()) {
-		nodes_expanded_for_bound++; 
+		//nodes_expanded_for_bound++; 
 		Node nodecp = expand.front();
 		g_real = nodecp.getGreal();
                 StateID state_id = nodecp.get_id();
