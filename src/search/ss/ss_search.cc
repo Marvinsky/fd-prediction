@@ -399,13 +399,14 @@ void SSSearch::BFS(SSNode root, Type type) {
 				s3.setT(object);
 
 				//cout<<"\t\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<object.getLevel()<<", w = "<<w<<", stateID,:"<<child.get_id()<<"\n";
-
-				if (cost_op == 0) {
-					//cout<<"\t\t\tcost = 0, then is inserted to the D.\n";
-					D.push_back(succ_node);			
-				} else {
-					//cout<<"\t\t\tcost != 0, then is inserted to the L.\n";
-					L.insert(s3);
+				if (succ_h + succ_node.getGreal() <= threshold) {
+					if (cost_op == 0) {
+						//cout<<"\t\t\tcost = 0, then is inserted to the D.\n";
+						D.push_back(succ_node);			
+					} else {
+						//cout<<"\t\t\tcost != 0, then is inserted to the L.\n";
+						L.insert(s3);
+					}
 				}
 			} else {
 				//cout<<"\t\t\tSSQueue with id = "<<child.get_id()<<" already exists.\n";

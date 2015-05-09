@@ -230,7 +230,7 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
 	    		//cout<<"\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<"\n";
 
 			if (cost_op == 0) {
-				BFS(succ_node);
+				BFS(succ_node, bound);
 				if (found_solution) {
 					return 1;
 				}
@@ -301,7 +301,7 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
 	return 0;
 }
 
-void IDAISearch::BFS(Node root) {
+void IDAISearch::BFS(Node root, double bound) {
 	std::queue<Node> expand;
 	check.insert(root);
 	expand.push(root);
@@ -382,11 +382,12 @@ void IDAISearch::BFS(Node root) {
                                 succ_node.setHvalue(succ_h);				
 
                                 //cout<<"\t\t\tNew node : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<succ_node.getLevel()<<", stateID,: "<<child.get_id()<<"\n";
-
-				if (cost_op == 0) {
-					expand.push(succ_node);
-				} else {
-					L.insert(succ_node);
+				if (succ_h + succ_node.getGreal() <= bound) {
+					if (cost_op == 0) {
+						expand.push(succ_node);
+					} else {
+						L.insert(succ_node);
+					}
 				}
 			} else {
 				//cout<<"\t\t\tnode with stateID = "<<child.get_id()<<"\n";

@@ -87,7 +87,7 @@ public:
     IDAISearch(const Options &opts); 
     int idastar(Node node);
     int dfs_heur(Node node, double bound, double &next_bound);
-    void BFS(Node root);
+    void BFS(Node root, double bound);
 };
 
 #endif
