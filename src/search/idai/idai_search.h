@@ -74,7 +74,9 @@ private:
     set<Node, classcomp> check;
     set<Node, classcomp> L;
     bool found_solution;
-
+    int Fboundary;
+    int last_level_found;
+    int count_last_nodes_generated;
 protected:
     SearchStatus step();
     void print_heuristic_values(const std::vector<int> &values) const;

@@ -51,6 +51,7 @@ void IDAISearch::initialize() {
     nodes_expanded_for_start_state = 0;
     nodes_generated_for_start_state = 0;
     found_solution = false;
+    count_last_nodes_generated = 0;
 }
 
 SearchStatus IDAISearch::step() {
@@ -84,13 +85,15 @@ SearchStatus IDAISearch::step() {
 		//Solution not found
 		cout<<"Solution NOT FOUND"<<endl;
 		cout<<", expanded nodes = "<<nodes_expanded_for_start_state;
-		cout<<", generated nodes = "<<nodes_generated_for_start_state<<"\n";
+		cout<<", generated nodes = "<<nodes_generated_for_start_state;
+		cout<<", count last nodes generated = "<<count_last_nodes_generated<<"\n";
 	} else {
                 //Solution found
 		cout<<"SOLUTION FOUND"<<endl;
 		cout<<"\tcost = "<<d;
 		cout<<", expanded nodes = "<<nodes_expanded_for_start_state;
-		cout<<", generated nodes = "<<nodes_generated_for_start_state<<"\n";
+		cout<<", generated nodes = "<<nodes_generated_for_start_state;
+		cout<<", count last nodes generated = "<<count_last_nodes_generated<<"\n";
 	}
 	total_d += d;
 	cout<<"total_d = "<<total_d<<"\n";
@@ -113,7 +116,7 @@ int IDAISearch::idastar(Node node) {
 
         GlobalState global_state = g_state_registry->lookup_state(node.get_id());
 	if (check_goal_and_set_plan(global_state)) {
-		cout<<"solution_found_1"<<endl;
+		//cout<<"solution_found_1"<<endl;
                 return 0; 
         }
 	best_soln_sofar = INT_MAX;
@@ -194,9 +197,12 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
 			//cout<<"best_soln_sofar = "<<best_soln_sofar<<"\n";
 			//cout<<"g_real = "<<g_real<<"\n";
 			//cout<<"h_value = "<<ncp.getHvalue()<<"\n";
+			last_level_found = bound;			
 			if (best_soln_sofar > g_real + ncp.getHvalue()) {
 				best_soln_sofar = g_real + ncp.getHvalue();
+				last_level_found = best_soln_sofar;
 			}
+			
 			//cout<<"\tbest_soln_sofar = "<<best_soln_sofar<<endl;
 			/*if (best_soln_sofar <= bound) {
 	           		//cout<<"\tbest_soln_sofar <= bound => return 1;"<<endl;
@@ -204,8 +210,24 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
 			} else {
 		   		continue;
 			}*/
-			return 1;
+			
+			int last_level = last_level_found;
+			Fboundary = last_level;
+			found_solution = true;
+			continue;
+			//return 1;
             	}
+
+		if (found_solution) {
+			int last_level = last_level_found;
+			if (Fboundary == last_level) {
+				count_last_nodes_generated++;
+				nodes_generated_for_bound++;
+			} else {
+				return 1;
+			}
+		}
+
 		//cout<<"after checking.."<<endl;
 		L.clear();
 		check.clear();
@@ -232,8 +254,19 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
 			if (cost_op == 0) {
 				BFS(succ_node, bound);
 				if (found_solution) {
-					return 1;
+					int last_level = last_level_found;
+					if (Fboundary == last_level) {
+						count_last_nodes_generated++;
+					} else {
+						return 1;
+					}
 				}
+
+
+
+				/*if (found_solution) {
+					return 1;
+				}*/
 
 				std::set<Node, classcomp>::iterator iter;
 				double new_g_real = 0, new_h_value = 0;
@@ -262,6 +295,8 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
 						if (new_g_real + new_h_value > bound) {
 							if (next_bound > new_g_real + new_h_value) {
 								next_bound = new_g_real + new_h_value;
+								last_level_found = next_bound;
+								//cout<<"229: last_level_found = "<<last_level_found<<"\n";
 							}
 							//cout<<"\t\tnext_bound = "<<next_bound<<endl;
 						} else {
@@ -287,6 +322,8 @@ int IDAISearch::dfs_heur(Node node, double bound, double &next_bound) {
 					if (g_real + cost_op + succ_h > bound) {
 						if (next_bound > g_real + cost_op + succ_h) {
 							next_bound = g_real + cost_op + succ_h;
+							last_level_found = next_bound;
+							//cout<<"326: last_level_found = "<<last_level_found<<"\n";
 						}
 						//cout<<"\t\tnext_bound = "<<next_bound<<endl;
 					} else {
@@ -328,8 +365,10 @@ void IDAISearch::BFS(Node root, double bound) {
 			//cout<<"best_soln_sofar = "<<best_soln_sofar<<"\n";
 			//cout<<"g_real = "<<g_real<<"\n";
 			//cout<<"h_value = "<<nodecp.getHvalue()<<"\n";
+			last_level_found = bound;
 			if (best_soln_sofar > g_real + nodecp.getHvalue()) {
 				best_soln_sofar = g_real + nodecp.getHvalue();
+				last_level_found = best_soln_sofar;
 			}
 			//cout<<"\tbest_soln_sofar = "<<best_soln_sofar<<endl;
 			/*if (best_soln_sofar <= bound) {
@@ -339,11 +378,19 @@ void IDAISearch::BFS(Node root, double bound) {
 		   		continue;
 			}*/
 			//return 1;
+			int last_level = last_level_found;
+			Fboundary = last_level;
 			found_solution = true;
+			continue;
             	}
 
 		if (found_solution) {
-			break;
+			int last_level = last_level_found;
+			if (Fboundary == last_level) {
+				count_last_nodes_generated++;
+			} else {
+				break;
+			}
 		}
 
                 //cout<<"\t\tBFSExpanded state:";
