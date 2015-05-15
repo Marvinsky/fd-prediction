@@ -9,9 +9,17 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 
+
+template <typename T>
+void remove_at(std::vector<T>& v, typename std::vector<T>::size_type n)
+{
+    std::swap(v[n], v.back());
+    v.pop_back();
+}
 
 ArgError::ArgError(std::string msg_) : msg(msg_) {
 }
@@ -228,7 +236,66 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
             if (is_last)
                 throw ArgError("missing argument after --search");
             ++i;
-            OptionParser p(args[i], dry_run);
+	    string arg2=string(args[i]);
+	    cout<<"args["<<i<<"]:"<<args[i]<<endl;
+	    if(arg2.find("automate_GAs")!=string::npos){
+
+	      //string GAs_heur_call_list;
+	      cout<<"input arg:"<<arg2<<endl;
+	      arg2.erase(arg2.end()-15,arg2.end());//remove ending
+	      cout<<"new arg after erase:"<<arg2<<endl;
+	      //first allocate all the availabe mp probs to a vector to ensure no repetion of random probabilities
+	      vector<string> mp_probs;
+	      double heurs_to_generate=5;
+	        for(int j=0;j<int(heurs_to_generate);j++){
+		  std::stringstream str;
+		  str << fixed << setprecision(7) <<double(j+1)/heurs_to_generate;
+		  mp_probs.push_back(str.str());
+		}
+	        for(int j=0;j<heurs_to_generate;j++){
+		arg2+="gapdb(mp=";
+		int random_mp=rand() %mp_probs.size();
+		arg2+=mp_probs.at(random_mp);
+		//now efficiently remove element
+		remove_at(mp_probs, random_mp);
+
+		//50% disjoint prob
+		  int random=rand()%2;
+		//cout<<"random1:"<<random<<endl;
+		if(random==1){
+		  arg2+=",disjoint=true";
+		}
+		 
+		/* random=rand()%1000+1;
+		//cout<<"random2:"<<random<<endl;
+		 if(random<5){
+		  arg2+=",size=2000000,eps=30,colls=5),";
+		}
+		else if(random<17){
+		  arg2+=",size=200000,eps=30,colls=5),";
+		}
+		else if(random<127){
+		  arg2+=",size=20000,eps=60,colls=5),";
+		}
+		else{
+		  arg2+=",size=2000,eps=120,colls=5),";
+		}*/
+		/*  random=rand()%100+1;
+		if(random<10){
+		  arg2+=",size=2000000,eps=30,colls=5),";
+		}
+		else{
+		  arg2+=",size=200000,eps=60,colls=5),";
+		}*/
+		//arg2+=",size=200000,eps=30,colls=5),";
+		  arg2+=",size=20000,eps=120,colls=5),";
+	      }
+	      arg2.erase(arg2.end()-1);//remove ending
+	      arg2+="]))";
+	      //cout<<"final arg:"<<arg2<<endl;
+	    }
+            //OptionParser p(args[i], dry_run);
+            OptionParser p(arg2.c_str(), dry_run);
             engine = p.start_parsing<SearchEngine *>();
         } else if (arg.compare("--global_probes") == 0) {
             ++i;
