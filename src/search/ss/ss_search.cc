@@ -82,7 +82,7 @@ void SSSearch::probe()
 
         //for the open domains the heuristic is set to six
 	//cout<<"f_boundary = "<<f_boundary<<endl;
-
+	//cout<<"initial_value = "<<initial_value<<"\n";
         if (f_boundary) {
 	   threshold = f_boundary;
 	} else {
@@ -564,7 +564,13 @@ void SSSearch::printQueue() {
 
 void SSSearch::initialize() {
 	cout << "SSSearch ..." << endl;
-        ss_timer.reset();	
+        ss_timer.reset();
+
+	//ss+cc santiago code
+        if (use_saved_pdbs) {
+                stored_GA_patterns.clear();
+                cout<<"cleared store_GA_patterns."<<endl;
+        }	
 }
 
 static SearchEngine *_parse(OptionParser &parser) {

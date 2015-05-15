@@ -4,6 +4,7 @@
 #include "../heuristic.h"
 
 #include <vector>
+using namespace std;
 
 class AbstractOperator {
     /*
@@ -175,6 +176,8 @@ public:
 
     // Returns true iff op has an effect on a variable in the pattern.
     bool is_operator_relevant(const GlobalOperator &op) const;
+    //ss+cc
+    std::string get_pattern_string() const;
 };
 
 #endif

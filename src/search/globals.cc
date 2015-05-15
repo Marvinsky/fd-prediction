@@ -411,3 +411,14 @@ string heuristic_name2 = "temp";
 int ss_probes = 0;
 int f_boundary = 0;
 bool is_mov_bound = false;
+
+//ss + culprits
+set<std::vector<std::vector<int> >, compare_patterns > chosen_pattern_collections; //all current pattern collections
+
+bool no_more_ga_pdbs = false;
+bool use_saved_pdbs = false;
+double pdb_gen_time_limit = 200;
+int g_random_seed = 1;
+int pdb_dump_counter = 0;
+string problem_name = "temp";
+vector<string> stored_GA_patterns;

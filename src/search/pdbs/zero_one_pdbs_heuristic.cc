@@ -18,6 +18,11 @@ ZeroOnePDBsHeuristic::ZeroOnePDBsHeuristic(
     const Options &opts,
     const vector<int> &op_costs)
     : Heuristic(opts) {
+    gapdb_heur_TPN=0.00000011;
+    bool temp(opts.get<bool>("disjoint"));disjoint_patterns=temp;
+    double temp2(opts.get<double>("mp"));mutation_rate=temp2;
+    bool temp3(opts.get<bool>("complementary"));complementary=temp3;
+    int temp4(opts.get<int>("size"));pdb_max_size=temp4;
     vector<int> operator_costs;
     if (op_costs.empty()) { // if no operator costs are specified, use default operator costs
         operator_costs.reserve(g_operators.size());
@@ -72,6 +77,16 @@ int ZeroOnePDBsHeuristic::compute_heuristic(const GlobalState &state) {
     }
     return h_val;
 }
+
+void ZeroOnePDBsHeuristic::get_patterns(string &patterns) {
+	//patterns="[";
+	for (size_t i = 0; i < pattern_databases.size(); i++) {
+		patterns+="[";
+		patterns+=pattern_databases[i]->get_pattern_string();
+		patterns+="]";
+		patterns+="-";
+	}
+} 
 
 void ZeroOnePDBsHeuristic::dump() const {
     for (size_t i = 0; i < pattern_databases.size(); ++i) {

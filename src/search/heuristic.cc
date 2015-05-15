@@ -18,6 +18,7 @@ Heuristic::Heuristic(const Options &opts)
     : task(get_task_from_options(opts)),
       cost_type(OperatorCost(opts.get_enum("cost_type"))) {
     heuristic = NOT_INITIALIZED;
+    stop_using=false; //cout<<get_heur_name()<<",initial stop_using=false"<<endl;
 }
 
 Heuristic::~Heuristic() {
@@ -32,6 +33,19 @@ void Heuristic::set_preferred(const GlobalOperator *op) {
 
 void Heuristic::set_preferred(OperatorProxy op) {
     set_preferred(op.get_global_operator());
+}
+
+void Heuristic::set_stop_using(bool status) {
+       stop_using = status;
+       heuristic = 0;
+       if (get_heur_name().find("blind") == string::npos) {
+               cout<<get_heur_name()<<",set_stop_using=";
+               if (status) {
+                       cout<<"true"<<endl;
+               } else {
+                       cout<<"false"<<endl;
+               }
+       }
 }
 
 void Heuristic::evaluate(const GlobalState &state) {
@@ -120,6 +134,13 @@ void Heuristic::set_evaluator_value(int val) {
 
 int Heuristic::get_adjusted_cost(const GlobalOperator &op) const {
     return get_adjusted_action_cost(op, cost_type);
+}
+
+int Heuristic::get_adjusted_cost(const OperatorProxy &op) const {
+    if (op.is_axiom())
+        return 0;
+    else
+        return get_adjusted_action_cost(op.get_cost(), cost_type);
 }
 
 State Heuristic::convert_global_state(const GlobalState &global_state) const {

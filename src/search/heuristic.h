@@ -23,15 +23,14 @@ class Heuristic : public ScalarEvaluator {
     int evaluator_value; // usually equal to heuristic but can be different
     // if set with set_evaluator_value which is done if we use precalculated
     // estimates, eg. when re-opening a search node
-
+    bool stop_using;
     std::vector<const GlobalOperator *> preferred_operators;
 protected:
     TaskProxy *task;
     OperatorCost cost_type;
     enum {DEAD_END = -1};
     virtual void initialize() {}
-    // TODO: Call with State directly once all heuristics support it.
-    virtual int compute_heuristic(const GlobalState &state) = 0;
+   
     // Usage note: It's OK to set the same operator as preferred
     // multiple times -- it will still only appear in the list of
     // preferred operators for this heuristic once.
@@ -40,12 +39,18 @@ protected:
     void set_preferred(OperatorProxy op);
     // TODO: Remove once all heuristics use the TaskProxy class.
     int get_adjusted_cost(const GlobalOperator &op) const;
+    int get_adjusted_cost(const OperatorProxy &op) const;
     // TODO: Make private once all heuristics use the TaskProxy class.
     State convert_global_state(const GlobalState &global_state) const;
 public:
     Heuristic(const Options &options);
     virtual ~Heuristic();
 
+    // TODO: Call with State directly once all heuristics support it.
+    virtual int compute_heuristic(const GlobalState &state) = 0;
+
+    void set_stop_using(bool status);
+    bool is_using(){return !stop_using;};
     void evaluate(const GlobalState &state);
     bool is_dead_end() const;
     int get_heuristic();
@@ -55,14 +60,17 @@ public:
     virtual bool reach_state(const GlobalState &parent_state, const GlobalOperator &op,
                              const GlobalState &state);
 
+    virtual void get_patterns(string &patterns) {patterns="";};
+
     // virtual methods inherited from Evaluator and ScalarEvaluator:
     virtual int get_value() const;
     virtual void evaluate(int g, bool preferred);
     virtual bool dead_end_is_reliable() const;
     virtual void get_involved_heuristics(std::set<Heuristic *> &hset) {hset.insert(this); }
 
-    //Prediction A* = Dijkstra + ss + kre
+    //Prediction  A* = Dijkstra + ss + kre
     virtual string get_heur_name() {string temp = "No Name"; return temp;}
+    
 
 
     void set_evaluator_value(int val);

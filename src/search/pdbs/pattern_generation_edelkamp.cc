@@ -3,12 +3,14 @@
 #include "pdb_heuristic.h"
 #include "zero_one_pdbs_heuristic.h"
 
+#include "../blind_search_heuristic.h"
 #include "../causal_graph.h"
 #include "../globals.h"
 #include "../plugin.h"
 #include "../rng.h"
 #include "../timer.h"
 #include "../utilities.h"
+#include <boost/lexical_cast.hpp>
 
 #include <algorithm>
 #include <cassert>
@@ -16,25 +18,218 @@
 #include <limits>
 #include <vector>
 #include <ext/hash_set>
+#include <fstream>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
 
 using namespace __gnu_cxx;
 using namespace std;
 
 PatternGenerationEdelkamp::PatternGenerationEdelkamp(const Options &opts)
     : task(get_task_from_options(opts)),
-      pdb_max_size(opts.get<int>("pdb_max_size")),
-      num_collections(opts.get<int>("num_collections")),
-      num_episodes(opts.get<int>("num_episodes")),
-      mutation_probability(opts.get<double>("mutation_probability")),
+      pdb_max_size(opts.get<int>("size")),
+      colls(opts.get<int>("colls")),
+      num_episodes(opts.get<int>("eps")),
+      mutation_probability(opts.get<double>("mp")),
       disjoint_patterns(opts.get<bool>("disjoint")),
+      complementary(opts.get<bool>("complementary")),
       cost_type(OperatorCost(opts.get<int>("cost_type"))) {
-    Timer timer;
-    genetic_algorithm();
-    cout << "Pattern generation (Edelkamp) time: " << timer << endl;
+	static bool no_more_pdb_gen_print=true;
+      if(pdb_max_size>=20000000){
+	time_limit=600;
+      }
+      else if(pdb_max_size>=2000000){
+	time_limit=40;
+      }
+      else if(pdb_max_size>=200000){
+	time_limit=20;
+      }
+      else if(pdb_max_size>=20000){
+	time_limit=10;
+      }
+      else {
+	time_limit=5;
+      }
+      //cout<<"overall GA's pdb_gen_time_limit, currently:"<<pdb_gen_time_limit<<endl;
+      if(g_timer()>pdb_gen_time_limit){
+	if(no_more_pdb_gen_print==true){
+	  cout<<"no more PDB generation, overall time("<<g_timer<<")>pdb_gen_time_limit("<<pdb_gen_time_limit<<")"<<endl;
+	  no_more_pdb_gen_print=false;
+	}
+	//best_heuristic->set_stop_using(true);
+	no_more_ga_pdbs=true;
+	return;
+      }
+      if((double(get_peak_memory_in_kb())/1024)>1000){
+	cout<<"no more PDB generation, Peak memory above 1 GB max"<<endl;
+	no_more_ga_pdbs=true;
+	return;
+      }
+      //to add more variety to patterns
+      g_random_seed+=1;
+      srand(g_random_seed);
+      g_rng.seed(g_random_seed);
+      
+      ///cout<<"GAPDB,mutation_probability:"<<mutation_probability<<".Disj:"<<disjoint_patterns<<",restarted random sequence for g_random_seed"<<g_random_seed<<",complementary:"<<endl;
+      timer.reset();
+      //As we are running several methods for comparison, we ran PDB generation only once per problem and then add the generation time(minus the new generation time of just the selected pdbs) and the selected patterns
+      cout<<"use_saved_pdbs = "<<use_saved_pdbs<<endl;
+      if(use_saved_pdbs){
+	//problem_name=g_plan_filename;
+      /*for (int i = 0; i < argc_copy; ++i) {
+	//puts(argv_copy[i]);
+	cout<<"i:"<<i<<","<<argv_copy[i]<<endl;
+      }*/
+//	vector<int> v1 {9,17,18,31,50,56}; 
+//	vector<int> v2 {24,26,43,45,54};
+//	vector<int> v3 {2, 16, 19, 25, 46, 51};
+//	vector<int> v4 {3, 6, 10, 12, 14, 15, 28, 33, 41, 49};
+//	vector<int> v5 {1, 8, 11, 21, 32, 35, 38, 40, 47, 52};
+//	vector<int> v6 {7, 23, 27, 34, 39, 44, 55};
+//	vector<int> v7 {20, 22, 37, 42, 48, 53};
+//	vector<int> v8 {};
+	vector<vector<int> > pattern_collection;
+//	pattern_collection.push_back(v1);
+//	pattern_collection.push_back(v2);
+//	pattern_collection.push_back(v3);
+//	pattern_collection.push_back(v4);
+//	pattern_collection.push_back(v5);
+//	pattern_collection.push_back(v6);
+//	pattern_collection.push_back(v7);
+//	pattern_collection.push_back(v8);
+
+	if(!get_GA_patterns_from_file(pattern_collection,disjoint_patterns,mutation_probability,pdb_max_size)){
+	  //cout<<"Cant find at least one previous GA, so returning dummy heuristic from now on"<<endl;
+	  no_more_ga_pdbs=true;
+	  return;
+	}
+	//cout<<"returned from get_GA_patterns_from_file"<<endl;fflush(NULL);
+	      
+	Options opts2;
+
+	opts2.set<TaskProxy *>("task", task);
+
+	opts2.set<int>("cost_type", cost_type);
+	opts2.set<bool>("disjoint", disjoint_patterns);
+	opts2.set<vector<vector<int> > >("patterns", pattern_collection);
+	opts2.set<double>("mp", mutation_probability);
+	opts2.set<bool>("complementary", complementary);
+	opts2.set<int>("size", pdb_max_size);
+	//cout<<"complementary:"<<complementary<<endl;
+	ZeroOnePDBsHeuristic *zoppch =
+	  new ZeroOnePDBsHeuristic(opts2);
+	best_heuristic = zoppch;
+	best_fitness = best_heuristic->get_approx_mean_finite_h();
+	//dump_best_heuristic();
+        } else {
+          genetic_algorithm();
+	  cout << "Pattern generation (Edelkamp) time: " << timer() << endl;
+        }
+    //Timer timer;
+    //genetic_algorithm();
+    //cout << "Pattern generation (Edelkamp) time: " << timer << endl;
 }
 
 PatternGenerationEdelkamp::~PatternGenerationEdelkamp() {
 }
+
+void PatternGenerationEdelkamp::dump_best_heuristic() const {
+	static int i = 0;
+	if (best_fitness <0) {
+		cout<<"GAPDB dit not generate any complete PDB collection, so stop using!"<<endl;
+		best_heuristic->set_stop_using(true);
+		return;
+	}
+	if ((!use_saved_pdbs) && best_fitness_was_duplicate) {
+		cout<<"last best_fitness_was_duplicate,";
+	}
+	cout<<"returning best heuristic(GAPDB)[,"<<i<<",]:";
+	best_heuristic->dump();
+	cout<<",mp:,"<<mutation_probability;
+	cout<<",disjoint_patterns:,"<<disjoint_patterns;
+	cout<<",size:,"<<pdb_max_size;
+	cout<<"-best_fitness:"<<best_fitness<<",";
+	cout<<",initial value:"<<best_heuristic->compute_heuristic(g_initial_state());
+	cout<<",GAPDB generation time:"<<timer()<<endl;
+	i++;
+}
+
+void PatternGenerationEdelkamp::dump_file() const {
+	ofstream outputFile;
+        cout<<"callind dump_file() with ";
+	static int i = 0;
+	if (best_fitness<0){
+		//No GAPDB was chosen
+		return;
+	}
+        cout<<"pdb_dump_counter = "<<pdb_dump_counter<<endl;
+	if (pdb_dump_counter == 0) {
+                //Create directory dat
+                string datDirectory = "mkdir dat";
+                string domainDirectory = "mkdir dat/"+domain_name;
+		if (system(datDirectory.c_str())) {
+		   cout<<"dat directory created."<<endl;
+		} else {
+		   cout<<"dat directory already exists."<<endl;
+		}
+
+		if (system(domainDirectory.c_str())) {
+		   cout<<"domain directory created."<<endl;
+		} else {
+		   cout<<"domain directory already exists."<<endl;
+		}
+
+		string system_call = "/bin/rm dat/"+domain_name+"/";
+                string task2 = problem_name2;
+                size_t found2 = task2.find(".");
+                string task2_final = task2.substr(0, found2);
+		system_call += task2_final; 
+		system_call += ".dat";
+		cout<<"First call, removing system_call to avoid duplicate pdbs:"<<system_call<<endl;
+
+		int temp = system(system_call.c_str());
+		cout<<"rm status:"<<temp<<endl;
+		if (temp == 0) {
+			
+		}
+	}
+	pdb_dump_counter++;
+
+        string task3 = problem_name2;
+	
+	size_t found3 = task3.find(".");
+	
+	string file_name =  task3.substr(0, found3);
+        
+	file_name += ".dat";
+        file_name = "/" + file_name;
+        file_name = domain_name + file_name;
+	file_name = "dat/" + file_name;
+        cout<<"file_name: "<<file_name<<endl;
+
+	outputFile.open(file_name.c_str(), ios::app);
+	problem_name = g_plan_filename;
+	outputFile<<problem_name<<":";
+	outputFile<<"returning best heuristic(GAPDB)[,"<<i<<",]:";
+	i++;
+	string patterns;
+	best_heuristic->get_patterns(patterns);
+	outputFile<<patterns;
+
+
+	std::ostringstream ss;
+	ss<<std::fixed<<std::setprecision(7);
+	ss<<mutation_probability;
+	outputFile<<",mp:,"<<ss.str();
+	outputFile<<",size:,"<<pdb_max_size;
+	outputFile<<",disjoint_patterns:,"<<disjoint_patterns;
+	outputFile<<"-best_fitness:"<<best_fitness<<",";
+	outputFile<<",initial value:"<<best_heuristic->compute_heuristic(g_initial_state());
+	outputFile<<",GAPDB generation time:"<<timer()<<endl;
+	outputFile.flush();
+	outputFile.close();
+} 
 
 void PatternGenerationEdelkamp::select(const vector<double> &fitness_values) {
     vector<double> cumulative_fitness;
@@ -47,8 +242,8 @@ void PatternGenerationEdelkamp::select(const vector<double> &fitness_values) {
     // total_so_far is now sum over all fitness values
 
     vector<vector<vector<bool> > > new_pattern_collections;
-    new_pattern_collections.reserve(num_collections);
-    for (int i = 0; i < num_collections; ++i) {
+    new_pattern_collections.reserve(colls);
+    for (int i = 0; i <colls; ++i) {
         int selected;
         if (total_so_far == 0) {
             // All fitness values are 0 => choose uniformly.
@@ -162,14 +357,14 @@ void PatternGenerationEdelkamp::evaluate(vector<double> &fitness_values) {
             transform_to_pattern_normal_form(bitvector, pattern);
 
             if (is_pattern_too_large(pattern)) {
-                cout << "pattern " << j << " exceeds the memory limit!" << endl;
+                //cout << "pattern " << j << " exceeds the memory limit!" << endl;
                 pattern_valid = false;
                 break;
             }
 
             if (disjoint_patterns) {
                 if (mark_used_variables(pattern, variables_used)) {
-                    cout << "patterns are not disjoint anymore!" << endl;
+                    //cout << "patterns are not disjoint anymore!" << endl;
                     pattern_valid = false;
                     break;
                 }
@@ -183,20 +378,40 @@ void PatternGenerationEdelkamp::evaluate(vector<double> &fitness_values) {
             fitness = 0.001;
         } else {
             // generate the pattern collection heuristic and get its fitness value.
+	    if(timer()>time_limit){
+	      //cout<<"breaking-1 out of GA Algortihm, current gen_time:"<<timer<<" bigger than time_limit:"<<time_limit<<endl;
+	      timer.stop();
+	      break;
+	    }
             Options opts;
             opts.set<TaskProxy *>("task_proxy", task);
             opts.set<int>("cost_type", cost_type);
+            opts.set<bool>("disjoint", disjoint_patterns);
             opts.set<vector<vector<int> > >("patterns", pattern_collection);
+	    opts.set<double>("mp", mutation_probability);
+	    opts.set<bool>("complementary", complementary);
+	    opts.set<int>("size", pdb_max_size);
             ZeroOnePDBsHeuristic *zoppch =
                 new ZeroOnePDBsHeuristic(opts);
             fitness = zoppch->get_approx_mean_finite_h();
             // update the best heuristic found so far.
             if (fitness > best_fitness) {
+	      std::pair<std::set<vector<vector<int> > >::iterator,bool> ret;
+
+	      ret=chosen_pattern_collections.insert(pattern_collection); // all current pattern collections
+	      if(ret.second==false){
+		//cout<<"pattern collection already selected"<<endl;
+		//zoppch->dump();
+                delete zoppch;
+		best_fitness_was_duplicate=true;
+	      }
+	      else{
                 best_fitness = fitness;
                 cout << "best_fitness = " << best_fitness << endl;
                 delete best_heuristic;
                 best_heuristic = zoppch;
-                //best_heuristic->dump();
+		best_fitness_was_duplicate=false;
+	      }
             } else {
                 delete zoppch;
             }
@@ -212,7 +427,7 @@ void PatternGenerationEdelkamp::bin_packing() {
         variables.push_back(i);
     }
 
-    for (int i = 0; i < num_collections; ++i) {
+    for (int i = 0; i < colls; ++i) {
         // random variable ordering for all pattern collections
         g_rng.shuffle(variables);
         vector<vector<bool> > pattern_collection;
@@ -254,16 +469,27 @@ void PatternGenerationEdelkamp::genetic_algorithm() {
     vector<double> initial_fitness_values;
     evaluate(initial_fitness_values);
     for (int i = 0; i < num_episodes; ++i) {
-        cout << endl;
-        cout << "--------- episode no " << (i + 1) << " ---------" << endl;
+	if(timer()>time_limit){
+	  //cout<<"breaking-3 out of GA Algortihm, current gen time:"<<timer()<<" bigger than time_limit:"<<time_limit<<endl;
+	  timer.stop();
+	  break;
+        }
+        //cout << endl;
+        //cout << "--------- episode no " << (i + 1) << " ---------" << endl;
         mutate();
         //cout << "current pattern_collections after mutation" << endl;
         //dump();
         vector<double> fitness_values;
         evaluate(fitness_values);
+	if(timer()>time_limit){
+	  //cout<<"breaking-4 out of GA Algortihm, current gen time:"<<timer()<<" bigger than time_limit:"<<time_limit<<endl;
+	  timer.stop();
+	  break;
+	}
         select(fitness_values); // we allow to select invalid pattern collections
         //cout << "current pattern collections (after selection):" << endl;
         //dump();
+    timer.stop();//no need to keep this one ticking after pattern generation finished!
     }
 }
 
@@ -308,7 +534,7 @@ static Heuristic *_parse(OptionParser &parser) {
         "In Fast Downward bin-packing with the next-fit strategy is used. A bin "
         "corresponds to a pattern which contains variables up to ``pdb_max_size``. "
         "With this method each variable occurs exactly in one pattern of a collection. "
-        "There are ``num_collections`` collections created.\n"
+        "There are ``colls`` collections created.\n"
         "+ Mutation<<BR>>"
         "With probability ``mutation_probability`` a bit is flipped meaning that "
         "either a variable is added to a pattern or deleted from a pattern.\n"
@@ -328,29 +554,49 @@ static Heuristic *_parse(OptionParser &parser) {
         "probabilities and Roulette Wheel Selection is used.\n"
         "+\n\n", true);
 
-    parser.add_option<int>("pdb_max_size", "maximal number of states per pattern database ", "50000");
-    parser.add_option<int>("num_collections", "number of pattern collections to maintain in the genetic algorithm (population size)", "5");
-    parser.add_option<int>("num_episodes", "number of episodes for the genetic algorithm", "30");
-    parser.add_option<double>("mutation_probability", "probability between 0 and 1 for flipping a bit in the genetic algorithm", "0.01");
+    parser.add_option<int>("size", "maximal number of states per pattern database ", "50000");
+    parser.add_option<int>("colls", "number of pattern collections to maintain in the genetic algorithm (population size)", "5");
+    parser.add_option<int>("eps", "number of episodes for the genetic algorithm", "30");
+    parser.add_option<double>("mp", "probability between 0 and 1 for flipping a bit in the genetic algorithm", "0.01");
+    parser.add_option<bool>("disjoint","using disjoint variables in the patterns of a collection", "false");
     parser.add_option<bool>("disjoint", "consider a pattern collection invalid (giving it very low fitness) if its patterns are not disjoint", "false");
+    parser.add_option<bool>("complementary", "If restarting sampling, was the heuristic already defined as complementary", "false");
+
 
     Heuristic::add_options_to_parser(parser);
     Options opts = parser.parse();
     if (parser.help_mode())
         return 0;
 
-    if (opts.get<int>("pdb_max_size") < 1)
+    if (opts.get<int>("size") < 1)
         parser.error("size per pdb must be at least 1");
-    if (opts.get<int>("num_collections") < 1)
+    if (opts.get<int>("colls") < 1)
         parser.error("number of pattern collections must be at least 1");
-    if (opts.get<int>("num_episodes") < 0)
+    if (opts.get<int>("eps") < 0)
         parser.error("number of episodes must be a non negative number");
-    if (opts.get<double>("mutation_probability") < 0 || opts.get<double>("mutation_probability") > 1)
+    if (opts.get<double>("mp") < 0 || opts.get<double>("mp") > 1)
         parser.error("mutation probability must be in [0..1]");
 
     if (parser.dry_run())
         return 0;
     PatternGenerationEdelkamp pge(opts);
+  if(no_more_ga_pdbs||pge.get_fitness()<0){
+    //cout<<"We must have reached maximum time or memory limit, returning blind heuristic instead"<<endl;
+    if(pge.get_fitness()<0){
+      cout<<"No unique pattenrs were found!"<<endl;
+    }
+    Heuristic::add_options_to_parser(parser);
+    Options opts = parser.parse();
+    BlindSearchHeuristic *dummy_heur =
+                new BlindSearchHeuristic(opts);
+    dummy_heur->set_stop_using(true);
+    return dummy_heur; 
+  }
+    //we copy the patterns to be able to reuse them if we crast out before time is up
+    if(!use_saved_pdbs){//only if we are not reading the pdbs!
+      pge.dump_file();
+      pge.dump_best_heuristic();
+    }
     return pge.get_pattern_collection_heuristic();
 }
 

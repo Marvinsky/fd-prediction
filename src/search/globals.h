@@ -5,6 +5,9 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <set>
+
+using namespace std;
 
 class AbstractTask;
 class Axiom;
@@ -90,4 +93,36 @@ extern std::string heuristic_name2;
 extern int ss_probes;
 extern int f_boundary;
 extern bool is_mov_bound;
+
+// ss+ culprits
+struct compare_patterns
+{
+  bool operator() (const vector<vector<int> >v1, const vector<vector<int> > v2){
+    if(v1.size()<v2.size()){
+        return true;
+    }
+    size_t matching_patterns=0;
+    for(size_t i=0;i<v1.size();i++){
+      for(size_t j=0;j<v2.size();j++){
+        if(v1[i] == v2[j]){
+          matching_patterns++;
+          break;
+        }
+      }
+    }
+    if(matching_patterns==v1.size()){//v1 is included in v2, hence do not insert
+      //cout<<"All patterns included in one collection, not adding it"<<endl;
+      return false;
+    }
+    return true;
+  }
+};
+extern std::set<std::vector<std::vector<int> >, compare_patterns> chosen_pattern_collections;//all current pattern collections
+extern bool no_more_ga_pdbs;
+extern bool use_saved_pdbs;
+extern double pdb_gen_time_limit;
+extern int g_random_seed;
+extern int pdb_dump_counter;
+extern string problem_name;
+extern vector<string> stored_GA_patterns;
 #endif

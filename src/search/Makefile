@@ -58,6 +58,7 @@ HEADERS = \
           iterated_search.h \
           lazy_search.h \
           max_evaluator.h \
+          min_evaluator.h \
           operator_cost.h \
           option_parser.h \
           option_parser_util.h \

@@ -247,6 +247,8 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
 	    f_boundary = std::stoi(args[i]);
 	} else if (arg.compare("--is_mov_bound") == 0) {
 		is_mov_bound = true;	
+	} else if (arg.compare("--use_saved_pdbs") == 0) {
+		use_saved_pdbs = true;
 	} else if (arg.compare("--random-seed") == 0) {
             if (is_last)
                 throw ArgError("missing argument after --random-seed");

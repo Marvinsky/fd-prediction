@@ -17,6 +17,8 @@
 #include <limits>
 #include <string>
 #include <vector>
+#include "../ext/boost/lexical_cast.hpp"
+
 
 using namespace std;
 
@@ -56,6 +58,17 @@ void AbstractOperator::dump(const vector<int> &pattern) const {
     }
     cout << "Hash effect:" << hash_effect << endl;
 }
+
+std::string PDBHeuristic::get_pattern_string() const {
+	string pattern_string;
+	for (size_t i = 0; i < pattern.size(); i++) {
+		pattern_string+=boost::lexical_cast<string>(pattern.at(i));
+		if (i < (pattern.size() - 1)) {
+			pattern_string+=",";
+		}
+	}
+	return pattern_string;
+} 
 
 PDBHeuristic::PDBHeuristic(
     const Options &opts, bool dump,

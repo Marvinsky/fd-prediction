@@ -2,8 +2,13 @@
 
 #include <cassert>
 #include <csignal>
+#include <iostream>
 #include <fstream>
 #include <limits>
+#include "ext/boost/lexical_cast.hpp"
+#include <iomanip>
+#include "../timer.h"
+
 using namespace std;
 
 
@@ -162,4 +167,160 @@ bool is_product_within_limit(int factor1, int factor2, int limit) {
     assert(factor1 >= 0 && factor1 <= limit);
     assert(factor2 >= 0 && factor2 <= limit);
     return factor2 == 0 || factor1 <= limit / factor2;
+}
+
+bool get_GA_patterns_from_file(std::vector<std::vector<int> > &all_pattern_col,bool disjoint,double mutation_rate,int pdb_max_size){
+  if(stored_GA_patterns.size()==0){
+    cout<<"No patterns stored,calling load_GA_Patterns_from_file"<<endl;
+    load_GA_Patterns_from_file();
+  }
+  all_pattern_col.clear();//just in case this was previously populated
+  all_pattern_col.resize(1);//just in case this was previously populated
+    std::string line;
+    std::string temp;
+    unsigned found2;
+    unsigned next_pattern_pos;
+    bool found_PDB=false;
+    //ifstream in(log_file.c_str());
+    //cout<<"log_file:"<<log_file<<",g_plan_filename:"<<g_plan_filename;
+    string problem_name_mod=g_plan_filename;
+    problem_name_mod+=":";
+    cout<<",problem_name_mod:"<<problem_name_mod<<endl;
+    std::string disjoint_pattern("disjoint_patterns:,");
+    if(disjoint){
+      disjoint_pattern+="1";
+    }
+    else{
+      disjoint_pattern+="0";
+    }
+    
+    cout<<disjoint_pattern<<endl;
+    std::string mutation_rate_string("mp:,");
+    //mutation_rate_string+=boost::lexical_cast<std::string>(mutation_rate);
+    //mutation_rate_string+=std::to_string(mutation_rate);
+    ///std::ostringstream strs;
+    std::ostringstream strs;strs << std::fixed << std::setprecision(7);strs<<mutation_rate;
+    //strs << mutation_rate;
+    //std::string str = strs.str();
+    mutation_rate_string+=strs.str();
+    mutation_rate_string+=",";
+    cout<<"mutation_rate_string:"<<mutation_rate_string<<endl;
+    
+    std::string pdb_max_size_string("size:,");
+    std::ostringstream strs2;strs2 << std::fixed;strs2<<pdb_max_size;
+    pdb_max_size_string+=strs2.str();
+    pdb_max_size_string+=",";
+    cout<<"pdb_max_size_string:"<<pdb_max_size_string<<endl;
+
+    for(size_t pattern=0;pattern<stored_GA_patterns.size();pattern++){
+     line=stored_GA_patterns.at(pattern);
+     if( line.find(problem_name_mod)!=string::npos&&line.find(disjoint_pattern)!=string::npos
+  &&line.find(mutation_rate_string)!=string::npos&&line.find(pdb_max_size_string)!=string::npos){
+       cout<<"line:"<<line<<endl;
+       found_PDB=true;
+  
+       unsigned current_pos=line.find("]");
+       int num_databases = std::count(line.begin(), line.end(), ']') - 1;//the first ] is for the heuristic number
+       //cout<<"num_databases:"<<num_databases<<endl;
+       all_pattern_col.resize(num_databases);
+
+
+       current_pos=line.find("[",current_pos+1);
+       //unsigned found2 = line.find("[",found+1);
+       next_pattern_pos=line.find("-",current_pos+1);
+       for(int i=0;i<num_databases;i++){
+  //cout<<"reading database"<<i<<endl;
+  while(next_pattern_pos>line.find_first_of(",]",current_pos+1)){
+  //while(true)
+    current_pos=line.find_first_of("0123456789",current_pos);//so it points to the next variable
+    if(current_pos>next_pattern_pos){
+      //cout<<"skipping empty database"<<endl;
+      while(current_pos>next_pattern_pos){
+        next_pattern_pos=line.find("-",next_pattern_pos+1);
+        //cout<<"skipped database "<<i<<" because it is empty"<<endl;
+        //cout<<all_pattern_col.at(i);cout<<endl;
+        i++;
+      }
+      i--;//need to decrease i by one or it will be one ahead by the for statement
+      break;
+    }
+    //cout<<"\tcurrent_pos:"<<current_pos;
+    found2 = line.find_first_of(",]",current_pos);
+    //cout<<",found2:"<<found2;
+    if(line.find_first_of(",]",current_pos)==string::npos){
+      //cout<<",finished with pattern:"<<i<<",string finished"<<endl;
+      break;
+    }
+    temp=line.substr(current_pos,found2-current_pos);
+    //cout<<",next var:"<<temp<<",";
+    int temp2=boost::lexical_cast<int>(temp);
+    all_pattern_col.at(i).push_back(temp2);
+    // cout<<",last int added:"<<all_pattern_col.at(i).back();
+    current_pos=found2;//current_pos not pointing to next , or ]
+    if(line.find_first_of(",",found2)>next_pattern_pos){
+      //cout<<",finished with pattern:"<<i<<",pattern finished"<<endl;
+      current_pos=line.find("[",next_pattern_pos);
+      next_pattern_pos=line.find("-",next_pattern_pos+1);
+      //cout<<"next_pattern_pos:"<<next_pattern_pos<<endl;
+      break;
+    }
+  }
+  //cout<<"database:"<<i<<",read pattern:";
+  //cout<<all_pattern_col.at(i);cout<<endl;
+       } 
+       //Now add to our time calculations how long did iPDB originally take to generate this PDBs
+       current_pos=line.find("time:");
+       current_pos=line.find_first_of("0123456789",current_pos);
+       temp=line.substr(current_pos);
+       //double temp2=boost::lexical_cast<double>(temp);
+       //overall_original_pdbs_time+=temp2;
+     }
+   }
+    if(!found_PDB){
+      //cout<<"No existing gaPDB to read for current problem!, will return dummy heuristic!:"<<endl;
+      //exit(o);
+    }
+    /*  else{
+      cout<<"Original GAPDB time:"<<temp2<<mutation_rate_string<<disjoint_pattern<<",Original_pdbs_time:"<<overall_original_pdbs_time<<endl;
+    }*/
+    return found_PDB;
+}
+
+void load_GA_Patterns_from_file(){
+  std::string line;
+
+  string task2 = problem_name2;
+  
+  size_t found = task2.find(".");
+
+  string problem_name_mod = task2.substr(0, found);
+  problem_name_mod += ".dat";
+  problem_name_mod = "/" + problem_name_mod;
+  problem_name_mod = domain_name + problem_name_mod;
+  problem_name_mod = "dat/" + problem_name_mod;
+  cout<<"problem_name_mod = "<<problem_name_mod<<endl;
+
+  ifstream in(problem_name_mod.c_str());
+  Timer load_GA_from_file_timer;
+  
+  cout<<"Calling load_GA_Patterns_from_file"<<endl;
+  cout<<"log_file:"<<problem_name_mod<<",g_plan_filename:"<<g_plan_filename<<endl;
+  bool problem_found=false;
+    if( in.is_open())
+    {
+      cout<<"is_open true"<<endl;
+      while( getline(in,line) ){
+	  //cout<<"line:"<<line<<endl;
+	if( line.find(g_plan_filename)!=string::npos) {
+	    //cout<<"inside the line"<<endl;
+	    stored_GA_patterns.push_back(line);
+	    problem_found=true;
+	}
+      }
+      if(problem_found){
+	cout<<"problem_found among stored GAs:"<<g_plan_filename<<endl;
+      }
+    }
+    in.close();
+    cout<<"stored_GA_patterns.size:"<<stored_GA_patterns.size()<<",time:"<<load_GA_from_file_timer()<<endl;
 }
