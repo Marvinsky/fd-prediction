@@ -17,6 +17,7 @@
 #include <fstream>
 #include <iomanip>
 
+#define _ASTAR_DEBUG false
 
 using namespace std;
 
@@ -108,11 +109,14 @@ void EagerSearch::initialize() {
         node.set_level(0);
         initial_value = node.get_h();
 	total_min = initial_value;
-        cout<<"total_min_initialize = "<<total_min<<endl;
-	cout<<"search_time() = "<<(double)search_time()<<endl;
+        
         target_search_velocity = (double)total_min/(double)search_time();
-        cout<<"target_search_velocity = "<<target_search_velocity<<endl;
 
+#if _ASTAR_DEBUG
+	cout<<"total_min_initialize = "<<total_min<<endl;
+	cout<<"search_time() = "<<(double)search_time()<<endl;
+        cout<<"target_search_velocity = "<<target_search_velocity<<endl;
+#endif
 
         Node2 node2(node.get_h() + node.get_real_g(), 0);
         //nodes_expanded.insert(pair<Node2, double>(node2, count_nodes));
@@ -142,6 +146,12 @@ void EagerSearch::initialize() {
        
       outputFile2<<"\th_min\tgen\texp\t\tV\t\tSEv\t\tVeSP\t\tNPBP\n";
     //************************************************************
+
+      //santiago code
+      if (use_saved_pdbs) {
+             stored_GA_patterns.clear();
+             cout<<"cleared store_GA_patterns."<<endl;
+      }
 }
 
 
@@ -164,8 +174,10 @@ SearchStatus EagerSearch::step() {
     int level = node.get_level();
         
     Node2 node2(node.get_h() + node.get_real_g(), node.get_level());
-    cout<<"node expanded: h = "<<node.get_h()<<", g_real = "<<node.get_real_g()<<", f = "<<node.get_h() + node.get_real_g()<<", level = "<<level<<"\n";
 
+#if _ASTAR_DEBUG
+    cout<<"node expanded: h = "<<node.get_h()<<", g_real = "<<node.get_real_g()<<", f = "<<node.get_h() + node.get_real_g()<<", level = "<<level<<"\n";
+#endif
     //Inserting nodes to the expanded structure.
     std::pair<std::map<Node2, double>::iterator, bool> ret;
     std::map<Node2, double>::iterator it;
@@ -195,10 +207,12 @@ SearchStatus EagerSearch::step() {
           count_last_nodes_generated += 1;
           nodes_generated_for_start_state++;
        } else {
+#if _ASTAR_DEBUG
           cout<<"\ncount_last_nodes_generated = "<<count_last_nodes_generated<<endl;
           cout<<"total_nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
 	  cout<<"total_nodes_generated_for_start_state = "<<nodes_generated_for_start_state<<endl;	
-          generateExpandedReport();
+#endif
+	  generateExpandedReport();
           outputFile2.close();
           return SOLVED;
        }
@@ -221,7 +235,9 @@ SearchStatus EagerSearch::step() {
         }
     }
     search_progress.inc_evaluations(preferred_operator_heuristics.size());
+#if _ASTAR_DEBUG
     cout<<"-------------------beging childs-------------------\n";
+#endif
     for (size_t i = 0; i < applicable_ops.size(); ++i) {
 	nodes_generated_for_start_state++;
         const GlobalOperator *op = applicable_ops[i];
@@ -292,28 +308,33 @@ SearchStatus EagerSearch::step() {
             succ_node.open(succ_h, node, op);
             succ_node.set_level(level + 1);
             open_list->insert(succ_state.get_id());
+#if _ASTAR_DEBUG
             cout<<"\t Child_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.get_real_g()<<", f = "<<succ_h + succ_node.get_real_g()<<", level = "<<succ_node.get_level()<<"\n";
-
+#endif
 	    if (succ_h < total_min) {
                total_min = succ_h;
                
                int diff = initial_value - total_min;
-               //cout<<"\tinitial_value = "<<initial_value<<endl;
-               //cout<<"\ttotal_min = "<<total_min<<endl;
-               //cout<<"\tdiff = "<<initial_value - total_min<<endl;
+#if _ASTAR_DEBUG
+               cout<<"\tinitial_value = "<<initial_value<<endl;
+               cout<<"\ttotal_min = "<<total_min<<endl;
+               cout<<"\tdiff = "<<initial_value - total_min<<endl;
                cout<<"\tpartial nodes_generated_for_start_state = "<<nodes_generated_for_start_state<<endl;
                cout<<"\tpartial nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
+#endif
                V = (double)diff/(double)nodes_generated_for_start_state;
                search_speed = (double)diff/(double)nodes_expanded_for_start_state;
                SEv = (double)total_min/V;
                VeSP = (double)nodes_generated_for_start_state/(double)(nodes_generated_for_start_state + SEv);
                
+#if _ASTAR_DEBUG
                //Unit-cost domains
-               //cout<<"\tsucc_node.get_real_g() = "<<succ_node.get_real_g()<<endl;
-               //cout<<"\tsucc_node.get_h() = "<<succ_node.get_h()<<endl;
-               //cout<<"\tf = "<<succ_node.get_real_g() + succ_node.get_h()<<endl;
+               cout<<"\tsucc_node.get_real_g() = "<<succ_node.get_real_g()<<endl;
+               cout<<"\tsucc_node.get_h() = "<<succ_node.get_h()<<endl;
+               cout<<"\tf = "<<succ_node.get_real_g() + succ_node.get_h()<<endl;
                NPBP = (double)succ_node.get_real_g()/(double)(succ_node.get_real_g() + succ_node.get_h());
-               //cout<<"\tNPBP = "<<NPBP<<endl;
+               cout<<"\tNPBP = "<<NPBP<<endl;
+#endif
                reportProgress();
             }
 
@@ -350,7 +371,9 @@ SearchStatus EagerSearch::step() {
             }
         }
     }
+#if _ASTAR_DEBUG
     cout<<"-----------------end all Childs-----------------\n";
+#endif
     return IN_PROGRESS;
 }
 
@@ -375,26 +398,6 @@ int EagerSearch::returnMinF(vector<int> levels) {
 	}
 	return min;
 }
-
-/*int EagerSearch::generatedSoFar() {
-     
-      int count_nodes = 0;
-      for (map<Node2, int>::iterator iter = collector.begin(); iter !=  collector.end(); iter++) {
-          int k = iter->second;
-          count_nodes += k;
-      }
-      return count_nodes;
-}
-
-int EagerSearch::expandedSoFar() {
-      int count_nodes = 0;
-      for (map<Node2, int>::iterator iter = collector2.begin(); iter !=  collector2.end(); iter++) {
-          int k = iter->second;
-          count_nodes += k;
-      }
-      return count_nodes;
-}
-*/
 
 void EagerSearch::generateExpandedReport() {
 	cout<<"nodes_expanded.size() = "<<nodes_expanded.size()<<endl;
@@ -455,12 +458,7 @@ void EagerSearch::generateExpandedReport() {
 		}
 	
 	}
-
-
-	cout<<"print v_timer"<<endl;
-	for (size_t i = 0; i < v_timer.size(); i++) {
-		cout<<v_timer.at(i)<<endl;
-	}
+	
 	int sum = 0;
 	int count_v_timer = 0;
 	for (map<int, int>::iterator iter = m.begin(); iter != m.end(); iter++) {
@@ -478,14 +476,13 @@ void EagerSearch::generateExpandedReport() {
 }
 
 void EagerSearch::reportProgress() {
-       
+#if _ASTAR_DEBUG
        cout<<"V = "<<V<<endl;
        cout<<"search_speed = "<<search_speed<<endl;
        cout<<"SEv = "<<SEv<<endl;
        cout<<"VeSP = "<<VeSP<<endl;
-
+#endif
       outputFile2<<"\t"<<total_min<<"\t"<<nodes_generated_for_start_state<<"\t"<<nodes_expanded_for_start_state<<"\t\t"<<std::setprecision(2)<<V<<"\t\t"<<SEv<<"\t\t"<<VeSP<<"\t\t"<<NPBP<<"\n";
-      //outputFile2.close();
 }
 
 pair<SearchNode, bool> EagerSearch::fetch_next_node() {
@@ -578,8 +575,7 @@ void EagerSearch::update_jump_statistic(const SearchNode &node) {
         int new_f_value = f_evaluator->get_value();
 
 	if (search_progress.updated_lastjump_f_value(new_f_value)) {
-		 double level_update_time = (double)time_level();
-		 v_timer.push_back(level_update_time);
+		 v_timer.push_back(g_timer);
 		 search_progress.report_f_value(new_f_value);
 	}
     }
