@@ -95,7 +95,7 @@ void EagerSearch::initialize() {
     nodes_generated_for_start_state = 0;
 
     const GlobalState &initial_state = g_initial_state();
-    int max_h = 0;
+    int min_h = INT_MAX/2;
     //ss+culprits
     boost::dynamic_bitset<> b_initial_v(heuristics.size());
     vector<int> h_initial_v;
@@ -103,11 +103,11 @@ void EagerSearch::initialize() {
     for (size_t i = 0; i < heuristics.size(); ++i) {
         heuristics[i]->evaluate(initial_state);
 	if (!heuristics[i]->is_dead_end()) {
-		max_h = max(max_h, heuristics[i]->get_heuristic());
+		min_h = min(min_h, heuristics[i]->get_heuristic());
 		h_initial_v.push_back(heuristics[i]->get_heuristic());
 	} else {
-		max_h = 0;
-		h_initial_v.push_back(max_h);
+		min_h = INT_MAX/2;
+		h_initial_v.push_back(min_h);
 		break;	
 	}
     }
@@ -116,13 +116,13 @@ void EagerSearch::initialize() {
     if (f_boundary) {
 	threshold = f_boundary;
     } else {
-	threshold = max_h;
+	threshold = min_h;
 	if (threshold == 0) {
 		threshold = 2;
 	}
     }
     cout<<"initial threshold = "<<threshold<<"\n";
-    open_list->evaluate2(0, max_h);
+    open_list->evaluate2(0, min_h);
     search_progress.inc_evaluated_states();
     search_progress.inc_evaluations(heuristics.size());
 
@@ -307,15 +307,15 @@ SearchStatus EagerSearch::step() {
 	//creating the child bitset
 	boost::dynamic_bitset<> b_child_v(heuristics.size());
 	vector<int> h_child_v;
-	int max_heur = 0;
+	int min_heur = INT_MAX/2;
 	for (size_t i = 0; i < heuristics.size(); i++) {
 		heuristics[i]->evaluate(succ_state);
 		if (!heuristics[i]->is_dead_end()) {
-			max_heur = max(max_heur, heuristics[i]->get_heuristic());
+			min_heur = min(min_heur, heuristics[i]->get_heuristic());
 			h_child_v.push_back(heuristics[i]->get_heuristic());
 		} else {
-			max_heur = 0;
-			h_child_v.push_back(max_heur);
+			min_heur = INT_MAX/2;
+			h_child_v.push_back(min_heur);
 			break;
 		}
 	}
@@ -657,6 +657,7 @@ pair<SearchNode, bool> EagerSearch::fetch_next_node() {
         if (open_list->empty()) {
             cout << "Completely explored state space -- no solution!" << endl;
             generateExpandedReport();
+	    generateSSCCReport();
             // HACK! HACK! we do this because SearchNode has no default/copy constructor
             SearchNode dummy_node = search_space.get_node(g_initial_state());
             dummy_node.set_level(0);

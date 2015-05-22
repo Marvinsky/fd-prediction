@@ -21,7 +21,7 @@ MinEvaluator::~MinEvaluator() {
 int MinEvaluator::combine_values(const vector<int> &values) {
     int result = 0;
     for (size_t i = 0; i < values.size(); ++i) {
-      cout<<"\tMining_h["<<i<<"]:"<<values[i]<<endl;
+        //cout<<"\tMining_h["<<i<<"]:"<<values[i]<<endl;
         assert(values[i] >= 0);
         result = min(result, values[i]);
     }
