@@ -2,6 +2,7 @@
 #define OPEN_LISTS_OPEN_LIST_H
 
 #include "../evaluator.h"
+#include <iostream>
 #include <vector>
 
 template<class Entry>
@@ -30,6 +31,7 @@ public:
 
     virtual int boost_preferred() {return 0; }
     virtual void boost_last_used_list() {return; }
+    virtual void evaluate2(int g,int h){if(g+h>0) std::cout<<"calling virtual evaluate2,implement method"<<std::endl;exit(0);return;return;};
 };
 
 #endif

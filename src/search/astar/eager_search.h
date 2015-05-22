@@ -19,6 +19,9 @@
 #include <iostream>
 #include <fstream>
 
+//ss+culprits
+#include "../ext/boost/dynamic_bitset.hpp"
+
 class GlobalOperator;
 class Heuristic;
 class Options;
@@ -66,6 +69,10 @@ class EagerSearch : public SearchEngine {
     //Unit-cost Domains
     double NPBP; //Naive path-based progress estimator
 
+    //ss+culprits
+    int threshold;
+    map<boost::dynamic_bitset<>,  double> bitcollector;
+
 protected:
     SearchStatus step();
     std::pair<SearchNode, bool> fetch_next_node();
@@ -95,8 +102,7 @@ public:
 
 //Speed Progress
     void reportProgress();
-    //int generatedSoFar();
-    //int expandedSoFar();
+    void generateSSCCReport();
 };
 
 #endif

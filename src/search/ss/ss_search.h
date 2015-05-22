@@ -21,6 +21,8 @@
 #include "../state_id.h"
 #include "../timer.h"
 
+//ss+culprits
+#include "../ext/boost/dynamic_bitset.hpp"
 
 class GlobalOperator;
 class Heuristic;
@@ -94,6 +96,9 @@ private:
 	std::set<SSQueue, classcomp> L;
 	std::set<SSNode, classcomp2> check;
 
+	//ss+culprits
+	map<boost::dynamic_bitset<>, double> bitcollector;
+
 protected:
 
 	virtual SearchStatus step();
@@ -105,6 +110,7 @@ public:
         void printQueue(); 
         void generateExpandedReport();
         void generateGeneratedReport();
+	void generateSSCCReport();
         double getProbingResult();
         void probe();
         void predict(int probes);

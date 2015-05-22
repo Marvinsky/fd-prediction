@@ -48,6 +48,7 @@ public:
 
     // tuple evaluator interface
     void evaluate(int g, bool preferred);
+    void evaluate2(int g, int h);
     bool is_dead_end() const;
     bool dead_end_is_reliable() const;
     void get_involved_heuristics(std::set<Heuristic *> &hset);

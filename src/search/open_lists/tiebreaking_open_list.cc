@@ -97,6 +97,7 @@ void TieBreakingOpenList<Entry>::clear() {
 
 template<class Entry>
 void TieBreakingOpenList<Entry>::evaluate(int g, bool preferred) {
+  cout<<"calling evaluate"<<endl;
     dead_end = false;
     dead_end_reliable = false;
 
@@ -116,6 +117,16 @@ void TieBreakingOpenList<Entry>::evaluate(int g, bool preferred) {
     }
     first_is_dead_end = evaluators[0]->is_dead_end();
     last_preferred = preferred;
+}
+template<class Entry>
+void TieBreakingOpenList<Entry>::evaluate2(int g, int h) {
+  //cout<<"calling evaluate2"<<endl;
+    dead_end = false;
+    dead_end_reliable = false;
+    last_evaluated_value[0] = g+h;
+    last_evaluated_value[1]=h;
+    first_is_dead_end = false;
+    last_preferred = false;
 }
 
 template<class Entry>
