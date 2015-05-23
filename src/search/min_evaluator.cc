@@ -30,7 +30,7 @@ int MinEvaluator::combine_values(const vector<int> &values) {
 }
 
 static ScalarEvaluator *_parse(OptionParser &parser) {
-  cout<<"calling ScalarEvaluator Min parser"<<endl;
+    //cout<<"calling ScalarEvaluator Min parser"<<endl;
     parser.add_list_option<ScalarEvaluator *>("evals");
     Options opts = parser.parse();
 
@@ -39,7 +39,7 @@ static ScalarEvaluator *_parse(OptionParser &parser) {
     if (parser.dry_run())
         return 0;
     else{
-      cout<<"returning MinEvaluator"<<endl;fflush(stdout);
+        //cout<<"returning MinEvaluator"<<endl;fflush(stdout);
         return new MinEvaluator(opts);
     }
 }

@@ -1,0 +1,6 @@
+sas_plan:returning best heuristic(GAPDB)[,0,]:[0,1,2,3,4,5,6,7]-,mp:,0.5000000,size:,50000,disjoint_patterns:,0-best_fitness:8.5625,,initial value:13,GAPDB generation time:0
+sas_plan:returning best heuristic(GAPDB)[,1,]:[0,1,2,3,4,5,6,7]-,mp:,0.6000000,size:,20000,disjoint_patterns:,1-best_fitness:8.5625,,initial value:13,GAPDB generation time:2.21923e-18
+sas_plan:returning best heuristic(GAPDB)[,2,]:[]-,mp:,1.0000000,size:,20000,disjoint_patterns:,1-best_fitness:0,,initial value:0,GAPDB generation time:1.11131e-17
+sas_plan:returning best heuristic(GAPDB)[,3,]:[0,1,2,3,4,5,6,7]-,mp:,0.8000000,size:,20000,disjoint_patterns:,0-best_fitness:8.5625,,initial value:13,GAPDB generation time:0.02
+sas_plan:returning best heuristic(GAPDB)[,4,]:[0,1,2,3,4,5,6,7]-,mp:,0.2000000,size:,20000,disjoint_patterns:,0-best_fitness:8.5625,,initial value:13,GAPDB generation time:-8.89046e-18
+sas_plan:returning best heuristic(GAPDB)[,5,]:[0,1,2,3,4,5,6,7]-,mp:,0.4000000,size:,20000,disjoint_patterns:,0-best_fitness:8.5625,,initial value:13,GAPDB generation time:0.02
