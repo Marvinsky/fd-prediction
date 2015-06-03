@@ -566,15 +566,25 @@ void EagerSearch::generateSSCCReport() {
         cout<<"dominio = "<<dominio<<endl;
         cout<<"tarefa = "<<tarefa<<endl;
         cout<<"heuristica = "<<heuristica<<endl;
-        int length = tarefa.size();
-        cout<<"length = "<<length<<endl;
         size_t found = tarefa.find(".");
         cout<<"found = "<<found<<endl;
-        string name = tarefa.substr(0, found);
-        name+="_F_";
-        name+=boost::lexical_cast<std::string>(threshold);
-        name += ".csv";
-        cout<<"name = "<<name<<endl;
+
+	cout<<"problem_name_gapdb = "<<problem_name_gapdb<<"\n";
+	string name;
+	if (problem_name_gapdb != "temp") {
+		string t = problem_name_gapdb;
+		size_t found = t.find(".");
+		name = t.substr(0, found);
+		name += "_F_";
+		name+=boost::lexical_cast<std::string>(threshold);
+        	name += ".csv";
+	} else {
+        	name = tarefa.substr(0, found);
+        	name+="_F_";
+        	name+=boost::lexical_cast<std::string>(threshold);
+        	name += ".csv"; 
+	}
+	cout<<"name = "<<name<<endl;
 
         string dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio;
         string dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc";

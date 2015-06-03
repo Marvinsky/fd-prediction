@@ -125,4 +125,7 @@ extern int g_random_seed;
 extern int pdb_dump_counter;
 extern string problem_name;
 extern vector<string> stored_GA_patterns;
+
+//problem name gapdb, this is only for use of gapdb test
+extern string problem_name_gapdb;
 #endif

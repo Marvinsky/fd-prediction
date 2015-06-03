@@ -316,6 +316,9 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
 		is_mov_bound = true;	
 	} else if (arg.compare("--use_saved_pdbs") == 0) {
 		use_saved_pdbs = true;
+	} else if (arg.compare("--problem_name_gapdb") == 0) {
+		++i;
+		problem_name_gapdb = args[i];
 	} else if (arg.compare("--random-seed") == 0) {
             if (is_last)
                 throw ArgError("missing argument after --random-seed");
