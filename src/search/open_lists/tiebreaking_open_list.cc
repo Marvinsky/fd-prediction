@@ -97,7 +97,7 @@ void TieBreakingOpenList<Entry>::clear() {
 
 template<class Entry>
 void TieBreakingOpenList<Entry>::evaluate(int g, bool preferred) {
-  cout<<"calling evaluate"<<endl;
+    //cout<<"calling evaluate"<<endl;
     dead_end = false;
     dead_end_reliable = false;
 
