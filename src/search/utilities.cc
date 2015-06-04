@@ -183,6 +183,7 @@ bool get_GA_patterns_from_file(std::vector<std::vector<int> > &all_pattern_col,b
     bool found_PDB=false;
     //ifstream in(log_file.c_str());
     //cout<<"log_file:"<<log_file<<",g_plan_filename:"<<g_plan_filename;
+    //cout<<"g_plan_filename:"<<g_plan_filename<<"\n";
     string problem_name_mod=problem_name2;
     problem_name_mod+=":";
     cout<<",problem_name_mod:"<<problem_name_mod<<endl;
@@ -214,10 +215,30 @@ bool get_GA_patterns_from_file(std::vector<std::vector<int> > &all_pattern_col,b
     cout<<"stored_GA_patterns.size():"<<stored_GA_patterns.size()<<"\n";
     for(size_t pattern=0;pattern<stored_GA_patterns.size();pattern++){
      line=stored_GA_patterns.at(pattern);
+     /*
      cout<<"before analyze line:"<<line<<"\n";
-     if( line.find(problem_name_mod)!=string::npos&&line.find(disjoint_pattern)!=string::npos
-  &&line.find(mutation_rate_string)!=string::npos&&line.find(pdb_max_size_string)!=string::npos){
-       cout<<"line:"<<line<<endl;
+     cout<<"elements to look for:\n";
+     cout<<"\tdisjoint:"<<disjoint<<"\n";
+     cout<<"\tmutation_rate:"<<mutation_rate<<"\n";
+     cout<<"\tpdb_max_size:"<<pdb_max_size<<"\n\n";
+
+     cout<<"line.find(problem_name_mod):"<<line.find(problem_name_mod)<<"\n";
+     cout<<"line.find(disjoint_pattern):"<<line.find(disjoint_pattern)<<"\n";
+     cout<<"line.find(mutation_rate_string):"<<line.find(mutation_rate_string)<<"\n";
+     cout<<"line.find(pdb_max_size_string):"<<line.find(pdb_max_size_string)<<"\n\n";
+
+     cout<<"name of the parameters:\n";
+     cout<<"\t\tproblem_name_mod:"<<problem_name_mod<<"\n";
+     cout<<"\t\tdisjoint_pattern:"<<disjoint_pattern<<"\n";
+     cout<<"\t\tmutation_rate_string:"<<mutation_rate_string<<"\n";
+     cout<<"\t\tpdb_max_size_string:"<<pdb_max_size_string<<"\n";
+     */
+     if( line.find(problem_name_mod)!=string::npos &&
+	line.find(disjoint_pattern)!=string::npos &&
+	line.find(mutation_rate_string)!=string::npos &&
+	line.find(pdb_max_size_string)!=string::npos) {
+
+       //cout<<"line:"<<line<<endl;
        found_PDB=true;
   
        unsigned current_pos=line.find("]");
@@ -303,6 +324,8 @@ void load_GA_Patterns_from_file(){
 
   ifstream in(problem_name_mod.c_str());
   Timer load_GA_from_file_timer;
+  g_plan_filename=problem_name2;
+  g_plan_filename+=":";
   
   cout<<"Calling load_GA_Patterns_from_file"<<endl;
   cout<<"log_file:"<<problem_name_mod<<",g_plan_filename:"<<g_plan_filename<<endl;
@@ -311,9 +334,9 @@ void load_GA_Patterns_from_file(){
     {
       cout<<"is_open true"<<endl;
       while( getline(in,line) ){
-	  //cout<<"line:"<<line<<endl;
+	cout<<"line:"<<line<<endl;
 	if( line.find(g_plan_filename)!=string::npos) {
-	    //cout<<"inside the line"<<endl;
+	    cout<<"inside the line"<<endl;
 	    stored_GA_patterns.push_back(line);
 	    problem_found=true;
 	}

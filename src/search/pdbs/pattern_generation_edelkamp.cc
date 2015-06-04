@@ -209,7 +209,7 @@ void PatternGenerationEdelkamp::dump_file() const {
         cout<<"file_name: "<<file_name<<endl;
 
 	outputFile.open(file_name.c_str(), ios::app);
-	problem_name = g_plan_filename;
+	problem_name = problem_name2;
 	outputFile<<problem_name<<":";
 	outputFile<<"returning best heuristic(GAPDB)[,"<<i<<",]:";
 	i++;
