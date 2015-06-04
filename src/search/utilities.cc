@@ -324,25 +324,25 @@ void load_GA_Patterns_from_file(){
 
   ifstream in(problem_name_mod.c_str());
   Timer load_GA_from_file_timer;
-  g_plan_filename=problem_name2;
-  g_plan_filename+=":";
+  string g_plan_filename2 = problem_name2;
+  g_plan_filename2+=":";
   
   cout<<"Calling load_GA_Patterns_from_file"<<endl;
-  cout<<"log_file:"<<problem_name_mod<<",g_plan_filename:"<<g_plan_filename<<endl;
+  cout<<"log_file:"<<problem_name_mod<<",g_plan_filename2:"<<g_plan_filename2<<endl;
   bool problem_found=false;
     if( in.is_open())
     {
       cout<<"is_open true"<<endl;
       while( getline(in,line) ){
 	cout<<"line:"<<line<<endl;
-	if( line.find(g_plan_filename)!=string::npos) {
+	if( line.find(g_plan_filename2)!=string::npos) {
 	    cout<<"inside the line"<<endl;
 	    stored_GA_patterns.push_back(line);
 	    problem_found=true;
 	}
       }
       if(problem_found){
-	cout<<"problem_found among stored GAs:"<<g_plan_filename<<endl;
+	cout<<"problem_found among stored GAs:"<<g_plan_filename2<<endl;
       }
     }
     in.close();
