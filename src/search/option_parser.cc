@@ -288,7 +288,7 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
 		  arg2+=",size=200000,eps=60,colls=5),";
 		}*/
 		//arg2+=",size=200000,eps=30,colls=5),";
-		  arg2+=",size=20000,eps=120,colls=5),";
+		  arg2+=",size=2000000,eps=20,colls=5),";
 	      }
 	      arg2.erase(arg2.end()-1);//remove ending
 	      arg2+="]))";
