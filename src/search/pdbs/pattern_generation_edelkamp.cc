@@ -43,7 +43,7 @@ PatternGenerationEdelkamp::PatternGenerationEdelkamp(const Options &opts)
 	time_limit=40;
       }
       else if(pdb_max_size>=200000){
-	time_limit=20;
+	time_limit=60; //time_limit=20
       }
       else if(pdb_max_size>=20000){
 	time_limit=10;

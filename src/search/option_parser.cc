@@ -238,15 +238,16 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
             ++i;
 	    string arg2=string(args[i]);
 	    cout<<"args["<<i<<"]:"<<args[i]<<endl;
-	    if(arg2.find("automate_GAs")!=string::npos){
 
+	if(arg2.find("automate_GAs")!=string::npos){
 	      //string GAs_heur_call_list;
 	      cout<<"input arg:"<<arg2<<endl;
 	      arg2.erase(arg2.end()-15,arg2.end());//remove ending
 	      cout<<"new arg after erase:"<<arg2<<endl;
 	      //first allocate all the availabe mp probs to a vector to ensure no repetion of random probabilities
 	      vector<string> mp_probs;
-	      double heurs_to_generate=5;
+	      double heurs_to_generate=10;
+	      cout<<"heurs_to_generate:"<<heurs_to_generate<<endl;
 	        for(int j=0;j<int(heurs_to_generate);j++){
 		  std::stringstream str;
 		  str << fixed << setprecision(7) <<double(j+1)/heurs_to_generate;
@@ -266,9 +267,9 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
 		  arg2+=",disjoint=true";
 		}
 		 
-		/* random=rand()%1000+1;
+		 random=rand()%1000+1;
 		//cout<<"random2:"<<random<<endl;
-		 if(random<5){
+		 /*  if(random<5){
 		  arg2+=",size=2000000,eps=30,colls=5),";
 		}
 		else if(random<17){
@@ -287,13 +288,23 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
 		else{
 		  arg2+=",size=200000,eps=60,colls=5),";
 		}*/
-		//arg2+=",size=200000,eps=30,colls=5),";
-		  arg2+=",size=2000000,eps=20,colls=5),";
+		  //arg2+=",size=20000,eps=120,colls=10),";
+		if(random<51){
+		  arg2+=",size=2000000,eps=30,colls=5),";
+		}
+		else if(random<300){
+		  arg2+=",size=2000000,eps=30,colls=5),";//2 Mill
+		}
+		else{
+		  arg2+=",size=2000000,eps=60,colls=5),";
+		}
+		//arg2+=",size=2000000,eps=30,colls=5),";//2 Mill
 	      }
 	      arg2.erase(arg2.end()-1);//remove ending
 	      arg2+="]))";
-	      //cout<<"final arg:"<<arg2<<endl;
 	    }
+	      //cout<<"final arg:"<<arg2<<endl;
+	    cout<<"GA type:"<<arg2.substr(arg2.size()-min(args.size()-1,unsigned(62)))<<endl;
             //OptionParser p(args[i], dry_run);
             OptionParser p(arg2.c_str(), dry_run);
             engine = p.start_parsing<SearchEngine *>();

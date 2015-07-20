@@ -112,6 +112,8 @@ class LandmarkCutHeuristic : public Heuristic {
     AdaptiveQueue<RelaxedProposition *> priority_queue;
 
     virtual void initialize();
+    virtual string get_heur_name() {string temp = "lmcut"; return temp;}
+
     virtual int compute_heuristic(const GlobalState &state);
     void build_relaxed_operator(const GlobalOperator &op);
     void add_relaxed_operator(const std::vector<RelaxedProposition *> &precondition,
