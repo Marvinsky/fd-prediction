@@ -539,9 +539,19 @@ void SSSearch::generateExpandedReport() {
 	string dirDomain, dirfDist, outputFile;
 
 	if (is_mov_bound) {
-		dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio;
-        	dirfDist = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio+"/fdist";
-        	outputFile = "/home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio+"/fdist/"+tarefa;
+		if (ss_probes == 1000) {
+                        dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio;
+                        dirfDist = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio+"/fdist";
+                        outputFile = "/home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio+"/fdist/"+tarefa;
+                } else {
+                        string nameProbes = "reportss_bounds";
+                        nameProbes += "_probes_";
+                        nameProbes += boost::lexical_cast<std::string>(ss_probes);
+                        cout<<"nameProbes = "<<nameProbes<<"\n";
+                        dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio;
+                        dirfDist = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio+"/fdist";
+                        outputFile = "/home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio+"/fdist/"+tarefa;
+                }
 	} else {
         	dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss/"+dominio;
         	dirfDist = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss/"+dominio+"/fdist";
