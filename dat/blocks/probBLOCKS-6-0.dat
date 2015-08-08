@@ -1,6 +1,1 @@
-probBLOCKS-6-0.pddl:returning best heuristic(GAPDB)[,0,]:[2,4,5,7,8,9,10,11]-[0,1,3,6,12]-,mp:,0.5000000,size:,50000,disjoint_patterns:,0-best_fitness:8.21218,,initial value:12,GAPDB generation time:0.26
-probBLOCKS-6-0.pddl:returning best heuristic(GAPDB)[,1,]:[1,2,3,4,5,6,8,9,10,11,12]-[]-,mp:,0.6000000,size:,2000000,disjoint_patterns:,1-best_fitness:10.2788,,initial value:12,GAPDB generation time:4.54
-probBLOCKS-6-0.pddl:returning best heuristic(GAPDB)[,2,]:[1,2,3,4,6,7,8,9,10,11,12]-[]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,1-best_fitness:10.3589,,initial value:12,GAPDB generation time:6.54
-probBLOCKS-6-0.pddl:returning best heuristic(GAPDB)[,3,]:[2,3,4,5,7,8,9,10,11,12]-[0,3,9,11,12]-,mp:,0.8000000,size:,2000000,disjoint_patterns:,0-best_fitness:10.0258,,initial value:12,GAPDB generation time:4.72
-probBLOCKS-6-0.pddl:returning best heuristic(GAPDB)[,4,]:[2,3,5,6,7,8,9,10,11,12]-[0,1,4,5,8,10,11,12]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:10.2818,,initial value:12,GAPDB generation time:9.1
-probBLOCKS-6-0.pddl:returning best heuristic(GAPDB)[,5,]:[1,2,4,5,6,7,8,9,10,11,12]-[]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,0-best_fitness:10.4015,,initial value:12,GAPDB generation time:4.56
+probBLOCKS-6-0.pddl:returning best heuristic(GAPDB)[,0,]:[0,2,3,4,5,6,7,8,9,11,12]-[1,10]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:8.99988,,initial value:10,GAPDB generation time:11.98

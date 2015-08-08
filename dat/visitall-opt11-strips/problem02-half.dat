@@ -1,0 +1,2 @@
+problem02-half.pddl:returning best heuristic(GAPDB)[,0,]:[0,1]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:0.75,,initial value:1,GAPDB generation time:0
+problem02-half.pddl:returning best heuristic(GAPDB)[,1,]:[0,1]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,1-best_fitness:0.75,,initial value:1,GAPDB generation time:0

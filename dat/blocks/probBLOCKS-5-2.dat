@@ -1,6 +1,10 @@
-probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,0,]:[0,1,2,3,5,6,7,8,10]-[1,2,4,5,6,7,10]-,mp:,0.5000000,size:,50000,disjoint_patterns:,0-best_fitness:7.20489,,initial value:11,GAPDB generation time:0.1
-probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,1,]:[0,1,2,3,4,5,6,7,8,9,10]-,mp:,0.6000000,size:,2000000,disjoint_patterns:,1-best_fitness:7.33437,,initial value:16,GAPDB generation time:0.46
-probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,2,]:[]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,1-best_fitness:0,,initial value:0,GAPDB generation time:0.46
-probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,3,]:[1,2,3,5,7,8,9,10]-,mp:,0.8000000,size:,2000000,disjoint_patterns:,0-best_fitness:7.68277,,initial value:10,GAPDB generation time:0.44
-probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,4,]:[2,3,5,6,7,8,9,10]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:8.01611,,initial value:11,GAPDB generation time:0.74
-probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,5,]:[1,2,3,4,5,6,7,8,9,10]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,0-best_fitness:8.7718,,initial value:11,GAPDB generation time:0.5
+probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,0,]:[0,1,2,3,4,5,6,7,8,9,10]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:7.33437,,initial value:16,GAPDB generation time:0.74
+probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,1,]:[1,2,4,5,6,7,8,9,10]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,1-best_fitness:8.07661,,initial value:11,GAPDB generation time:0.7
+probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,2,]:[1,2,3,5,6,7,8,9,10]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:8.37367,,initial value:11,GAPDB generation time:0.76
+probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,3,]:[1,2,3,5,6,7,8,9,10]-,mp:,0.3000000,size:,2000000,disjoint_patterns:,1-best_fitness:8.37367,,initial value:11,GAPDB generation time:0.82
+probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,4,]:[0,1,2,3,4,5,6,7,8,10]-,mp:,0.9000000,size:,2000000,disjoint_patterns:,1-best_fitness:7.31873,,initial value:11,GAPDB generation time:0.68
+probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,5,]:[1,2,4,5,6,7,8,9,10]-,mp:,0.7000000,size:,2000000,disjoint_patterns:,0-best_fitness:8.07661,,initial value:11,GAPDB generation time:0.7
+probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,6,]:[1,2,3,4,5,6,7,8,9,10]-,mp:,0.6000000,size:,2000000,disjoint_patterns:,0-best_fitness:8.7718,,initial value:11,GAPDB generation time:0.68
+probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,7,]:[1,2,3,5,6,7,8,9,10]-,mp:,0.8000000,size:,2000000,disjoint_patterns:,1-best_fitness:8.37367,,initial value:11,GAPDB generation time:0.68
+probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,8,]:[1,2,3,4,5,6,7,8,9,10]-,mp:,0.1000000,size:,2000000,disjoint_patterns:,1-best_fitness:8.7718,,initial value:11,GAPDB generation time:1.12
+probBLOCKS-5-2.pddl:returning best heuristic(GAPDB)[,9,]:[1,2,3,5,6,7,8,9,10]-,mp:,0.5000000,size:,2000000,disjoint_patterns:,0-best_fitness:8.37367,,initial value:11,GAPDB generation time:0.7

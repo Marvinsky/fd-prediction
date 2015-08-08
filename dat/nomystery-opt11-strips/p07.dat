@@ -1,0 +1,3 @@
+p07.pddl:returning best heuristic(GAPDB)[,0,]:[0,3,4,6,7,9]-[2,5,10]-[8]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:23.6625,,initial value:28,GAPDB generation time:9.52
+p07.pddl:returning best heuristic(GAPDB)[,1,]:[2,7,8]-[0,3,4,6,9,10]-[5]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,1-best_fitness:23.6625,,initial value:28,GAPDB generation time:12.6
+p07.pddl:returning best heuristic(GAPDB)[,2,]:[0,2,3,5,6,8]-[7,9,10]-[4]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:23.8669,,initial value:28,GAPDB generation time:21.3

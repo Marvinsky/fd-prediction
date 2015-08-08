@@ -1,0 +1,7 @@
+p04.pddl:returning best heuristic(GAPDB)[,0,]:[0,1,2,3,4,5,6,7,9,10,11,12,14,15,16]-[8,13]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:0,,initial value:0,GAPDB generation time:8.68
+p04.pddl:returning best heuristic(GAPDB)[,1,]:[1,2,3,4,5,6,7,8,9,11,13,14,15,16]-[0,10,12]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,1-best_fitness:0,,initial value:0,GAPDB generation time:3.58
+p04.pddl:returning best heuristic(GAPDB)[,2,]:[0,1,5,6,7,8,9,10,11,12,13,14,15,16]-[]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:0.0260082,,initial value:3,GAPDB generation time:6.56
+p04.pddl:returning best heuristic(GAPDB)[,3,]:[0,1,2,3,6,8,9,10,11,12,13,14,15,16]-[]-,mp:,0.3000000,size:,2000000,disjoint_patterns:,1-best_fitness:0.00613674,,initial value:1,GAPDB generation time:3.5
+p04.pddl:returning best heuristic(GAPDB)[,4,]:[0,1,2,4,6,7,8,9,10,11,12,14,15,16]-[13]-,mp:,0.9000000,size:,2000000,disjoint_patterns:,1-best_fitness:0.008851,,initial value:2,GAPDB generation time:5.66
+p04.pddl:returning best heuristic(GAPDB)[,5,]:[0,3,5,6,7,8,9,10,11,12,13,14,15,16]-[]-,mp:,0.7000000,size:,2000000,disjoint_patterns:,0-best_fitness:0.0260082,,initial value:3,GAPDB generation time:5.74
+p04.pddl:returning best heuristic(GAPDB)[,6,]:[1,13,14,15,16]-[0,3,7,8,9,10,11,12,13,14,15,16]-,mp:,0.6000000,size:,2000000,disjoint_patterns:,0-best_fitness:0.0260082,,initial value:3,GAPDB generation time:5.74

@@ -1,0 +1,10 @@
+problem06-half.pddl:returning best heuristic(GAPDB)[,0,]:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:15.8819,,initial value:23,GAPDB generation time:1.14
+problem06-half.pddl:returning best heuristic(GAPDB)[,1,]:[0,1,2,3,4,5,6,7,9,13,14,15]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,1-best_fitness:13.8418,,initial value:20,GAPDB generation time:1.18
+problem06-half.pddl:returning best heuristic(GAPDB)[,2,]:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:15.8819,,initial value:23,GAPDB generation time:1.32
+problem06-half.pddl:returning best heuristic(GAPDB)[,3,]:[0,1,3,4,5,6,7,8,10,11,12,13,14,15]-,mp:,0.3000000,size:,2000000,disjoint_patterns:,1-best_fitness:14.7488,,initial value:22,GAPDB generation time:1.14
+problem06-half.pddl:returning best heuristic(GAPDB)[,4,]:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]-,mp:,0.9000000,size:,2000000,disjoint_patterns:,1-best_fitness:15.8819,,initial value:23,GAPDB generation time:1.12
+problem06-half.pddl:returning best heuristic(GAPDB)[,5,]:[0,1,2,3,4,5,6,7,8,9,11,12,15]-,mp:,0.7000000,size:,2000000,disjoint_patterns:,0-best_fitness:15.0906,,initial value:23,GAPDB generation time:1.1
+problem06-half.pddl:returning best heuristic(GAPDB)[,6,]:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]-,mp:,0.6000000,size:,2000000,disjoint_patterns:,0-best_fitness:15.8819,,initial value:23,GAPDB generation time:1.12
+problem06-half.pddl:returning best heuristic(GAPDB)[,7,]:[0,1,2,3,4,6,8,9,11,12,13,14,15]-,mp:,0.8000000,size:,2000000,disjoint_patterns:,1-best_fitness:14.7624,,initial value:23,GAPDB generation time:1.1
+problem06-half.pddl:returning best heuristic(GAPDB)[,8,]:[0,1,2,3,4,5,7,8,9,10,11,12,13,14,15]-,mp:,0.1000000,size:,2000000,disjoint_patterns:,1-best_fitness:15.3588,,initial value:21,GAPDB generation time:1.36
+problem06-half.pddl:returning best heuristic(GAPDB)[,9,]:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]-,mp:,0.5000000,size:,2000000,disjoint_patterns:,0-best_fitness:15.8819,,initial value:23,GAPDB generation time:1.12
