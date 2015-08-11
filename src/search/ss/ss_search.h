@@ -35,16 +35,19 @@ class SSNode{
 private:
 	StateID id;
 	double weight;
-        double g_real;
+        int g_real;
+	int h;
 public:
-        SSNode(): id(StateID::no_state), weight(0.0), g_real(0){}
-        SSNode(StateID identifier, double w, double g) : id(identifier), weight(w), g_real(g){}
+        SSNode(): id(StateID::no_state), weight(0.0), g_real(0) {}
+        SSNode(StateID identifier, double w, int g) : id(identifier), weight(w), g_real(g){}
         StateID get_id() const {return this->id;}
         void set_id(StateID identifier) {this->id = identifier;}
         double getWeight()  {return this->weight;}
         void setWeight(double w) {this->weight = w;}
-        double getGreal() const {return this->g_real;}
-        void setGreal(double g) {this->g_real = g;}
+        int getGreal() const {return this->g_real;}
+        void setGreal(int g) {this->g_real = g;}
+	int getH() {return this->h;}
+	void setH(int H) {this->h = H;}
 };
 
 class SSQueue {
@@ -81,23 +84,27 @@ private:
 
 	std::vector<Heuristic*> heuristics; 
 	Heuristic* heuristic;
+	
+	
+	int initial_value;
 
-	double initial_value;
-        double threshold;
         GlobalState current_state;
+	Timer search_time;
+        Timer level_time; //time required to expand an entire level
 
         //A* prediction using ss:
 	TypeSystem * sampler;
         CRandomMersenne* RanGen2;
         Timer ss_timer;
-        double ss_timer_value;
-	
+	double ss_timer_value;
+
 	//IDA* - BFS
 	std::set<SSQueue, classcomp> L;
 	std::set<SSNode, classcomp2> check;
 
 	//ss+culprits
-	map<boost::dynamic_bitset<>, double> bitcollector;
+	int threshold;
+	map<boost::dynamic_bitset<>, double> collector;
 
 protected:
 
@@ -114,6 +121,8 @@ public:
         double getProbingResult();
         void probe();
         void predict(int probes);
+	int getMinHeur(vector<int> v);
+	void select_best_heuristics_greedy();
 	//BFS
 	void BFS(SSNode root, Type type);
 };

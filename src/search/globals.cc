@@ -417,7 +417,7 @@ set<std::vector<std::vector<int> >, compare_patterns > chosen_pattern_collection
 
 bool no_more_ga_pdbs = false;
 bool use_saved_pdbs = false;
-double pdb_gen_time_limit = 200;
+double pdb_gen_time_limit = 600;
 int g_random_seed = 1;
 int pdb_dump_counter = 0;
 string problem_name = "temp";

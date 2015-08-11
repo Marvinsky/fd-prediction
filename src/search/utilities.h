@@ -7,6 +7,7 @@
 #include <vector>
 #include <functional>
 #include "globals.h"
+#include "boost/dynamic_bitset.hpp"
 
 #define LINUX 0
 #define OSX 1
@@ -43,6 +44,7 @@ enum ExitCode {
     EXIT_UNSOLVED_INCOMPLETE = 5,
     EXIT_OUT_OF_MEMORY = 6
 };
+void print_h_comb(boost::dynamic_bitset<> h_comb);
 
 extern void exit_with(ExitCode returncode) __attribute__((noreturn));
 
@@ -134,5 +136,8 @@ bool get_GA_patterns_from_file (std::vector<std::vector<int> > &all_pattern_col,
                 int pdb_max_size);
                 
 void load_GA_Patterns_from_file();
+bool get_All_GA_patterns_from_file(std::vector<std::vector<int> > &all_pattern_col);
+int get_current_memory_in_kb(bool use_buffered_input) ;
+void get_iPDB_patterns_from_file(std::vector<std::vector<int> > &all_pattern_col);
 
 #endif

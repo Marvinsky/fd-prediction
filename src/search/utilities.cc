@@ -62,6 +62,13 @@ void exit_handler() {
     print_peak_memory(false);
 }
 #endif
+void print_h_comb(boost::dynamic_bitset<> h_comb){
+  for (size_t i=0;i<h_comb.size();i++){
+    if(h_comb.test(i)){
+      cout<<i<<"-";
+    }   
+  }
+}
 
 void exit_with(ExitCode exitcode) {
     switch (exitcode) {
@@ -113,6 +120,51 @@ void signal_handler(int signal_number) {
     raise(signal_number);
 }
 
+int get_current_memory_in_kb(bool use_buffered_input) {
+    // On error, produces a warning on cerr and returns -1.
+    int memory_in_kb = -1;
+
+#if OPERATING_SYSTEM == OSX
+    unused_parameter(use_buffered_input);
+    // Based on http://stackoverflow.com/questions/63166/how-to-determine-cpu-and-memory-consumption-from-inside-a-process
+    task_basic_info t_info;
+    mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
+
+    if (task_info(mach_task_self(), TASK_BASIC_INFO,
+                  reinterpret_cast<task_info_t>(&t_info),
+                  &t_info_count) == KERN_SUCCESS)
+        memory_in_kb = t_info.virtual_size / 1024;
+#elif OPERATING_SYSTEM == WINDOWS || OPERATING_SYSTEM == CYGWIN
+    unused_parameter(use_buffered_input);
+    // The file /proc/self/status is present under Cygwin, but contains no peak memory info.
+    PROCESS_MEMORY_COUNTERS_EX pmc;
+    GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PROCESS_MEMORY_COUNTERS *>(&pmc), sizeof(pmc));
+    memory_in_kb = pmc.PeakPagefileUsage / 1024;
+#else
+    ifstream procfile;
+    if (!use_buffered_input) {
+        procfile.rdbuf()->pubsetbuf(0, 0);
+    }
+    procfile.open("/proc/self/status");
+    string word;
+    while (procfile.good()) {
+        procfile >> word;
+	if(word == "VmSize:"){
+	  procfile >> memory_in_kb;
+	  cout<<"VmSize:"<<memory_in_kb<<endl;
+	  break;
+	}
+        // Skip to end of line.
+        procfile.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    if (procfile.fail())
+        memory_in_kb = -1;
+#endif
+
+    if (memory_in_kb == -1)
+        cerr << "warning: could not determine peak memory" << endl;
+    return memory_in_kb;
+}
 int get_peak_memory_in_kb(bool use_buffered_input) {
     // On error, produces a warning on cerr and returns -1.
     int memory_in_kb = -1;
