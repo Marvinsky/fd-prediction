@@ -39,7 +39,6 @@ class EagerSearch : public SearchEngine {
 
 //A* prediction
     map<Node2, double> nodes_expanded;
-    vector<Timer> v_timer;
     double count_nodes;
     bool first_time_in_solved;
     int F_boundary;

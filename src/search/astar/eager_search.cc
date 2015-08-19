@@ -567,15 +567,13 @@ void EagerSearch::generateExpandedReport() {
 	}
 	
 	int sum = 0;
-	int count_v_timer = 0;
 	for (map<int, int>::iterator iter = m.begin(); iter != m.end(); iter++) {
 		int f = iter->first;
 		int q = iter->second;
 		if ((f <= F_boundary) && (q != 0) ) {
 			cout<<"f = "<<f<<"\tq = "<<q<<endl;
 			sum = sum + q;
-			outputFile<<"\t"<<f<<"\t\t"<<q<<"\t\t\t"<<v_timer.at(count_v_timer)<<"\t\t\t"<<sum<<"\n";
-			count_v_timer++;
+			outputFile<<"\t"<<f<<"\t\t"<<q<<"\t\t\t1\t\t\t"<<sum<<"\n";
 		}
 	}
 	
@@ -771,7 +769,6 @@ void EagerSearch::update_jump_statistic(const SearchNode &node) {
         int new_f_value = f_evaluator->get_value();
 
 	if (search_progress.updated_lastjump_f_value(new_f_value)) {
-		 v_timer.push_back(g_timer);
 		 search_progress.report_f_value(new_f_value);
 	}
     }
