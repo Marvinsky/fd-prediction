@@ -330,6 +330,9 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
 	} else if (arg.compare("--problem_name_gapdb") == 0) {
 		++i;
 		problem_name_gapdb = args[i];
+	} else if (arg.compare("--deep_F_boundary") == 0) {
+		++i;
+		deep_F_boundary = std::stoi(args[i]);
 	} else if (arg.compare("--random-seed") == 0) {
             if (is_last)
                 throw ArgError("missing argument after --random-seed");

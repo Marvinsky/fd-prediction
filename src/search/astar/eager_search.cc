@@ -610,6 +610,11 @@ void EagerSearch::generateSSCCReport() {
 		size_t found = t.find(".");
 		name = t.substr(0, found);
 		name += "_F_";
+		//get the deep_F_boundary
+		if (deep_F_boundary != 0) {
+			threshold = deep_F_boundary;
+		}
+
 		name+=boost::lexical_cast<std::string>(threshold);
         	name += ".csv";
 
