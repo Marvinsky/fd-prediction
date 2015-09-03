@@ -1,0 +1,10 @@
+p06.pddl:returning best heuristic(GAPDB)[,0,]:[0,1,2,3,5,6,9,11]-[4,7,8,10]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:24.783,,initial value:19,GAPDB generation time:9.9
+p06.pddl:returning best heuristic(GAPDB)[,1,]:[0,2,3,4,5,6,8,10]-[1,7,9,11]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,1-best_fitness:17.5106,,initial value:24,GAPDB generation time:3.26
+p06.pddl:returning best heuristic(GAPDB)[,2,]:[0,1,2,3,8,10,11]-[0,1,2,3,4,6,9,10]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:30.4965,,initial value:31,GAPDB generation time:9.3
+p06.pddl:returning best heuristic(GAPDB)[,3,]:[0,1,2,6,8,9,10]-[3,4,5,7,11]-,mp:,0.3000000,size:,2000000,disjoint_patterns:,1-best_fitness:19.9344,,initial value:26,GAPDB generation time:3.4
+p06.pddl:returning best heuristic(GAPDB)[,4,]:[0,1,2,3,4,5,9,11]-[6,7,8,10]-,mp:,0.9000000,size:,2000000,disjoint_patterns:,1-best_fitness:24.783,,initial value:19,GAPDB generation time:4.98
+p06.pddl:returning best heuristic(GAPDB)[,5,]:[1,2,3,8,9,11]-[0,3,6,10]-,mp:,0.7000000,size:,2000000,disjoint_patterns:,0-best_fitness:25.4132,,initial value:31,GAPDB generation time:8.52
+p06.pddl:returning best heuristic(GAPDB)[,6,]:[0,1,2,3,7,8,9]-[1,2,3,4,6,9,11]-,mp:,0.6000000,size:,2000000,disjoint_patterns:,0-best_fitness:27.0978,,initial value:20,GAPDB generation time:6.4
+p06.pddl:returning best heuristic(GAPDB)[,7,]:[0,1,2,3,6,7,8,11]-[4,5,9,10]-,mp:,0.8000000,size:,2000000,disjoint_patterns:,1-best_fitness:25.1027,,initial value:20,GAPDB generation time:2.64
+p06.pddl:returning best heuristic(GAPDB)[,8,]:[0,1,2,3,5,7,8,9]-[4,6,10,11]-,mp:,0.1000000,size:,2000000,disjoint_patterns:,1-best_fitness:27.0978,,initial value:20,GAPDB generation time:6.46
+p06.pddl:returning best heuristic(GAPDB)[,9,]:[1,2,3,5,9,10,11]-[0,2,3,4,8,10,11]-,mp:,0.5000000,size:,2000000,disjoint_patterns:,0-best_fitness:24.4472,,initial value:25,GAPDB generation time:7.64

@@ -1,1 +1,10 @@
-p03.pddl:returning best heuristic(GAPDB)[,0,]:[0,1,2,3,6,9,10]-[4,5,7,8]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:32.3497,,initial value:40,GAPDB generation time:5.58
+p03.pddl:returning best heuristic(GAPDB)[,0,]:[0,1,2,3,6,9,10]-[4,5,7,8]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:32.3497,,initial value:40,GAPDB generation time:4.74
+p03.pddl:returning best heuristic(GAPDB)[,1,]:[1,2,3,5,6,8,9]-[0,4,7,10]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,1-best_fitness:31.893,,initial value:38,GAPDB generation time:5.18
+p03.pddl:returning best heuristic(GAPDB)[,2,]:[0,1,2,3,4,8,10]-[5,6,7,9]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:35.2872,,initial value:44,GAPDB generation time:5.64
+p03.pddl:returning best heuristic(GAPDB)[,3,]:[1,2,3,4,6,8,10]-[0,5,7,9]-,mp:,0.3000000,size:,2000000,disjoint_patterns:,1-best_fitness:21.8085,,initial value:30,GAPDB generation time:4.1
+p03.pddl:returning best heuristic(GAPDB)[,4,]:[0,1,3,6,9,10]-[2,4,5,7,8]-,mp:,0.9000000,size:,2000000,disjoint_patterns:,1-best_fitness:17.6125,,initial value:30,GAPDB generation time:2.2
+p03.pddl:returning best heuristic(GAPDB)[,5,]:[1,2,3,4,7,8,9]-[0,1,2,5,7,8,10]-,mp:,0.7000000,size:,2000000,disjoint_patterns:,0-best_fitness:33.851,,initial value:38,GAPDB generation time:7.04
+p03.pddl:returning best heuristic(GAPDB)[,6,]:[0,1,2,3,4,8,10]-[1,4,6,8]-,mp:,0.6000000,size:,2000000,disjoint_patterns:,0-best_fitness:35.2872,,initial value:44,GAPDB generation time:2.7
+p03.pddl:returning best heuristic(GAPDB)[,7,]:[]-[0,1,2,3,8,9]-,mp:,0.8000000,size:,2000000,disjoint_patterns:,1-best_fitness:32.1086,,initial value:26,GAPDB generation time:3.46
+p03.pddl:returning best heuristic(GAPDB)[,8,]:[1,2,3,4,5,6,8,9]-[0,7,10]-,mp:,0.1000000,size:,2000000,disjoint_patterns:,1-best_fitness:31.893,,initial value:38,GAPDB generation time:5.4
+p03.pddl:returning best heuristic(GAPDB)[,9,]:[0,1,2,3,5,9,10]-[0,5,9,10]-,mp:,0.5000000,size:,2000000,disjoint_patterns:,0-best_fitness:32.3497,,initial value:40,GAPDB generation time:5.06

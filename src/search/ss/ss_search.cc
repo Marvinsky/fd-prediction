@@ -292,12 +292,14 @@ void SSSearch::predict(int probes) {
         totalPrediction = 0;
         cout<<"#probes : "<<probes<<",g_timer:"<<g_timer()<<endl;
 	cout<<"input heuristics:"<<heuristics.size()<<endl;
+	int current_n_probes = 0;
         for (int i = 0; i < probes; i++) {
 	  cout<<"#probe:"<<i<<",g_timer:"<<g_timer()<<",search_time:"<<search_time()<<endl;
 	  if(search_time()>300.0||g_timer()>1400){
 	    cout<<"Search_timer past maximum sampling_time"<<endl;
 	    cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
-	    //select_best_heuristics_greedy();
+	    //select_best_heuristics_greedy();	
+	    generateSSCCReport(current_n_probes);
 	    exit(0);
 	  }
 	  else if(search_time()>5.0&&domination_check){
@@ -306,6 +308,7 @@ void SSSearch::predict(int probes) {
 	  }
             vweight.clear();
             probe();
+	    current_n_probes++;
             double p = getProbingResult();
             totalPrediction = totalPrediction + (p - totalPrediction)/(i + 1);
             cout<<"**********"<<endl;
@@ -319,7 +322,7 @@ void SSSearch::predict(int probes) {
         cout<<"ss_timer: "<<ss_timer_value<<"\n";
 	cout<<"probes: "<<probes<<"\n"; 
 	cout<<"threshold : "<<threshold<<"\n";
-	generateSSCCReport();
+	generateSSCCReport(probes);
 	generateGeneratedReport();
         generateExpandedReport();
 	
@@ -867,11 +870,11 @@ void SSSearch::generateExpandedReport() {
 	string dirDomain, dirfDist, outputFile;
 
 	if (is_mov_bound) {
-		if (ss_probes == 1000) {
+		/*if (ss_probes == 1000) {
                         dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio;
                         dirfDist = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio+"/fdist";
                         outputFile = "/home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio+"/fdist/"+tarefa;
-                } else {
+                } else {*/
                         string nameProbes = "reportss_bounds";
                         nameProbes += "_probes_";
                         nameProbes += boost::lexical_cast<std::string>(ss_probes);
@@ -879,7 +882,7 @@ void SSSearch::generateExpandedReport() {
                         dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio;
                         dirfDist = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio+"/fdist";
                         outputFile = "/home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio+"/fdist/"+tarefa;
-                }
+                //}
 	} else {
         	dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss/"+dominio;
         	dirfDist = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss/"+dominio+"/fdist";
@@ -950,7 +953,7 @@ double SSSearch::getProbingResult() {
         return expansions;
 }
 
-void SSSearch::generateSSCCReport() {
+void SSSearch::generateSSCCReport(int n_probes) {
         string dominio = domain_name;
         string tarefa = problem_name2;
         string heuristica = heuristic_name2;
@@ -1010,8 +1013,8 @@ void SSSearch::generateSSCCReport() {
                                 output<<"/";
                         }
                 }
-                //cout<<")cc="<<(double)cc/(double)ss_probes<<"\n";
-                output<<")cc="<<(double)cc/(double)ss_probes<<"\n";
+                //cout<<")cc="<<(double)cc/(double)n_probes<<"\n";
+                output<<")cc="<<(double)cc/(double)n_probes<<"\n";
         }
         output.close(); 
 }

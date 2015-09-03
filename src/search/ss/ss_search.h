@@ -117,7 +117,7 @@ public:
         void printQueue(); 
         void generateExpandedReport();
         void generateGeneratedReport();
-	void generateSSCCReport();
+	void generateSSCCReport(int n_probes);
         double getProbingResult();
         void probe();
         void predict(int probes);
