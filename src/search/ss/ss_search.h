@@ -80,6 +80,7 @@ private:
         vector<SSNode> vweight;
         std::map<Node2, double> expanded;
         std::map<Node2, double> generated;
+	set<int> setFboundaries;
         double totalPrediction;         
 
 	std::vector<Heuristic*> heuristics; 
@@ -117,7 +118,7 @@ public:
         void printQueue(); 
         void generateExpandedReport();
         void generateGeneratedReport();
-	void generateSSCCReport(int n_probes);
+	void generateSSCCReport(int n_probes, bool termination);
         double getProbingResult();
         void probe();
         void predict(int probes);
