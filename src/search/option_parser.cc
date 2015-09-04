@@ -317,7 +317,10 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
         } else if (arg.compare("--problem_name") == 0) {
             ++i;
             problem_name2 = args[i];
-        } else if (arg.compare("--heuristic_name") == 0) {
+        } else if (arg.compare("--domain_instance_pddl") == 0) {
+	    ++i;
+            domain_instance_pddl = args[i];
+	} else if (arg.compare("--heuristic_name") == 0) {
             ++i;
             heuristic_name2 = args[i];
         } else if (arg.compare("--F_boundary") == 0) {

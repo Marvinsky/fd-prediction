@@ -129,4 +129,5 @@ extern vector<string> stored_GA_patterns;
 //problem name gapdb, this is only for use of gapdb test
 extern string problem_name_gapdb;
 extern int deep_F_boundary; //This is used by Santiago's code deep F boundary
+extern string domain_instance_pddl;
 #endif
