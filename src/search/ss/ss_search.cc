@@ -1275,7 +1275,7 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
 			//cout<<"final_real_heur = "<<final_real_heur<<"\n";
                 	//cout<<"final_number_heur = "<<final_number_heur<<"\n\n";
 
-			string PROB_GOOD = "reportastar_";
+			string PROB_GOOD = "problemas_";
                 	PROB_GOOD += boost::lexical_cast<std::string>(ss_probes);
                 	PROB_GOOD += "_probes";
                 	//cout<<"PROB_GOOD = "<<PROB_GOOD<<"\n";
@@ -1327,6 +1327,7 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                 	arquivo = "marvin/" + arquivo;
                 	arquivo = "marvin/"+ arquivo;
                 	arquivo = "/home/" + arquivo;
+			cout<<"arquivo="<<arquivo<<"\n";
                 	ofstream outfile(arquivo.c_str(), ios::out);
 
                 	sas = "Astar";
@@ -1338,8 +1339,19 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                 	string parameter =  final_real_heur;//v_gapdb_string.at(i);
                 	cout<<"parameter_"<<i<<" = "<<parameter<<"\n";
 
+			//Calculate the time to execute the process	
+			//Timer good_time = 1800 - g_timer();
+			double duration = 1800 - g_timer();
+			string good_timer;
+			ostringstream convert;
+			convert<<duration;
+			good_timer = convert.str();
+			cout<<"search_time()="<<search_time()<<"\n";
+			cout<<"g_timer()="<<g_timer()<<"\n";
+			cout<<"duration="<<good_timer<<"\n";
+
                 	//Begin construction of the sh file
-                	outfile<<"#PBS -N "<<ASTAR_GOOD_NAME<<"\n\n#PBS -m a\n\n#PBS -l walltime=00:30:00\n\n#PBS -M marvin.zarate@ufv.br\n\n#PBS -l pmem=6gb\n\ncd $PBS_O_WORKDIR\n\nsource /usr/share/modules/init/bash\n\nmodule load python\nmodule load mercurial\n\n";
+                	outfile<<"#PBS -N "<<ASTAR_GOOD_NAME<<"\n\n#PBS -m a\n\n#PBS -l walltime="<<good_timer<<"\n\n#PBS -M marvin.zarate@ufv.br\n\ncd $PBS_O_WORKDIR\n\nsource /usr/share/modules/init/bash\n\nmodule load python\nmodule load mercurial\n\n";
                 	//outfile<<"ulimit -v 6500000\n\n"; //SET LIMIT 6GB
                 	//PBS -l walltime=200
 
@@ -1372,11 +1384,12 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                         	if(system(allow.c_str())) {
 					cout<<"adding permition...\n";
 				}
-                        	executeFile = "timeout 600 sh "+arquivo; //setting the limit time	
+
+			       	executeFile = "timeout "+ good_timer +" sh "+arquivo; //setting the limit time	
                         	cout<<executeFile<<"\n\n";
-                        	/*if(system(executeFile.c_str())) {
+                        	if(system(executeFile.c_str())) {
 					cout<<"running in the local...\n";
-				}*/
+				}
                 	}
 		}
 	}//end termination
