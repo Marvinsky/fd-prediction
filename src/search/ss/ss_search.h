@@ -80,7 +80,6 @@ private:
         vector<SSNode> vweight;
         std::map<Node2, double> expanded;
         std::map<Node2, double> generated;
-	set<int> setFboundaries;
         double totalPrediction;         
 
 	std::vector<Heuristic*> heuristics; 

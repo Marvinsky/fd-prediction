@@ -26,8 +26,7 @@ set<vector<int> > F_culprits;
 
 
 SSSearch::SSSearch(const Options &opts) : SearchEngine(opts), current_state(g_initial_state()) {
-	
-	
+
 	ScalarEvaluator * evaluator = opts.get<ScalarEvaluator *>("eval");
 	std::set<Heuristic *> hset;
 	evaluator->get_involved_heuristics(hset);
@@ -298,7 +297,7 @@ void SSSearch::predict(int probes) {
 	int current_n_probes = 0;
         for (int i = 0; i < probes; i++) {
 	  cout<<"#probe:"<<i<<",g_timer:"<<g_timer()<<",search_time:"<<search_time()<<endl;
-	  if(search_time()>300.0||g_timer()>1400){
+	  if(search_time()>100.0||g_timer()>1400){ //300 default
 	    cout<<"Search_timer past maximum sampling_time"<<endl;
 	    cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
 	    //select_best_heuristics_greedy();	
@@ -962,7 +961,6 @@ double SSSearch::getProbingResult() {
 }
 
 void SSSearch::generateSSCCReport(int n_probes, bool termination) {
-	setFboundaries.insert(threshold);
 
         string dominio = domain_name;
         string tarefa = problem_name2;
@@ -1238,7 +1236,7 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                                 	final_real_heur = "merge_and_shrink(shrink_strategy=shrink_bisimulation(max_states=100000,threshold=1,greedy=false),merge_strategy=merge_dfp())";
                                 	//final_real_heur = "merge_and_shrink()";
                         	} else if (previous_real_heur == "ipdb()") {
-                                	final_real_heur = "ipdb(max_time=600)";
+                                	final_real_heur = "ipdb(max_time=200)";
                         	}
 
                         	//get the heuristic number
@@ -1279,7 +1277,7 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                 	PROB_GOOD += boost::lexical_cast<std::string>(ss_probes);
                 	PROB_GOOD += "_probes";
                 	//cout<<"PROB_GOOD = "<<PROB_GOOD<<"\n";
-			string ASTAR_GOOD_NAME = "_GOOD_ASTAR";
+			string ASTAR_GOOD_NAME = "_SS_ASTAR";
 			int deep_F_boundary = threshold;
 
 			//begin
@@ -1301,6 +1299,11 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                 	string dirProblema = "mkdir /home/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD;
                 	if (system(dirProblema.c_str())) {
                         	cout<<"create directory "<<dirProblema.c_str()<<"\n";
+                	}
+
+			string dirResultado = "mkdir /home/marvin/marvin/astar/"+heuristic_good+"/reportastar";
+                	if (system(dirResultado.c_str())) {
+                        	cout<<"create directory "<<dirResultado.c_str()<<"\n";
                 	}
 
 			string pastaProblema = "mkdir /home/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  + "/"+dominio;
@@ -1330,8 +1333,10 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
 			cout<<"arquivo="<<arquivo<<"\n";
                 	ofstream outfile(arquivo.c_str(), ios::out);
 
-                	sas = "Astar";
-                	sas += dominio;
+			string newdominio = dominio + "_" + final_number_heur + "_" + new_problem_name_mod;
+
+                	sas = "Inside_Astar";
+                	sas += newdominio;
 
 			sas += Resultado.str();
                 	//End creation of each sh file for the gapdb heuristic
@@ -1361,8 +1366,8 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
 
                 	outfile<<"src/preprocess/preprocess < "<<sas.c_str()<<".sas"<<"\n\n"; 
 
-			//Santiago's code to find the F_boundary on the fly     
-                	outfile<<"src/search/downward-release --use_saved_pdbs --domain_name "<<dominio<<" --problem_name "<<tarefa<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --search \"astar(min(["<<parameter<<"]))\" <  "<<sas.c_str()<<" > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+			//Santiago's code to find the F_boundary on the fly
+                	outfile<<"src/search/downward-release --use_saved_pdbs --domain_name "<<dominio<<" --problem_name "<<tarefa<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --search \"astar("<<parameter<<")\" <  "<<sas.c_str()<<" > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
                 	outfile<<"\n\nrm "<<sas.c_str()<<"\n\n";
                 	outfile<<"\n\nrm "<<sas.c_str()<<".sas"<<"\n\n";
 
@@ -1374,9 +1379,9 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                 	if (is_in_cluster) {
                         	executeFile = "qsub -l select=1:ncpus=1:mem=6GB "+arquivo;
                         	cout<<executeFile<<"\n\n";
-				/*if(system(executeFile.c_str())) {
+				if(system(executeFile.c_str())) {
 					cout<<"running in the cluster...\n";
-				}*/
+				}
                 	} else {
                         	string allow;
                         	allow = "chmod +x "+arquivo;
@@ -1596,8 +1601,8 @@ void SSSearch::select_best_heuristics_greedy(){
 }
 
 
-void SSSearch::initialize() {
-	cout << "SSSearch ..." << endl;
+void SSSearch::initialize() {	
+	cout << "SSSearch ..."<<endl;
 	search_time.reset();
 	level_time.reset();
 
