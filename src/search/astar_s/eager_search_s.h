@@ -47,6 +47,9 @@ public:
     void statistics() const;
 
     void dump_search_space();
+
+    //file results function
+    void generateSSCCReport();
 };
 
 #endif

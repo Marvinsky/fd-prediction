@@ -12,6 +12,17 @@
 #include <cassert>
 #include <cstdlib>
 #include <set>
+
+
+//file
+#include <iostream>
+#include <fstream>
+
+//ss+culprits
+#include "../ext/boost/dynamic_bitset.hpp"
+#include <boost/lexical_cast.hpp>
+#include <stdlib.h>
+
 using namespace std;
 
 EagerSearchS::EagerSearchS(
@@ -307,6 +318,80 @@ SearchStatus EagerSearchS::step() {
 
     return IN_PROGRESS;
 }
+
+void EagerSearchS::generateSSCCReport() {
+	string dominio = domain_name;
+        string tarefa = problem_name2;
+        string heuristica = heuristic_name2;
+	int threshold = 0;
+
+	//get the deep_F_boundary
+        if (deep_F_boundary != 0) {
+        	threshold = deep_F_boundary;
+        }
+
+	cout<<"dominio = "<<dominio<<endl;
+        cout<<"tarefa = "<<tarefa<<endl;
+        cout<<"heuristica = "<<heuristica<<endl;
+        cout<<"problem_name_gapdb = "<<problem_name_gapdb<<"\n";
+
+	string name, dirDomain, dirSSCC, dirSSCCFile, outputFile;
+	if (problem_name_gapdb != "temp") {
+                string t0 = tarefa;
+                size_t found0 = t0.find(".");
+                string fileDir = t0.substr(0, found0);
+
+                string t = problem_name_gapdb;
+                size_t found = t.find(".");
+                name = t.substr(0, found);
+                name += "_F_";
+
+                name+=boost::lexical_cast<std::string>(threshold);
+                name += ".csv";
+
+                dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio;
+                dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc";
+                dirSSCCFile = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc/"+fileDir;
+                outputFile = "/home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc/"+fileDir+"/"+name;
+
+                if (system(dirDomain.c_str())) {
+                        cout<<"Directory: "<<heuristica<<" created."<<endl;
+                }
+
+                if (system(dirSSCC.c_str())) {
+                        cout<<"Directory: SSCC created."<<endl;
+                }
+
+                if (system(dirSSCCFile.c_str())) {
+                        cout<<"Directory: SSCCFile created."<<endl;
+                }
+        } else {
+		size_t found = tarefa.find(".");
+                cout<<"found = "<<found<<endl;
+                name = tarefa.substr(0, found);
+                name+="_F_";
+                name+=boost::lexical_cast<std::string>(threshold);
+                name += ".csv";
+
+                dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio;
+                dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc";
+                outputFile = "/home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc/"+name;
+
+
+                if (system(dirDomain.c_str())) {
+                        cout<<"Directory: "<<heuristica<<" created."<<endl;
+                }
+
+                if (system(dirSSCC.c_str())) {
+                        cout<<"Directory: SSCC created."<<endl;
+                }
+        }
+        cout<<"name = "<<name<<endl;
+        ofstream output;
+        output.open(outputFile.c_str());
+}
+
+
 
 pair<SearchNode, bool> EagerSearchS::fetch_next_node() {
     /* TODO: The bulk of this code deals with multi-path dependence,
