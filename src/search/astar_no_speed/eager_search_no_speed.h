@@ -1,5 +1,5 @@
-#ifndef EAGER_SEARCH_H
-#define EAGER_SEARCH_H
+#ifndef EAGER_SEARCH_NO_SPEED_H
+#define EAGER_SEARCH_NO_SPEED_H
 
 #include <vector>
 
@@ -27,7 +27,7 @@ class Heuristic;
 class Options;
 class ScalarEvaluator;
 
-class EagerSearch : public SearchEngine {
+class EagerSearchNoSpeed : public SearchEngine {
     // Search Behavior parameters
     bool reopen_closed_nodes; // whether to reopen closed nodes upon finding lower g paths
     bool do_pathmax; // whether to use pathmax correction
@@ -74,7 +74,7 @@ protected:
     virtual void initialize();
 
 public:
-    EagerSearch(const Options &opts);
+    EagerSearchNoSpeed(const Options &opts);
     void statistics() const;
 
     void dump_search_space();

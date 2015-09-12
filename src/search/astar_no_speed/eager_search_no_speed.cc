@@ -1,4 +1,4 @@
-#include "eager_search.h"
+#include "eager_search_no_speed.h"
 
 #include "../globals.h"
 #include "../heuristic.h"
@@ -28,7 +28,7 @@
 
 using namespace std;
 
-EagerSearch::EagerSearch(
+EagerSearchNoSpeed::EagerSearchNoSpeed(
     const Options &opts)
     : SearchEngine(opts),
       reopen_closed_nodes(opts.get<bool>("reopen_closed")),
@@ -46,7 +46,7 @@ EagerSearch::EagerSearch(
     }
 }
 
-void EagerSearch::initialize() {
+void EagerSearchNoSpeed::initialize() {
     //TODO children classes should output which kind of search
     cout << "Conducting best first search"
          << (reopen_closed_nodes ? " with" : " without")
@@ -150,12 +150,12 @@ void EagerSearch::initialize() {
 }
 
 
-void EagerSearch::statistics() const {
+void EagerSearchNoSpeed::statistics() const {
     search_progress.print_statistics();
     search_space.statistics();
 }
 
-SearchStatus EagerSearch::step() {
+SearchStatus EagerSearchNoSpeed::step() {
 
     pair<SearchNode, bool> n = fetch_next_node();
     nodes_expanded_for_start_state++;
@@ -389,7 +389,7 @@ SearchStatus EagerSearch::step() {
 }
 
 
-int EagerSearch::returnMaxF(vector<int> levels) {
+int EagerSearchNoSpeed::returnMaxF(vector<int> levels) {
 	int max = levels.at(0);
 	for (size_t i = 0; i < levels.size(); i++) {
 		if (max < levels.at(i)) {
@@ -400,7 +400,7 @@ int EagerSearch::returnMaxF(vector<int> levels) {
 }
 
 
-int EagerSearch::returnMinF(vector<int> levels) {
+int EagerSearchNoSpeed::returnMinF(vector<int> levels) {
 	int min = levels.at(0);
 	for (size_t i = 0; i < levels.size(); i++) {
 		if (min > levels.at(i)) {
@@ -410,7 +410,7 @@ int EagerSearch::returnMinF(vector<int> levels) {
 	return min;
 }
 
-void EagerSearch::generateExpandedReport() {
+void EagerSearchNoSpeed::generateExpandedReport() {
 	cout<<"nodes_expanded.size() = "<<nodes_expanded.size()<<endl;
 	vector<int> levels; //Obtain all F_boundaries
 	map<int, int> mlevels; //Count nodes using key = f-value
@@ -500,7 +500,7 @@ void EagerSearch::generateExpandedReport() {
 	outputFile.close();
 }
 
-void EagerSearch::generateSSCCReport() {
+void EagerSearchNoSpeed::generateSSCCReport() {
         string dominio = domain_name;
         string tarefa = problem_name2;
         string heuristica = heuristic_name2;
@@ -593,7 +593,7 @@ void EagerSearch::generateSSCCReport() {
         output.close();
 }
 
-pair<SearchNode, bool> EagerSearch::fetch_next_node() {
+pair<SearchNode, bool> EagerSearchNoSpeed::fetch_next_node() {
     /* TODO: The bulk of this code deals with multi-path dependence,
        which is a bit unfortunate since that is a special case that
        makes the common case look more complicated than it would need
@@ -667,17 +667,17 @@ pair<SearchNode, bool> EagerSearch::fetch_next_node() {
     }
 }
 
-void EagerSearch::reward_progress() {
+void EagerSearchNoSpeed::reward_progress() {
     // Boost the "preferred operator" open lists somewhat whenever
     // one of the heuristics finds a state with a new best h value.
     open_list->boost_preferred();
 }
 
-void EagerSearch::dump_search_space() {
+void EagerSearchNoSpeed::dump_search_space() {
     search_space.dump();
 }
 
-void EagerSearch::update_jump_statistic(const SearchNode &node) {
+void EagerSearchNoSpeed::update_jump_statistic(const SearchNode &node) {
     if (f_evaluator) {
         heuristics[0]->set_evaluator_value(node.get_h());
         f_evaluator->evaluate(node.get_g(), false);
@@ -689,7 +689,7 @@ void EagerSearch::update_jump_statistic(const SearchNode &node) {
     }
 }
 
-void EagerSearch::print_heuristic_values(const vector<int> &values) const {
+void EagerSearchNoSpeed::print_heuristic_values(const vector<int> &values) const {
     for (size_t i = 0; i < values.size(); ++i) {
         cout << values[i];
         if (i != values.size() - 1)
@@ -722,10 +722,10 @@ static SearchEngine *_parse(OptionParser &parser) {
     SearchEngine::add_options_to_parser(parser);
     Options opts = parser.parse();
 
-    EagerSearch *engine = 0;
+    EagerSearchNoSpeed *engine = 0;
     if (!parser.dry_run()) {
         opts.set<bool>("mpd", false);
-        engine = new EagerSearch(opts);
+        engine = new EagerSearchNoSpeed(opts);
     }
 
     return engine;
@@ -759,7 +759,7 @@ static SearchEngine *_parse_astar(OptionParser &parser) {
     SearchEngine::add_options_to_parser(parser);
     Options opts = parser.parse();
 
-    EagerSearch *engine = 0;
+    EagerSearchNoSpeed *engine = 0;
     if (!parser.dry_run()) {
         GEvaluator *g = new GEvaluator();
         vector<ScalarEvaluator *> sum_evals;
@@ -778,7 +778,7 @@ static SearchEngine *_parse_astar(OptionParser &parser) {
         opts.set("open", open);
         opts.set("f_eval", f_eval);
         opts.set("reopen_closed", true);
-        engine = new EagerSearch(opts);
+        engine = new EagerSearchNoSpeed(opts);
     }
 
     return engine;
@@ -837,7 +837,7 @@ static SearchEngine *_parse_greedy(OptionParser &parser) {
     Options opts = parser.parse();
     opts.verify_list_non_empty<ScalarEvaluator *>("evals");
 
-    EagerSearch *engine = 0;
+    EagerSearchNoSpeed *engine = 0;
     if (!parser.dry_run()) {
         vector<ScalarEvaluator *> evals =
             opts.get_list<ScalarEvaluator *>("evals");
@@ -867,11 +867,11 @@ static SearchEngine *_parse_greedy(OptionParser &parser) {
         ScalarEvaluator *sep = 0;
         opts.set("f_eval", sep);
         opts.set("preferred", preferred_list);
-        engine = new EagerSearch(opts);
+        engine = new EagerSearchNoSpeed(opts);
     }
     return engine;
 }
 
 static Plugin<SearchEngine> _plugin("eager", _parse);
-static Plugin<SearchEngine> _plugin_astar("astar", _parse_astar);
+static Plugin<SearchEngine> _plugin_astar("astar_no_speed", _parse_astar);
 static Plugin<SearchEngine> _plugin_greedy("eager_greedy", _parse_greedy);

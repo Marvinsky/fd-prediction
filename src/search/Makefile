@@ -163,6 +163,8 @@ HEADERS += speed/speed_progress.h \
 
 HEADERS += astar/eager_search.h \
 
+HEADERS += astar_no_speed/eager_search_no_speed.h \
+
 HEADERS += dijkstra/eager_dijkstra_search.h \
 
 HEADERS += dfs/dfs_search.h \
