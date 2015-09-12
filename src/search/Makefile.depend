@@ -12550,6 +12550,174 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
+.obj/astar_s/eager_search_s.release.o: astar_s/eager_search_s.cc astar_s/eager_search_s.h \
+ astar_s/../evaluator.h astar_s/../global_state.h astar_s/../int_packer.h \
+ astar_s/../state_id.h astar_s/../search_engine.h \
+ astar_s/../global_operator.h astar_s/../global_state.h \
+ astar_s/../operator_cost.h astar_s/../search_space.h \
+ astar_s/../per_state_information.h astar_s/../globals.h \
+ astar_s/../segmented_vector.h astar_s/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
+ ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
+ ext/boost/config/compiler/gcc.hpp \
+ ext/boost/config/select_stdlib_config.hpp \
+ ext/boost/config/no_tr1/utility.hpp \
+ ext/boost/config/stdlib/libstdcpp3.hpp \
+ ext/boost/config/select_platform_config.hpp \
+ ext/boost/config/platform/linux.hpp ext/boost/config/posix_features.hpp \
+ ext/boost/config/suffix.hpp ext/boost/detail/workaround.hpp \
+ ext/boost/dynamic_bitset_fwd.hpp ext/boost/detail/dynamic_bitset.hpp \
+ ext/boost/detail/iterator.hpp ext/boost/move/move.hpp \
+ ext/boost/move/detail/config_begin.hpp ext/boost/move/utility.hpp \
+ ext/boost/move/core.hpp ext/boost/move/detail/config_end.hpp \
+ ext/boost/move/detail/meta_utils.hpp \
+ ext/boost/type_traits/remove_reference.hpp \
+ ext/boost/type_traits/detail/type_trait_def.hpp \
+ ext/boost/type_traits/detail/template_arity_spec.hpp \
+ ext/boost/mpl/int.hpp ext/boost/mpl/int_fwd.hpp \
+ ext/boost/mpl/aux_/adl_barrier.hpp ext/boost/mpl/aux_/config/adl.hpp \
+ ext/boost/mpl/aux_/config/msvc.hpp ext/boost/mpl/aux_/config/intel.hpp \
+ ext/boost/mpl/aux_/config/gcc.hpp \
+ ext/boost/mpl/aux_/config/workaround.hpp \
+ ext/boost/mpl/aux_/nttp_decl.hpp ext/boost/mpl/aux_/config/nttp.hpp \
+ ext/boost/mpl/aux_/integral_wrapper.hpp ext/boost/mpl/integral_c_tag.hpp \
+ ext/boost/mpl/aux_/config/static_constant.hpp \
+ ext/boost/mpl/aux_/static_cast.hpp ext/boost/preprocessor/cat.hpp \
+ ext/boost/preprocessor/config/config.hpp \
+ ext/boost/mpl/aux_/template_arity_fwd.hpp \
+ ext/boost/mpl/aux_/preprocessor/params.hpp \
+ ext/boost/mpl/aux_/config/preprocessor.hpp \
+ ext/boost/preprocessor/comma_if.hpp \
+ ext/boost/preprocessor/punctuation/comma_if.hpp \
+ ext/boost/preprocessor/control/if.hpp \
+ ext/boost/preprocessor/control/iif.hpp \
+ ext/boost/preprocessor/logical/bool.hpp \
+ ext/boost/preprocessor/facilities/empty.hpp \
+ ext/boost/preprocessor/punctuation/comma.hpp \
+ ext/boost/preprocessor/repeat.hpp \
+ ext/boost/preprocessor/repetition/repeat.hpp \
+ ext/boost/preprocessor/debug/error.hpp \
+ ext/boost/preprocessor/detail/auto_rec.hpp \
+ ext/boost/preprocessor/tuple/eat.hpp ext/boost/preprocessor/inc.hpp \
+ ext/boost/preprocessor/arithmetic/inc.hpp \
+ ext/boost/mpl/aux_/config/lambda.hpp ext/boost/mpl/aux_/config/ttp.hpp \
+ ext/boost/mpl/aux_/config/ctps.hpp \
+ ext/boost/mpl/aux_/config/overload_resolution.hpp \
+ ext/boost/mpl/aux_/lambda_support.hpp \
+ ext/boost/type_traits/detail/type_trait_undef.hpp \
+ ext/boost/move/iterator.hpp ext/boost/move/traits.hpp \
+ ext/boost/type_traits/has_trivial_destructor.hpp \
+ ext/boost/type_traits/config.hpp ext/boost/type_traits/intrinsics.hpp \
+ ext/boost/type_traits/is_same.hpp \
+ ext/boost/type_traits/detail/bool_trait_def.hpp \
+ ext/boost/type_traits/integral_constant.hpp ext/boost/mpl/bool.hpp \
+ ext/boost/mpl/bool_fwd.hpp ext/boost/mpl/integral_c.hpp \
+ ext/boost/mpl/integral_c_fwd.hpp \
+ ext/boost/type_traits/detail/bool_trait_undef.hpp \
+ ext/boost/type_traits/is_reference.hpp \
+ ext/boost/type_traits/is_lvalue_reference.hpp \
+ ext/boost/type_traits/is_rvalue_reference.hpp \
+ ext/boost/type_traits/ice.hpp \
+ ext/boost/type_traits/detail/yes_no_type.hpp \
+ ext/boost/type_traits/detail/ice_or.hpp \
+ ext/boost/type_traits/detail/ice_and.hpp \
+ ext/boost/type_traits/detail/ice_not.hpp \
+ ext/boost/type_traits/detail/ice_eq.hpp \
+ ext/boost/type_traits/is_volatile.hpp \
+ ext/boost/type_traits/detail/cv_traits_impl.hpp \
+ ext/boost/type_traits/is_pod.hpp ext/boost/type_traits/is_void.hpp \
+ ext/boost/type_traits/is_scalar.hpp \
+ ext/boost/type_traits/is_arithmetic.hpp \
+ ext/boost/type_traits/is_integral.hpp ext/boost/type_traits/is_float.hpp \
+ ext/boost/type_traits/is_enum.hpp ext/boost/type_traits/is_pointer.hpp \
+ ext/boost/type_traits/is_member_pointer.hpp \
+ ext/boost/type_traits/is_member_function_pointer.hpp \
+ ext/boost/type_traits/detail/is_mem_fun_pointer_impl.hpp \
+ ext/boost/type_traits/remove_cv.hpp \
+ ext/boost/type_traits/is_nothrow_move_constructible.hpp \
+ ext/boost/type_traits/has_trivial_move_constructor.hpp \
+ ext/boost/type_traits/has_nothrow_copy.hpp \
+ ext/boost/type_traits/has_trivial_copy.hpp \
+ ext/boost/type_traits/is_array.hpp ext/boost/utility/declval.hpp \
+ ext/boost/type_traits/add_rvalue_reference.hpp \
+ ext/boost/utility/enable_if.hpp ext/boost/core/enable_if.hpp \
+ ext/boost/type_traits/is_nothrow_move_assignable.hpp \
+ ext/boost/type_traits/has_trivial_move_assign.hpp \
+ ext/boost/type_traits/is_const.hpp \
+ ext/boost/type_traits/has_nothrow_assign.hpp \
+ ext/boost/type_traits/has_trivial_assign.hpp \
+ ext/boost/move/algorithm.hpp ext/boost/detail/no_exceptions_support.hpp \
+ ext/boost/core/no_exceptions_support.hpp ext/boost/limits.hpp \
+ ext/boost/pending/lowest_bit.hpp ext/boost/pending/integer_log2.hpp \
+ ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
+ ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
+ ext/boost/throw_exception.hpp astar_s/../state_registry.h \
+ astar_s/../search_node_info.h astar_s/../search_progress.h \
+ astar_s/../timer.h astar_s/../heuristic.h astar_s/../scalar_evaluator.h \
+ astar_s/../evaluator.h astar_s/../task_proxy.h \
+ astar_s/../abstract_task.h astar_s/../search_progress.h \
+ astar_s/../search_space.h astar_s/../timer.h \
+ astar_s/../open_lists/open_list.h astar_s/../open_lists/../evaluator.h \
+ astar_s/../globals.h astar_s/../heuristic.h astar_s/../option_parser.h \
+ astar_s/../option_parser_util.h ext/tree.hh ext/tree_util.hh ext/tree.hh \
+ ext/boost/any.hpp ext/boost/type_traits/decay.hpp \
+ ext/boost/type_traits/is_function.hpp \
+ ext/boost/type_traits/detail/false_result.hpp \
+ ext/boost/type_traits/detail/is_function_ptr_helper.hpp \
+ ext/boost/type_traits/remove_bounds.hpp \
+ ext/boost/type_traits/add_pointer.hpp ext/boost/mpl/eval_if.hpp \
+ ext/boost/mpl/if.hpp ext/boost/mpl/aux_/value_wknd.hpp \
+ ext/boost/mpl/aux_/config/integral.hpp ext/boost/mpl/aux_/config/eti.hpp \
+ ext/boost/mpl/aux_/na_spec.hpp ext/boost/mpl/lambda_fwd.hpp \
+ ext/boost/mpl/void_fwd.hpp ext/boost/mpl/aux_/na.hpp \
+ ext/boost/mpl/aux_/na_fwd.hpp ext/boost/mpl/aux_/lambda_arity_param.hpp \
+ ext/boost/mpl/aux_/arity.hpp ext/boost/mpl/aux_/config/dtp.hpp \
+ ext/boost/mpl/aux_/preprocessor/enum.hpp \
+ ext/boost/mpl/aux_/preprocessor/def_params_tail.hpp \
+ ext/boost/mpl/limits/arity.hpp ext/boost/preprocessor/logical/and.hpp \
+ ext/boost/preprocessor/logical/bitand.hpp \
+ ext/boost/preprocessor/identity.hpp \
+ ext/boost/preprocessor/facilities/identity.hpp \
+ ext/boost/preprocessor/empty.hpp \
+ ext/boost/preprocessor/arithmetic/add.hpp \
+ ext/boost/preprocessor/arithmetic/dec.hpp \
+ ext/boost/preprocessor/control/while.hpp \
+ ext/boost/preprocessor/list/fold_left.hpp \
+ ext/boost/preprocessor/list/detail/fold_left.hpp \
+ ext/boost/preprocessor/control/expr_iif.hpp \
+ ext/boost/preprocessor/list/adt.hpp \
+ ext/boost/preprocessor/detail/is_binary.hpp \
+ ext/boost/preprocessor/detail/check.hpp \
+ ext/boost/preprocessor/logical/compl.hpp \
+ ext/boost/preprocessor/list/fold_right.hpp \
+ ext/boost/preprocessor/list/detail/fold_right.hpp \
+ ext/boost/preprocessor/list/reverse.hpp \
+ ext/boost/preprocessor/control/detail/while.hpp \
+ ext/boost/preprocessor/tuple/elem.hpp \
+ ext/boost/preprocessor/facilities/overload.hpp \
+ ext/boost/preprocessor/variadic/size.hpp \
+ ext/boost/preprocessor/tuple/rem.hpp \
+ ext/boost/preprocessor/variadic/elem.hpp \
+ ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
+ ext/boost/type_traits/add_reference.hpp astar_s/../successor_generator.h \
+ astar_s/../g_evaluator.h astar_s/../sum_evaluator.h \
+ astar_s/../combining_evaluator.h astar_s/../max_evaluator.h \
+ astar_s/../plugin.h astar_s/../open_lists/standard_scalar_open_list.h \
+ astar_s/../open_lists/open_list.h \
+ astar_s/../open_lists/standard_scalar_open_list.cc \
+ astar_s/../open_lists/../scalar_evaluator.h \
+ astar_s/../open_lists/../option_parser.h \
+ astar_s/../open_lists/open_list_buckets.h \
+ astar_s/../open_lists/open_list_buckets.cc \
+ astar_s/../open_lists/tiebreaking_open_list.h \
+ astar_s/../open_lists/tiebreaking_open_list.cc \
+ astar_s/../open_lists/alternation_open_list.h \
+ astar_s/../open_lists/../plugin.h \
+ astar_s/../open_lists/alternation_open_list.cc \
+ astar_s/../open_lists/pareto_open_list.h \
+ astar_s/../open_lists/pareto_open_list.cc \
+ astar_s/../open_lists/../globals.h astar_s/../open_lists/../rng.h
 .obj/dijkstra/eager_dijkstra_search.release.o: dijkstra/eager_dijkstra_search.cc \
  dijkstra/eager_dijkstra_search.h dijkstra/../evaluator.h \
  dijkstra/../global_state.h dijkstra/../int_packer.h \
@@ -26852,6 +27020,174 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
+.obj/astar_s/eager_search_s.debug.o: astar_s/eager_search_s.cc astar_s/eager_search_s.h \
+ astar_s/../evaluator.h astar_s/../global_state.h astar_s/../int_packer.h \
+ astar_s/../state_id.h astar_s/../search_engine.h \
+ astar_s/../global_operator.h astar_s/../global_state.h \
+ astar_s/../operator_cost.h astar_s/../search_space.h \
+ astar_s/../per_state_information.h astar_s/../globals.h \
+ astar_s/../segmented_vector.h astar_s/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
+ ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
+ ext/boost/config/compiler/gcc.hpp \
+ ext/boost/config/select_stdlib_config.hpp \
+ ext/boost/config/no_tr1/utility.hpp \
+ ext/boost/config/stdlib/libstdcpp3.hpp \
+ ext/boost/config/select_platform_config.hpp \
+ ext/boost/config/platform/linux.hpp ext/boost/config/posix_features.hpp \
+ ext/boost/config/suffix.hpp ext/boost/detail/workaround.hpp \
+ ext/boost/dynamic_bitset_fwd.hpp ext/boost/detail/dynamic_bitset.hpp \
+ ext/boost/detail/iterator.hpp ext/boost/move/move.hpp \
+ ext/boost/move/detail/config_begin.hpp ext/boost/move/utility.hpp \
+ ext/boost/move/core.hpp ext/boost/move/detail/config_end.hpp \
+ ext/boost/move/detail/meta_utils.hpp \
+ ext/boost/type_traits/remove_reference.hpp \
+ ext/boost/type_traits/detail/type_trait_def.hpp \
+ ext/boost/type_traits/detail/template_arity_spec.hpp \
+ ext/boost/mpl/int.hpp ext/boost/mpl/int_fwd.hpp \
+ ext/boost/mpl/aux_/adl_barrier.hpp ext/boost/mpl/aux_/config/adl.hpp \
+ ext/boost/mpl/aux_/config/msvc.hpp ext/boost/mpl/aux_/config/intel.hpp \
+ ext/boost/mpl/aux_/config/gcc.hpp \
+ ext/boost/mpl/aux_/config/workaround.hpp \
+ ext/boost/mpl/aux_/nttp_decl.hpp ext/boost/mpl/aux_/config/nttp.hpp \
+ ext/boost/mpl/aux_/integral_wrapper.hpp ext/boost/mpl/integral_c_tag.hpp \
+ ext/boost/mpl/aux_/config/static_constant.hpp \
+ ext/boost/mpl/aux_/static_cast.hpp ext/boost/preprocessor/cat.hpp \
+ ext/boost/preprocessor/config/config.hpp \
+ ext/boost/mpl/aux_/template_arity_fwd.hpp \
+ ext/boost/mpl/aux_/preprocessor/params.hpp \
+ ext/boost/mpl/aux_/config/preprocessor.hpp \
+ ext/boost/preprocessor/comma_if.hpp \
+ ext/boost/preprocessor/punctuation/comma_if.hpp \
+ ext/boost/preprocessor/control/if.hpp \
+ ext/boost/preprocessor/control/iif.hpp \
+ ext/boost/preprocessor/logical/bool.hpp \
+ ext/boost/preprocessor/facilities/empty.hpp \
+ ext/boost/preprocessor/punctuation/comma.hpp \
+ ext/boost/preprocessor/repeat.hpp \
+ ext/boost/preprocessor/repetition/repeat.hpp \
+ ext/boost/preprocessor/debug/error.hpp \
+ ext/boost/preprocessor/detail/auto_rec.hpp \
+ ext/boost/preprocessor/tuple/eat.hpp ext/boost/preprocessor/inc.hpp \
+ ext/boost/preprocessor/arithmetic/inc.hpp \
+ ext/boost/mpl/aux_/config/lambda.hpp ext/boost/mpl/aux_/config/ttp.hpp \
+ ext/boost/mpl/aux_/config/ctps.hpp \
+ ext/boost/mpl/aux_/config/overload_resolution.hpp \
+ ext/boost/mpl/aux_/lambda_support.hpp \
+ ext/boost/type_traits/detail/type_trait_undef.hpp \
+ ext/boost/move/iterator.hpp ext/boost/move/traits.hpp \
+ ext/boost/type_traits/has_trivial_destructor.hpp \
+ ext/boost/type_traits/config.hpp ext/boost/type_traits/intrinsics.hpp \
+ ext/boost/type_traits/is_same.hpp \
+ ext/boost/type_traits/detail/bool_trait_def.hpp \
+ ext/boost/type_traits/integral_constant.hpp ext/boost/mpl/bool.hpp \
+ ext/boost/mpl/bool_fwd.hpp ext/boost/mpl/integral_c.hpp \
+ ext/boost/mpl/integral_c_fwd.hpp \
+ ext/boost/type_traits/detail/bool_trait_undef.hpp \
+ ext/boost/type_traits/is_reference.hpp \
+ ext/boost/type_traits/is_lvalue_reference.hpp \
+ ext/boost/type_traits/is_rvalue_reference.hpp \
+ ext/boost/type_traits/ice.hpp \
+ ext/boost/type_traits/detail/yes_no_type.hpp \
+ ext/boost/type_traits/detail/ice_or.hpp \
+ ext/boost/type_traits/detail/ice_and.hpp \
+ ext/boost/type_traits/detail/ice_not.hpp \
+ ext/boost/type_traits/detail/ice_eq.hpp \
+ ext/boost/type_traits/is_volatile.hpp \
+ ext/boost/type_traits/detail/cv_traits_impl.hpp \
+ ext/boost/type_traits/is_pod.hpp ext/boost/type_traits/is_void.hpp \
+ ext/boost/type_traits/is_scalar.hpp \
+ ext/boost/type_traits/is_arithmetic.hpp \
+ ext/boost/type_traits/is_integral.hpp ext/boost/type_traits/is_float.hpp \
+ ext/boost/type_traits/is_enum.hpp ext/boost/type_traits/is_pointer.hpp \
+ ext/boost/type_traits/is_member_pointer.hpp \
+ ext/boost/type_traits/is_member_function_pointer.hpp \
+ ext/boost/type_traits/detail/is_mem_fun_pointer_impl.hpp \
+ ext/boost/type_traits/remove_cv.hpp \
+ ext/boost/type_traits/is_nothrow_move_constructible.hpp \
+ ext/boost/type_traits/has_trivial_move_constructor.hpp \
+ ext/boost/type_traits/has_nothrow_copy.hpp \
+ ext/boost/type_traits/has_trivial_copy.hpp \
+ ext/boost/type_traits/is_array.hpp ext/boost/utility/declval.hpp \
+ ext/boost/type_traits/add_rvalue_reference.hpp \
+ ext/boost/utility/enable_if.hpp ext/boost/core/enable_if.hpp \
+ ext/boost/type_traits/is_nothrow_move_assignable.hpp \
+ ext/boost/type_traits/has_trivial_move_assign.hpp \
+ ext/boost/type_traits/is_const.hpp \
+ ext/boost/type_traits/has_nothrow_assign.hpp \
+ ext/boost/type_traits/has_trivial_assign.hpp \
+ ext/boost/move/algorithm.hpp ext/boost/detail/no_exceptions_support.hpp \
+ ext/boost/core/no_exceptions_support.hpp ext/boost/limits.hpp \
+ ext/boost/pending/lowest_bit.hpp ext/boost/pending/integer_log2.hpp \
+ ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
+ ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
+ ext/boost/throw_exception.hpp astar_s/../state_registry.h \
+ astar_s/../search_node_info.h astar_s/../search_progress.h \
+ astar_s/../timer.h astar_s/../heuristic.h astar_s/../scalar_evaluator.h \
+ astar_s/../evaluator.h astar_s/../task_proxy.h \
+ astar_s/../abstract_task.h astar_s/../search_progress.h \
+ astar_s/../search_space.h astar_s/../timer.h \
+ astar_s/../open_lists/open_list.h astar_s/../open_lists/../evaluator.h \
+ astar_s/../globals.h astar_s/../heuristic.h astar_s/../option_parser.h \
+ astar_s/../option_parser_util.h ext/tree.hh ext/tree_util.hh ext/tree.hh \
+ ext/boost/any.hpp ext/boost/type_traits/decay.hpp \
+ ext/boost/type_traits/is_function.hpp \
+ ext/boost/type_traits/detail/false_result.hpp \
+ ext/boost/type_traits/detail/is_function_ptr_helper.hpp \
+ ext/boost/type_traits/remove_bounds.hpp \
+ ext/boost/type_traits/add_pointer.hpp ext/boost/mpl/eval_if.hpp \
+ ext/boost/mpl/if.hpp ext/boost/mpl/aux_/value_wknd.hpp \
+ ext/boost/mpl/aux_/config/integral.hpp ext/boost/mpl/aux_/config/eti.hpp \
+ ext/boost/mpl/aux_/na_spec.hpp ext/boost/mpl/lambda_fwd.hpp \
+ ext/boost/mpl/void_fwd.hpp ext/boost/mpl/aux_/na.hpp \
+ ext/boost/mpl/aux_/na_fwd.hpp ext/boost/mpl/aux_/lambda_arity_param.hpp \
+ ext/boost/mpl/aux_/arity.hpp ext/boost/mpl/aux_/config/dtp.hpp \
+ ext/boost/mpl/aux_/preprocessor/enum.hpp \
+ ext/boost/mpl/aux_/preprocessor/def_params_tail.hpp \
+ ext/boost/mpl/limits/arity.hpp ext/boost/preprocessor/logical/and.hpp \
+ ext/boost/preprocessor/logical/bitand.hpp \
+ ext/boost/preprocessor/identity.hpp \
+ ext/boost/preprocessor/facilities/identity.hpp \
+ ext/boost/preprocessor/empty.hpp \
+ ext/boost/preprocessor/arithmetic/add.hpp \
+ ext/boost/preprocessor/arithmetic/dec.hpp \
+ ext/boost/preprocessor/control/while.hpp \
+ ext/boost/preprocessor/list/fold_left.hpp \
+ ext/boost/preprocessor/list/detail/fold_left.hpp \
+ ext/boost/preprocessor/control/expr_iif.hpp \
+ ext/boost/preprocessor/list/adt.hpp \
+ ext/boost/preprocessor/detail/is_binary.hpp \
+ ext/boost/preprocessor/detail/check.hpp \
+ ext/boost/preprocessor/logical/compl.hpp \
+ ext/boost/preprocessor/list/fold_right.hpp \
+ ext/boost/preprocessor/list/detail/fold_right.hpp \
+ ext/boost/preprocessor/list/reverse.hpp \
+ ext/boost/preprocessor/control/detail/while.hpp \
+ ext/boost/preprocessor/tuple/elem.hpp \
+ ext/boost/preprocessor/facilities/overload.hpp \
+ ext/boost/preprocessor/variadic/size.hpp \
+ ext/boost/preprocessor/tuple/rem.hpp \
+ ext/boost/preprocessor/variadic/elem.hpp \
+ ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
+ ext/boost/type_traits/add_reference.hpp astar_s/../successor_generator.h \
+ astar_s/../g_evaluator.h astar_s/../sum_evaluator.h \
+ astar_s/../combining_evaluator.h astar_s/../max_evaluator.h \
+ astar_s/../plugin.h astar_s/../open_lists/standard_scalar_open_list.h \
+ astar_s/../open_lists/open_list.h \
+ astar_s/../open_lists/standard_scalar_open_list.cc \
+ astar_s/../open_lists/../scalar_evaluator.h \
+ astar_s/../open_lists/../option_parser.h \
+ astar_s/../open_lists/open_list_buckets.h \
+ astar_s/../open_lists/open_list_buckets.cc \
+ astar_s/../open_lists/tiebreaking_open_list.h \
+ astar_s/../open_lists/tiebreaking_open_list.cc \
+ astar_s/../open_lists/alternation_open_list.h \
+ astar_s/../open_lists/../plugin.h \
+ astar_s/../open_lists/alternation_open_list.cc \
+ astar_s/../open_lists/pareto_open_list.h \
+ astar_s/../open_lists/pareto_open_list.cc \
+ astar_s/../open_lists/../globals.h astar_s/../open_lists/../rng.h
 .obj/dijkstra/eager_dijkstra_search.debug.o: dijkstra/eager_dijkstra_search.cc \
  dijkstra/eager_dijkstra_search.h dijkstra/../evaluator.h \
  dijkstra/../global_state.h dijkstra/../int_packer.h \
@@ -41154,6 +41490,174 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
+.obj/astar_s/eager_search_s.profile.o: astar_s/eager_search_s.cc astar_s/eager_search_s.h \
+ astar_s/../evaluator.h astar_s/../global_state.h astar_s/../int_packer.h \
+ astar_s/../state_id.h astar_s/../search_engine.h \
+ astar_s/../global_operator.h astar_s/../global_state.h \
+ astar_s/../operator_cost.h astar_s/../search_space.h \
+ astar_s/../per_state_information.h astar_s/../globals.h \
+ astar_s/../segmented_vector.h astar_s/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
+ ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
+ ext/boost/config/compiler/gcc.hpp \
+ ext/boost/config/select_stdlib_config.hpp \
+ ext/boost/config/no_tr1/utility.hpp \
+ ext/boost/config/stdlib/libstdcpp3.hpp \
+ ext/boost/config/select_platform_config.hpp \
+ ext/boost/config/platform/linux.hpp ext/boost/config/posix_features.hpp \
+ ext/boost/config/suffix.hpp ext/boost/detail/workaround.hpp \
+ ext/boost/dynamic_bitset_fwd.hpp ext/boost/detail/dynamic_bitset.hpp \
+ ext/boost/detail/iterator.hpp ext/boost/move/move.hpp \
+ ext/boost/move/detail/config_begin.hpp ext/boost/move/utility.hpp \
+ ext/boost/move/core.hpp ext/boost/move/detail/config_end.hpp \
+ ext/boost/move/detail/meta_utils.hpp \
+ ext/boost/type_traits/remove_reference.hpp \
+ ext/boost/type_traits/detail/type_trait_def.hpp \
+ ext/boost/type_traits/detail/template_arity_spec.hpp \
+ ext/boost/mpl/int.hpp ext/boost/mpl/int_fwd.hpp \
+ ext/boost/mpl/aux_/adl_barrier.hpp ext/boost/mpl/aux_/config/adl.hpp \
+ ext/boost/mpl/aux_/config/msvc.hpp ext/boost/mpl/aux_/config/intel.hpp \
+ ext/boost/mpl/aux_/config/gcc.hpp \
+ ext/boost/mpl/aux_/config/workaround.hpp \
+ ext/boost/mpl/aux_/nttp_decl.hpp ext/boost/mpl/aux_/config/nttp.hpp \
+ ext/boost/mpl/aux_/integral_wrapper.hpp ext/boost/mpl/integral_c_tag.hpp \
+ ext/boost/mpl/aux_/config/static_constant.hpp \
+ ext/boost/mpl/aux_/static_cast.hpp ext/boost/preprocessor/cat.hpp \
+ ext/boost/preprocessor/config/config.hpp \
+ ext/boost/mpl/aux_/template_arity_fwd.hpp \
+ ext/boost/mpl/aux_/preprocessor/params.hpp \
+ ext/boost/mpl/aux_/config/preprocessor.hpp \
+ ext/boost/preprocessor/comma_if.hpp \
+ ext/boost/preprocessor/punctuation/comma_if.hpp \
+ ext/boost/preprocessor/control/if.hpp \
+ ext/boost/preprocessor/control/iif.hpp \
+ ext/boost/preprocessor/logical/bool.hpp \
+ ext/boost/preprocessor/facilities/empty.hpp \
+ ext/boost/preprocessor/punctuation/comma.hpp \
+ ext/boost/preprocessor/repeat.hpp \
+ ext/boost/preprocessor/repetition/repeat.hpp \
+ ext/boost/preprocessor/debug/error.hpp \
+ ext/boost/preprocessor/detail/auto_rec.hpp \
+ ext/boost/preprocessor/tuple/eat.hpp ext/boost/preprocessor/inc.hpp \
+ ext/boost/preprocessor/arithmetic/inc.hpp \
+ ext/boost/mpl/aux_/config/lambda.hpp ext/boost/mpl/aux_/config/ttp.hpp \
+ ext/boost/mpl/aux_/config/ctps.hpp \
+ ext/boost/mpl/aux_/config/overload_resolution.hpp \
+ ext/boost/mpl/aux_/lambda_support.hpp \
+ ext/boost/type_traits/detail/type_trait_undef.hpp \
+ ext/boost/move/iterator.hpp ext/boost/move/traits.hpp \
+ ext/boost/type_traits/has_trivial_destructor.hpp \
+ ext/boost/type_traits/config.hpp ext/boost/type_traits/intrinsics.hpp \
+ ext/boost/type_traits/is_same.hpp \
+ ext/boost/type_traits/detail/bool_trait_def.hpp \
+ ext/boost/type_traits/integral_constant.hpp ext/boost/mpl/bool.hpp \
+ ext/boost/mpl/bool_fwd.hpp ext/boost/mpl/integral_c.hpp \
+ ext/boost/mpl/integral_c_fwd.hpp \
+ ext/boost/type_traits/detail/bool_trait_undef.hpp \
+ ext/boost/type_traits/is_reference.hpp \
+ ext/boost/type_traits/is_lvalue_reference.hpp \
+ ext/boost/type_traits/is_rvalue_reference.hpp \
+ ext/boost/type_traits/ice.hpp \
+ ext/boost/type_traits/detail/yes_no_type.hpp \
+ ext/boost/type_traits/detail/ice_or.hpp \
+ ext/boost/type_traits/detail/ice_and.hpp \
+ ext/boost/type_traits/detail/ice_not.hpp \
+ ext/boost/type_traits/detail/ice_eq.hpp \
+ ext/boost/type_traits/is_volatile.hpp \
+ ext/boost/type_traits/detail/cv_traits_impl.hpp \
+ ext/boost/type_traits/is_pod.hpp ext/boost/type_traits/is_void.hpp \
+ ext/boost/type_traits/is_scalar.hpp \
+ ext/boost/type_traits/is_arithmetic.hpp \
+ ext/boost/type_traits/is_integral.hpp ext/boost/type_traits/is_float.hpp \
+ ext/boost/type_traits/is_enum.hpp ext/boost/type_traits/is_pointer.hpp \
+ ext/boost/type_traits/is_member_pointer.hpp \
+ ext/boost/type_traits/is_member_function_pointer.hpp \
+ ext/boost/type_traits/detail/is_mem_fun_pointer_impl.hpp \
+ ext/boost/type_traits/remove_cv.hpp \
+ ext/boost/type_traits/is_nothrow_move_constructible.hpp \
+ ext/boost/type_traits/has_trivial_move_constructor.hpp \
+ ext/boost/type_traits/has_nothrow_copy.hpp \
+ ext/boost/type_traits/has_trivial_copy.hpp \
+ ext/boost/type_traits/is_array.hpp ext/boost/utility/declval.hpp \
+ ext/boost/type_traits/add_rvalue_reference.hpp \
+ ext/boost/utility/enable_if.hpp ext/boost/core/enable_if.hpp \
+ ext/boost/type_traits/is_nothrow_move_assignable.hpp \
+ ext/boost/type_traits/has_trivial_move_assign.hpp \
+ ext/boost/type_traits/is_const.hpp \
+ ext/boost/type_traits/has_nothrow_assign.hpp \
+ ext/boost/type_traits/has_trivial_assign.hpp \
+ ext/boost/move/algorithm.hpp ext/boost/detail/no_exceptions_support.hpp \
+ ext/boost/core/no_exceptions_support.hpp ext/boost/limits.hpp \
+ ext/boost/pending/lowest_bit.hpp ext/boost/pending/integer_log2.hpp \
+ ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
+ ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
+ ext/boost/throw_exception.hpp astar_s/../state_registry.h \
+ astar_s/../search_node_info.h astar_s/../search_progress.h \
+ astar_s/../timer.h astar_s/../heuristic.h astar_s/../scalar_evaluator.h \
+ astar_s/../evaluator.h astar_s/../task_proxy.h \
+ astar_s/../abstract_task.h astar_s/../search_progress.h \
+ astar_s/../search_space.h astar_s/../timer.h \
+ astar_s/../open_lists/open_list.h astar_s/../open_lists/../evaluator.h \
+ astar_s/../globals.h astar_s/../heuristic.h astar_s/../option_parser.h \
+ astar_s/../option_parser_util.h ext/tree.hh ext/tree_util.hh ext/tree.hh \
+ ext/boost/any.hpp ext/boost/type_traits/decay.hpp \
+ ext/boost/type_traits/is_function.hpp \
+ ext/boost/type_traits/detail/false_result.hpp \
+ ext/boost/type_traits/detail/is_function_ptr_helper.hpp \
+ ext/boost/type_traits/remove_bounds.hpp \
+ ext/boost/type_traits/add_pointer.hpp ext/boost/mpl/eval_if.hpp \
+ ext/boost/mpl/if.hpp ext/boost/mpl/aux_/value_wknd.hpp \
+ ext/boost/mpl/aux_/config/integral.hpp ext/boost/mpl/aux_/config/eti.hpp \
+ ext/boost/mpl/aux_/na_spec.hpp ext/boost/mpl/lambda_fwd.hpp \
+ ext/boost/mpl/void_fwd.hpp ext/boost/mpl/aux_/na.hpp \
+ ext/boost/mpl/aux_/na_fwd.hpp ext/boost/mpl/aux_/lambda_arity_param.hpp \
+ ext/boost/mpl/aux_/arity.hpp ext/boost/mpl/aux_/config/dtp.hpp \
+ ext/boost/mpl/aux_/preprocessor/enum.hpp \
+ ext/boost/mpl/aux_/preprocessor/def_params_tail.hpp \
+ ext/boost/mpl/limits/arity.hpp ext/boost/preprocessor/logical/and.hpp \
+ ext/boost/preprocessor/logical/bitand.hpp \
+ ext/boost/preprocessor/identity.hpp \
+ ext/boost/preprocessor/facilities/identity.hpp \
+ ext/boost/preprocessor/empty.hpp \
+ ext/boost/preprocessor/arithmetic/add.hpp \
+ ext/boost/preprocessor/arithmetic/dec.hpp \
+ ext/boost/preprocessor/control/while.hpp \
+ ext/boost/preprocessor/list/fold_left.hpp \
+ ext/boost/preprocessor/list/detail/fold_left.hpp \
+ ext/boost/preprocessor/control/expr_iif.hpp \
+ ext/boost/preprocessor/list/adt.hpp \
+ ext/boost/preprocessor/detail/is_binary.hpp \
+ ext/boost/preprocessor/detail/check.hpp \
+ ext/boost/preprocessor/logical/compl.hpp \
+ ext/boost/preprocessor/list/fold_right.hpp \
+ ext/boost/preprocessor/list/detail/fold_right.hpp \
+ ext/boost/preprocessor/list/reverse.hpp \
+ ext/boost/preprocessor/control/detail/while.hpp \
+ ext/boost/preprocessor/tuple/elem.hpp \
+ ext/boost/preprocessor/facilities/overload.hpp \
+ ext/boost/preprocessor/variadic/size.hpp \
+ ext/boost/preprocessor/tuple/rem.hpp \
+ ext/boost/preprocessor/variadic/elem.hpp \
+ ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
+ ext/boost/type_traits/add_reference.hpp astar_s/../successor_generator.h \
+ astar_s/../g_evaluator.h astar_s/../sum_evaluator.h \
+ astar_s/../combining_evaluator.h astar_s/../max_evaluator.h \
+ astar_s/../plugin.h astar_s/../open_lists/standard_scalar_open_list.h \
+ astar_s/../open_lists/open_list.h \
+ astar_s/../open_lists/standard_scalar_open_list.cc \
+ astar_s/../open_lists/../scalar_evaluator.h \
+ astar_s/../open_lists/../option_parser.h \
+ astar_s/../open_lists/open_list_buckets.h \
+ astar_s/../open_lists/open_list_buckets.cc \
+ astar_s/../open_lists/tiebreaking_open_list.h \
+ astar_s/../open_lists/tiebreaking_open_list.cc \
+ astar_s/../open_lists/alternation_open_list.h \
+ astar_s/../open_lists/../plugin.h \
+ astar_s/../open_lists/alternation_open_list.cc \
+ astar_s/../open_lists/pareto_open_list.h \
+ astar_s/../open_lists/pareto_open_list.cc \
+ astar_s/../open_lists/../globals.h astar_s/../open_lists/../rng.h
 .obj/dijkstra/eager_dijkstra_search.profile.o: dijkstra/eager_dijkstra_search.cc \
  dijkstra/eager_dijkstra_search.h dijkstra/../evaluator.h \
  dijkstra/../global_state.h dijkstra/../int_packer.h \
