@@ -1,1 +1,0 @@
-p05.pddl:returning best heuristic(GAPDB)[,0,]:[11,13,14,21,26,31,35,46,47,50,51,52]-[]-[0,2,3,15,19,22,27,30,39,40,43,45,48]-[]-[1,5,8,17,23,28,34,36,41,49]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:2.65385,,initial value:5,GAPDB generation time:38.5

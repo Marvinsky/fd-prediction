@@ -22,6 +22,8 @@ bool ss_debug=false;
 int next_f_bound=INT_MAX/2;
 bool domination_check=false;
 set<vector<int> > F_culprits;
+double sampling_time_limit=150;
+double overall_time_limit=1400;
 //#define _SS_DEBUG
 
 
@@ -86,7 +88,7 @@ SearchStatus SSSearch::step() {
   bool at_least_one_dominated=false;
   vector<int> demotted_heurs;
   int original_threshold=f_boundary;
-  while(search_time()<140.0){
+  while(search_time()<sampling_time_limit){
 	this->RanGen2 = new CRandomMersenne(1);
         	
 	//clear all data from previous iteration
@@ -297,7 +299,7 @@ void SSSearch::predict(int probes) {
 	int current_n_probes = 0;
         for (int i = 0; i < probes; i++) {
 	  cout<<"#probe:"<<i<<",g_timer:"<<g_timer()<<",search_time:"<<search_time()<<endl;
-	  if(search_time()>100.0||g_timer()>1400){ //300 default
+	  if(search_time()>sampling_time_limit || g_timer()>overall_time_limit){ //300 default
 	    cout<<"Search_timer past maximum sampling_time"<<endl;
 	    cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
 	    //select_best_heuristics_greedy();	
@@ -325,8 +327,8 @@ void SSSearch::predict(int probes) {
 	cout<<"probes: "<<probes<<"\n"; 
 	cout<<"threshold : "<<threshold<<"\n";
 	generateSSCCReport(probes, false);
-	generateGeneratedReport();
-        generateExpandedReport();
+	//generateGeneratedReport();
+        //generateExpandedReport();
 	
 }
 
@@ -436,9 +438,20 @@ void SSSearch::probe()
 	queue.insert( pair<Type, SSNode>( type, node ) );
 
         int nraiz = 0;
-  
+ 
+	long queue_counter = 0; 
 	while( !queue.empty() )
 	{
+		queue_counter++;
+		if (queue_counter%1000==0) {
+			if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
+				cout<<"Search_timer past maximum sampling_time"<<endl;
+	      			cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
+				generateSSCCReport(threshold, true);
+	      			//select_best_heuristics_greedy();
+	      			exit(0);
+			}
+		}
 #ifdef _SS_DEBUG
 	  cout<<"queue.size:"<<queue.size()<<endl;
 #endif

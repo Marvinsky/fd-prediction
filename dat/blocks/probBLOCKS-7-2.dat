@@ -1,3 +1,0 @@
-probBLOCKS-7-2.pddl:returning best heuristic(GAPDB)[,0,]:[1,7,10,12,14]-[0,2,3,4,5,6,8,9,11,13]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:8.62598,,initial value:10,GAPDB generation time:11.52
-probBLOCKS-7-2.pddl:returning best heuristic(GAPDB)[,1,]:[0,7,9,10,11,13,14]-[1,2,3,4,5,6,8,12]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,1-best_fitness:9.91286,,initial value:10,GAPDB generation time:7.62
-probBLOCKS-7-2.pddl:returning best heuristic(GAPDB)[,2,]:[1,5,9,10,11,12,13,14]-[3,4,7,9,10,12,13]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:10.3789,,initial value:10,GAPDB generation time:11.82

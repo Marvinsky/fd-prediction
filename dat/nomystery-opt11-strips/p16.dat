@@ -1,7 +1,0 @@
-p16.pddl:returning best heuristic(GAPDB)[,0,]:[4,5,8,9]-[0,2,3,6,7]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:21.9447,,initial value:25,GAPDB generation time:3.56
-p16.pddl:returning best heuristic(GAPDB)[,1,]:[0,3,5,6,7,8]-[2,4,9]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,1-best_fitness:22.4458,,initial value:24,GAPDB generation time:5.08
-p16.pddl:returning best heuristic(GAPDB)[,2,]:[0,2,4,6,7,9]-[3,5,8]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:22.7323,,initial value:26,GAPDB generation time:5.42
-p16.pddl:returning best heuristic(GAPDB)[,3,]:[0,2,3,5,6,9]-[4,7,8]-,mp:,0.3000000,size:,2000000,disjoint_patterns:,1-best_fitness:23.0488,,initial value:25,GAPDB generation time:6.68
-p16.pddl:returning best heuristic(GAPDB)[,4,]:[0,2,5,7,8,9]-[3,4,6]-,mp:,0.9000000,size:,2000000,disjoint_patterns:,1-best_fitness:22.3869,,initial value:24,GAPDB generation time:5.1
-p16.pddl:returning best heuristic(GAPDB)[,5,]:[0,2,4,5,6,9]-[3,4,5,7,8]-,mp:,0.7000000,size:,2000000,disjoint_patterns:,0-best_fitness:23.2472,,initial value:26,GAPDB generation time:5.72
-p16.pddl:returning best heuristic(GAPDB)[,6,]:[0,3,4,5,6,7]-[2,8,9]-,mp:,0.6000000,size:,2000000,disjoint_patterns:,0-best_fitness:22.6464,,initial value:24,GAPDB generation time:6.78
