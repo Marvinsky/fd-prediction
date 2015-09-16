@@ -12573,14 +12573,15 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
-.obj/astar_s/eager_search_s.release.o: astar_s/eager_search_s.cc astar_s/eager_search_s.h \
- astar_s/../evaluator.h astar_s/../global_state.h astar_s/../int_packer.h \
- astar_s/../state_id.h astar_s/../search_engine.h \
- astar_s/../global_operator.h astar_s/../global_state.h \
- astar_s/../operator_cost.h astar_s/../search_space.h \
- astar_s/../per_state_information.h astar_s/../globals.h \
- astar_s/../mutex_group.h astar_s/../segmented_vector.h \
- astar_s/../utilities.h ext/boost/dynamic_bitset.hpp \
+.obj/astar_max/eager_search_max.release.o: astar_max/eager_search_max.cc \
+ astar_max/eager_search_max.h astar_max/../evaluator.h \
+ astar_max/../global_state.h astar_max/../int_packer.h \
+ astar_max/../state_id.h astar_max/../search_engine.h \
+ astar_max/../global_operator.h astar_max/../global_state.h \
+ astar_max/../operator_cost.h astar_max/../search_space.h \
+ astar_max/../per_state_information.h astar_max/../globals.h \
+ astar_max/../mutex_group.h astar_max/../segmented_vector.h \
+ astar_max/../utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -12676,16 +12677,17 @@
  ext/boost/pending/lowest_bit.hpp ext/boost/pending/integer_log2.hpp \
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
- ext/boost/throw_exception.hpp astar_s/../state_registry.h \
- astar_s/../search_node_info.h astar_s/../search_progress.h \
- astar_s/../timer.h astar_s/../heuristic.h astar_s/../scalar_evaluator.h \
- astar_s/../evaluator.h astar_s/../task_proxy.h \
- astar_s/../abstract_task.h astar_s/../search_progress.h \
- astar_s/../search_space.h astar_s/../timer.h \
- astar_s/../open_lists/open_list.h astar_s/../open_lists/../evaluator.h \
- astar_s/../globals.h astar_s/../heuristic.h astar_s/../option_parser.h \
- astar_s/../option_parser_util.h ext/tree.hh ext/tree_util.hh ext/tree.hh \
- ext/boost/any.hpp ext/boost/type_traits/decay.hpp \
+ ext/boost/throw_exception.hpp astar_max/../state_registry.h \
+ astar_max/../search_node_info.h astar_max/../search_progress.h \
+ astar_max/../timer.h astar_max/../heuristic.h \
+ astar_max/../scalar_evaluator.h astar_max/../evaluator.h \
+ astar_max/../task_proxy.h astar_max/../abstract_task.h \
+ astar_max/../search_progress.h astar_max/../search_space.h \
+ astar_max/../timer.h astar_max/../open_lists/open_list.h \
+ astar_max/../open_lists/../evaluator.h astar_max/../globals.h \
+ astar_max/../heuristic.h astar_max/../option_parser.h \
+ astar_max/../option_parser_util.h ext/tree.hh ext/tree_util.hh \
+ ext/tree.hh ext/boost/any.hpp ext/boost/type_traits/decay.hpp \
  ext/boost/type_traits/is_function.hpp \
  ext/boost/type_traits/detail/false_result.hpp \
  ext/boost/type_traits/detail/is_function_ptr_helper.hpp \
@@ -12724,25 +12726,26 @@
  ext/boost/preprocessor/tuple/rem.hpp \
  ext/boost/preprocessor/variadic/elem.hpp \
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
- ext/boost/type_traits/add_reference.hpp astar_s/../successor_generator.h \
- astar_s/../g_evaluator.h astar_s/../sum_evaluator.h \
- astar_s/../combining_evaluator.h astar_s/../max_evaluator.h \
- astar_s/../plugin.h astar_s/../open_lists/standard_scalar_open_list.h \
- astar_s/../open_lists/open_list.h \
- astar_s/../open_lists/standard_scalar_open_list.cc \
- astar_s/../open_lists/../scalar_evaluator.h \
- astar_s/../open_lists/../option_parser.h \
- astar_s/../open_lists/open_list_buckets.h \
- astar_s/../open_lists/open_list_buckets.cc \
- astar_s/../open_lists/tiebreaking_open_list.h \
- astar_s/../open_lists/tiebreaking_open_list.cc \
- astar_s/../open_lists/alternation_open_list.h \
- astar_s/../open_lists/../plugin.h \
- astar_s/../open_lists/alternation_open_list.cc \
- astar_s/../open_lists/pareto_open_list.h \
- astar_s/../open_lists/pareto_open_list.cc \
- astar_s/../open_lists/../globals.h astar_s/../open_lists/../rng.h \
- astar_s/../ext/boost/dynamic_bitset.hpp ext/boost/lexical_cast.hpp \
+ ext/boost/type_traits/add_reference.hpp \
+ astar_max/../successor_generator.h astar_max/../g_evaluator.h \
+ astar_max/../sum_evaluator.h astar_max/../combining_evaluator.h \
+ astar_max/../max_evaluator.h astar_max/../plugin.h \
+ astar_max/../open_lists/standard_scalar_open_list.h \
+ astar_max/../open_lists/open_list.h \
+ astar_max/../open_lists/standard_scalar_open_list.cc \
+ astar_max/../open_lists/../scalar_evaluator.h \
+ astar_max/../open_lists/../option_parser.h \
+ astar_max/../open_lists/open_list_buckets.h \
+ astar_max/../open_lists/open_list_buckets.cc \
+ astar_max/../open_lists/tiebreaking_open_list.h \
+ astar_max/../open_lists/tiebreaking_open_list.cc \
+ astar_max/../open_lists/alternation_open_list.h \
+ astar_max/../open_lists/../plugin.h \
+ astar_max/../open_lists/alternation_open_list.cc \
+ astar_max/../open_lists/pareto_open_list.h \
+ astar_max/../open_lists/pareto_open_list.cc \
+ astar_max/../open_lists/../globals.h astar_max/../open_lists/../rng.h \
+ astar_max/../ext/boost/dynamic_bitset.hpp ext/boost/lexical_cast.hpp \
  ext/boost/detail/lcast_precision.hpp ext/boost/integer_traits.hpp \
  ext/boost/type_traits/is_abstract.hpp ext/boost/array.hpp \
  ext/boost/assert.hpp ext/boost/swap.hpp ext/boost/core/swap.hpp \
@@ -27330,14 +27333,15 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
-.obj/astar_s/eager_search_s.debug.o: astar_s/eager_search_s.cc astar_s/eager_search_s.h \
- astar_s/../evaluator.h astar_s/../global_state.h astar_s/../int_packer.h \
- astar_s/../state_id.h astar_s/../search_engine.h \
- astar_s/../global_operator.h astar_s/../global_state.h \
- astar_s/../operator_cost.h astar_s/../search_space.h \
- astar_s/../per_state_information.h astar_s/../globals.h \
- astar_s/../mutex_group.h astar_s/../segmented_vector.h \
- astar_s/../utilities.h ext/boost/dynamic_bitset.hpp \
+.obj/astar_max/eager_search_max.debug.o: astar_max/eager_search_max.cc \
+ astar_max/eager_search_max.h astar_max/../evaluator.h \
+ astar_max/../global_state.h astar_max/../int_packer.h \
+ astar_max/../state_id.h astar_max/../search_engine.h \
+ astar_max/../global_operator.h astar_max/../global_state.h \
+ astar_max/../operator_cost.h astar_max/../search_space.h \
+ astar_max/../per_state_information.h astar_max/../globals.h \
+ astar_max/../mutex_group.h astar_max/../segmented_vector.h \
+ astar_max/../utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -27433,16 +27437,17 @@
  ext/boost/pending/lowest_bit.hpp ext/boost/pending/integer_log2.hpp \
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
- ext/boost/throw_exception.hpp astar_s/../state_registry.h \
- astar_s/../search_node_info.h astar_s/../search_progress.h \
- astar_s/../timer.h astar_s/../heuristic.h astar_s/../scalar_evaluator.h \
- astar_s/../evaluator.h astar_s/../task_proxy.h \
- astar_s/../abstract_task.h astar_s/../search_progress.h \
- astar_s/../search_space.h astar_s/../timer.h \
- astar_s/../open_lists/open_list.h astar_s/../open_lists/../evaluator.h \
- astar_s/../globals.h astar_s/../heuristic.h astar_s/../option_parser.h \
- astar_s/../option_parser_util.h ext/tree.hh ext/tree_util.hh ext/tree.hh \
- ext/boost/any.hpp ext/boost/type_traits/decay.hpp \
+ ext/boost/throw_exception.hpp astar_max/../state_registry.h \
+ astar_max/../search_node_info.h astar_max/../search_progress.h \
+ astar_max/../timer.h astar_max/../heuristic.h \
+ astar_max/../scalar_evaluator.h astar_max/../evaluator.h \
+ astar_max/../task_proxy.h astar_max/../abstract_task.h \
+ astar_max/../search_progress.h astar_max/../search_space.h \
+ astar_max/../timer.h astar_max/../open_lists/open_list.h \
+ astar_max/../open_lists/../evaluator.h astar_max/../globals.h \
+ astar_max/../heuristic.h astar_max/../option_parser.h \
+ astar_max/../option_parser_util.h ext/tree.hh ext/tree_util.hh \
+ ext/tree.hh ext/boost/any.hpp ext/boost/type_traits/decay.hpp \
  ext/boost/type_traits/is_function.hpp \
  ext/boost/type_traits/detail/false_result.hpp \
  ext/boost/type_traits/detail/is_function_ptr_helper.hpp \
@@ -27481,25 +27486,26 @@
  ext/boost/preprocessor/tuple/rem.hpp \
  ext/boost/preprocessor/variadic/elem.hpp \
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
- ext/boost/type_traits/add_reference.hpp astar_s/../successor_generator.h \
- astar_s/../g_evaluator.h astar_s/../sum_evaluator.h \
- astar_s/../combining_evaluator.h astar_s/../max_evaluator.h \
- astar_s/../plugin.h astar_s/../open_lists/standard_scalar_open_list.h \
- astar_s/../open_lists/open_list.h \
- astar_s/../open_lists/standard_scalar_open_list.cc \
- astar_s/../open_lists/../scalar_evaluator.h \
- astar_s/../open_lists/../option_parser.h \
- astar_s/../open_lists/open_list_buckets.h \
- astar_s/../open_lists/open_list_buckets.cc \
- astar_s/../open_lists/tiebreaking_open_list.h \
- astar_s/../open_lists/tiebreaking_open_list.cc \
- astar_s/../open_lists/alternation_open_list.h \
- astar_s/../open_lists/../plugin.h \
- astar_s/../open_lists/alternation_open_list.cc \
- astar_s/../open_lists/pareto_open_list.h \
- astar_s/../open_lists/pareto_open_list.cc \
- astar_s/../open_lists/../globals.h astar_s/../open_lists/../rng.h \
- astar_s/../ext/boost/dynamic_bitset.hpp ext/boost/lexical_cast.hpp \
+ ext/boost/type_traits/add_reference.hpp \
+ astar_max/../successor_generator.h astar_max/../g_evaluator.h \
+ astar_max/../sum_evaluator.h astar_max/../combining_evaluator.h \
+ astar_max/../max_evaluator.h astar_max/../plugin.h \
+ astar_max/../open_lists/standard_scalar_open_list.h \
+ astar_max/../open_lists/open_list.h \
+ astar_max/../open_lists/standard_scalar_open_list.cc \
+ astar_max/../open_lists/../scalar_evaluator.h \
+ astar_max/../open_lists/../option_parser.h \
+ astar_max/../open_lists/open_list_buckets.h \
+ astar_max/../open_lists/open_list_buckets.cc \
+ astar_max/../open_lists/tiebreaking_open_list.h \
+ astar_max/../open_lists/tiebreaking_open_list.cc \
+ astar_max/../open_lists/alternation_open_list.h \
+ astar_max/../open_lists/../plugin.h \
+ astar_max/../open_lists/alternation_open_list.cc \
+ astar_max/../open_lists/pareto_open_list.h \
+ astar_max/../open_lists/pareto_open_list.cc \
+ astar_max/../open_lists/../globals.h astar_max/../open_lists/../rng.h \
+ astar_max/../ext/boost/dynamic_bitset.hpp ext/boost/lexical_cast.hpp \
  ext/boost/detail/lcast_precision.hpp ext/boost/integer_traits.hpp \
  ext/boost/type_traits/is_abstract.hpp ext/boost/array.hpp \
  ext/boost/assert.hpp ext/boost/swap.hpp ext/boost/core/swap.hpp \
@@ -42087,14 +42093,15 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
-.obj/astar_s/eager_search_s.profile.o: astar_s/eager_search_s.cc astar_s/eager_search_s.h \
- astar_s/../evaluator.h astar_s/../global_state.h astar_s/../int_packer.h \
- astar_s/../state_id.h astar_s/../search_engine.h \
- astar_s/../global_operator.h astar_s/../global_state.h \
- astar_s/../operator_cost.h astar_s/../search_space.h \
- astar_s/../per_state_information.h astar_s/../globals.h \
- astar_s/../mutex_group.h astar_s/../segmented_vector.h \
- astar_s/../utilities.h ext/boost/dynamic_bitset.hpp \
+.obj/astar_max/eager_search_max.profile.o: astar_max/eager_search_max.cc \
+ astar_max/eager_search_max.h astar_max/../evaluator.h \
+ astar_max/../global_state.h astar_max/../int_packer.h \
+ astar_max/../state_id.h astar_max/../search_engine.h \
+ astar_max/../global_operator.h astar_max/../global_state.h \
+ astar_max/../operator_cost.h astar_max/../search_space.h \
+ astar_max/../per_state_information.h astar_max/../globals.h \
+ astar_max/../mutex_group.h astar_max/../segmented_vector.h \
+ astar_max/../utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -42190,16 +42197,17 @@
  ext/boost/pending/lowest_bit.hpp ext/boost/pending/integer_log2.hpp \
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
- ext/boost/throw_exception.hpp astar_s/../state_registry.h \
- astar_s/../search_node_info.h astar_s/../search_progress.h \
- astar_s/../timer.h astar_s/../heuristic.h astar_s/../scalar_evaluator.h \
- astar_s/../evaluator.h astar_s/../task_proxy.h \
- astar_s/../abstract_task.h astar_s/../search_progress.h \
- astar_s/../search_space.h astar_s/../timer.h \
- astar_s/../open_lists/open_list.h astar_s/../open_lists/../evaluator.h \
- astar_s/../globals.h astar_s/../heuristic.h astar_s/../option_parser.h \
- astar_s/../option_parser_util.h ext/tree.hh ext/tree_util.hh ext/tree.hh \
- ext/boost/any.hpp ext/boost/type_traits/decay.hpp \
+ ext/boost/throw_exception.hpp astar_max/../state_registry.h \
+ astar_max/../search_node_info.h astar_max/../search_progress.h \
+ astar_max/../timer.h astar_max/../heuristic.h \
+ astar_max/../scalar_evaluator.h astar_max/../evaluator.h \
+ astar_max/../task_proxy.h astar_max/../abstract_task.h \
+ astar_max/../search_progress.h astar_max/../search_space.h \
+ astar_max/../timer.h astar_max/../open_lists/open_list.h \
+ astar_max/../open_lists/../evaluator.h astar_max/../globals.h \
+ astar_max/../heuristic.h astar_max/../option_parser.h \
+ astar_max/../option_parser_util.h ext/tree.hh ext/tree_util.hh \
+ ext/tree.hh ext/boost/any.hpp ext/boost/type_traits/decay.hpp \
  ext/boost/type_traits/is_function.hpp \
  ext/boost/type_traits/detail/false_result.hpp \
  ext/boost/type_traits/detail/is_function_ptr_helper.hpp \
@@ -42238,25 +42246,26 @@
  ext/boost/preprocessor/tuple/rem.hpp \
  ext/boost/preprocessor/variadic/elem.hpp \
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
- ext/boost/type_traits/add_reference.hpp astar_s/../successor_generator.h \
- astar_s/../g_evaluator.h astar_s/../sum_evaluator.h \
- astar_s/../combining_evaluator.h astar_s/../max_evaluator.h \
- astar_s/../plugin.h astar_s/../open_lists/standard_scalar_open_list.h \
- astar_s/../open_lists/open_list.h \
- astar_s/../open_lists/standard_scalar_open_list.cc \
- astar_s/../open_lists/../scalar_evaluator.h \
- astar_s/../open_lists/../option_parser.h \
- astar_s/../open_lists/open_list_buckets.h \
- astar_s/../open_lists/open_list_buckets.cc \
- astar_s/../open_lists/tiebreaking_open_list.h \
- astar_s/../open_lists/tiebreaking_open_list.cc \
- astar_s/../open_lists/alternation_open_list.h \
- astar_s/../open_lists/../plugin.h \
- astar_s/../open_lists/alternation_open_list.cc \
- astar_s/../open_lists/pareto_open_list.h \
- astar_s/../open_lists/pareto_open_list.cc \
- astar_s/../open_lists/../globals.h astar_s/../open_lists/../rng.h \
- astar_s/../ext/boost/dynamic_bitset.hpp ext/boost/lexical_cast.hpp \
+ ext/boost/type_traits/add_reference.hpp \
+ astar_max/../successor_generator.h astar_max/../g_evaluator.h \
+ astar_max/../sum_evaluator.h astar_max/../combining_evaluator.h \
+ astar_max/../max_evaluator.h astar_max/../plugin.h \
+ astar_max/../open_lists/standard_scalar_open_list.h \
+ astar_max/../open_lists/open_list.h \
+ astar_max/../open_lists/standard_scalar_open_list.cc \
+ astar_max/../open_lists/../scalar_evaluator.h \
+ astar_max/../open_lists/../option_parser.h \
+ astar_max/../open_lists/open_list_buckets.h \
+ astar_max/../open_lists/open_list_buckets.cc \
+ astar_max/../open_lists/tiebreaking_open_list.h \
+ astar_max/../open_lists/tiebreaking_open_list.cc \
+ astar_max/../open_lists/alternation_open_list.h \
+ astar_max/../open_lists/../plugin.h \
+ astar_max/../open_lists/alternation_open_list.cc \
+ astar_max/../open_lists/pareto_open_list.h \
+ astar_max/../open_lists/pareto_open_list.cc \
+ astar_max/../open_lists/../globals.h astar_max/../open_lists/../rng.h \
+ astar_max/../ext/boost/dynamic_bitset.hpp ext/boost/lexical_cast.hpp \
  ext/boost/detail/lcast_precision.hpp ext/boost/integer_traits.hpp \
  ext/boost/type_traits/is_abstract.hpp ext/boost/array.hpp \
  ext/boost/assert.hpp ext/boost/swap.hpp ext/boost/core/swap.hpp \

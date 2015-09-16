@@ -166,7 +166,7 @@ HEADERS += astar/eager_search.h \
 
 HEADERS += astar_no_speed/eager_search_no_speed.h \
 
-HEADERS += astar_s/eager_search_s.h \
+HEADERS += astar_max/eager_search_max.h \
 
 HEADERS += dijkstra/eager_dijkstra_search.h \
 
