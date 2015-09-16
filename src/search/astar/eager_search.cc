@@ -138,7 +138,9 @@ void EagerSearch::initialize() {
         
 	//Speed Progress
         node.set_level(0);
-        initial_value = node.get_h();
+
+//********************speed***********************
+        /*initial_value = node.get_h();
 	total_min = initial_value;
         
         target_search_velocity = (double)total_min/(double)search_time();
@@ -148,6 +150,8 @@ void EagerSearch::initialize() {
 	cout<<"search_time() = "<<(double)search_time()<<endl;
         cout<<"target_search_velocity = "<<target_search_velocity<<endl;
 #endif 
+	*/
+//********************speed*********************
         //Node2 node2(node.get_h() + node.get_real_g(), 0);
         //nodes_expanded.insert(pair<Node2, double>(node2, count_nodes));
         
@@ -156,6 +160,7 @@ void EagerSearch::initialize() {
     }
 
 //********************speed progress************************
+      /*
       string dominio = domain_name;
       string tarefa = problem_name2;
       string heuristica = heuristic_name2;
@@ -194,6 +199,7 @@ void EagerSearch::initialize() {
       outputFile2<<"\tinitial_value: "<<initial_value<<"\n";
        
       outputFile2<<"\th_min\tgen\texp\t\tV\t\tSEv\t\tVeSP\t\tNPBP\n";
+      */
     //************************************************************
 
       //santiago code
@@ -261,9 +267,9 @@ SearchStatus EagerSearch::step() {
           cout<<"total_nodes_expanded_for_start_state = "<<nodes_expanded_for_start_state<<endl;
 	  cout<<"total_nodes_generated_for_start_state = "<<nodes_generated_for_start_state<<endl;	
 #endif
-	  generateExpandedReport();
+	  //generateExpandedReport();
 	  generateSSCCReport();
-          outputFile2.close();
+          //outputFile2.close();
           return SOLVED;
        }
     }
@@ -402,6 +408,9 @@ SearchStatus EagerSearch::step() {
 #if _ASTAR_DEBUG
             cout<<"\t Child_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.get_real_g()<<", f = "<<succ_h + succ_node.get_real_g()<<", level = "<<succ_node.get_level()<<"\n";
 #endif
+
+//*********************speed*****************
+            /*
 	    if (succ_h < total_min) {
                total_min = succ_h;
                
@@ -428,6 +437,8 @@ SearchStatus EagerSearch::step() {
 #endif
                reportProgress();
             }
+	    */
+//***************************speed****************
 
             if (search_progress.check_h_progress(succ_node.get_g())) {
                 reward_progress();
@@ -580,15 +591,19 @@ void EagerSearch::generateExpandedReport() {
 	outputFile.close();
 }
 
+/*
 void EagerSearch::reportProgress() {
+
 #if _ASTAR_DEBUG
        cout<<"V = "<<V<<endl;
        cout<<"search_speed = "<<search_speed<<endl;
        cout<<"SEv = "<<SEv<<endl;
        cout<<"VeSP = "<<VeSP<<endl;
 #endif
-      outputFile2<<"\t"<<total_min<<"\t"<<nodes_generated_for_start_state<<"\t"<<nodes_expanded_for_start_state<<"\t\t"<<std::setprecision(2)<<V<<"\t\t"<<SEv<<"\t\t"<<VeSP<<"\t\t"<<NPBP<<"\n";
+
+      //outputFile2<<"\t"<<total_min<<"\t"<<nodes_generated_for_start_state<<"\t"<<nodes_expanded_for_start_state<<"\t\t"<<std::setprecision(2)<<V<<"\t\t"<<SEv<<"\t\t"<<VeSP<<"\t\t"<<NPBP<<"\n";
 }
+*/
 
 void EagerSearch::generateSSCCReport() {
         string dominio = domain_name;
@@ -695,7 +710,7 @@ pair<SearchNode, bool> EagerSearch::fetch_next_node() {
     while (true) {
         if (open_list->empty()) {
             cout << "Completely explored state space -- no solution!" << endl;
-            generateExpandedReport();
+            //generateExpandedReport();
 	    generateSSCCReport();
             // HACK! HACK! we do this because SearchNode has no default/copy constructor
             SearchNode dummy_node = search_space.get_node(g_initial_state());

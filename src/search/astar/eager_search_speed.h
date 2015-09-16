@@ -53,7 +53,6 @@ class EagerSearch : public SearchEngine {
     int nodes_generated_for_start_state;
     Timer search_time;
     Timer level_time; //time required to expand an entire level
-    /*
     double target_search_velocity;
     double V; // Search velocity - it is calcultated based the number of nodes generated
     double search_speed; // Search velocity - it is calculated based the number of nodes expanded
@@ -61,7 +60,7 @@ class EagerSearch : public SearchEngine {
     double VeSP; //Velocity Search Progress Estimator
 
     ofstream outputFile2;
-    */    
+    
     //Vacillation-Based Search Speed Estimator   
     //TODO: There is no enough information about DAS
     
@@ -101,7 +100,7 @@ public:
 
 
 //Speed Progress
-    //void reportProgress();
+    void reportProgress();
     void generateSSCCReport();
 };
 

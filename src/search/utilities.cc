@@ -371,7 +371,7 @@ void load_GA_Patterns_from_file(){
   problem_name_mod += ".dat";
   problem_name_mod = "/" + problem_name_mod;
   problem_name_mod = domain_name + problem_name_mod;
-  problem_name_mod = "dat/" + problem_name_mod;
+  problem_name_mod = "/home/marvin/fd/dat/" + problem_name_mod;
   cout<<"problem_name_mod = "<<problem_name_mod<<endl;
 
   ifstream in(problem_name_mod.c_str());

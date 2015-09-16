@@ -1369,20 +1369,27 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
 			cout<<"duration="<<good_timer<<"\n";
 
                 	//Begin construction of the sh file
-                	outfile<<"#PBS -N "<<ASTAR_GOOD_NAME<<"\n\n#PBS -m a\n\n#PBS -l walltime="<<good_timer<<"\n\n#PBS -M marvin.zarate@ufv.br\n\ncd $PBS_O_WORKDIR\n\nsource /usr/share/modules/init/bash\n\nmodule load python\nmodule load mercurial\n\n";
-                	//outfile<<"ulimit -v 6500000\n\n"; //SET LIMIT 6GB
-                	//PBS -l walltime=200
+			outfile<<"#!/bin/bash\n\n";
+                	outfile<<"#PBS -N "<<ASTAR_GOOD_NAME<<"\n\n#PBS -m a\n\n#PBS -l walltime="<<good_timer<<"\n\n";
+			outfile<<"#PBS -M marvin.zarate@ufv.br\n\n";
+			outfile<<"source /usr/share/modules/init/bash\n\n";
+			outfile<<"module load python\nmodule load mercurial\n\n";
 
-			//cout<<"pasta = "<<dominio<<"\n\n";
-                	outfile<<"RESULTS=/home/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado"<<"\n\ncd /home/marvin/fd\n\n";
-                	outfile<<"python3 src/translate/translate.py benchmarks/"<<dominio<<"/"<<domain_pddl<<" benchmarks/"<<dominio<<"/"<<tarefa<<" "<<sas.c_str()<<"  "<<dominio<<" "<<tarefa<<"  "<<heuristic_good<<"\n\n";
+			//cout<<"pasta = "<<dominio<<"\n\n;
+			outfile<<"FD_ROOT=/home/marvin/fd\n\n";
+        		outfile<<"TEMP=/home/marvin/fd/temp\n\n";
+        		outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";	
+                	outfile<<"RESULTS=/home/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado\n\n";
+			outfile<<"cd ${DIR}\n\n";
+                	outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<domain_pddl<<" ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<tarefa<<"\n\n";
 
-                	outfile<<"src/preprocess/preprocess < "<<sas.c_str()<<".sas"<<"\n\n"; 
-
+                	outfile<<"${FD_ROOT}/src/preprocess/preprocess < output.sas"<<"\n\n"; 
 			//Santiago's code to find the F_boundary on the fly
-                	outfile<<"src/search/downward-release --use_saved_pdbs --domain_name "<<dominio<<" --problem_name "<<tarefa<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --search \"astar("<<parameter<<")\" <  "<<sas.c_str()<<" > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
-                	outfile<<"\n\nrm "<<sas.c_str()<<"\n\n";
-                	outfile<<"\n\nrm "<<sas.c_str()<<".sas"<<"\n\n";
+                	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio<<" --problem_name "<<tarefa<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --search \"astar("<<parameter<<")\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+                	
+
+			//outfile<<"\n\nrm "<<sas.c_str()<<"\n\n";
+                	//outfile<<"\n\nrm "<<sas.c_str()<<".sas"<<"\n\n";
 
                 	outfile.close();
 
