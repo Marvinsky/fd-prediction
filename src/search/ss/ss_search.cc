@@ -1304,6 +1304,16 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
 			//end get real name
 			//create the directory of the problemas_500_probes_good
 
+			string dirSASPLAN = "mkdir /home/marvin/fd/plan/";
+                	if (system(dirSASPLAN.c_str())) {
+                		cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
+                	}
+
+			string dirSASPLANDomain = "mkdir /home/marvin/fd/plan/"+dominio;
+                	if (system(dirSASPLANDomain.c_str())) {
+                		cout<<"create directory "<<dirSASPLANDomain.c_str()<<"\n";
+                	}
+
                 	string dirProbGood = "mkdir /home/marvin/marvin/astar/"+heuristic_good+"/";
                 	if (system(dirProbGood.c_str())) {
                 		cout<<"create directory "<<dirProbGood.c_str()<<"\n";
@@ -1388,8 +1398,8 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                 	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio<<" --problem_name "<<tarefa<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --search \"astar("<<parameter<<")\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
                 	
 
-			//outfile<<"\n\nrm "<<sas.c_str()<<"\n\n";
-                	//outfile<<"\n\nrm "<<sas.c_str()<<".sas"<<"\n\n";
+			outfile<<"\n\nrm ${DIR}\n\n";
+                	outfile<<"\n\nmv sas_plan ${FD_ROOT}/plan/"<<dominio<<"/"<<tarefa<<"\n\n";
 
                 	outfile.close();
 
