@@ -29,6 +29,7 @@
 #include "scc.h"
 #include "variable.h"
 
+#include <stdlib.h>
 #include <iostream>
 #include <cassert>
 using namespace std;
@@ -107,22 +108,96 @@ void CausalGraph::weigh_graph_from_axioms(const vector<Variable *> &,
     }
 }
 
+// This method is called after deriving mutexes and unreachable facts.
+// It performs the following steps:
+// 1) Remove unneccessary variables
+// 2) Reconstruct causal graph with new variables and operators
+void CausalGraph::update(){
+  cout << "Updating causal graph and pruning unnecessary facts" << endl;
 
+  // 1) Remove unneccessary variables and
+  // change ordering to leave out unimportant vars
+  vector<Variable *> new_ordering;
+  int old_size = ordering.size();
+  for (int i = 0; i < old_size; i++)
+    if (ordering[i]->is_necessary() || g_do_not_prune_variables){
+      new_ordering.push_back(ordering[i]);
+      ordering[i]->remove_unreachable_facts();
+    }
+  ordering = new_ordering;
+  for (int i = 0; i < ordering.size(); i++) {
+    ordering[i]->set_level(i);
+  }
+  cout << ordering.size() << " variables of " << old_size << " of " << variables.size() <<  " necessary" << endl;
+
+  // 2) Reconstruct causal graph with new variables and operators
+
+  weighted_graph.clear();
+  for (int i = 0; i < ordering.size(); i++){
+    weighted_graph[ordering[i]] = WeightedSuccessors();
+  }
+  weigh_graph_from_ops(ordering, operators, goals);
+  weigh_graph_from_axioms(ordering, axioms, goals);
+  
+  
+  //dump();
+
+  //    Partition sccs; atorralba: sccs is now an attribute
+  sccs.clear();
+  get_strongly_connected_components(ordering, sccs);
+
+  cout << "The causal graph is "
+       << (sccs.size() == ordering.size() ? "" : "not ")
+       << "acyclic." << endl;
+  /*
+    if (sccs.size() != variables.size()) {
+    cout << "Components: " << endl;
+    for(int i = 0; i < sccs.size(); i++) {
+    for(int j = 0; j < sccs[i].size(); j++)
+    cout << " " << sccs[i][j]->get_name();
+    cout << endl;
+    }
+    }
+  */
+
+  //atorralb: For each partition p, complete scc_var
+  scc_var.clear();
+  for(int p = 0; p < sccs.size(); p++){
+    //cout << "scc " << p << ": ";
+    for(int v = 0; v < sccs[p].size(); v++){
+      scc_var[sccs[p][v]] = p;  
+      //cout << sccs[p][v]->get_name() << " ";
+    }
+    //cout <<endl;
+  }
+
+  //calculate_important_vars(); 
+  //Put -1 to every variable to remove variables that are not in ordering
+  for (int i = 0; i < variables.size(); i++) {
+    variables[i]->set_level(-1); 
+  }
+  //Put right level to each variable
+  for (int i = 0; i < ordering.size(); i++) {
+    ordering[i]->set_level(i);
+  }  
+}
 CausalGraph::CausalGraph(const vector<Variable *> &the_variables,
                          const vector<Operator> &the_operators,
                          const vector<Axiom> &the_axioms,
                          const vector<pair<Variable *, int> > &the_goals)
 
     : variables(the_variables), operators(the_operators), axioms(the_axioms),
-      goals(the_goals), acyclic(false) {
+      goals(the_goals), acyclic(false), rng(RandomNumberGenerator(7)) {
     for (int i = 0; i < variables.size(); i++)
-        weighted_graph[variables[i]] = WeightedSuccessors();
+      weighted_graph[variables[i]] = WeightedSuccessors();
     weigh_graph_from_ops(variables, operators, goals);
     weigh_graph_from_axioms(variables, axioms, goals);
+
+
     //dump();
 
-    Partition sccs;
-    get_strongly_connected_components(sccs);
+    //    Partition sccs; atorralba: sccs is now an attribute
+    get_strongly_connected_components(variables, sccs);
 
     cout << "The causal graph is "
          << (sccs.size() == variables.size() ? "" : "not ")
@@ -137,13 +212,30 @@ CausalGraph::CausalGraph(const vector<Variable *> &the_variables,
       }
     }
     */
-    calculate_topological_pseudo_sort(sccs);
-    calculate_important_vars();
 
-    // cout << "new variable order: ";
-    // for(int i = 0; i < ordering.size(); i++)
-    //   cout << ordering[i]->get_name()<<" - ";
-    // cout << endl;
+    //atorralb: For each partition p, complete scc_var
+    for(int p = 0; p < sccs.size(); p++){
+      // cout << "scc " << p << ": ";
+      for(int v = 0; v < sccs[p].size(); v++){
+	scc_var[sccs[p][v]] = p;  
+	// cout << sccs[p][v]->get_name() << " ";
+      }
+      // cout <<endl;
+    }
+
+    calculate_topological_pseudo_sort(sccs);
+    calculate_important_vars(); 
+
+    //optimize_ordering_gamer();
+
+    //Put -1 to every variable to remove variables that are not in ordering
+    for (int i = 0; i < variables.size(); i++) {
+      variables[i]->set_level(-1); 
+    }
+    //Put right level to each variable
+    for (int i = 0; i < ordering.size(); i++) {
+      ordering[i]->set_level(i);
+    }
 }
 
 void CausalGraph::calculate_topological_pseudo_sort(const Partition &sccs) {
@@ -195,13 +287,13 @@ void CausalGraph::calculate_topological_pseudo_sort(const Partition &sccs) {
     }
 }
 
-void CausalGraph::get_strongly_connected_components(Partition &result) {
+void CausalGraph::get_strongly_connected_components(const vector <Variable *> & vars, Partition &result) {
     map<Variable *, int> variableToIndex;
-    for (int i = 0; i < variables.size(); i++)
-        variableToIndex[variables[i]] = i;
+    for (int i = 0; i < vars.size(); i++)
+        variableToIndex[vars[i]] = i;
 
     vector<vector<int> > unweighted_graph;
-    unweighted_graph.resize(variables.size());
+    unweighted_graph.resize(vars.size());
     for (WeightedGraph::const_iterator it = weighted_graph.begin();
          it != weighted_graph.end(); ++it) {
         int index = variableToIndex[it->first];
@@ -218,7 +310,7 @@ void CausalGraph::get_strongly_connected_components(Partition &result) {
     for (int i = 0; i < int_result.size(); i++) {
         vector<Variable *> component;
         for (int j = 0; j < int_result[i].size(); j++)
-            component.push_back(variables[int_result[i][j]]);
+            component.push_back(vars[int_result[i][j]]);
         result.push_back(component);
     }
 }
@@ -243,6 +335,7 @@ void CausalGraph::calculate_important_vars() {
     }
     cout << ordering.size() << " variables of " << old_size << " necessary" << endl;
 }
+
 
 void CausalGraph::dfs(Variable *from) {
     for (Predecessors::iterator pred = predecessor_graph[from].begin();
@@ -285,11 +378,13 @@ void CausalGraph::dump() const {
     }
 }
 void CausalGraph::generate_cpp_input(ofstream &outfile,
-                                     const vector<Variable *> &ordered_vars)
-const {
+                                     const vector<Variable *> &ordered_vars) const {
     //TODO: use const iterator!
     vector<WeightedSuccessors *> succs; // will be ordered like ordered_vars
     vector<int> number_of_succ; // will be ordered like ordered_vars
+    cout << "Number of vars: " << ordered_vars.size() << endl;
+    cout << "weighted " << weighted_graph.size() << endl;
+    
     succs.resize(ordered_vars.size());
     number_of_succ.resize(ordered_vars.size());
     for (WeightedGraph::const_iterator source = weighted_graph.begin();
@@ -298,6 +393,7 @@ const {
         if (source_var->get_level() != -1) {
             // source variable influences others
             WeightedSuccessors &curr = (WeightedSuccessors &)source->second;
+	    //cout << "Initialized: " << source_var->get_level() << endl;
             succs[source_var->get_level()] = &curr;
             // count number of influenced vars
             int num = 0;
@@ -310,6 +406,7 @@ const {
             number_of_succ[source_var->get_level()] = num;
         }
     }
+
     for (int i = 0; i < ordered_vars.size(); i++) {
         WeightedSuccessors *curr = succs[i];
         // print number of variables influenced by variable i
@@ -324,4 +421,346 @@ const {
                 outfile << it->first->get_level() << " " << it->second << endl;
         }
     }
+}
+
+
+
+
+
+void CausalGraph::swap_scc(vector <Variable * > & result){
+
+  vector <int> ini_pos_scc(sccs.size());
+  vector <int> scc_order;
+  int prev_scc = -1;
+  for(int i = 0; i < ordering.size(); i++){
+    int scc_i = scc_var[ordering[i]];
+    if(scc_i != prev_scc){
+      ini_pos_scc[scc_i] = i;
+      scc_order.push_back(scc_i);
+    }
+    prev_scc = scc_i;
+  }
+  
+  int rnd_scc = rng.next(scc_order.size());
+  int scc1 = scc_order[rnd_scc];
+
+  int min_pos = rnd_scc;
+  int max_pos = rnd_scc;
+  while(min_pos > 0             && !conflict_scc[scc1][scc_order[min_pos-1]]) min_pos --; 
+
+  while(max_pos < scc_order.size()-1 && !conflict_scc[scc1][scc_order[max_pos+1]]) max_pos ++; 
+
+  
+  
+  int rnd_scc2 = min_pos;
+  if(min_pos != max_pos) rnd_scc2 += rng.next(max_pos - min_pos);
+  int scc2 = scc_order[rnd_scc2];
+
+  //Now, copy ordering in result
+  for(int i = 0; i < scc_order.size(); i++){
+    int copy_scc = scc_order[i];
+    if(copy_scc == scc1){
+      copy_scc = scc2;
+    }else if(copy_scc == scc2){
+      copy_scc = scc1;
+    }
+    
+    for(int j =0; j < sccs[copy_scc].size(); j++){
+      result.push_back(ordering[ini_pos_scc[copy_scc] + j]);
+    }
+  }  
+}
+
+/*
+void CausalGraph::optimize_ordering(){
+
+  //Initialize influence and conflict between sccs
+  conflict_scc = vector <vector <bool> > (sccs.size(),
+					  vector <bool> (sccs.size(), false));
+
+  for(int i = 0; i < variables.size() -1 ; i++){   
+    Variable * v1 = variables[i];
+    WeightedSuccessors &successors = weighted_graph[v1];
+    for(WeightedSuccessors::iterator it = successors.begin(); it != successors.end(); ++it) {
+      Variable * v2 = it->first;
+      int w = it->second;
+      if(w > 0){ 
+	cout << "There is conflict between " << v1->get_name()
+	     << " and "<< v2->get_name() << ": " << w << endl;
+	conflict_scc[scc_var[v2]][scc_var[v1]] = true;
+      }
+    }
+  }
+
+  long value_optimization_function, new_value;
+  for (int counter = 0; counter < 100; counter++) {
+    value_optimization_function = optimize_variable_ordering(ordering, 1000);
+    vector <Variable *> new_order; //Copy the order
+    swap_scc(new_order); //Swap scc
+    new_value = optimize_variable_ordering(new_order, 1000); 
+    if (new_value < value_optimization_function){
+      value_optimization_function = new_value;
+      ordering = new_order;
+    }
+  }
+  optimize_variable_ordering(ordering, 10000);
+ }*/
+
+
+void CausalGraph::optimize_ordering_gamer(){
+
+  cout << "Ordering: " << ordering.size() << endl;
+  for (int i = 0; i < ordering.size(); i++) {
+    influence_graph.push_back(vector <bool> (ordering.size(), false));
+    ordering[i]->set_level(i);     
+  }
+
+  influence_graph_from_ops(ordering, operators, goals);    
+
+  cout << "previous variable order: ";
+  for(int i = 0; i < ordering.size(); i++)
+    cout << ordering[i]->get_name()<<" - ";
+  cout << ": " << compute_function(ordering) << endl;
+
+  long value_optimization_function = optimize_variable_ordering_gamer(ordering, 50000);
+  cout << "New value: " << compute_function(ordering) << endl;
+
+
+  for (int counter = 0; counter < 20; counter++) {
+    vector <Variable *> new_order; //Copy the order
+    for(int i = 0; i < ordering.size(); i++){
+      int rnd_pos = rng.next(ordering.size() - i);
+      int pos = -1;
+      do{       
+	pos++;
+	bool found;
+	do {
+	  found = false;
+	  for(int j = 0; j < new_order.size(); j++){
+	    if(new_order[j] == ordering[pos]){
+	      found = true;
+	      break;
+	    }
+	  } 
+	  if(found) pos++;
+	}while(found);
+      }while(rnd_pos-- > 0);
+      new_order.push_back(ordering[pos]);
+    }
+
+    //cout << "Init value: " << compute_function(new_order) << endl;
+    long new_value = optimize_variable_ordering_gamer(new_order, 50000); 
+
+    if (new_value < value_optimization_function){
+      value_optimization_function = new_value;
+      ordering = new_order;
+      cout << "New value: " <<  value_optimization_function << endl;
+    }
+  }
+  //cout << "final distance: " << compute_function(ordering) << endl;
+  // exit(-1);
+  //optimize_variable_ordering(ordering, 10000);
+
+
+  cout << "new variable order: ";
+  for(int i = 0; i < ordering.size(); i++)
+    cout << ordering[i]->get_name()<<" - ";
+    
+  cout << ": " << compute_function(ordering) << endl;
+
+  //Put right level to each variable
+  for (int i = 0; i < ordering.size(); i++) {
+    ordering[i]->set_level(i);
+  }
+}
+
+
+/*long CausalGraph::optimize_variable_ordering(vector <Variable *> & order,  int iterations){
+    long totalDistance = compute_function(order);
+  for(int i = 0; i < order.size(); i++){
+      for(int j = 0; j < order.size(); j++){
+	if(influence(order[i], order[j])){
+	  cout << order[i]->get_name() << " influences " << order[j]->get_name() << ": " << influence(order[i], order[j]) <<  endl;
+	}
+      }
+  }
+  cout << "initiale distance: " << totalDistance << endl;
+
+  long oldTotalDistance = totalDistance;
+  //Repeat iterations times
+  for (int counter = 0; counter < iterations; counter++) {
+
+    //Swap variable
+    int rnd_var = rng.next(order.size());
+    int scc_rnd_var = scc_var[order[rnd_var]];
+    int ini_scc_var = rnd_var;
+    while(ini_scc_var > 0 && scc_var[order[ini_scc_var -1]] == scc_rnd_var) ini_scc_var--;
+
+    int swapIndex1 = rnd_var; 
+    int swapIndex2 = ini_scc_var + rng.next(sccs[scc_rnd_var].size());
+
+    //Compute the new value of the optimization function
+    for(int i = 0; i < order.size(); i++){
+      totalDistance = totalDistance + 
+	influence(order[i], order[swapIndex1])
+	*(- (i - swapIndex1)*(i - swapIndex1)
+	  + (i - swapIndex2)*(i - swapIndex2));
+	
+      totalDistance = totalDistance +
+	influence(order[i], order[swapIndex2])*
+	(- (i - swapIndex2)*(i - swapIndex2)
+	 + (i - swapIndex1)*(i - swapIndex1));	
+    }
+
+    //Apply the swap if it is worthy
+    if (totalDistance < oldTotalDistance){
+      Variable * tmp = order[swapIndex1];
+      order[swapIndex1] = order[swapIndex2];
+      order[swapIndex2] = tmp;
+      oldTotalDistance = totalDistance;
+    }else{
+      totalDistance = oldTotalDistance;
+    }
+    }
+
+    return totalDistance;
+  return 0;
+  }*/
+
+
+long CausalGraph::optimize_variable_ordering_gamer(vector <Variable *> & order,  int iterations){
+  long totalDistance = compute_function(order);
+    
+  /*for(int i = 0; i < order.size(); i++){
+    for(int j = 0; j < order.size(); j++){
+      if(influence(order[i], order[j])){
+	cout << order[i]->get_name() << " influences " << order[j]->get_name() << ": " << influence(order[i], order[j]) <<  endl;
+      }
+    }
+    }*/
+  //  cout << "initiale distance: " << totalDistance << endl;
+
+  long oldTotalDistance = totalDistance;
+  //Repeat iterations times
+  for (int counter = 0; counter < iterations; counter++) {
+    //    cout << "Counter: " << counter << endl;
+    //Swap variable
+    int swapIndex1 = rng.next(order.size());
+    int swapIndex2 = rng.next(order.size());
+    //cout << "SWAP: " << swapIndex1 << " with " << swapIndex2 << endl;
+    if(swapIndex1 == swapIndex2) continue;
+
+    //Compute the new value of the optimization function
+    for(int i = 0; i < order.size(); i++){
+      if(i == swapIndex1 || i == swapIndex2) continue;
+
+      if(influence(order[i], order[swapIndex1]))
+	totalDistance += (- (i - swapIndex1)*(i - swapIndex1)
+			  + (i - swapIndex2)*(i - swapIndex2));
+	
+      if(influence(order[i], order[swapIndex2]))
+	totalDistance += (- (i - swapIndex2)*(i - swapIndex2)
+			  + (i - swapIndex1)*(i - swapIndex1));	
+    }
+
+    //Apply the swap if it is worthy
+    if (totalDistance < oldTotalDistance){
+      Variable * tmp = order[swapIndex1];
+      order[swapIndex1] = order[swapIndex2];
+      order[swapIndex2] = tmp;
+      oldTotalDistance = totalDistance;
+      
+      /*if(totalDistance != compute_function(order)){
+	cerr << "Error computing total distance: " << totalDistance << " " << compute_function(order) << endl;
+	exit(-1);
+      }else{
+	cout << "Bien: " << totalDistance << endl;
+      }*/
+    }else{
+      totalDistance = oldTotalDistance;
+    }
+  }
+//  cout << "Total distance: " << totalDistance << endl;
+  return totalDistance;
+}
+
+
+long CausalGraph::compute_function(vector <Variable *> & order){
+  long totalDistance = 0;
+  for (int i = 0; i < order.size() - 1; i++) {
+    for (int j = i+1; j < order.size(); j++) {
+      if(influence(order[i], order[j])){
+	totalDistance += (i-j)*(i -j);
+      }
+    }
+  }
+  return totalDistance;
+}
+
+long CausalGraph::influence(Variable * v1, Variable * v2){
+  //long w = 0;
+  //WeightedSuccessors::iterator res = weighted_graph[v1].find(v2);
+  //if(res != weighted_graph[v1].end()) w += res->second;
+
+  //res = weighted_graph[v2].find(v1);
+  //if(res != weighted_graph[v2].end()) w += res->second;
+
+  //if(w > 0) return 1;
+  //else return w;
+  /*long w = 0;
+
+  WeightedSuccessors::iterator res = influence_graph[v1].find(v2);
+  if(res != influence_graph[v1].end()) w += res->second;
+
+  res = influence_graph[v2].find(v1);
+  if(res != influence_graph[v2].end()) w += res->second;
+
+  if(w != 0) return 1;
+  else return 0;*/
+  return influence_graph[v1->get_level()] [v2->get_level()] ||
+    influence_graph[v2->get_level()] [v1->get_level()];
+}
+
+
+
+void CausalGraph::influence_graph_from_ops(const vector<Variable *> &,
+					   const vector<Operator> &operators,
+					   const vector<pair<Variable *, int> > &) {
+  for (int i = 0; i < operators.size(); i++) {
+    if(operators[i].is_redundant()){
+      continue;
+    }
+    const vector<Operator::Prevail> &prevail = operators[i].get_prevail();
+    const vector<Operator::PrePost> &pre_post = operators[i].get_pre_post();
+    vector<Variable *> pre_vars;
+    vector<Variable *> eff_vars;
+    for (int j = 0; j < prevail.size(); j++)
+      pre_vars.push_back(prevail[j].var);
+    for (int j = 0; j < pre_post.size(); j++){
+      eff_vars.push_back(pre_post[j].var);
+      if (pre_post[j].is_conditional_effect)
+	for (int k = 0; k < pre_post[j].effect_conds.size(); k++)
+	  pre_vars.push_back(pre_post[j].effect_conds[k].var);
+    }
+	
+    for (int j = 0; j < pre_vars.size(); j++){
+      int vpre = pre_vars[j]->get_level();
+      for (int k = 0; k < eff_vars.size(); k++) {
+	int veff = eff_vars[k]->get_level();
+	if (vpre != veff){ 
+	  influence_graph[vpre][veff] = true;
+	  influence_graph[veff][vpre] = true;
+	}
+      }
+    }
+
+    for (int j = 0; j < eff_vars.size(); j++) {
+      for (int k = 0; k < eff_vars.size(); k++) {
+	if (eff_vars[j] != eff_vars[k]) {
+	  influence_graph[eff_vars[j]->get_level()][eff_vars[k]->get_level()] = true;
+	  influence_graph[eff_vars[k]->get_level()][eff_vars[j]->get_level()] = true;
+	}      
+      }
+    }
+  }
 }

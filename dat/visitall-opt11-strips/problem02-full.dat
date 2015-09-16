@@ -1,0 +1,10 @@
+problem02-full.pddl:returning best heuristic(GAPDB)[,0,]:[0,1,2,3]-,mp:,1.0000000,size:,2000000,disjoint_patterns:,0-best_fitness:1.9375,,initial value:3,GAPDB generation time:0
+problem02-full.pddl:returning best heuristic(GAPDB)[,1,]:[0,1,2,3]-,mp:,0.4000000,size:,2000000,disjoint_patterns:,1-best_fitness:1.9375,,initial value:3,GAPDB generation time:0
+problem02-full.pddl:returning best heuristic(GAPDB)[,2,]:[0,1,2]-,mp:,0.2000000,size:,2000000,disjoint_patterns:,0-best_fitness:1.625,,initial value:3,GAPDB generation time:-4.1674e-19
+problem02-full.pddl:returning best heuristic(GAPDB)[,3,]:[0,1,2]-,mp:,0.3000000,size:,2000000,disjoint_patterns:,1-best_fitness:1.625,,initial value:3,GAPDB generation time:-4.1674e-19
+problem02-full.pddl:returning best heuristic(GAPDB)[,4,]:[1,2,3]-,mp:,0.9000000,size:,2000000,disjoint_patterns:,1-best_fitness:1.5,,initial value:3,GAPDB generation time:-8.3348e-19
+problem02-full.pddl:returning best heuristic(GAPDB)[,5,]:[0,1,2,3]-,mp:,0.7000000,size:,2000000,disjoint_patterns:,0-best_fitness:1.9375,,initial value:3,GAPDB generation time:-8.3348e-19
+problem02-full.pddl:returning best heuristic(GAPDB)[,6,]:[0,1,2,3]-,mp:,0.6000000,size:,2000000,disjoint_patterns:,0-best_fitness:1.9375,,initial value:3,GAPDB generation time:-8.3348e-19
+problem02-full.pddl:returning best heuristic(GAPDB)[,7,]:[0,1,2,3]-,mp:,0.8000000,size:,2000000,disjoint_patterns:,1-best_fitness:1.9375,,initial value:3,GAPDB generation time:2.21923e-18
+problem02-full.pddl:returning best heuristic(GAPDB)[,8,]:[0,1,2]-,mp:,0.1000000,size:,2000000,disjoint_patterns:,1-best_fitness:1.625,,initial value:3,GAPDB generation time:2.21923e-18
+problem02-full.pddl:returning best heuristic(GAPDB)[,9,]:[1,2,3]-,mp:,0.5000000,size:,2000000,disjoint_patterns:,0-best_fitness:1.5,,initial value:3,GAPDB generation time:-1.66696e-18

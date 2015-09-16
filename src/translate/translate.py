@@ -1,17 +1,7 @@
-#! /usr/bin/env python
+#! /usr/bin/env python2.7
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-
-import sys
-
-def python_version_supported():
-    major, minor = sys.version_info[:2]
-    return (major == 2 and minor >= 7) or (major, minor) >= (3, 2)
-
-if not python_version_supported():
-    sys.exit("Error: Translator only supports Python >= 2.7 and Python >= 3.2.")
-
 
 from collections import defaultdict
 from copy import deepcopy
@@ -21,11 +11,11 @@ import axiom_rules
 import fact_groups
 import instantiate
 import normalize
-import options
+import optparse
 import pddl
-import pddl_parser
 import sas_tasks
 import simplify
+import sys
 import timers
 import tools
 
@@ -39,8 +29,17 @@ import tools
 # derived variable is synonymous with another variable (derived or
 # non-derived).
 
+USE_PARTIAL_ENCODING = True
+DETECT_UNREACHABLE = True
+DUMP_TASK = False
+
+## Setting the following variable to True can cause a severe
+## performance penalty due to weaker relevance analysis (see issue7).
+ADD_IMPLIED_PRECONDITIONS = False
+
 DEBUG = False
 
+removed_implied_effect_counter = 0
 simplified_effect_condition_counter = 0
 added_implied_precondition_counter = 0
 
@@ -269,7 +268,7 @@ def translate_strips_operator_aux(operator, dictionary, ranges, mutex_dict,
 
 def build_sas_operator(name, condition, effects_by_variable, cost, ranges,
                        implied_facts):
-    if options.add_implied_preconditions:
+    if ADD_IMPLIED_PRECONDITIONS:
         implied_precondition = set()
         for fact in condition.items():
             implied_precondition.update(implied_facts[fact])
@@ -293,7 +292,7 @@ def build_sas_operator(name, condition, effects_by_variable, cost, ranges,
                                                   eff_condition_lists):
                     global simplified_effect_condition_counter
                     simplified_effect_condition_counter += 1
-                if (options.add_implied_preconditions and pre == -1 and
+                if (ADD_IMPLIED_PRECONDITIONS and pre == -1 and
                         (var, 1 - post) in implied_precondition):
                     global added_implied_precondition_counter
                     added_implied_precondition_counter += 1
@@ -318,7 +317,7 @@ def prune_stupid_effect_conditions(var, val, conditions):
     ## 1. Conditions of the form "var = dualval" where var is the
     ##    effect variable and dualval != val can be omitted.
     ##    (If var != dualval, then var == val because it is binary,
-    ##    which means that in such situations the effect is a no-op.)
+    ##    which mesans that in such situations the effect is a no-op.)
     ## 2. If conditions contains any empty list, it is equivalent
     ##    to True and we can remove all other disjuncts.
     ##
@@ -417,7 +416,7 @@ def translate_task(strips_to_sas, ranges, translation_key,
     #for axiom in axioms:
     #  axiom.dump()
 
-    if options.dump_task:
+    if DUMP_TASK:
         # Remove init facts that don't occur in strips_to_sas: they're constant.
         nonconstant_init = filter(strips_to_sas.get, init)
         dump_task(nonconstant_init, goals, actions, axioms, axiom_layer_dict)
@@ -435,11 +434,6 @@ def translate_task(strips_to_sas, ranges, translation_key,
 
     goal_dict_list = translate_strips_conditions(goals, strips_to_sas, ranges,
                                                  mutex_dict, mutex_ranges)
-    if goal_dict_list is None:
-        # "None" is a signal that the goal is unreachable because it
-        # violates a mutex.
-        return unsolvable_sas_task("Goal violates a mutex")
-
     assert len(goal_dict_list) == 1, "Negative goal not supported"
     ## we could substitute the negative goal literal in
     ## normalize.substitute_complicated_goal, using an axiom. We currently
@@ -503,17 +497,18 @@ def pddl_to_sas(task):
 
     with timers.timing("Computing fact groups", block=True):
         groups, mutex_groups, translation_key = fact_groups.compute_groups(
-            task, atoms, reachable_action_params)
+            task, atoms, reachable_action_params,
+            partial_encoding=USE_PARTIAL_ENCODING)
 
     with timers.timing("Building STRIPS to SAS dictionary"):
         ranges, strips_to_sas = strips_to_sas_dictionary(
-            groups, assert_partial=options.use_partial_encoding)
+            groups, assert_partial=USE_PARTIAL_ENCODING)
 
     with timers.timing("Building dictionary for full mutex groups"):
         mutex_ranges, mutex_dict = strips_to_sas_dictionary(
             mutex_groups, assert_partial=False)
 
-    if options.add_implied_preconditions:
+    if ADD_IMPLIED_PRECONDITIONS:
         with timers.timing("Building implied facts dictionary..."):
             implied_facts = build_implied_facts(strips_to_sas, groups,
                                                 mutex_groups)
@@ -530,12 +525,13 @@ def pddl_to_sas(task):
             task.init, goal_list, actions, axioms, task.use_min_cost_metric,
             implied_facts)
 
+    print("%d implied effects removed" % removed_implied_effect_counter)
     print("%d effect conditions simplified" %
           simplified_effect_condition_counter)
     print("%d implied preconditions added" %
           added_implied_precondition_counter)
 
-    if options.filter_unreachable_facts:
+    if DETECT_UNREACHABLE:
         with timers.timing("Detecting unreachable propositions", block=True):
             try:
                 simplify.filter_unreachable_propositions(sas_task)
@@ -611,12 +607,10 @@ def dump_statistics(sas_task):
            len([layer for layer in sas_task.variables.axiom_layers
                 if layer >= 0])))
     print("Translator facts: %d" % sum(sas_task.variables.ranges))
-    print("Translator goal facts: %d" % len(sas_task.goal.pairs))
     print("Translator mutex groups: %d" % len(sas_task.mutexes))
     print(("Translator total mutex groups size: %d" %
            sum(mutex.get_encoding_size() for mutex in sas_task.mutexes)))
     print("Translator operators: %d" % len(sas_task.operators))
-    print("Translator axioms: %d" % len(sas_task.axioms))
     print("Translator task size: %d" % sas_task.get_encoding_size())
     try:
         peak_memory = tools.get_peak_memory_in_kb()
@@ -626,10 +620,42 @@ def dump_statistics(sas_task):
         print("Translator peak memory: %d KB" % peak_memory)
 
 
+def check_python_version(force_old_python):
+    if sys.version_info[:2] == (2, 6):
+        if force_old_python:
+            print("Warning: Running with slow Python 2.6", file=sys.stderr)
+        else:
+            print("Error: Python 2.6 runs the translator very slowly. You "
+                  "should use Python 2.7 or 3.x instead. If you really need "
+                  "to run it with Python 2.6, you can pass the "
+                  "--force-old-python flag.",
+                  file=sys.stderr)
+            sys.exit(1)
+
+
+def parse_options():
+    optparser = optparse.OptionParser(
+        usage="Usage: %prog [options] [<domain.pddl>] <task.pddl>")
+    optparser.add_option(
+        "--relaxed", dest="generate_relaxed_task", action="store_true",
+        help="Output relaxed task (no delete effects)")
+    optparser.add_option(
+        "--force-old-python", action="store_true",
+        help="Allow running the translator with slow Python 2.6")
+    options, args = optparser.parse_args()
+    # Remove the parsed options from sys.argv
+    sys.argv = [sys.argv[0]] + args
+    return options, args
+
+
 def main():
+    options, args = parse_options()
+
+    check_python_version(options.force_old_python)
+
     timer = timers.Timer()
     with timers.timing("Parsing", True):
-        task = pddl_parser.open(task_filename=options.task, domain_filename=options.domain)
+        task = pddl.open()
 
     with timers.timing("Normalizing task"):
         normalize.normalize(task)
@@ -645,16 +671,9 @@ def main():
     dump_statistics(sas_task)
 
     with timers.timing("Writing output"):
-        print("\nfile: %s" %options.file)
-        with open(options.file+".sas", "w") as output_file:
-            print(options.file, file=output_file) 
+        with open("output.sas", "w") as output_file:
             sas_task.output(output_file)
     print("Done! %s" % timer)
-    tarefa = options.soloProblema
-    dominio = options.soloDominio
-    heuristica = options.heuristic
-    line = dominio + " " + tarefa + " " + heuristica
-    print("Line! %s" %line)
 
 
 if __name__ == "__main__":

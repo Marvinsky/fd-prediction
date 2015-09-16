@@ -25,7 +25,14 @@ Axiom::Axiom(istream &in, const vector<Variable *> &variables) {
 }
 
 bool Axiom::is_redundant() const {
-    return effect_var->get_level() == -1;
+  if(!effect_var->is_reachable(old_val)){
+    return true;
+  }
+  for(int i = 0; i < conditions.size(); ++i) {
+    if(conditions[i].unreachable())
+      return true;
+  }
+  return effect_var->get_level() == -1;
 }
 
 void strip_axioms(vector<Axiom> &axioms) {
@@ -63,4 +70,13 @@ void Axiom::generate_cpp_input(ofstream &outfile) const {
     }
     outfile << effect_var->get_level() << " " << old_val << " " << effect_val << endl;
     outfile << "end_rule" << endl;
+}
+
+void Axiom::remove_unreachable_facts(){
+  old_val = effect_var->get_new_id(old_val);
+  effect_val = effect_var->get_new_id(effect_val);
+  
+  for(int i = 0; i < conditions.size(); ++i) {
+    conditions[i].remove_unreachable_facts();
+  }
 }

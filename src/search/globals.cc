@@ -36,7 +36,7 @@ static const int PRE_FILE_VERSION = 3;
 //       are_mutex, which is at least better than exposing the data
 //       structure globally.)
 
-static vector<vector<set<pair<int, int> > > > g_inconsistent_facts;
+//static vector<vector<set<pair<int, int> > > > g_inconsistent_facts;
 
 bool test_goal(const GlobalState &state) {
     for (size_t i = 0; i < g_goal.size(); ++i) {
@@ -147,13 +147,15 @@ void read_variables(istream &in) {
             getline(in, fact_names[j]);
         g_fact_names.push_back(fact_names);
         check_magic(in, "end_variable");
+    //Alvaro, Vidal: Important set id_facts
+    g_id_first_fact.push_back(g_num_facts);
+    g_num_facts += range;
     }
 }
 
+//Vidal, Alvaro: Changed all the read_mutexes method
 void read_mutexes(istream &in) {
-    g_inconsistent_facts.resize(g_variable_domain.size());
-    for (size_t i = 0; i < g_variable_domain.size(); ++i)
-        g_inconsistent_facts[i].resize(g_variable_domain[i]);
+  g_inconsistent_facts.resize(g_num_facts*g_num_facts, false);
 
     int num_mutex_groups;
     in >> num_mutex_groups;
@@ -165,24 +167,18 @@ void read_mutexes(istream &in) {
        aware of. */
 
     for (int i = 0; i < num_mutex_groups; ++i) {
-        check_magic(in, "begin_mutex_group");
-        int num_facts;
-        in >> num_facts;
-        vector<pair<int, int> > invariant_group;
-        invariant_group.reserve(num_facts);
-        for (int j = 0; j < num_facts; ++j) {
-            int var, val;
-            in >> var >> val;
-            invariant_group.push_back(make_pair(var, val));
-        }
-        check_magic(in, "end_mutex_group");
+      MutexGroup mg = MutexGroup(in);
+      g_mutex_groups.push_back(mg);
+  
+      const vector<pair<int, int> > & invariant_group = mg.getFacts();
         for (size_t j = 0; j < invariant_group.size(); ++j) {
             const pair<int, int> &fact1 = invariant_group[j];
-            int var1 = fact1.first, val1 = fact1.second;
+            //int var1 = fact1.first, val1 = fact1.second;
             for (size_t k = 0; k < invariant_group.size(); ++k) {
                 const pair<int, int> &fact2 = invariant_group[k];
-                int var2 = fact2.first;
-                if (var1 != var2) {
+			    
+                //int var2 = fact2.first;
+                //if (var1 != var2) {
                     /* The "different variable" test makes sure we
                        don't mark a fact as mutex with itself
                        (important for correctness) and don't include
@@ -193,11 +189,12 @@ void read_mutexes(istream &in) {
                        groups which lead to *some* redundant mutexes,
                        where some but not all facts talk about the
                        same variable. */
-                    g_inconsistent_facts[var1][val1].insert(fact2);
-                }
+                set_mutex(fact1, fact2);
+                //}
             }
         }
     }
+
 }
 
 void read_goal(istream &in) {
@@ -365,10 +362,27 @@ void verify_no_axioms_no_conditional_effects() {
 }
 
 bool are_mutex(const pair<int, int> &a, const pair<int, int> &b) {
-    if (a.first == b.first) // same variable: mutex iff different value
-        return a.second != b.second;
-    return bool(g_inconsistent_facts[a.first][a.second].count(b));
+    // Vidal: if the value is unknown then they aren't mutex
+  if (a.second == -1 || b.second == -1)
+    return false;
+  if (a.first == b.first) // same variable: mutex iff different value
+    return a.second != b.second;
+  return g_inconsistent_facts[id_mutex(a, b)];
 }
+int id_mutex(const std::pair<int, int> & a, const std::pair<int, int> &b){
+  int id_a = g_id_first_fact [a.first] + a.second;
+  int id_b = g_id_first_fact [b.first] + b.second;
+  if(id_a < id_b){
+    return g_num_facts*id_a + id_b;
+  }else{
+    return g_num_facts*id_b + id_a;
+  }
+}
+
+void set_mutex(const pair<int, int> & a, const pair<int, int> &b){
+  g_inconsistent_facts[id_mutex(a, b)] = true;
+}
+
 
 const GlobalState &g_initial_state() {
     return g_state_registry->get_initial_state();
@@ -396,6 +410,12 @@ AxiomEvaluator *g_axiom_evaluator;
 SuccessorGenerator *g_successor_generator;
 vector<DomainTransitionGraph *> g_transition_graphs;
 CausalGraph *g_causal_graph;
+
+vector<MutexGroup> g_mutex_groups; 
+vector<bool> g_inconsistent_facts;
+int g_num_facts;
+vector<int> g_id_first_fact;
+
 
 Timer g_timer;
 string g_plan_filename = "sas_plan";

@@ -1,4 +1,4 @@
-.obj/planner.release.o: planner.cc globals.h option_parser.h heuristic.h \
+.obj/planner.release.o: planner.cc globals.h mutex_group.h option_parser.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
@@ -141,10 +141,11 @@
  per_state_information.h segmented_vector.h state_registry.h \
  search_node_info.h search_progress.h timer.h ext/tree_util.hh
 .obj/axioms.release.o: axioms.cc axioms.h global_state.h int_packer.h state_id.h \
- global_operator.h globals.h
+ global_operator.h globals.h mutex_group.h
 .obj/causal_graph.release.o: causal_graph.cc causal_graph.h global_operator.h \
- global_state.h int_packer.h state_id.h globals.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -245,8 +246,8 @@
 .obj/cost_adapted_task.release.o: cost_adapted_task.cc cost_adapted_task.h \
  delegating_task.h abstract_task.h operator_cost.h option_parser.h \
  heuristic.h scalar_evaluator.h evaluator.h task_proxy.h \
- option_parser_util.h utilities.h globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ option_parser_util.h utilities.h globals.h mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -395,8 +396,8 @@
 .obj/delegating_task.release.o: delegating_task.cc delegating_task.h abstract_task.h
 .obj/domain_transition_graph.release.o: domain_transition_graph.cc \
  domain_transition_graph.h global_operator.h global_state.h int_packer.h \
- state_id.h globals.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ state_id.h globals.h mutex_group.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -495,7 +496,7 @@
 .obj/enforced_hill_climbing_search.release.o: enforced_hill_climbing_search.cc \
  enforced_hill_climbing_search.h g_evaluator.h scalar_evaluator.h \
  evaluator.h global_operator.h global_state.h int_packer.h state_id.h \
- globals.h search_engine.h operator_cost.h search_space.h \
+ globals.h mutex_group.h search_engine.h operator_cost.h search_space.h \
  per_state_information.h segmented_vector.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -646,7 +647,7 @@
  open_lists/../globals.h open_lists/../rng.h pref_evaluator.h \
  successor_generator.h
 .obj/equivalence_relation.release.o: equivalence_relation.cc equivalence_relation.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -744,7 +745,8 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/exact_timer.release.o: exact_timer.cc exact_timer.h utilities.h globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -842,7 +844,7 @@
  ext/boost/throw_exception.hpp
 .obj/g_evaluator.release.o: g_evaluator.cc g_evaluator.h scalar_evaluator.h \
  evaluator.h option_parser.h heuristic.h operator_cost.h task_proxy.h \
- abstract_task.h option_parser_util.h utilities.h globals.h \
+ abstract_task.h option_parser_util.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -989,7 +991,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/global_operator.release.o: global_operator.cc global_operator.h global_state.h \
- int_packer.h state_id.h globals.h utilities.h \
+ int_packer.h state_id.h globals.h mutex_group.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -1087,7 +1089,7 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/global_state.release.o: global_state.cc global_state.h int_packer.h state_id.h \
- globals.h utilities.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -1184,12 +1186,12 @@
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp state_registry.h segmented_vector.h
-.obj/globals.release.o: globals.cc globals.h axioms.h global_state.h int_packer.h \
- state_id.h causal_graph.h domain_transition_graph.h global_operator.h \
- heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h rng.h root_task.h state_registry.h segmented_vector.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+.obj/globals.release.o: globals.cc globals.h mutex_group.h axioms.h global_state.h \
+ int_packer.h state_id.h causal_graph.h domain_transition_graph.h \
+ global_operator.h heuristic.h operator_cost.h scalar_evaluator.h \
+ evaluator.h task_proxy.h abstract_task.h rng.h root_task.h \
+ state_registry.h segmented_vector.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -1288,8 +1290,9 @@
 .obj/heuristic.release.o: heuristic.cc heuristic.h operator_cost.h scalar_evaluator.h \
  evaluator.h task_proxy.h abstract_task.h cost_adapted_task.h \
  delegating_task.h global_operator.h global_state.h int_packer.h \
- state_id.h globals.h option_parser.h option_parser_util.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ state_id.h globals.h mutex_group.h option_parser.h option_parser_util.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -1429,7 +1432,7 @@
 .obj/ipc_max_heuristic.release.o: ipc_max_heuristic.cc ipc_max_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser.h option_parser_util.h utilities.h \
- globals.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -1577,8 +1580,8 @@
  open_lists/../rng.h
 .obj/iterated_search.release.o: iterated_search.cc iterated_search.h search_engine.h \
  global_operator.h global_state.h int_packer.h state_id.h operator_cost.h \
- search_space.h per_state_information.h globals.h segmented_vector.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
+ search_space.h per_state_information.h globals.h mutex_group.h \
+ segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -1729,8 +1732,8 @@
 .obj/lazy_search.release.o: lazy_search.cc lazy_search.h global_state.h int_packer.h \
  state_id.h scalar_evaluator.h evaluator.h search_engine.h \
  global_operator.h operator_cost.h search_space.h per_state_information.h \
- globals.h segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ globals.h mutex_group.h segmented_vector.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -1878,10 +1881,11 @@
  open_lists/pareto_open_list.h open_lists/pareto_open_list.cc \
  open_lists/../globals.h open_lists/../rng.h rng.h successor_generator.h \
  sum_evaluator.h combining_evaluator.h weighted_evaluator.h
+.obj/mutex_group.release.o: mutex_group.cc mutex_group.h globals.h
 .obj/max_evaluator.release.o: max_evaluator.cc max_evaluator.h combining_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -2030,7 +2034,7 @@
 .obj/min_evaluator.release.o: min_evaluator.cc min_evaluator.h combining_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -2177,10 +2181,10 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/operator_cost.release.o: operator_cost.cc operator_cost.h global_operator.h \
- global_state.h int_packer.h state_id.h globals.h option_parser.h \
- heuristic.h scalar_evaluator.h evaluator.h task_proxy.h abstract_task.h \
- option_parser_util.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ option_parser.h heuristic.h scalar_evaluator.h evaluator.h task_proxy.h \
+ abstract_task.h option_parser_util.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -2316,8 +2320,8 @@
  ext/boost/preprocessor/variadic/elem.hpp \
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
  ext/boost/type_traits/add_reference.hpp
-.obj/option_parser.release.o: option_parser.cc globals.h option_parser.h heuristic.h \
- operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
+.obj/option_parser.release.o: option_parser.cc globals.h mutex_group.h option_parser.h \
+ heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -2465,7 +2469,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h rng.h
 .obj/option_parser_util.release.o: option_parser_util.cc option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -2603,7 +2607,7 @@
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
  ext/boost/type_traits/add_reference.hpp
 .obj/segmented_vector.release.o: segmented_vector.cc segmented_vector.h utilities.h \
- globals.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -2701,8 +2705,8 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/per_state_information.release.o: per_state_information.cc per_state_information.h \
- global_state.h int_packer.h state_id.h globals.h segmented_vector.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -2807,8 +2811,8 @@
  open_lists/../operator_cost.h open_lists/../scalar_evaluator.h \
  open_lists/../task_proxy.h open_lists/../abstract_task.h \
  open_lists/../option_parser_util.h open_lists/../utilities.h \
- open_lists/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ open_lists/../globals.h open_lists/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -2952,7 +2956,7 @@
 .obj/relaxation_heuristic.release.o: relaxation_heuristic.cc relaxation_heuristic.h \
  heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h global_operator.h global_state.h int_packer.h state_id.h \
- globals.h utilities.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -3051,10 +3055,10 @@
  ext/boost/throw_exception.hpp
 .obj/rng.release.o: rng.cc rng.h
 .obj/root_task.release.o: root_task.cc root_task.h abstract_task.h global_operator.h \
- global_state.h int_packer.h state_id.h globals.h option_parser.h \
- heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- option_parser_util.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ option_parser.h heuristic.h operator_cost.h scalar_evaluator.h \
+ evaluator.h task_proxy.h option_parser_util.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -3201,8 +3205,9 @@
  open_lists/../rng.h
 .obj/search_engine.release.o: search_engine.cc search_engine.h global_operator.h \
  global_state.h int_packer.h state_id.h operator_cost.h search_space.h \
- per_state_information.h globals.h segmented_vector.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ per_state_information.h globals.h mutex_group.h segmented_vector.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -3343,10 +3348,10 @@
  ext/boost/type_traits/add_reference.hpp
 .obj/search_node_info.release.o: search_node_info.cc search_node_info.h \
  global_operator.h global_state.h int_packer.h state_id.h
-.obj/search_progress.release.o: search_progress.cc search_progress.h globals.h timer.h \
- heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+.obj/search_progress.release.o: search_progress.cc search_progress.h globals.h \
+ mutex_group.h timer.h heuristic.h operator_cost.h scalar_evaluator.h \
+ evaluator.h task_proxy.h abstract_task.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -3444,8 +3449,8 @@
  ext/boost/throw_exception.hpp
 .obj/search_space.release.o: search_space.cc search_space.h global_state.h \
  int_packer.h state_id.h operator_cost.h per_state_information.h \
- globals.h segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ globals.h mutex_group.h segmented_vector.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -3544,8 +3549,9 @@
  global_operator.h
 .obj/state_id.release.o: state_id.cc state_id.h
 .obj/state_registry.release.o: state_registry.cc state_registry.h global_state.h \
- int_packer.h state_id.h globals.h segmented_vector.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ int_packer.h state_id.h globals.h mutex_group.h segmented_vector.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -3644,7 +3650,7 @@
  per_state_information.h
 .obj/successor_generator.release.o: successor_generator.cc successor_generator.h \
  global_operator.h global_state.h int_packer.h state_id.h globals.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
+ mutex_group.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -3744,7 +3750,7 @@
 .obj/sum_evaluator.release.o: sum_evaluator.cc sum_evaluator.h combining_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -3891,7 +3897,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/task_tools.release.o: task_tools.cc task_tools.h task_proxy.h abstract_task.h
-.obj/timer.release.o: timer.cc timer.h utilities.h globals.h \
+.obj/timer.release.o: timer.cc timer.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -3988,7 +3994,7 @@
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
-.obj/tracer.release.o: tracer.cc tracer.h globals.h timer.h utilities.h \
+.obj/tracer.release.o: tracer.cc tracer.h globals.h mutex_group.h timer.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -4085,7 +4091,7 @@
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
-.obj/utilities.release.o: utilities.cc utilities.h globals.h \
+.obj/utilities.release.o: utilities.cc utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -4482,8 +4488,8 @@
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp \
  ext/../timer.h
 .obj/variable_order_finder.release.o: variable_order_finder.cc variable_order_finder.h \
- causal_graph.h globals.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ causal_graph.h globals.h mutex_group.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -4582,7 +4588,7 @@
 .obj/weighted_evaluator.release.o: weighted_evaluator.cc weighted_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -4734,7 +4740,7 @@
 .obj/open_lists/standard_scalar_open_list.release.o: open_lists/standard_scalar_open_list.cc
 .obj/open_lists/tiebreaking_open_list.release.o: open_lists/tiebreaking_open_list.cc
 .obj/lp_internals.release.o: lp_internals.cc lp_internals.h
-.obj/lp_solver.release.o: lp_solver.cc lp_solver.h utilities.h globals.h \
+.obj/lp_solver.release.o: lp_solver.cc lp_solver.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -4874,8 +4880,8 @@
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
  ext/boost/type_traits/add_reference.hpp
 .obj/additive_heuristic.release.o: additive_heuristic.cc additive_heuristic.h \
- priority_queue.h utilities.h globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ priority_queue.h utilities.h globals.h mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -5027,7 +5033,8 @@
  blind_search_heuristic.h heuristic.h operator_cost.h scalar_evaluator.h \
  evaluator.h task_proxy.h abstract_task.h global_state.h int_packer.h \
  state_id.h option_parser.h option_parser_util.h utilities.h globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -5174,7 +5181,7 @@
  open_lists/../rng.h task_tools.h
 .obj/cea_heuristic.release.o: cea_heuristic.cc cea_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h priority_queue.h utilities.h globals.h \
+ abstract_task.h priority_queue.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -5324,7 +5331,7 @@
  open_lists/../rng.h
 .obj/cg_heuristic.release.o: cg_heuristic.cc cg_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h priority_queue.h utilities.h globals.h \
+ abstract_task.h priority_queue.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -5473,7 +5480,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/cg_cache.release.o: cg_cache.cc cg_cache.h causal_graph.h global_state.h \
- int_packer.h state_id.h globals.h utilities.h \
+ int_packer.h state_id.h globals.h mutex_group.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -5571,8 +5578,8 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/ff_heuristic.release.o: ff_heuristic.cc ff_heuristic.h additive_heuristic.h \
- priority_queue.h utilities.h globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ priority_queue.h utilities.h globals.h mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -5723,7 +5730,7 @@
 .obj/goal_count_heuristic.release.o: goal_count_heuristic.cc goal_count_heuristic.h \
  heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h global_state.h int_packer.h state_id.h globals.h \
- option_parser.h option_parser_util.h utilities.h \
+ mutex_group.h option_parser.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -5872,9 +5879,9 @@
 .obj/dijkstra_search_heuristic.release.o: dijkstra_search_heuristic.cc \
  dijkstra_search_heuristic.h heuristic.h operator_cost.h \
  scalar_evaluator.h evaluator.h task_proxy.h abstract_task.h globals.h \
- global_operator.h global_state.h int_packer.h state_id.h option_parser.h \
- option_parser_util.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ mutex_group.h global_operator.h global_state.h int_packer.h state_id.h \
+ option_parser.h option_parser_util.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -6020,8 +6027,8 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/hm_heuristic.release.o: hm_heuristic.cc hm_heuristic.h global_state.h \
- int_packer.h state_id.h global_operator.h globals.h heuristic.h \
- operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
+ int_packer.h state_id.h global_operator.h globals.h mutex_group.h \
+ heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -6170,7 +6177,7 @@
  open_lists/../rng.h
 .obj/lm_cut_heuristic.release.o: lm_cut_heuristic.cc lm_cut_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h priority_queue.h utilities.h globals.h \
+ abstract_task.h priority_queue.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -6318,7 +6325,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/max_heuristic.release.o: max_heuristic.cc max_heuristic.h priority_queue.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -6472,8 +6479,9 @@
  merge_and_shrink/../equivalence_relation.h \
  merge_and_shrink/../global_operator.h merge_and_shrink/../global_state.h \
  merge_and_shrink/../int_packer.h merge_and_shrink/../state_id.h \
- merge_and_shrink/../globals.h merge_and_shrink/../option_parser.h \
- merge_and_shrink/../heuristic.h merge_and_shrink/../operator_cost.h \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ merge_and_shrink/../option_parser.h merge_and_shrink/../heuristic.h \
+ merge_and_shrink/../operator_cost.h \
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
@@ -6624,10 +6632,11 @@
  merge_and_shrink/labels.h merge_and_shrink/merge_strategy.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/../global_state.h \
  merge_and_shrink/../int_packer.h merge_and_shrink/../state_id.h \
- merge_and_shrink/../globals.h merge_and_shrink/../option_parser.h \
- merge_and_shrink/../heuristic.h merge_and_shrink/../option_parser_util.h \
- merge_and_shrink/../utilities.h merge_and_shrink/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ merge_and_shrink/../option_parser.h merge_and_shrink/../heuristic.h \
+ merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
+ merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -6787,8 +6796,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -6949,8 +6958,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -7104,7 +7113,8 @@
  merge_and_shrink/../open_lists/../globals.h \
  merge_and_shrink/../open_lists/../rng.h merge_and_shrink/../utilities.h
 .obj/merge_and_shrink/merge_strategy.release.o: merge_and_shrink/merge_strategy.cc \
- merge_and_shrink/merge_strategy.h merge_and_shrink/../globals.h
+ merge_and_shrink/merge_strategy.h merge_and_shrink/../globals.h \
+ merge_and_shrink/../mutex_group.h
 .obj/merge_and_shrink/shrink_bisimulation.release.o: merge_and_shrink/shrink_bisimulation.cc \
  merge_and_shrink/shrink_bisimulation.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/transition_system.h \
@@ -7113,8 +7123,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -7271,7 +7281,7 @@
  merge_and_shrink/shrink_bucket_based.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/transition_system.h \
  merge_and_shrink/../operator_cost.h merge_and_shrink/../globals.h \
- merge_and_shrink/../rng.h
+ merge_and_shrink/../mutex_group.h merge_and_shrink/../rng.h
 .obj/merge_and_shrink/shrink_fh.release.o: merge_and_shrink/shrink_fh.cc merge_and_shrink/shrink_fh.h \
  merge_and_shrink/shrink_bucket_based.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/transition_system.h \
@@ -7280,8 +7290,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -7442,8 +7452,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -7603,8 +7613,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -7747,9 +7757,9 @@
  merge_and_shrink/shrink_strategy.h merge_and_shrink/../global_operator.h \
  merge_and_shrink/../global_state.h merge_and_shrink/../int_packer.h \
  merge_and_shrink/../state_id.h merge_and_shrink/../globals.h \
- merge_and_shrink/../priority_queue.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../mutex_group.h merge_and_shrink/../priority_queue.h \
+ merge_and_shrink/../utilities.h merge_and_shrink/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -7850,9 +7860,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -7957,9 +7968,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -8121,9 +8132,10 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/exploration.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -8288,7 +8300,8 @@
  landmarks/landmark_factory_rpg_sasp.h landmarks/landmark_factory.h
 .obj/landmarks/landmark_cost_assignment.release.o: landmarks/landmark_cost_assignment.cc \
  landmarks/landmark_cost_assignment.h landmarks/../globals.h \
- landmarks/../lp_solver.h landmarks/../utilities.h landmarks/../globals.h \
+ landmarks/../mutex_group.h landmarks/../lp_solver.h \
+ landmarks/../utilities.h landmarks/../globals.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -8439,9 +8452,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -8609,9 +8623,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -8759,9 +8773,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -8922,9 +8937,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -9071,9 +9086,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -9220,9 +9235,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -9385,9 +9401,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -9551,9 +9568,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -9715,9 +9733,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -9862,7 +9880,8 @@
  pdbs/../operator_cost.h pdbs/../scalar_evaluator.h pdbs/../evaluator.h \
  pdbs/../task_proxy.h pdbs/../abstract_task.h pdbs/dominance_pruner.h \
  pdbs/pdb_heuristic.h pdbs/../utilities.h pdbs/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -10021,7 +10040,8 @@
  pdbs/pdb_heuristic.h pdbs/../heuristic.h pdbs/../operator_cost.h \
  pdbs/../scalar_evaluator.h pdbs/../evaluator.h pdbs/../task_proxy.h \
  pdbs/../abstract_task.h pdbs/../utilities.h pdbs/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -10120,9 +10140,9 @@
 .obj/pdbs/match_tree.release.o: pdbs/match_tree.cc pdbs/match_tree.h pdbs/pdb_heuristic.h \
  pdbs/../heuristic.h pdbs/../operator_cost.h pdbs/../scalar_evaluator.h \
  pdbs/../evaluator.h pdbs/../task_proxy.h pdbs/../abstract_task.h \
- pdbs/../globals.h
+ pdbs/../globals.h pdbs/../mutex_group.h
 .obj/pdbs/max_cliques.release.o: pdbs/max_cliques.cc pdbs/max_cliques.h pdbs/../utilities.h \
- pdbs/../globals.h ext/boost/dynamic_bitset.hpp \
+ pdbs/../globals.h pdbs/../mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -10226,7 +10246,8 @@
  pdbs/../task_proxy.h pdbs/../abstract_task.h \
  pdbs/zero_one_pdbs_heuristic.h pdbs/../blind_search_heuristic.h \
  pdbs/../heuristic.h pdbs/../causal_graph.h pdbs/../globals.h \
- pdbs/../plugin.h pdbs/../open_lists/standard_scalar_open_list.h \
+ pdbs/../mutex_group.h pdbs/../plugin.h \
+ pdbs/../open_lists/standard_scalar_open_list.h \
  pdbs/../open_lists/open_list.h pdbs/../open_lists/../evaluator.h \
  pdbs/../open_lists/standard_scalar_open_list.cc \
  pdbs/../open_lists/../scalar_evaluator.h \
@@ -10643,9 +10664,9 @@
 .obj/pdbs/pattern_generation_haslum.release.o: pdbs/pattern_generation_haslum.cc \
  pdbs/pattern_generation_haslum.h pdbs/../operator_cost.h \
  pdbs/../state_registry.h pdbs/../global_state.h pdbs/../int_packer.h \
- pdbs/../state_id.h pdbs/../globals.h pdbs/../segmented_vector.h \
- pdbs/../utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../state_id.h pdbs/../globals.h pdbs/../mutex_group.h \
+ pdbs/../segmented_vector.h pdbs/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -10806,7 +10827,7 @@
 .obj/pdbs/pdb_heuristic.release.o: pdbs/pdb_heuristic.cc pdbs/pdb_heuristic.h \
  pdbs/../heuristic.h pdbs/../operator_cost.h pdbs/../scalar_evaluator.h \
  pdbs/../evaluator.h pdbs/../task_proxy.h pdbs/../abstract_task.h \
- pdbs/match_tree.h pdbs/util.h pdbs/../globals.h \
+ pdbs/match_tree.h pdbs/util.h pdbs/../globals.h pdbs/../mutex_group.h \
  pdbs/../global_operator.h pdbs/../global_state.h pdbs/../int_packer.h \
  pdbs/../state_id.h pdbs/../global_state.h pdbs/../plugin.h \
  pdbs/../open_lists/standard_scalar_open_list.h \
@@ -11223,7 +11244,7 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
-.obj/pdbs/util.release.o: pdbs/util.cc pdbs/util.h pdbs/../globals.h \
+.obj/pdbs/util.release.o: pdbs/util.cc pdbs/util.h pdbs/../globals.h pdbs/../mutex_group.h \
  pdbs/../option_parser.h pdbs/../heuristic.h pdbs/../operator_cost.h \
  pdbs/../scalar_evaluator.h pdbs/../evaluator.h pdbs/../task_proxy.h \
  pdbs/../abstract_task.h pdbs/../option_parser_util.h pdbs/../utilities.h \
@@ -11371,9 +11392,10 @@
  pdbs/../task_proxy.h pdbs/../abstract_task.h pdbs/pdb_heuristic.h \
  pdbs/util.h pdbs/../global_operator.h pdbs/../global_state.h \
  pdbs/../int_packer.h pdbs/../state_id.h pdbs/../global_state.h \
- pdbs/../globals.h pdbs/../option_parser.h pdbs/../heuristic.h \
- pdbs/../option_parser_util.h pdbs/../utilities.h pdbs/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../globals.h pdbs/../mutex_group.h pdbs/../option_parser.h \
+ pdbs/../heuristic.h pdbs/../option_parser_util.h pdbs/../utilities.h \
+ pdbs/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -11529,7 +11551,7 @@
  speed/../state_id.h speed/../search_engine.h speed/../global_operator.h \
  speed/../global_state.h speed/../operator_cost.h speed/../search_space.h \
  speed/../per_state_information.h speed/../globals.h \
- speed/../segmented_vector.h speed/../utilities.h \
+ speed/../mutex_group.h speed/../segmented_vector.h speed/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -11695,7 +11717,7 @@
  astar/../state_id.h astar/../search_engine.h astar/../global_operator.h \
  astar/../global_state.h astar/../operator_cost.h astar/../search_space.h \
  astar/../per_state_information.h astar/../globals.h \
- astar/../segmented_vector.h astar/../utilities.h \
+ astar/../mutex_group.h astar/../segmented_vector.h astar/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -12124,8 +12146,9 @@
  astar_no_speed/../global_operator.h astar_no_speed/../global_state.h \
  astar_no_speed/../operator_cost.h astar_no_speed/../search_space.h \
  astar_no_speed/../per_state_information.h astar_no_speed/../globals.h \
- astar_no_speed/../segmented_vector.h astar_no_speed/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ astar_no_speed/../mutex_group.h astar_no_speed/../segmented_vector.h \
+ astar_no_speed/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -12556,8 +12579,9 @@
  astar_s/../global_operator.h astar_s/../global_state.h \
  astar_s/../operator_cost.h astar_s/../search_space.h \
  astar_s/../per_state_information.h astar_s/../globals.h \
- astar_s/../segmented_vector.h astar_s/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ astar_s/../mutex_group.h astar_s/../segmented_vector.h \
+ astar_s/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -12986,8 +13010,9 @@
  dijkstra/../global_operator.h dijkstra/../global_state.h \
  dijkstra/../operator_cost.h dijkstra/../search_space.h \
  dijkstra/../per_state_information.h dijkstra/../globals.h \
- dijkstra/../segmented_vector.h dijkstra/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ dijkstra/../mutex_group.h dijkstra/../segmented_vector.h \
+ dijkstra/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -13153,7 +13178,7 @@
  dfs/../global_state.h dfs/../int_packer.h dfs/../state_id.h \
  dfs/../search_engine.h dfs/../global_operator.h dfs/../global_state.h \
  dfs/../operator_cost.h dfs/../search_space.h \
- dfs/../per_state_information.h dfs/../globals.h \
+ dfs/../per_state_information.h dfs/../globals.h dfs/../mutex_group.h \
  dfs/../segmented_vector.h dfs/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -13317,7 +13342,7 @@
  ida/../global_state.h ida/../int_packer.h ida/../state_id.h \
  ida/../search_engine.h ida/../global_operator.h ida/../global_state.h \
  ida/../operator_cost.h ida/../search_space.h \
- ida/../per_state_information.h ida/../globals.h \
+ ida/../per_state_information.h ida/../globals.h ida/../mutex_group.h \
  ida/../segmented_vector.h ida/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -13481,7 +13506,7 @@
  idar/../global_state.h idar/../int_packer.h idar/../state_id.h \
  idar/../search_engine.h idar/../global_operator.h idar/../global_state.h \
  idar/../operator_cost.h idar/../search_space.h \
- idar/../per_state_information.h idar/../globals.h \
+ idar/../per_state_information.h idar/../globals.h idar/../mutex_group.h \
  idar/../segmented_vector.h idar/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -13647,7 +13672,7 @@
  idai/../global_state.h idai/../int_packer.h idai/../state_id.h \
  idai/../search_engine.h idai/../global_operator.h idai/../global_state.h \
  idai/../operator_cost.h idai/../search_space.h \
- idai/../per_state_information.h idai/../globals.h \
+ idai/../per_state_information.h idai/../globals.h idai/../mutex_group.h \
  idai/../segmented_vector.h idai/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -13813,7 +13838,7 @@
  bfs/../global_state.h bfs/../int_packer.h bfs/../state_id.h \
  bfs/../search_engine.h bfs/../global_operator.h bfs/../global_state.h \
  bfs/../operator_cost.h bfs/../search_space.h \
- bfs/../per_state_information.h bfs/../globals.h \
+ bfs/../per_state_information.h bfs/../globals.h bfs/../mutex_group.h \
  bfs/../segmented_vector.h bfs/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -13980,8 +14005,9 @@
  original/../global_operator.h original/../global_state.h \
  original/../operator_cost.h original/../search_space.h \
  original/../per_state_information.h original/../globals.h \
- original/../segmented_vector.h original/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ original/../mutex_group.h original/../segmented_vector.h \
+ original/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -14153,8 +14179,8 @@
  ss/../task_proxy.h ss/../abstract_task.h ss/../global_operator.h \
  ss/../global_state.h ss/../search_engine.h ss/../global_operator.h \
  ss/../search_space.h ss/../per_state_information.h ss/../globals.h \
- ss/../segmented_vector.h ss/../utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ ss/../mutex_group.h ss/../segmented_vector.h ss/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -14312,8 +14338,8 @@
  ss/../task_proxy.h ss/../abstract_task.h ss/../global_operator.h \
  ss/../global_state.h ss/../search_engine.h ss/../global_operator.h \
  ss/../search_space.h ss/../per_state_information.h ss/../globals.h \
- ss/../segmented_vector.h ss/../utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ ss/../mutex_group.h ss/../segmented_vector.h ss/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -14729,7 +14755,7 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
-.obj/planner.debug.o: planner.cc globals.h option_parser.h heuristic.h \
+.obj/planner.debug.o: planner.cc globals.h mutex_group.h option_parser.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
@@ -14872,10 +14898,11 @@
  per_state_information.h segmented_vector.h state_registry.h \
  search_node_info.h search_progress.h timer.h ext/tree_util.hh
 .obj/axioms.debug.o: axioms.cc axioms.h global_state.h int_packer.h state_id.h \
- global_operator.h globals.h
+ global_operator.h globals.h mutex_group.h
 .obj/causal_graph.debug.o: causal_graph.cc causal_graph.h global_operator.h \
- global_state.h int_packer.h state_id.h globals.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -14976,8 +15003,8 @@
 .obj/cost_adapted_task.debug.o: cost_adapted_task.cc cost_adapted_task.h \
  delegating_task.h abstract_task.h operator_cost.h option_parser.h \
  heuristic.h scalar_evaluator.h evaluator.h task_proxy.h \
- option_parser_util.h utilities.h globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ option_parser_util.h utilities.h globals.h mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -15126,8 +15153,8 @@
 .obj/delegating_task.debug.o: delegating_task.cc delegating_task.h abstract_task.h
 .obj/domain_transition_graph.debug.o: domain_transition_graph.cc \
  domain_transition_graph.h global_operator.h global_state.h int_packer.h \
- state_id.h globals.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ state_id.h globals.h mutex_group.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -15226,7 +15253,7 @@
 .obj/enforced_hill_climbing_search.debug.o: enforced_hill_climbing_search.cc \
  enforced_hill_climbing_search.h g_evaluator.h scalar_evaluator.h \
  evaluator.h global_operator.h global_state.h int_packer.h state_id.h \
- globals.h search_engine.h operator_cost.h search_space.h \
+ globals.h mutex_group.h search_engine.h operator_cost.h search_space.h \
  per_state_information.h segmented_vector.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -15377,7 +15404,7 @@
  open_lists/../globals.h open_lists/../rng.h pref_evaluator.h \
  successor_generator.h
 .obj/equivalence_relation.debug.o: equivalence_relation.cc equivalence_relation.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -15475,7 +15502,8 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/exact_timer.debug.o: exact_timer.cc exact_timer.h utilities.h globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -15573,7 +15601,7 @@
  ext/boost/throw_exception.hpp
 .obj/g_evaluator.debug.o: g_evaluator.cc g_evaluator.h scalar_evaluator.h \
  evaluator.h option_parser.h heuristic.h operator_cost.h task_proxy.h \
- abstract_task.h option_parser_util.h utilities.h globals.h \
+ abstract_task.h option_parser_util.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -15720,7 +15748,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/global_operator.debug.o: global_operator.cc global_operator.h global_state.h \
- int_packer.h state_id.h globals.h utilities.h \
+ int_packer.h state_id.h globals.h mutex_group.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -15818,7 +15846,7 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/global_state.debug.o: global_state.cc global_state.h int_packer.h state_id.h \
- globals.h utilities.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -15915,12 +15943,12 @@
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp state_registry.h segmented_vector.h
-.obj/globals.debug.o: globals.cc globals.h axioms.h global_state.h int_packer.h \
- state_id.h causal_graph.h domain_transition_graph.h global_operator.h \
- heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h rng.h root_task.h state_registry.h segmented_vector.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+.obj/globals.debug.o: globals.cc globals.h mutex_group.h axioms.h global_state.h \
+ int_packer.h state_id.h causal_graph.h domain_transition_graph.h \
+ global_operator.h heuristic.h operator_cost.h scalar_evaluator.h \
+ evaluator.h task_proxy.h abstract_task.h rng.h root_task.h \
+ state_registry.h segmented_vector.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -16019,8 +16047,9 @@
 .obj/heuristic.debug.o: heuristic.cc heuristic.h operator_cost.h scalar_evaluator.h \
  evaluator.h task_proxy.h abstract_task.h cost_adapted_task.h \
  delegating_task.h global_operator.h global_state.h int_packer.h \
- state_id.h globals.h option_parser.h option_parser_util.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ state_id.h globals.h mutex_group.h option_parser.h option_parser_util.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -16160,7 +16189,7 @@
 .obj/ipc_max_heuristic.debug.o: ipc_max_heuristic.cc ipc_max_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser.h option_parser_util.h utilities.h \
- globals.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -16308,8 +16337,8 @@
  open_lists/../rng.h
 .obj/iterated_search.debug.o: iterated_search.cc iterated_search.h search_engine.h \
  global_operator.h global_state.h int_packer.h state_id.h operator_cost.h \
- search_space.h per_state_information.h globals.h segmented_vector.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
+ search_space.h per_state_information.h globals.h mutex_group.h \
+ segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -16460,8 +16489,8 @@
 .obj/lazy_search.debug.o: lazy_search.cc lazy_search.h global_state.h int_packer.h \
  state_id.h scalar_evaluator.h evaluator.h search_engine.h \
  global_operator.h operator_cost.h search_space.h per_state_information.h \
- globals.h segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ globals.h mutex_group.h segmented_vector.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -16609,10 +16638,11 @@
  open_lists/pareto_open_list.h open_lists/pareto_open_list.cc \
  open_lists/../globals.h open_lists/../rng.h rng.h successor_generator.h \
  sum_evaluator.h combining_evaluator.h weighted_evaluator.h
+.obj/mutex_group.debug.o: mutex_group.cc mutex_group.h globals.h
 .obj/max_evaluator.debug.o: max_evaluator.cc max_evaluator.h combining_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -16761,7 +16791,7 @@
 .obj/min_evaluator.debug.o: min_evaluator.cc min_evaluator.h combining_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -16908,10 +16938,10 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/operator_cost.debug.o: operator_cost.cc operator_cost.h global_operator.h \
- global_state.h int_packer.h state_id.h globals.h option_parser.h \
- heuristic.h scalar_evaluator.h evaluator.h task_proxy.h abstract_task.h \
- option_parser_util.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ option_parser.h heuristic.h scalar_evaluator.h evaluator.h task_proxy.h \
+ abstract_task.h option_parser_util.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -17047,8 +17077,8 @@
  ext/boost/preprocessor/variadic/elem.hpp \
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
  ext/boost/type_traits/add_reference.hpp
-.obj/option_parser.debug.o: option_parser.cc globals.h option_parser.h heuristic.h \
- operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
+.obj/option_parser.debug.o: option_parser.cc globals.h mutex_group.h option_parser.h \
+ heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -17196,7 +17226,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h rng.h
 .obj/option_parser_util.debug.o: option_parser_util.cc option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -17334,7 +17364,7 @@
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
  ext/boost/type_traits/add_reference.hpp
 .obj/segmented_vector.debug.o: segmented_vector.cc segmented_vector.h utilities.h \
- globals.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -17432,8 +17462,8 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/per_state_information.debug.o: per_state_information.cc per_state_information.h \
- global_state.h int_packer.h state_id.h globals.h segmented_vector.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -17538,8 +17568,8 @@
  open_lists/../operator_cost.h open_lists/../scalar_evaluator.h \
  open_lists/../task_proxy.h open_lists/../abstract_task.h \
  open_lists/../option_parser_util.h open_lists/../utilities.h \
- open_lists/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ open_lists/../globals.h open_lists/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -17683,7 +17713,7 @@
 .obj/relaxation_heuristic.debug.o: relaxation_heuristic.cc relaxation_heuristic.h \
  heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h global_operator.h global_state.h int_packer.h state_id.h \
- globals.h utilities.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -17782,10 +17812,10 @@
  ext/boost/throw_exception.hpp
 .obj/rng.debug.o: rng.cc rng.h
 .obj/root_task.debug.o: root_task.cc root_task.h abstract_task.h global_operator.h \
- global_state.h int_packer.h state_id.h globals.h option_parser.h \
- heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- option_parser_util.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ option_parser.h heuristic.h operator_cost.h scalar_evaluator.h \
+ evaluator.h task_proxy.h option_parser_util.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -17932,8 +17962,9 @@
  open_lists/../rng.h
 .obj/search_engine.debug.o: search_engine.cc search_engine.h global_operator.h \
  global_state.h int_packer.h state_id.h operator_cost.h search_space.h \
- per_state_information.h globals.h segmented_vector.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ per_state_information.h globals.h mutex_group.h segmented_vector.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -18074,10 +18105,10 @@
  ext/boost/type_traits/add_reference.hpp
 .obj/search_node_info.debug.o: search_node_info.cc search_node_info.h \
  global_operator.h global_state.h int_packer.h state_id.h
-.obj/search_progress.debug.o: search_progress.cc search_progress.h globals.h timer.h \
- heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+.obj/search_progress.debug.o: search_progress.cc search_progress.h globals.h \
+ mutex_group.h timer.h heuristic.h operator_cost.h scalar_evaluator.h \
+ evaluator.h task_proxy.h abstract_task.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -18175,8 +18206,8 @@
  ext/boost/throw_exception.hpp
 .obj/search_space.debug.o: search_space.cc search_space.h global_state.h \
  int_packer.h state_id.h operator_cost.h per_state_information.h \
- globals.h segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ globals.h mutex_group.h segmented_vector.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -18275,8 +18306,9 @@
  global_operator.h
 .obj/state_id.debug.o: state_id.cc state_id.h
 .obj/state_registry.debug.o: state_registry.cc state_registry.h global_state.h \
- int_packer.h state_id.h globals.h segmented_vector.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ int_packer.h state_id.h globals.h mutex_group.h segmented_vector.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -18375,7 +18407,7 @@
  per_state_information.h
 .obj/successor_generator.debug.o: successor_generator.cc successor_generator.h \
  global_operator.h global_state.h int_packer.h state_id.h globals.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
+ mutex_group.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -18475,7 +18507,7 @@
 .obj/sum_evaluator.debug.o: sum_evaluator.cc sum_evaluator.h combining_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -18622,7 +18654,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/task_tools.debug.o: task_tools.cc task_tools.h task_proxy.h abstract_task.h
-.obj/timer.debug.o: timer.cc timer.h utilities.h globals.h \
+.obj/timer.debug.o: timer.cc timer.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -18719,7 +18751,7 @@
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
-.obj/tracer.debug.o: tracer.cc tracer.h globals.h timer.h utilities.h \
+.obj/tracer.debug.o: tracer.cc tracer.h globals.h mutex_group.h timer.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -18816,7 +18848,7 @@
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
-.obj/utilities.debug.o: utilities.cc utilities.h globals.h \
+.obj/utilities.debug.o: utilities.cc utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -19213,8 +19245,8 @@
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp \
  ext/../timer.h
 .obj/variable_order_finder.debug.o: variable_order_finder.cc variable_order_finder.h \
- causal_graph.h globals.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ causal_graph.h globals.h mutex_group.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -19313,7 +19345,7 @@
 .obj/weighted_evaluator.debug.o: weighted_evaluator.cc weighted_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -19465,7 +19497,7 @@
 .obj/open_lists/standard_scalar_open_list.debug.o: open_lists/standard_scalar_open_list.cc
 .obj/open_lists/tiebreaking_open_list.debug.o: open_lists/tiebreaking_open_list.cc
 .obj/lp_internals.debug.o: lp_internals.cc lp_internals.h
-.obj/lp_solver.debug.o: lp_solver.cc lp_solver.h utilities.h globals.h \
+.obj/lp_solver.debug.o: lp_solver.cc lp_solver.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -19605,8 +19637,8 @@
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
  ext/boost/type_traits/add_reference.hpp
 .obj/additive_heuristic.debug.o: additive_heuristic.cc additive_heuristic.h \
- priority_queue.h utilities.h globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ priority_queue.h utilities.h globals.h mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -19758,7 +19790,8 @@
  blind_search_heuristic.h heuristic.h operator_cost.h scalar_evaluator.h \
  evaluator.h task_proxy.h abstract_task.h global_state.h int_packer.h \
  state_id.h option_parser.h option_parser_util.h utilities.h globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -19905,7 +19938,7 @@
  open_lists/../rng.h task_tools.h
 .obj/cea_heuristic.debug.o: cea_heuristic.cc cea_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h priority_queue.h utilities.h globals.h \
+ abstract_task.h priority_queue.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -20055,7 +20088,7 @@
  open_lists/../rng.h
 .obj/cg_heuristic.debug.o: cg_heuristic.cc cg_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h priority_queue.h utilities.h globals.h \
+ abstract_task.h priority_queue.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -20204,7 +20237,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/cg_cache.debug.o: cg_cache.cc cg_cache.h causal_graph.h global_state.h \
- int_packer.h state_id.h globals.h utilities.h \
+ int_packer.h state_id.h globals.h mutex_group.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -20302,8 +20335,8 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/ff_heuristic.debug.o: ff_heuristic.cc ff_heuristic.h additive_heuristic.h \
- priority_queue.h utilities.h globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ priority_queue.h utilities.h globals.h mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -20454,7 +20487,7 @@
 .obj/goal_count_heuristic.debug.o: goal_count_heuristic.cc goal_count_heuristic.h \
  heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h global_state.h int_packer.h state_id.h globals.h \
- option_parser.h option_parser_util.h utilities.h \
+ mutex_group.h option_parser.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -20603,9 +20636,9 @@
 .obj/dijkstra_search_heuristic.debug.o: dijkstra_search_heuristic.cc \
  dijkstra_search_heuristic.h heuristic.h operator_cost.h \
  scalar_evaluator.h evaluator.h task_proxy.h abstract_task.h globals.h \
- global_operator.h global_state.h int_packer.h state_id.h option_parser.h \
- option_parser_util.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ mutex_group.h global_operator.h global_state.h int_packer.h state_id.h \
+ option_parser.h option_parser_util.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -20751,8 +20784,8 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/hm_heuristic.debug.o: hm_heuristic.cc hm_heuristic.h global_state.h \
- int_packer.h state_id.h global_operator.h globals.h heuristic.h \
- operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
+ int_packer.h state_id.h global_operator.h globals.h mutex_group.h \
+ heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -20901,7 +20934,7 @@
  open_lists/../rng.h
 .obj/lm_cut_heuristic.debug.o: lm_cut_heuristic.cc lm_cut_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h priority_queue.h utilities.h globals.h \
+ abstract_task.h priority_queue.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -21049,7 +21082,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/max_heuristic.debug.o: max_heuristic.cc max_heuristic.h priority_queue.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -21203,8 +21236,9 @@
  merge_and_shrink/../equivalence_relation.h \
  merge_and_shrink/../global_operator.h merge_and_shrink/../global_state.h \
  merge_and_shrink/../int_packer.h merge_and_shrink/../state_id.h \
- merge_and_shrink/../globals.h merge_and_shrink/../option_parser.h \
- merge_and_shrink/../heuristic.h merge_and_shrink/../operator_cost.h \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ merge_and_shrink/../option_parser.h merge_and_shrink/../heuristic.h \
+ merge_and_shrink/../operator_cost.h \
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
@@ -21355,10 +21389,11 @@
  merge_and_shrink/labels.h merge_and_shrink/merge_strategy.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/../global_state.h \
  merge_and_shrink/../int_packer.h merge_and_shrink/../state_id.h \
- merge_and_shrink/../globals.h merge_and_shrink/../option_parser.h \
- merge_and_shrink/../heuristic.h merge_and_shrink/../option_parser_util.h \
- merge_and_shrink/../utilities.h merge_and_shrink/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ merge_and_shrink/../option_parser.h merge_and_shrink/../heuristic.h \
+ merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
+ merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -21518,8 +21553,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -21680,8 +21715,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -21835,7 +21870,8 @@
  merge_and_shrink/../open_lists/../globals.h \
  merge_and_shrink/../open_lists/../rng.h merge_and_shrink/../utilities.h
 .obj/merge_and_shrink/merge_strategy.debug.o: merge_and_shrink/merge_strategy.cc \
- merge_and_shrink/merge_strategy.h merge_and_shrink/../globals.h
+ merge_and_shrink/merge_strategy.h merge_and_shrink/../globals.h \
+ merge_and_shrink/../mutex_group.h
 .obj/merge_and_shrink/shrink_bisimulation.debug.o: merge_and_shrink/shrink_bisimulation.cc \
  merge_and_shrink/shrink_bisimulation.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/transition_system.h \
@@ -21844,8 +21880,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -22002,7 +22038,7 @@
  merge_and_shrink/shrink_bucket_based.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/transition_system.h \
  merge_and_shrink/../operator_cost.h merge_and_shrink/../globals.h \
- merge_and_shrink/../rng.h
+ merge_and_shrink/../mutex_group.h merge_and_shrink/../rng.h
 .obj/merge_and_shrink/shrink_fh.debug.o: merge_and_shrink/shrink_fh.cc merge_and_shrink/shrink_fh.h \
  merge_and_shrink/shrink_bucket_based.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/transition_system.h \
@@ -22011,8 +22047,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -22173,8 +22209,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -22334,8 +22370,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -22478,9 +22514,9 @@
  merge_and_shrink/shrink_strategy.h merge_and_shrink/../global_operator.h \
  merge_and_shrink/../global_state.h merge_and_shrink/../int_packer.h \
  merge_and_shrink/../state_id.h merge_and_shrink/../globals.h \
- merge_and_shrink/../priority_queue.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../mutex_group.h merge_and_shrink/../priority_queue.h \
+ merge_and_shrink/../utilities.h merge_and_shrink/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -22581,9 +22617,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -22688,9 +22725,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -22852,9 +22889,10 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/exploration.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -23019,7 +23057,8 @@
  landmarks/landmark_factory_rpg_sasp.h landmarks/landmark_factory.h
 .obj/landmarks/landmark_cost_assignment.debug.o: landmarks/landmark_cost_assignment.cc \
  landmarks/landmark_cost_assignment.h landmarks/../globals.h \
- landmarks/../lp_solver.h landmarks/../utilities.h landmarks/../globals.h \
+ landmarks/../mutex_group.h landmarks/../lp_solver.h \
+ landmarks/../utilities.h landmarks/../globals.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -23170,9 +23209,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -23340,9 +23380,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -23490,9 +23530,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -23653,9 +23694,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -23802,9 +23843,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -23951,9 +23992,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -24116,9 +24158,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -24282,9 +24325,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -24446,9 +24490,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -24593,7 +24637,8 @@
  pdbs/../operator_cost.h pdbs/../scalar_evaluator.h pdbs/../evaluator.h \
  pdbs/../task_proxy.h pdbs/../abstract_task.h pdbs/dominance_pruner.h \
  pdbs/pdb_heuristic.h pdbs/../utilities.h pdbs/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -24752,7 +24797,8 @@
  pdbs/pdb_heuristic.h pdbs/../heuristic.h pdbs/../operator_cost.h \
  pdbs/../scalar_evaluator.h pdbs/../evaluator.h pdbs/../task_proxy.h \
  pdbs/../abstract_task.h pdbs/../utilities.h pdbs/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -24851,9 +24897,9 @@
 .obj/pdbs/match_tree.debug.o: pdbs/match_tree.cc pdbs/match_tree.h pdbs/pdb_heuristic.h \
  pdbs/../heuristic.h pdbs/../operator_cost.h pdbs/../scalar_evaluator.h \
  pdbs/../evaluator.h pdbs/../task_proxy.h pdbs/../abstract_task.h \
- pdbs/../globals.h
+ pdbs/../globals.h pdbs/../mutex_group.h
 .obj/pdbs/max_cliques.debug.o: pdbs/max_cliques.cc pdbs/max_cliques.h pdbs/../utilities.h \
- pdbs/../globals.h ext/boost/dynamic_bitset.hpp \
+ pdbs/../globals.h pdbs/../mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -24957,7 +25003,8 @@
  pdbs/../task_proxy.h pdbs/../abstract_task.h \
  pdbs/zero_one_pdbs_heuristic.h pdbs/../blind_search_heuristic.h \
  pdbs/../heuristic.h pdbs/../causal_graph.h pdbs/../globals.h \
- pdbs/../plugin.h pdbs/../open_lists/standard_scalar_open_list.h \
+ pdbs/../mutex_group.h pdbs/../plugin.h \
+ pdbs/../open_lists/standard_scalar_open_list.h \
  pdbs/../open_lists/open_list.h pdbs/../open_lists/../evaluator.h \
  pdbs/../open_lists/standard_scalar_open_list.cc \
  pdbs/../open_lists/../scalar_evaluator.h \
@@ -25374,9 +25421,9 @@
 .obj/pdbs/pattern_generation_haslum.debug.o: pdbs/pattern_generation_haslum.cc \
  pdbs/pattern_generation_haslum.h pdbs/../operator_cost.h \
  pdbs/../state_registry.h pdbs/../global_state.h pdbs/../int_packer.h \
- pdbs/../state_id.h pdbs/../globals.h pdbs/../segmented_vector.h \
- pdbs/../utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../state_id.h pdbs/../globals.h pdbs/../mutex_group.h \
+ pdbs/../segmented_vector.h pdbs/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -25537,7 +25584,7 @@
 .obj/pdbs/pdb_heuristic.debug.o: pdbs/pdb_heuristic.cc pdbs/pdb_heuristic.h \
  pdbs/../heuristic.h pdbs/../operator_cost.h pdbs/../scalar_evaluator.h \
  pdbs/../evaluator.h pdbs/../task_proxy.h pdbs/../abstract_task.h \
- pdbs/match_tree.h pdbs/util.h pdbs/../globals.h \
+ pdbs/match_tree.h pdbs/util.h pdbs/../globals.h pdbs/../mutex_group.h \
  pdbs/../global_operator.h pdbs/../global_state.h pdbs/../int_packer.h \
  pdbs/../state_id.h pdbs/../global_state.h pdbs/../plugin.h \
  pdbs/../open_lists/standard_scalar_open_list.h \
@@ -25954,7 +26001,7 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
-.obj/pdbs/util.debug.o: pdbs/util.cc pdbs/util.h pdbs/../globals.h \
+.obj/pdbs/util.debug.o: pdbs/util.cc pdbs/util.h pdbs/../globals.h pdbs/../mutex_group.h \
  pdbs/../option_parser.h pdbs/../heuristic.h pdbs/../operator_cost.h \
  pdbs/../scalar_evaluator.h pdbs/../evaluator.h pdbs/../task_proxy.h \
  pdbs/../abstract_task.h pdbs/../option_parser_util.h pdbs/../utilities.h \
@@ -26102,9 +26149,10 @@
  pdbs/../task_proxy.h pdbs/../abstract_task.h pdbs/pdb_heuristic.h \
  pdbs/util.h pdbs/../global_operator.h pdbs/../global_state.h \
  pdbs/../int_packer.h pdbs/../state_id.h pdbs/../global_state.h \
- pdbs/../globals.h pdbs/../option_parser.h pdbs/../heuristic.h \
- pdbs/../option_parser_util.h pdbs/../utilities.h pdbs/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../globals.h pdbs/../mutex_group.h pdbs/../option_parser.h \
+ pdbs/../heuristic.h pdbs/../option_parser_util.h pdbs/../utilities.h \
+ pdbs/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -26260,7 +26308,7 @@
  speed/../state_id.h speed/../search_engine.h speed/../global_operator.h \
  speed/../global_state.h speed/../operator_cost.h speed/../search_space.h \
  speed/../per_state_information.h speed/../globals.h \
- speed/../segmented_vector.h speed/../utilities.h \
+ speed/../mutex_group.h speed/../segmented_vector.h speed/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -26426,7 +26474,7 @@
  astar/../state_id.h astar/../search_engine.h astar/../global_operator.h \
  astar/../global_state.h astar/../operator_cost.h astar/../search_space.h \
  astar/../per_state_information.h astar/../globals.h \
- astar/../segmented_vector.h astar/../utilities.h \
+ astar/../mutex_group.h astar/../segmented_vector.h astar/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -26855,8 +26903,9 @@
  astar_no_speed/../global_operator.h astar_no_speed/../global_state.h \
  astar_no_speed/../operator_cost.h astar_no_speed/../search_space.h \
  astar_no_speed/../per_state_information.h astar_no_speed/../globals.h \
- astar_no_speed/../segmented_vector.h astar_no_speed/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ astar_no_speed/../mutex_group.h astar_no_speed/../segmented_vector.h \
+ astar_no_speed/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -27287,8 +27336,9 @@
  astar_s/../global_operator.h astar_s/../global_state.h \
  astar_s/../operator_cost.h astar_s/../search_space.h \
  astar_s/../per_state_information.h astar_s/../globals.h \
- astar_s/../segmented_vector.h astar_s/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ astar_s/../mutex_group.h astar_s/../segmented_vector.h \
+ astar_s/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -27717,8 +27767,9 @@
  dijkstra/../global_operator.h dijkstra/../global_state.h \
  dijkstra/../operator_cost.h dijkstra/../search_space.h \
  dijkstra/../per_state_information.h dijkstra/../globals.h \
- dijkstra/../segmented_vector.h dijkstra/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ dijkstra/../mutex_group.h dijkstra/../segmented_vector.h \
+ dijkstra/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -27884,7 +27935,7 @@
  dfs/../global_state.h dfs/../int_packer.h dfs/../state_id.h \
  dfs/../search_engine.h dfs/../global_operator.h dfs/../global_state.h \
  dfs/../operator_cost.h dfs/../search_space.h \
- dfs/../per_state_information.h dfs/../globals.h \
+ dfs/../per_state_information.h dfs/../globals.h dfs/../mutex_group.h \
  dfs/../segmented_vector.h dfs/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -28048,7 +28099,7 @@
  ida/../global_state.h ida/../int_packer.h ida/../state_id.h \
  ida/../search_engine.h ida/../global_operator.h ida/../global_state.h \
  ida/../operator_cost.h ida/../search_space.h \
- ida/../per_state_information.h ida/../globals.h \
+ ida/../per_state_information.h ida/../globals.h ida/../mutex_group.h \
  ida/../segmented_vector.h ida/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -28212,7 +28263,7 @@
  idar/../global_state.h idar/../int_packer.h idar/../state_id.h \
  idar/../search_engine.h idar/../global_operator.h idar/../global_state.h \
  idar/../operator_cost.h idar/../search_space.h \
- idar/../per_state_information.h idar/../globals.h \
+ idar/../per_state_information.h idar/../globals.h idar/../mutex_group.h \
  idar/../segmented_vector.h idar/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -28378,7 +28429,7 @@
  idai/../global_state.h idai/../int_packer.h idai/../state_id.h \
  idai/../search_engine.h idai/../global_operator.h idai/../global_state.h \
  idai/../operator_cost.h idai/../search_space.h \
- idai/../per_state_information.h idai/../globals.h \
+ idai/../per_state_information.h idai/../globals.h idai/../mutex_group.h \
  idai/../segmented_vector.h idai/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -28544,7 +28595,7 @@
  bfs/../global_state.h bfs/../int_packer.h bfs/../state_id.h \
  bfs/../search_engine.h bfs/../global_operator.h bfs/../global_state.h \
  bfs/../operator_cost.h bfs/../search_space.h \
- bfs/../per_state_information.h bfs/../globals.h \
+ bfs/../per_state_information.h bfs/../globals.h bfs/../mutex_group.h \
  bfs/../segmented_vector.h bfs/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -28711,8 +28762,9 @@
  original/../global_operator.h original/../global_state.h \
  original/../operator_cost.h original/../search_space.h \
  original/../per_state_information.h original/../globals.h \
- original/../segmented_vector.h original/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ original/../mutex_group.h original/../segmented_vector.h \
+ original/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -28884,8 +28936,8 @@
  ss/../task_proxy.h ss/../abstract_task.h ss/../global_operator.h \
  ss/../global_state.h ss/../search_engine.h ss/../global_operator.h \
  ss/../search_space.h ss/../per_state_information.h ss/../globals.h \
- ss/../segmented_vector.h ss/../utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ ss/../mutex_group.h ss/../segmented_vector.h ss/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -29043,8 +29095,8 @@
  ss/../task_proxy.h ss/../abstract_task.h ss/../global_operator.h \
  ss/../global_state.h ss/../search_engine.h ss/../global_operator.h \
  ss/../search_space.h ss/../per_state_information.h ss/../globals.h \
- ss/../segmented_vector.h ss/../utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ ss/../mutex_group.h ss/../segmented_vector.h ss/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -29460,7 +29512,7 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
-.obj/planner.profile.o: planner.cc globals.h option_parser.h heuristic.h \
+.obj/planner.profile.o: planner.cc globals.h mutex_group.h option_parser.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
@@ -29603,10 +29655,11 @@
  per_state_information.h segmented_vector.h state_registry.h \
  search_node_info.h search_progress.h timer.h ext/tree_util.hh
 .obj/axioms.profile.o: axioms.cc axioms.h global_state.h int_packer.h state_id.h \
- global_operator.h globals.h
+ global_operator.h globals.h mutex_group.h
 .obj/causal_graph.profile.o: causal_graph.cc causal_graph.h global_operator.h \
- global_state.h int_packer.h state_id.h globals.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -29707,8 +29760,8 @@
 .obj/cost_adapted_task.profile.o: cost_adapted_task.cc cost_adapted_task.h \
  delegating_task.h abstract_task.h operator_cost.h option_parser.h \
  heuristic.h scalar_evaluator.h evaluator.h task_proxy.h \
- option_parser_util.h utilities.h globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ option_parser_util.h utilities.h globals.h mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -29857,8 +29910,8 @@
 .obj/delegating_task.profile.o: delegating_task.cc delegating_task.h abstract_task.h
 .obj/domain_transition_graph.profile.o: domain_transition_graph.cc \
  domain_transition_graph.h global_operator.h global_state.h int_packer.h \
- state_id.h globals.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ state_id.h globals.h mutex_group.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -29957,7 +30010,7 @@
 .obj/enforced_hill_climbing_search.profile.o: enforced_hill_climbing_search.cc \
  enforced_hill_climbing_search.h g_evaluator.h scalar_evaluator.h \
  evaluator.h global_operator.h global_state.h int_packer.h state_id.h \
- globals.h search_engine.h operator_cost.h search_space.h \
+ globals.h mutex_group.h search_engine.h operator_cost.h search_space.h \
  per_state_information.h segmented_vector.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -30108,7 +30161,7 @@
  open_lists/../globals.h open_lists/../rng.h pref_evaluator.h \
  successor_generator.h
 .obj/equivalence_relation.profile.o: equivalence_relation.cc equivalence_relation.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -30206,7 +30259,8 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/exact_timer.profile.o: exact_timer.cc exact_timer.h utilities.h globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -30304,7 +30358,7 @@
  ext/boost/throw_exception.hpp
 .obj/g_evaluator.profile.o: g_evaluator.cc g_evaluator.h scalar_evaluator.h \
  evaluator.h option_parser.h heuristic.h operator_cost.h task_proxy.h \
- abstract_task.h option_parser_util.h utilities.h globals.h \
+ abstract_task.h option_parser_util.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -30451,7 +30505,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/global_operator.profile.o: global_operator.cc global_operator.h global_state.h \
- int_packer.h state_id.h globals.h utilities.h \
+ int_packer.h state_id.h globals.h mutex_group.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -30549,7 +30603,7 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/global_state.profile.o: global_state.cc global_state.h int_packer.h state_id.h \
- globals.h utilities.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -30646,12 +30700,12 @@
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp state_registry.h segmented_vector.h
-.obj/globals.profile.o: globals.cc globals.h axioms.h global_state.h int_packer.h \
- state_id.h causal_graph.h domain_transition_graph.h global_operator.h \
- heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h rng.h root_task.h state_registry.h segmented_vector.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+.obj/globals.profile.o: globals.cc globals.h mutex_group.h axioms.h global_state.h \
+ int_packer.h state_id.h causal_graph.h domain_transition_graph.h \
+ global_operator.h heuristic.h operator_cost.h scalar_evaluator.h \
+ evaluator.h task_proxy.h abstract_task.h rng.h root_task.h \
+ state_registry.h segmented_vector.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -30750,8 +30804,9 @@
 .obj/heuristic.profile.o: heuristic.cc heuristic.h operator_cost.h scalar_evaluator.h \
  evaluator.h task_proxy.h abstract_task.h cost_adapted_task.h \
  delegating_task.h global_operator.h global_state.h int_packer.h \
- state_id.h globals.h option_parser.h option_parser_util.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ state_id.h globals.h mutex_group.h option_parser.h option_parser_util.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -30891,7 +30946,7 @@
 .obj/ipc_max_heuristic.profile.o: ipc_max_heuristic.cc ipc_max_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser.h option_parser_util.h utilities.h \
- globals.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -31039,8 +31094,8 @@
  open_lists/../rng.h
 .obj/iterated_search.profile.o: iterated_search.cc iterated_search.h search_engine.h \
  global_operator.h global_state.h int_packer.h state_id.h operator_cost.h \
- search_space.h per_state_information.h globals.h segmented_vector.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
+ search_space.h per_state_information.h globals.h mutex_group.h \
+ segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -31191,8 +31246,8 @@
 .obj/lazy_search.profile.o: lazy_search.cc lazy_search.h global_state.h int_packer.h \
  state_id.h scalar_evaluator.h evaluator.h search_engine.h \
  global_operator.h operator_cost.h search_space.h per_state_information.h \
- globals.h segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ globals.h mutex_group.h segmented_vector.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -31340,10 +31395,11 @@
  open_lists/pareto_open_list.h open_lists/pareto_open_list.cc \
  open_lists/../globals.h open_lists/../rng.h rng.h successor_generator.h \
  sum_evaluator.h combining_evaluator.h weighted_evaluator.h
+.obj/mutex_group.profile.o: mutex_group.cc mutex_group.h globals.h
 .obj/max_evaluator.profile.o: max_evaluator.cc max_evaluator.h combining_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -31492,7 +31548,7 @@
 .obj/min_evaluator.profile.o: min_evaluator.cc min_evaluator.h combining_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -31639,10 +31695,10 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/operator_cost.profile.o: operator_cost.cc operator_cost.h global_operator.h \
- global_state.h int_packer.h state_id.h globals.h option_parser.h \
- heuristic.h scalar_evaluator.h evaluator.h task_proxy.h abstract_task.h \
- option_parser_util.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ option_parser.h heuristic.h scalar_evaluator.h evaluator.h task_proxy.h \
+ abstract_task.h option_parser_util.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -31778,8 +31834,8 @@
  ext/boost/preprocessor/variadic/elem.hpp \
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
  ext/boost/type_traits/add_reference.hpp
-.obj/option_parser.profile.o: option_parser.cc globals.h option_parser.h heuristic.h \
- operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
+.obj/option_parser.profile.o: option_parser.cc globals.h mutex_group.h option_parser.h \
+ heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -31927,7 +31983,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h rng.h
 .obj/option_parser_util.profile.o: option_parser_util.cc option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -32065,7 +32121,7 @@
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
  ext/boost/type_traits/add_reference.hpp
 .obj/segmented_vector.profile.o: segmented_vector.cc segmented_vector.h utilities.h \
- globals.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -32163,8 +32219,8 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/per_state_information.profile.o: per_state_information.cc per_state_information.h \
- global_state.h int_packer.h state_id.h globals.h segmented_vector.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -32269,8 +32325,8 @@
  open_lists/../operator_cost.h open_lists/../scalar_evaluator.h \
  open_lists/../task_proxy.h open_lists/../abstract_task.h \
  open_lists/../option_parser_util.h open_lists/../utilities.h \
- open_lists/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ open_lists/../globals.h open_lists/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -32414,7 +32470,7 @@
 .obj/relaxation_heuristic.profile.o: relaxation_heuristic.cc relaxation_heuristic.h \
  heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h global_operator.h global_state.h int_packer.h state_id.h \
- globals.h utilities.h ext/boost/dynamic_bitset.hpp \
+ globals.h mutex_group.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -32513,10 +32569,10 @@
  ext/boost/throw_exception.hpp
 .obj/rng.profile.o: rng.cc rng.h
 .obj/root_task.profile.o: root_task.cc root_task.h abstract_task.h global_operator.h \
- global_state.h int_packer.h state_id.h globals.h option_parser.h \
- heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- option_parser_util.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ global_state.h int_packer.h state_id.h globals.h mutex_group.h \
+ option_parser.h heuristic.h operator_cost.h scalar_evaluator.h \
+ evaluator.h task_proxy.h option_parser_util.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -32663,8 +32719,9 @@
  open_lists/../rng.h
 .obj/search_engine.profile.o: search_engine.cc search_engine.h global_operator.h \
  global_state.h int_packer.h state_id.h operator_cost.h search_space.h \
- per_state_information.h globals.h segmented_vector.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ per_state_information.h globals.h mutex_group.h segmented_vector.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -32805,10 +32862,10 @@
  ext/boost/type_traits/add_reference.hpp
 .obj/search_node_info.profile.o: search_node_info.cc search_node_info.h \
  global_operator.h global_state.h int_packer.h state_id.h
-.obj/search_progress.profile.o: search_progress.cc search_progress.h globals.h timer.h \
- heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+.obj/search_progress.profile.o: search_progress.cc search_progress.h globals.h \
+ mutex_group.h timer.h heuristic.h operator_cost.h scalar_evaluator.h \
+ evaluator.h task_proxy.h abstract_task.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -32906,8 +32963,8 @@
  ext/boost/throw_exception.hpp
 .obj/search_space.profile.o: search_space.cc search_space.h global_state.h \
  int_packer.h state_id.h operator_cost.h per_state_information.h \
- globals.h segmented_vector.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ globals.h mutex_group.h segmented_vector.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -33006,8 +33063,9 @@
  global_operator.h
 .obj/state_id.profile.o: state_id.cc state_id.h
 .obj/state_registry.profile.o: state_registry.cc state_registry.h global_state.h \
- int_packer.h state_id.h globals.h segmented_vector.h utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ int_packer.h state_id.h globals.h mutex_group.h segmented_vector.h \
+ utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -33106,7 +33164,7 @@
  per_state_information.h
 .obj/successor_generator.profile.o: successor_generator.cc successor_generator.h \
  global_operator.h global_state.h int_packer.h state_id.h globals.h \
- utilities.h ext/boost/dynamic_bitset.hpp \
+ mutex_group.h utilities.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -33206,7 +33264,7 @@
 .obj/sum_evaluator.profile.o: sum_evaluator.cc sum_evaluator.h combining_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -33353,7 +33411,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/task_tools.profile.o: task_tools.cc task_tools.h task_proxy.h abstract_task.h
-.obj/timer.profile.o: timer.cc timer.h utilities.h globals.h \
+.obj/timer.profile.o: timer.cc timer.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -33450,7 +33508,7 @@
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
-.obj/tracer.profile.o: tracer.cc tracer.h globals.h timer.h utilities.h \
+.obj/tracer.profile.o: tracer.cc tracer.h globals.h mutex_group.h timer.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -33547,7 +33605,7 @@
  ext/boost/integer/integer_log2.hpp ext/boost/static_assert.hpp \
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
-.obj/utilities.profile.o: utilities.cc utilities.h globals.h \
+.obj/utilities.profile.o: utilities.cc utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -33944,8 +34002,8 @@
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp \
  ext/../timer.h
 .obj/variable_order_finder.profile.o: variable_order_finder.cc variable_order_finder.h \
- causal_graph.h globals.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ causal_graph.h globals.h mutex_group.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -34044,7 +34102,7 @@
 .obj/weighted_evaluator.profile.o: weighted_evaluator.cc weighted_evaluator.h \
  scalar_evaluator.h evaluator.h option_parser.h heuristic.h \
  operator_cost.h task_proxy.h abstract_task.h option_parser_util.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -34196,7 +34254,7 @@
 .obj/open_lists/standard_scalar_open_list.profile.o: open_lists/standard_scalar_open_list.cc
 .obj/open_lists/tiebreaking_open_list.profile.o: open_lists/tiebreaking_open_list.cc
 .obj/lp_internals.profile.o: lp_internals.cc lp_internals.h
-.obj/lp_solver.profile.o: lp_solver.cc lp_solver.h utilities.h globals.h \
+.obj/lp_solver.profile.o: lp_solver.cc lp_solver.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -34336,8 +34394,8 @@
  ext/boost/preprocessor/arithmetic/sub.hpp ext/boost/mpl/identity.hpp \
  ext/boost/type_traits/add_reference.hpp
 .obj/additive_heuristic.profile.o: additive_heuristic.cc additive_heuristic.h \
- priority_queue.h utilities.h globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ priority_queue.h utilities.h globals.h mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -34489,7 +34547,8 @@
  blind_search_heuristic.h heuristic.h operator_cost.h scalar_evaluator.h \
  evaluator.h task_proxy.h abstract_task.h global_state.h int_packer.h \
  state_id.h option_parser.h option_parser_util.h utilities.h globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -34636,7 +34695,7 @@
  open_lists/../rng.h task_tools.h
 .obj/cea_heuristic.profile.o: cea_heuristic.cc cea_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h priority_queue.h utilities.h globals.h \
+ abstract_task.h priority_queue.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -34786,7 +34845,7 @@
  open_lists/../rng.h
 .obj/cg_heuristic.profile.o: cg_heuristic.cc cg_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h priority_queue.h utilities.h globals.h \
+ abstract_task.h priority_queue.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -34935,7 +34994,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/cg_cache.profile.o: cg_cache.cc cg_cache.h causal_graph.h global_state.h \
- int_packer.h state_id.h globals.h utilities.h \
+ int_packer.h state_id.h globals.h mutex_group.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -35033,8 +35092,8 @@
  ext/boost/utility/addressof.hpp ext/boost/core/addressof.hpp \
  ext/boost/throw_exception.hpp
 .obj/ff_heuristic.profile.o: ff_heuristic.cc ff_heuristic.h additive_heuristic.h \
- priority_queue.h utilities.h globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ priority_queue.h utilities.h globals.h mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -35185,7 +35244,7 @@
 .obj/goal_count_heuristic.profile.o: goal_count_heuristic.cc goal_count_heuristic.h \
  heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h global_state.h int_packer.h state_id.h globals.h \
- option_parser.h option_parser_util.h utilities.h \
+ mutex_group.h option_parser.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -35334,9 +35393,9 @@
 .obj/dijkstra_search_heuristic.profile.o: dijkstra_search_heuristic.cc \
  dijkstra_search_heuristic.h heuristic.h operator_cost.h \
  scalar_evaluator.h evaluator.h task_proxy.h abstract_task.h globals.h \
- global_operator.h global_state.h int_packer.h state_id.h option_parser.h \
- option_parser_util.h utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ mutex_group.h global_operator.h global_state.h int_packer.h state_id.h \
+ option_parser.h option_parser_util.h utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -35482,8 +35541,8 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/hm_heuristic.profile.o: hm_heuristic.cc hm_heuristic.h global_state.h \
- int_packer.h state_id.h global_operator.h globals.h heuristic.h \
- operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
+ int_packer.h state_id.h global_operator.h globals.h mutex_group.h \
+ heuristic.h operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
  abstract_task.h option_parser.h option_parser_util.h utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -35632,7 +35691,7 @@
  open_lists/../rng.h
 .obj/lm_cut_heuristic.profile.o: lm_cut_heuristic.cc lm_cut_heuristic.h heuristic.h \
  operator_cost.h scalar_evaluator.h evaluator.h task_proxy.h \
- abstract_task.h priority_queue.h utilities.h globals.h \
+ abstract_task.h priority_queue.h utilities.h globals.h mutex_group.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -35780,7 +35839,7 @@
  open_lists/pareto_open_list.cc open_lists/../globals.h \
  open_lists/../rng.h
 .obj/max_heuristic.profile.o: max_heuristic.cc max_heuristic.h priority_queue.h \
- utilities.h globals.h ext/boost/dynamic_bitset.hpp \
+ utilities.h globals.h mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -35934,8 +35993,9 @@
  merge_and_shrink/../equivalence_relation.h \
  merge_and_shrink/../global_operator.h merge_and_shrink/../global_state.h \
  merge_and_shrink/../int_packer.h merge_and_shrink/../state_id.h \
- merge_and_shrink/../globals.h merge_and_shrink/../option_parser.h \
- merge_and_shrink/../heuristic.h merge_and_shrink/../operator_cost.h \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ merge_and_shrink/../option_parser.h merge_and_shrink/../heuristic.h \
+ merge_and_shrink/../operator_cost.h \
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
@@ -36086,10 +36146,11 @@
  merge_and_shrink/labels.h merge_and_shrink/merge_strategy.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/../global_state.h \
  merge_and_shrink/../int_packer.h merge_and_shrink/../state_id.h \
- merge_and_shrink/../globals.h merge_and_shrink/../option_parser.h \
- merge_and_shrink/../heuristic.h merge_and_shrink/../option_parser_util.h \
- merge_and_shrink/../utilities.h merge_and_shrink/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ merge_and_shrink/../option_parser.h merge_and_shrink/../heuristic.h \
+ merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
+ merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -36249,8 +36310,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -36411,8 +36472,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -36566,7 +36627,8 @@
  merge_and_shrink/../open_lists/../globals.h \
  merge_and_shrink/../open_lists/../rng.h merge_and_shrink/../utilities.h
 .obj/merge_and_shrink/merge_strategy.profile.o: merge_and_shrink/merge_strategy.cc \
- merge_and_shrink/merge_strategy.h merge_and_shrink/../globals.h
+ merge_and_shrink/merge_strategy.h merge_and_shrink/../globals.h \
+ merge_and_shrink/../mutex_group.h
 .obj/merge_and_shrink/shrink_bisimulation.profile.o: merge_and_shrink/shrink_bisimulation.cc \
  merge_and_shrink/shrink_bisimulation.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/transition_system.h \
@@ -36575,8 +36637,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -36733,7 +36795,7 @@
  merge_and_shrink/shrink_bucket_based.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/transition_system.h \
  merge_and_shrink/../operator_cost.h merge_and_shrink/../globals.h \
- merge_and_shrink/../rng.h
+ merge_and_shrink/../mutex_group.h merge_and_shrink/../rng.h
 .obj/merge_and_shrink/shrink_fh.profile.o: merge_and_shrink/shrink_fh.cc merge_and_shrink/shrink_fh.h \
  merge_and_shrink/shrink_bucket_based.h \
  merge_and_shrink/shrink_strategy.h merge_and_shrink/transition_system.h \
@@ -36742,8 +36804,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -36904,8 +36966,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -37065,8 +37127,8 @@
  merge_and_shrink/../scalar_evaluator.h merge_and_shrink/../evaluator.h \
  merge_and_shrink/../task_proxy.h merge_and_shrink/../abstract_task.h \
  merge_and_shrink/../option_parser_util.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../globals.h merge_and_shrink/../mutex_group.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -37209,9 +37271,9 @@
  merge_and_shrink/shrink_strategy.h merge_and_shrink/../global_operator.h \
  merge_and_shrink/../global_state.h merge_and_shrink/../int_packer.h \
  merge_and_shrink/../state_id.h merge_and_shrink/../globals.h \
- merge_and_shrink/../priority_queue.h merge_and_shrink/../utilities.h \
- merge_and_shrink/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ merge_and_shrink/../mutex_group.h merge_and_shrink/../priority_queue.h \
+ merge_and_shrink/../utilities.h merge_and_shrink/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -37312,9 +37374,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -37419,9 +37482,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -37583,9 +37646,10 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/exploration.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -37750,7 +37814,8 @@
  landmarks/landmark_factory_rpg_sasp.h landmarks/landmark_factory.h
 .obj/landmarks/landmark_cost_assignment.profile.o: landmarks/landmark_cost_assignment.cc \
  landmarks/landmark_cost_assignment.h landmarks/../globals.h \
- landmarks/../lp_solver.h landmarks/../utilities.h landmarks/../globals.h \
+ landmarks/../mutex_group.h landmarks/../lp_solver.h \
+ landmarks/../utilities.h landmarks/../globals.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -37901,9 +37966,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -38071,9 +38137,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -38221,9 +38287,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -38384,9 +38451,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -38533,9 +38600,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -38682,9 +38749,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -38847,9 +38915,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -39013,9 +39082,10 @@
  landmarks/../heuristic.h landmarks/../operator_cost.h \
  landmarks/../scalar_evaluator.h landmarks/../evaluator.h \
  landmarks/../task_proxy.h landmarks/../abstract_task.h \
- landmarks/../globals.h landmarks/../priority_queue.h \
- landmarks/../utilities.h landmarks/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../globals.h landmarks/../mutex_group.h \
+ landmarks/../priority_queue.h landmarks/../utilities.h \
+ landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -39177,9 +39247,9 @@
  landmarks/../operator_cost.h landmarks/../scalar_evaluator.h \
  landmarks/../evaluator.h landmarks/../task_proxy.h \
  landmarks/../abstract_task.h landmarks/../globals.h \
- landmarks/../priority_queue.h landmarks/../utilities.h \
- landmarks/../globals.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ landmarks/../mutex_group.h landmarks/../priority_queue.h \
+ landmarks/../utilities.h landmarks/../globals.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -39324,7 +39394,8 @@
  pdbs/../operator_cost.h pdbs/../scalar_evaluator.h pdbs/../evaluator.h \
  pdbs/../task_proxy.h pdbs/../abstract_task.h pdbs/dominance_pruner.h \
  pdbs/pdb_heuristic.h pdbs/../utilities.h pdbs/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -39483,7 +39554,8 @@
  pdbs/pdb_heuristic.h pdbs/../heuristic.h pdbs/../operator_cost.h \
  pdbs/../scalar_evaluator.h pdbs/../evaluator.h pdbs/../task_proxy.h \
  pdbs/../abstract_task.h pdbs/../utilities.h pdbs/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../mutex_group.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -39582,9 +39654,9 @@
 .obj/pdbs/match_tree.profile.o: pdbs/match_tree.cc pdbs/match_tree.h pdbs/pdb_heuristic.h \
  pdbs/../heuristic.h pdbs/../operator_cost.h pdbs/../scalar_evaluator.h \
  pdbs/../evaluator.h pdbs/../task_proxy.h pdbs/../abstract_task.h \
- pdbs/../globals.h
+ pdbs/../globals.h pdbs/../mutex_group.h
 .obj/pdbs/max_cliques.profile.o: pdbs/max_cliques.cc pdbs/max_cliques.h pdbs/../utilities.h \
- pdbs/../globals.h ext/boost/dynamic_bitset.hpp \
+ pdbs/../globals.h pdbs/../mutex_group.h ext/boost/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -39688,7 +39760,8 @@
  pdbs/../task_proxy.h pdbs/../abstract_task.h \
  pdbs/zero_one_pdbs_heuristic.h pdbs/../blind_search_heuristic.h \
  pdbs/../heuristic.h pdbs/../causal_graph.h pdbs/../globals.h \
- pdbs/../plugin.h pdbs/../open_lists/standard_scalar_open_list.h \
+ pdbs/../mutex_group.h pdbs/../plugin.h \
+ pdbs/../open_lists/standard_scalar_open_list.h \
  pdbs/../open_lists/open_list.h pdbs/../open_lists/../evaluator.h \
  pdbs/../open_lists/standard_scalar_open_list.cc \
  pdbs/../open_lists/../scalar_evaluator.h \
@@ -40105,9 +40178,9 @@
 .obj/pdbs/pattern_generation_haslum.profile.o: pdbs/pattern_generation_haslum.cc \
  pdbs/pattern_generation_haslum.h pdbs/../operator_cost.h \
  pdbs/../state_registry.h pdbs/../global_state.h pdbs/../int_packer.h \
- pdbs/../state_id.h pdbs/../globals.h pdbs/../segmented_vector.h \
- pdbs/../utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../state_id.h pdbs/../globals.h pdbs/../mutex_group.h \
+ pdbs/../segmented_vector.h pdbs/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -40268,7 +40341,7 @@
 .obj/pdbs/pdb_heuristic.profile.o: pdbs/pdb_heuristic.cc pdbs/pdb_heuristic.h \
  pdbs/../heuristic.h pdbs/../operator_cost.h pdbs/../scalar_evaluator.h \
  pdbs/../evaluator.h pdbs/../task_proxy.h pdbs/../abstract_task.h \
- pdbs/match_tree.h pdbs/util.h pdbs/../globals.h \
+ pdbs/match_tree.h pdbs/util.h pdbs/../globals.h pdbs/../mutex_group.h \
  pdbs/../global_operator.h pdbs/../global_state.h pdbs/../int_packer.h \
  pdbs/../state_id.h pdbs/../global_state.h pdbs/../plugin.h \
  pdbs/../open_lists/standard_scalar_open_list.h \
@@ -40685,7 +40758,7 @@
  ext/boost/range/algorithm/equal.hpp ext/boost/range/detail/safe_bool.hpp \
  ext/boost/container/container_fwd.hpp ext/boost/integer.hpp \
  ext/boost/integer_fwd.hpp ext/boost/detail/basic_pointerbuf.hpp
-.obj/pdbs/util.profile.o: pdbs/util.cc pdbs/util.h pdbs/../globals.h \
+.obj/pdbs/util.profile.o: pdbs/util.cc pdbs/util.h pdbs/../globals.h pdbs/../mutex_group.h \
  pdbs/../option_parser.h pdbs/../heuristic.h pdbs/../operator_cost.h \
  pdbs/../scalar_evaluator.h pdbs/../evaluator.h pdbs/../task_proxy.h \
  pdbs/../abstract_task.h pdbs/../option_parser_util.h pdbs/../utilities.h \
@@ -40833,9 +40906,10 @@
  pdbs/../task_proxy.h pdbs/../abstract_task.h pdbs/pdb_heuristic.h \
  pdbs/util.h pdbs/../global_operator.h pdbs/../global_state.h \
  pdbs/../int_packer.h pdbs/../state_id.h pdbs/../global_state.h \
- pdbs/../globals.h pdbs/../option_parser.h pdbs/../heuristic.h \
- pdbs/../option_parser_util.h pdbs/../utilities.h pdbs/../globals.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ pdbs/../globals.h pdbs/../mutex_group.h pdbs/../option_parser.h \
+ pdbs/../heuristic.h pdbs/../option_parser_util.h pdbs/../utilities.h \
+ pdbs/../globals.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -40991,7 +41065,7 @@
  speed/../state_id.h speed/../search_engine.h speed/../global_operator.h \
  speed/../global_state.h speed/../operator_cost.h speed/../search_space.h \
  speed/../per_state_information.h speed/../globals.h \
- speed/../segmented_vector.h speed/../utilities.h \
+ speed/../mutex_group.h speed/../segmented_vector.h speed/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -41157,7 +41231,7 @@
  astar/../state_id.h astar/../search_engine.h astar/../global_operator.h \
  astar/../global_state.h astar/../operator_cost.h astar/../search_space.h \
  astar/../per_state_information.h astar/../globals.h \
- astar/../segmented_vector.h astar/../utilities.h \
+ astar/../mutex_group.h astar/../segmented_vector.h astar/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
@@ -41586,8 +41660,9 @@
  astar_no_speed/../global_operator.h astar_no_speed/../global_state.h \
  astar_no_speed/../operator_cost.h astar_no_speed/../search_space.h \
  astar_no_speed/../per_state_information.h astar_no_speed/../globals.h \
- astar_no_speed/../segmented_vector.h astar_no_speed/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ astar_no_speed/../mutex_group.h astar_no_speed/../segmented_vector.h \
+ astar_no_speed/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -42018,8 +42093,9 @@
  astar_s/../global_operator.h astar_s/../global_state.h \
  astar_s/../operator_cost.h astar_s/../search_space.h \
  astar_s/../per_state_information.h astar_s/../globals.h \
- astar_s/../segmented_vector.h astar_s/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ astar_s/../mutex_group.h astar_s/../segmented_vector.h \
+ astar_s/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -42448,8 +42524,9 @@
  dijkstra/../global_operator.h dijkstra/../global_state.h \
  dijkstra/../operator_cost.h dijkstra/../search_space.h \
  dijkstra/../per_state_information.h dijkstra/../globals.h \
- dijkstra/../segmented_vector.h dijkstra/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ dijkstra/../mutex_group.h dijkstra/../segmented_vector.h \
+ dijkstra/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -42615,7 +42692,7 @@
  dfs/../global_state.h dfs/../int_packer.h dfs/../state_id.h \
  dfs/../search_engine.h dfs/../global_operator.h dfs/../global_state.h \
  dfs/../operator_cost.h dfs/../search_space.h \
- dfs/../per_state_information.h dfs/../globals.h \
+ dfs/../per_state_information.h dfs/../globals.h dfs/../mutex_group.h \
  dfs/../segmented_vector.h dfs/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -42779,7 +42856,7 @@
  ida/../global_state.h ida/../int_packer.h ida/../state_id.h \
  ida/../search_engine.h ida/../global_operator.h ida/../global_state.h \
  ida/../operator_cost.h ida/../search_space.h \
- ida/../per_state_information.h ida/../globals.h \
+ ida/../per_state_information.h ida/../globals.h ida/../mutex_group.h \
  ida/../segmented_vector.h ida/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -42943,7 +43020,7 @@
  idar/../global_state.h idar/../int_packer.h idar/../state_id.h \
  idar/../search_engine.h idar/../global_operator.h idar/../global_state.h \
  idar/../operator_cost.h idar/../search_space.h \
- idar/../per_state_information.h idar/../globals.h \
+ idar/../per_state_information.h idar/../globals.h idar/../mutex_group.h \
  idar/../segmented_vector.h idar/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -43109,7 +43186,7 @@
  idai/../global_state.h idai/../int_packer.h idai/../state_id.h \
  idai/../search_engine.h idai/../global_operator.h idai/../global_state.h \
  idai/../operator_cost.h idai/../search_space.h \
- idai/../per_state_information.h idai/../globals.h \
+ idai/../per_state_information.h idai/../globals.h idai/../mutex_group.h \
  idai/../segmented_vector.h idai/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -43275,7 +43352,7 @@
  bfs/../global_state.h bfs/../int_packer.h bfs/../state_id.h \
  bfs/../search_engine.h bfs/../global_operator.h bfs/../global_state.h \
  bfs/../operator_cost.h bfs/../search_space.h \
- bfs/../per_state_information.h bfs/../globals.h \
+ bfs/../per_state_information.h bfs/../globals.h bfs/../mutex_group.h \
  bfs/../segmented_vector.h bfs/../utilities.h \
  ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
@@ -43442,8 +43519,9 @@
  original/../global_operator.h original/../global_state.h \
  original/../operator_cost.h original/../search_space.h \
  original/../per_state_information.h original/../globals.h \
- original/../segmented_vector.h original/../utilities.h \
- ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ original/../mutex_group.h original/../segmented_vector.h \
+ original/../utilities.h ext/boost/dynamic_bitset.hpp \
+ ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -43615,8 +43693,8 @@
  ss/../task_proxy.h ss/../abstract_task.h ss/../global_operator.h \
  ss/../global_state.h ss/../search_engine.h ss/../global_operator.h \
  ss/../search_space.h ss/../per_state_information.h ss/../globals.h \
- ss/../segmented_vector.h ss/../utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ ss/../mutex_group.h ss/../segmented_vector.h ss/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \
@@ -43774,8 +43852,8 @@
  ss/../task_proxy.h ss/../abstract_task.h ss/../global_operator.h \
  ss/../global_state.h ss/../search_engine.h ss/../global_operator.h \
  ss/../search_space.h ss/../per_state_information.h ss/../globals.h \
- ss/../segmented_vector.h ss/../utilities.h ext/boost/dynamic_bitset.hpp \
- ext/boost/dynamic_bitset/dynamic_bitset.hpp \
+ ss/../mutex_group.h ss/../segmented_vector.h ss/../utilities.h \
+ ext/boost/dynamic_bitset.hpp ext/boost/dynamic_bitset/dynamic_bitset.hpp \
  ext/boost/dynamic_bitset/config.hpp ext/boost/config.hpp \
  ext/boost/config/user.hpp ext/boost/config/select_compiler_config.hpp \
  ext/boost/config/compiler/gcc.hpp \

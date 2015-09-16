@@ -13,12 +13,22 @@ State::State(istream &in, const vector<Variable *> &variables) {
     check_magic(in, "end_state");
 }
 
-int State::operator[](Variable *var) const {
+int State::operator[](const Variable *var) const {
     return values.find(var)->second;
 }
 
 void State::dump() const {
-    for (map<Variable *, int>::const_iterator it = values.begin();
-         it != values.end(); ++it)
-        cout << "  " << it->first->get_name() << ": " << it->second << endl;
+  for (map<const Variable *, int>::const_iterator it = values.begin();
+       it != values.end(); ++it)
+    cout << "  " << it->first->get_name() << ": " << it->second << endl;
+}
+
+void State::remove_unreachable_facts(){
+  map<const Variable *, int> newvalues;
+  for (map<const Variable *, int>::const_iterator it = values.begin();
+       it != values.end(); ++it){
+    if(it->first->is_necessary())
+      newvalues[it->first] = it->first->get_new_id(it->second);
+  }
+  newvalues.swap(values);
 }

@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python2.72.7
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
@@ -330,15 +330,20 @@ def compute_model(prog):
     return queue.queue
 
 if __name__ == "__main__":
-    import pddl_parser
+    import sys
     import pddl_to_prolog
+    silent = False
+    if len(sys.argv) >= 2 and sys.argv[1] == "--silent":
+        silent = True
+        del sys.argv[1]
 
     print("Parsing...")
-    task = pddl_parser.open()
+    task = pddl.open()
     print("Writing rules...")
     prog = pddl_to_prolog.translate(task)
 
     model = compute_model(prog)
-    for atom in model:
-        print(atom)
+    if not silent:
+        for atom in model:
+            print(atom)
     print("%d atoms" % len(model))

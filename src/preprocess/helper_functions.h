@@ -1,5 +1,5 @@
-#ifndef HELPER_FUNCTIONS_H
-#define HELPER_FUNCTIONS_H
+#ifndef HELPERS_H
+#define HELPERS_H
 
 #include "state.h"
 #include "variable.h"
@@ -50,5 +50,12 @@ void generate_cpp_input(bool causal_graph_acyclic,
                         const vector<DomainTransitionGraph> transition_graphs,
                         const CausalGraph &cg);
 void check_magic(istream &in, string magic);
+
+void write_mutexes(vector<Variable*> & variables, vector<MutexGroup> & m, string filename);
+void write_mutexes(vector<Variable*> & variables, vector<MutexGroup> & m, ofstream & filename);
+void write_operators(vector<Operator> & ops, string filename);
+void write_operators(vector<Operator> & ops, ofstream & filename);
+void write_variables(vector<Variable *> & variables, string filename);
+void write_variables(vector<Variable *> & variables, ofstream & file);
 
 #endif

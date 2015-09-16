@@ -162,3 +162,5 @@ class ConstraintSystem(object):
             if self._all_clauses_satisfiable(combined):
                 return True
         return False
+
+

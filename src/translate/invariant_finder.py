@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python2.72.7
 
 from __future__ import print_function
 
@@ -7,14 +7,13 @@ import itertools
 import time
 
 import invariants
-import options
 import pddl
 import timers
 
 class BalanceChecker(object):
     def __init__(self, task, reachable_action_params):
         self.predicates_to_add_actions = defaultdict(set)
-        self.action_to_heavy_action = {}
+        self.action_name_to_heavy_action = {}
         for act in task.actions:
             action = self.add_inequality_preconds(act, reachable_action_params)
             too_heavy_effects = []
@@ -35,13 +34,13 @@ class BalanceChecker(object):
                                         action.cost)
             # heavy_act: duplicated universal effects and assigned unique names
             # to all quantified variables (implicitly in constructor)
-            self.action_to_heavy_action[action] = heavy_act
+            self.action_name_to_heavy_action[action.name] = heavy_act
 
     def get_threats(self, predicate):
         return self.predicates_to_add_actions.get(predicate, set())
 
-    def get_heavy_action(self, action):
-        return self.action_to_heavy_action[action]
+    def get_heavy_action(self, action_name):
+        return self.action_name_to_heavy_action[action_name]
 
     def add_inequality_preconds(self, action, reachable_action_params):
         if reachable_action_params is None or len(action.parameters) < 2:
@@ -84,6 +83,10 @@ def get_initial_invariants(task):
             part = invariants.InvariantPart(predicate.name, order, omitted_arg)
             yield invariants.Invariant((part,))
 
+# Input file might be grounded, beware of too many invariant candidates
+MAX_CANDIDATES = 100000
+MAX_TIME = 300
+
 def find_invariants(task, reachable_action_params):
     candidates = deque(get_initial_invariants(task))
     print(len(candidates), "initial candidates")
@@ -92,15 +95,14 @@ def find_invariants(task, reachable_action_params):
     balance_checker = BalanceChecker(task, reachable_action_params)
 
     def enqueue_func(invariant):
-        if (len(seen_candidates) < options.invariant_generation_max_candidates and
-                invariant not in seen_candidates):
+        if len(seen_candidates) < MAX_CANDIDATES and invariant not in seen_candidates:
             candidates.append(invariant)
             seen_candidates.add(invariant)
 
     start_time = time.clock()
     while candidates:
         candidate = candidates.popleft()
-        if time.clock() - start_time > options.invariant_generation_max_time:
+        if time.clock() - start_time > MAX_TIME:
             print("Time limit reached, aborting invariant generation")
             return
         if candidate.check_balance(balance_checker, enqueue_func):
@@ -136,10 +138,8 @@ def get_groups(task, reachable_action_params=None):
 
 if __name__ == "__main__":
     import normalize
-    import pddl_parser
-
     print("Parsing...")
-    task = pddl_parser.open()
+    task = pddl.open()
     print("Normalizing...")
     normalize.normalize(task)
     print("Finding invariants...")

@@ -4,7 +4,8 @@
 
 #include <string>
 #include <vector>
-using namespace std;
+#include <fstream>
+
 
 #include "helper_functions.h"
 #include "state.h"
@@ -15,11 +16,13 @@ using namespace std;
 #include "successor_generator.h"
 #include "domain_transition_graph.h"
 
+using namespace std;
+
 
 static const int SAS_FILE_VERSION = 3;
 static const int PRE_FILE_VERSION = SAS_FILE_VERSION;
 
-string name;
+
 void check_magic(istream &in, string magic) {
     string word;
     in >> word;
@@ -37,7 +40,6 @@ void check_magic(istream &in, string magic) {
 
 void read_and_verify_version(istream &in) {
     int version;
-    in >> name;
     check_magic(in, "begin_version");
     in >> version;
     check_magic(in, "end_version");
@@ -172,7 +174,7 @@ void generate_cpp_input(bool /*solvable_in_poly_time*/,
        since the planner doesn't handle it specially any more anyway. */
 
     ofstream outfile;
-    outfile.open(name.c_str(), ios::out);
+    outfile.open("output", ios::out);
 
     outfile << "begin_version" << endl;
     outfile << PRE_FILE_VERSION << endl;
@@ -233,3 +235,67 @@ void generate_cpp_input(bool /*solvable_in_poly_time*/,
 
     outfile.close();
 }
+
+
+void write_variables(vector<Variable *> & variables, string filename){
+  ofstream vars_file; 
+  vars_file.open(filename.c_str());
+  write_variables(variables, vars_file);
+  vars_file.close();
+}
+
+
+
+void write_variables(vector<Variable *> & variables, ofstream & file){
+  for(int i = 0; i < variables.size(); ++i){
+    Variable * var = variables[i];
+    if(var->is_necessary()){
+      for(int j = 0; j < var->get_range(); ++j){
+	if(var->is_reachable(j)){
+	  file << var->get_fact_name(j) << endl;
+	}
+      }
+      file << endl;
+    }
+  }
+  
+}
+
+void write_operators(vector<Operator> & ops, string filename){
+  ofstream file; 
+  file.open(filename.c_str());
+  write_operators(ops, file);
+  file.close();
+}
+
+void write_operators(vector<Operator> & ops, ofstream & file){
+  for(int i = 0; i < ops.size(); ++i){
+    if (!ops[i].is_redundant())
+      file << ops[i].get_name() << endl;
+  }
+}
+
+
+void write_mutexes(vector<Variable*> & variables, vector<MutexGroup> & m, string filename){
+  ofstream mutexes_file; 
+  mutexes_file.open(filename.c_str());
+  write_mutexes(variables, m, mutexes_file);
+  mutexes_file.close();
+}
+
+void write_mutexes(vector<Variable*> & variables, vector<MutexGroup> & m, ofstream & file){
+  for(int i = 0; i < variables.size(); ++i){
+    if(variables[i]->is_necessary()){
+      MutexGroup g_v (variables[i]);
+      g_v.generate_gamer_input(file);
+    }
+  }
+  for(int i = 0; i < m.size(); ++i){
+    const MutexGroup & mutex = m[i];
+    if(!mutex.is_redundant()){
+      mutex.generate_gamer_input(file);
+    }
+  }
+}
+
+

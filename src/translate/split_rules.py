@@ -1,5 +1,5 @@
 # split_rules: Split rules whose conditions fall into different "connected
-# components" (where to conditions are related if they share a variabe) into
+# components" (where to conditions are related if they share a variable) into
 # several rules, one for each connected component and one high-level rule.
 
 from pddl_to_prolog import Rule, get_variables

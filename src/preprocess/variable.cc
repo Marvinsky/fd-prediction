@@ -3,6 +3,7 @@
 #include "helper_functions.h"
 
 #include <cassert>
+#include <stdlib.h>
 using namespace std;
 
 Variable::Variable(istream &in) {
@@ -12,9 +13,12 @@ Variable::Variable(istream &in) {
     values.resize(range);
     for (size_t i = 0; i < range; ++i)
         getline(in, values[i]);
+
     check_magic(in, "end_variable");
     level = -1;
     necessary = false;
+    reachable_values = range;
+    reachable = vector<bool> (range, true);
 }
 
 void Variable::set_level(int theLevel) {
@@ -40,7 +44,7 @@ string Variable::get_name() const {
 }
 
 bool Variable::is_necessary() const {
-    return necessary;
+    return necessary && reachable_values > 1;
 }
 
 void Variable::dump() const {
@@ -58,8 +62,36 @@ void Variable::generate_cpp_input(ofstream &outfile) const {
     outfile << "begin_variable" << endl
             << name << endl
             << layer << endl
-            << values.size() << endl;
+            << reachable_values << endl;
     for (size_t i = 0; i < values.size(); ++i)
+      if(reachable[i])
         outfile << values[i] << endl;
     outfile << "end_variable" << endl;
+}
+
+void Variable::remove_unreachable_facts(){
+  vector<string> new_values;
+  for (int i = 0; i < values.size(); i++){
+    if(reachable[i]){
+      new_values.push_back(values[i]);
+    }
+  }
+  new_values.swap(values);
+  vector<bool> (values.size(), true).swap(reachable);  
+  
+}
+
+int Variable::get_new_id(int value) const{
+  assert(reachable[value]);
+  if(!reachable[value]){
+    cerr << "ERROR: Tried to update an unreachable fact" << endl;
+    exit(-1);
+  }
+  int id = 0;
+  for(int i = 0; i < value; ++i){
+    if(reachable[i]){
+      id++;
+    }
+  }
+  return id;
 }

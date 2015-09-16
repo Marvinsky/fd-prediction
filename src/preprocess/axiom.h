@@ -5,16 +5,24 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include "variable.h"
 using namespace std;
 
 class Variable;
 
 class Axiom {
 public:
-    struct Condition {
+  class Condition {
+  public: 
         Variable *var;
         int cond;
         Condition(Variable *v, int c) : var(v), cond(c) {}
+	bool unreachable() const {
+	  return !var->is_reachable(cond);
+	}
+	void remove_unreachable_facts(){
+	  cond = var->get_new_id(cond);
+	}
     };
 private:
     Variable *effect_var;
@@ -32,6 +40,7 @@ public:
     Variable *get_effect_var() const {return effect_var; }
     int get_old_val() const {return old_val; }
     int get_effect_val() const {return effect_val; }
+    void remove_unreachable_facts();
 };
 
 extern void strip_axioms(vector<Axiom> &axioms);

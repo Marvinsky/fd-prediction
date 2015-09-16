@@ -9,13 +9,14 @@ using namespace std;
 class Variable;
 
 class State {
-    map<Variable *, int> values;
+    map<const Variable *, int> values;
 public:
     State() {} // TODO: Entfernen (erfordert kleines Redesign)
     State(istream &in, const vector<Variable *> &variables);
 
-    int operator[](Variable *var) const;
+    int operator[](const Variable *var) const;
     void dump() const;
+    void remove_unreachable_facts();
 };
 
 #endif
