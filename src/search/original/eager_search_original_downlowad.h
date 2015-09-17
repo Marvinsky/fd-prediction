@@ -46,7 +46,6 @@ public:
     void statistics() const;
 
     void dump_search_space();
-    void generateReport();
 };
 
 #endif

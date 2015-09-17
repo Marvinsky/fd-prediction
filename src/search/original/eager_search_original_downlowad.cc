@@ -11,11 +11,6 @@
 #include <cassert>
 #include <cstdlib>
 #include <set>
-
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-
 using namespace std;
 
 EagerSearchOriginal::EagerSearchOriginal(
@@ -111,10 +106,8 @@ SearchStatus EagerSearchOriginal::step() {
     SearchNode node = n.first;
 
     GlobalState s = node.get_state();
-    if (check_goal_and_set_plan(s)) {
-	generateReport();
+    if (check_goal_and_set_plan(s))
         return SOLVED;
-    }
 
     vector<const GlobalOperator *> applicable_ops;
     set<const GlobalOperator *> preferred_ops;
@@ -309,41 +302,6 @@ pair<SearchNode, bool> EagerSearchOriginal::fetch_next_node() {
         search_progress.inc_expanded();
         return make_pair(node, true);
     }
-}
-
-void EagerSearchOriginal::generateReport() {
-        string dominio = domain_name;
-        string tarefa = problem_name2;
-        string heuristica = heuristic_name2;
-
-        cout<<"dominio = "<<dominio<<endl;
-        cout<<"tarefa = "<<tarefa<<endl;
-        cout<<"heuristica = "<<heuristica<<endl;
-        cout<<"problem_name_gapdb = "<<problem_name_gapdb<<"\n";
-
-        string name, dirDomain, dirSSCC, dirSSCCFile, outputFile;
-
-	size_t found = tarefa.find(".");
-        //cout<<"found = "<<found<<endl;
-        name = tarefa.substr(0, found);
-        name += ".csv";
-
-        dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio;
-        dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc";
-        outputFile = "/home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc/"+name;
-
-        if (system(dirDomain.c_str())) {
-        	cout<<"Directory: "<<heuristica<<" created."<<endl;
-        }
-
-        if (system(dirSSCC.c_str())) {
-        	cout<<"Directory: SSCC created."<<endl;
-        }
-
-	ofstream output;
-        output.open(outputFile.c_str());
-	output<<"Solved\n";
-	output.close();
 }
 
 void EagerSearchOriginal::reward_progress() {
