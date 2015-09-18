@@ -189,6 +189,8 @@ HEADERS += ss/type_child.h \
            ss/node2.h \
            ss/ss_search.h \
 
+HEADERS += ssmean/ss_mean.h \
+
 
 SOURCES = planner.cc $(HEADERS:%.h=%.cc)
 TARGET = downward
