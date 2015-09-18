@@ -73,9 +73,11 @@ private:
 
 	map<Type, SSNode> queue; 
         vector<SSNode> vweight;
+	vector<SSQueue> vmeanheur;
         std::map<Node2, double> expanded;
         std::map<Node2, double> generated;
-        double totalPrediction;         
+        double totalPrediction;
+	double totalPredictionMean;      
 
 	std::vector<Heuristic*> heuristics; 
 	Heuristic* heuristic;
@@ -106,6 +108,7 @@ public:
         void generateExpandedReport();
         void generateGeneratedReport();
         double getProbingResult();
+	double getMeanHeurResult();
         void probe();
         void predict(int probes);
 	//BFS

@@ -44,25 +44,31 @@ SearchStatus SSMean::step() {
 
 void SSMean::predict(int probes) {
         totalPrediction = 0;
+	totalPredictionMean = 0;
 
         for (int i = 0; i < probes; i++) {
             vweight.clear();
+	    vmeanheur.clear();
             probe();
             double p = getProbingResult();
+            double mean = getMeanHeurResult();
             totalPrediction = totalPrediction + (p - totalPrediction)/(i + 1);
+	    totalPredictionMean = totalPredictionMean + (mean - totalPredictionMean)/(i + 1);
             //cout<<"**********"<<endl;
-            //cout<<"p = "<<p<<endl;
-            //cout<<"prePre_"<<(i+1)<<" = "<<totalPrediction<<endl;
+            cout<<"p = "<<p<<endl;
+            cout<<"prePre_"<<(i+1)<<" = "<<totalPrediction<<endl;
+	    cout<<"mean = "<<mean<<endl;
+            cout<<"preMean_"<<(i+1)<<" = "<<totalPredictionMean<<endl;
             //cout<<"**********"<<endl;
         }
         ss_timer_value = ss_timer();	
         cout<<"\ntotalPrediction : "<<totalPrediction<<"\n";
+	cout<<"\ntotalPredictionMean : "<<totalPredictionMean<<"\n";
         cout<<"ss_timer: "<<ss_timer_value<<"\n";
 	cout<<"probes: "<<probes<<"\n"; 
 	cout<<"threshold : "<<threshold<<"\n";
 	generateGeneratedReport();
         generateExpandedReport();
-	
 }
 
 void SSMean::probe()
@@ -130,11 +136,15 @@ void SSMean::probe()
 
 
 		queue.erase( rt );
-                //cout<<nraiz<<": Raiz: h = "<<out.getH()<<", g = "<<g_real<<", f = "<<out.getH() + g_real<<", level = "<<level<<", w  = "<<s.getWeight()<<endl;   
+                cout<<nraiz<<": Raiz: h = "<<out.getH()<<", g = "<<g_real<<", f = "<<out.getH() + g_real<<", level = "<<level<<", w  = "<<s.getWeight()<<endl;   
                 nraiz++;                
                 
 		vweight.push_back(s);
-		
+		//add the SSNode and Type
+		SSQueue smean;
+		smean.setNode(s);
+		smean.setT(out);
+		vmeanheur.push_back(smean);
 	        
                 //Insert each node.
                 Node2 node2(out.getH() + g_real, level);
@@ -562,6 +572,18 @@ double SSMean::getProbingResult() {
         return expansions;
 }
 
+double SSMean::getMeanHeurResult() {
+	double mean = 0;
+	for (size_t i = 0; i < vmeanheur.size(); i++) {
+		SSQueue n = vmeanheur.at(i);
+		SSNode node = n.getNode();
+		Type t = n.getT();
+		int heur_value = t.getH();
+		double w = node.getWeight();
+		mean += w*heur_value;	
+	}
+	return mean;
+}
 void SSMean::printQueue() {
         cout<<"\nPrintQueue\n";
 	for (map<Type, SSNode>::iterator iter = queue.begin(); iter !=  queue.end(); iter++) {
