@@ -125,6 +125,8 @@ public:
 	void select_best_heuristics_greedy();
 	//BFS
 	void BFS(SSNode root, Type type);
+	bool isGAPDB(string heuristic);
+	int getTotalGAHeurs(vector<string> v);
 };
 
 #endif /*MRW_H_*/
