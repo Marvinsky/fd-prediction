@@ -28,6 +28,7 @@ double overall_time_limit=1400;
 //Root and fd information
 string _HOME_INFO = "/home";
 string _FD_INFO = "/fd";
+bool run_min_heuristic = true;//true=select from all the heuristics/false=select just gapdb
 
 SSSearch::SSSearch(const Options &opts) : SearchEngine(opts), current_state(g_initial_state()) {
 
@@ -1175,7 +1176,6 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
         	vector<string> v_gapdb_string;
 		string heuristic_good = "gapdb_good";
 
-		bool run_min_heuristic = true;
 		int counter_just_ga_heur = 0;
 		int total_gapdb_heuristics = getTotalGAHeurs(number_gapdb_heurs);
         	map<string, vector<string> >::iterator iter;
@@ -1394,12 +1394,12 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
 				//end get real name
 				//create the directory of the problemas_500_probes_good
 
-				string dirSASPLAN = "mkdir "+_HOME_INFO+"/marvin/fd/plan/";
+				string dirSASPLAN = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan/";
                 		if (system(dirSASPLAN.c_str())) {
                 			cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
                 		}
 
-				string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin/fd/plan/"+dominio;
+				string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan/"+dominio;
                 		if (system(dirSASPLANDomain.c_str())) {
                 			cout<<"create directory "<<dirSASPLANDomain.c_str()<<"\n";
                 		}
@@ -1451,8 +1451,8 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
 				outfile<<"module load python\nmodule load mercurial\n\n";
 
 				//cout<<"pasta = "<<dominio<<"\n\n;
-				outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin/fd\n\n";
-        			outfile<<"TEMP="<<_HOME_INFO<<"/marvin/fd/temp\n\n";
+				outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
+        			outfile<<"TEMP="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/temp\n\n";
         			outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";	
                 		outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado\n\n";
 				outfile<<"cd ${DIR}\n\n";
@@ -1493,12 +1493,12 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                 		}
 			}//v_gapdb_string for loop
 		} else { //end else run_min_heuristic
-			string dirSASPLAN = "mkdir "+_HOME_INFO+"/marvin/fd/plan_"+heuristic_good+"/";
+			string dirSASPLAN = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan_"+heuristic_good+"/";
                 	if (system(dirSASPLAN.c_str())) {
                 		cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
                 	}
 
-			string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin/fd/plan_"+heuristic_good+"/"+dominio;
+			string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan_"+heuristic_good+"/"+dominio;
                 	if (system(dirSASPLANDomain.c_str())) {
                 		cout<<"create directory "<<dirSASPLANDomain.c_str()<<"\n";
                 	}	
@@ -1553,13 +1553,13 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
         		outfile<<"source /usr/share/modules/init/bash\n\n";
         		outfile<<"module load python\nmodule load mercurial\n\n";
 
-        		outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin/fd\n\n";
-        		outfile<<"TEMP="<<_HOME_INFO<<"/marvin/fd/temp\n\n";
+        		outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
+        		outfile<<"TEMP="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/temp\n\n";
         		outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";
         		//cout<<"pasta = "<<pasta.c_str()<<"\n\n";
 
         		outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado"<<"\n\n";
-        		//outfile<<"cd "<<_HOME_INFO<<"/marvin/fd\n\n";
+        		//outfile<<"cd "<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
         		outfile<<"cd ${DIR}\n\n";
                 	outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<domain_pddl<<" ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<tarefa<<"\n\n";
 
