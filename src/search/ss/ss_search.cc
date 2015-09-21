@@ -24,8 +24,10 @@ bool domination_check=false;
 set<vector<int> > F_culprits;
 double sampling_time_limit=150;
 double overall_time_limit=1400;
-//#define _SS_DEBUG
 
+//Root and fd information
+string _HOME_INFO = "/home";
+string _FD_INFO = "/fd";
 
 SSSearch::SSSearch(const Options &opts) : SearchEngine(opts), current_state(g_initial_state()) {
 
@@ -886,17 +888,17 @@ void SSSearch::generateExpandedReport() {
 
 	if (is_mov_bound) {
 		/*if (ss_probes == 1000) {
-                        dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio;
-                        dirfDist = "mkdir /home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio+"/fdist";
-                        outputFile = "/home/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio+"/fdist/"+tarefa;
+                        dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio;
+                        dirfDist = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio+"/fdist";
+                        outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/reportss_bounds/"+dominio+"/fdist/"+tarefa;
                 } else {*/
                         string nameProbes = "reportss_bounds";
                         nameProbes += "_probes_";
                         nameProbes += boost::lexical_cast<std::string>(ss_probes);
                         cout<<"nameProbes = "<<nameProbes<<"\n";
-                        dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio;
-                        dirfDist = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio+"/fdist";
-                        outputFile = "/home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio+"/fdist/"+tarefa;
+                        dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio;
+                        dirfDist = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio+"/fdist";
+                        outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio+"/fdist/"+tarefa;
                 //}
 	} else {
 		string nameProbes = "reportss_";
@@ -904,9 +906,9 @@ void SSSearch::generateExpandedReport() {
                 nameProbes += "_probes";
                 cout<<"nameProbes = "<<nameProbes<<"\n";
 
-        	dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
-        	dirfDist = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/fdist";
-        	outputFile = "/home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/fdist/"+tarefa;
+        	dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
+        	dirfDist = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/fdist";
+        	outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/fdist/"+tarefa;
 	}
 
         ofstream output;
@@ -1001,18 +1003,18 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                 nameProbes += boost::lexical_cast<std::string>(ss_probes);
                 cout<<"nameProbes = "<<nameProbes<<"\n";
 
-        	dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
-        	dirSSCC = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc";
-        	outputFile = "/home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc/"+name;
+        	dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
+        	dirSSCC = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc";
+        	outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc/"+name;
 	} else {
 		string nameProbes = "reportss_";
                 nameProbes += boost::lexical_cast<std::string>(ss_probes);
                 nameProbes += "_probes";
                 cout<<"nameProbes = "<<nameProbes<<"\n";
 
-		dirDomain = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
-        	dirSSCC = "mkdir /home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc";
-        	outputFile = "/home/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc/"+name;
+		dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
+        	dirSSCC = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc";
+        	outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc/"+name;
 	}
 
         if (system(dirDomain.c_str())) {
@@ -1173,7 +1175,7 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
         	vector<string> v_gapdb_string;
 		string heuristic_good = "gapdb_good";
 
-		bool run_min_heuristic = false;
+		bool run_min_heuristic = true;
 		int counter_just_ga_heur = 0;
 		int total_gapdb_heuristics = getTotalGAHeurs(number_gapdb_heurs);
         	map<string, vector<string> >::iterator iter;
@@ -1299,27 +1301,27 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
 
 		//create directories, running individual heuristic and running all gapdb heuristics using the same heuristic_good
 
-		string dirProbGood = "mkdir /home/marvin/marvin/astar/"+heuristic_good+"/";
+		string dirProbGood = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/";
                 if (system(dirProbGood.c_str())) {
                 	cout<<"create directory "<<dirProbGood.c_str()<<"\n";
                 }
 
-                string dirProblema = "mkdir /home/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD;
+                string dirProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD;
                 if (system(dirProblema.c_str())) {
                 	cout<<"create directory "<<dirProblema.c_str()<<"\n";
                 }
 
-		string dirResultado = "mkdir /home/marvin/marvin/astar/"+heuristic_good+"/reportastar";
+		string dirResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/reportastar";
                 if (system(dirResultado.c_str())) {
                 	cout<<"create directory "<<dirResultado.c_str()<<"\n";
                 }
 
-		string pastaProblema = "mkdir /home/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  + "/"+dominio;
+		string pastaProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  + "/"+dominio;
 		if (system(pastaProblema.c_str())) {
 			cout<<"create directory "<<pastaProblema.c_str()<<"\n";
 		}
 
-		string pastaResultado = "mkdir /home/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  +  "/"+dominio+"/resultado";
+		string pastaResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  +  "/"+dominio+"/resultado";
 		if (system(pastaResultado.c_str())) {
 			cout<<"create directory "<<pastaResultado.c_str()<<"\n";
 		}
@@ -1392,12 +1394,12 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
 				//end get real name
 				//create the directory of the problemas_500_probes_good
 
-				string dirSASPLAN = "mkdir /home/marvin/fd/plan/";
+				string dirSASPLAN = "mkdir "+_HOME_INFO+"/marvin/fd/plan/";
                 		if (system(dirSASPLAN.c_str())) {
                 			cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
                 		}
 
-				string dirSASPLANDomain = "mkdir /home/marvin/fd/plan/"+dominio;
+				string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin/fd/plan/"+dominio;
                 		if (system(dirSASPLANDomain.c_str())) {
                 			cout<<"create directory "<<dirSASPLANDomain.c_str()<<"\n";
                 		}
@@ -1415,7 +1417,7 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                 		arquivo = "astar/"+heuristic_good+"/" + PROB_GOOD  +  "/" + arquivo;
                 		arquivo = "marvin/" + arquivo;
                 		arquivo = "marvin/"+ arquivo;
-                		arquivo = "/home/" + arquivo;
+                		arquivo =  _HOME_INFO+"/" + arquivo;
 				cout<<"arquivo="<<arquivo<<"\n";
                 		ofstream outfile(arquivo.c_str(), ios::out);
 
@@ -1449,10 +1451,10 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
 				outfile<<"module load python\nmodule load mercurial\n\n";
 
 				//cout<<"pasta = "<<dominio<<"\n\n;
-				outfile<<"FD_ROOT=/home/marvin/fd\n\n";
-        			outfile<<"TEMP=/home/marvin/fd/temp\n\n";
+				outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin/fd\n\n";
+        			outfile<<"TEMP="<<_HOME_INFO<<"/marvin/fd/temp\n\n";
         			outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";	
-                		outfile<<"RESULTS=/home/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado\n\n";
+                		outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado\n\n";
 				outfile<<"cd ${DIR}\n\n";
                 		outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<domain_pddl<<" ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<tarefa<<"\n\n";
 
@@ -1491,12 +1493,12 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
                 		}
 			}//v_gapdb_string for loop
 		} else { //end else run_min_heuristic
-			string dirSASPLAN = "mkdir /home/marvin/fd/plan_"+heuristic_good+"/";
+			string dirSASPLAN = "mkdir "+_HOME_INFO+"/marvin/fd/plan_"+heuristic_good+"/";
                 	if (system(dirSASPLAN.c_str())) {
                 		cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
                 	}
 
-			string dirSASPLANDomain = "mkdir /home/marvin/fd/plan_"+heuristic_good+"/"+dominio;
+			string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin/fd/plan_"+heuristic_good+"/"+dominio;
                 	if (system(dirSASPLANDomain.c_str())) {
                 		cout<<"create directory "<<dirSASPLANDomain.c_str()<<"\n";
                 	}	
@@ -1538,7 +1540,7 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
         		arquivo = "astar/"+heuristic_good+"/" + PROB_GOOD  +  "/" + arquivo;
         		arquivo = "marvin/" + arquivo;
         		arquivo = "marvin/"+ arquivo;
-        		arquivo = "/home/" + arquivo;
+        		arquivo =  _HOME_INFO+"/" + arquivo;
         		ofstream outfile(arquivo.c_str(), ios::out);
 
         		string parameter =  heuristic_generator;
@@ -1551,13 +1553,13 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
         		outfile<<"source /usr/share/modules/init/bash\n\n";
         		outfile<<"module load python\nmodule load mercurial\n\n";
 
-        		outfile<<"FD_ROOT=/home/marvin/fd\n\n";
-        		outfile<<"TEMP=/home/marvin/fd/temp\n\n";
+        		outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin/fd\n\n";
+        		outfile<<"TEMP="<<_HOME_INFO<<"/marvin/fd/temp\n\n";
         		outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";
         		//cout<<"pasta = "<<pasta.c_str()<<"\n\n";
 
-        		outfile<<"RESULTS=/home/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado"<<"\n\n";
-        		//outfile<<"cd /home/marvin/fd\n\n";
+        		outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado"<<"\n\n";
+        		//outfile<<"cd "<<_HOME_INFO<<"/marvin/fd\n\n";
         		outfile<<"cd ${DIR}\n\n";
                 	outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<domain_pddl<<" ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<tarefa<<"\n\n";
 
