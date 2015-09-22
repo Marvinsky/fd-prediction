@@ -101,8 +101,13 @@ SearchStatus SSSearch::step() {
 	  cout<<"Cleared F_culprits&b_culprits"<<endl;F_culprits.clear();
 	}
         predict(ss_probes);
+
 	if(next_f_bound==INT_MAX/2){
-	  cout<<"next_f_bound was not updated!, check code!"<<endl;exit(1);
+	  cout<<"next_f_bound was not updated!, check code!"<<endl;
+	  cout<<"For now just selecting generateSSCCReport"<<endl;
+	  generateSSCCReport(threshold, true);
+	  //select_best_heuristics_greedy();
+	  exit(1);
 	}
 	threshold=next_f_bound;
 	f_boundary=next_f_bound;
@@ -297,6 +302,7 @@ SearchStatus SSSearch::step() {
 
 void SSSearch::predict(int probes) {
         totalPrediction = 0;
+	totalPredictionMean = 0;
         cout<<"#probes : "<<probes<<",g_timer:"<<g_timer()<<endl;
 	cout<<"input heuristics:"<<heuristics.size()<<endl;
 	int current_n_probes = 0;
@@ -314,18 +320,24 @@ void SSSearch::predict(int probes) {
 	    return;
 	  }
             vweight.clear();
+	    vmeanheur.clear();
             probe();
 	    current_n_probes++;
             double p = getProbingResult();
+	    double mean = getMeanHeurResult();
             totalPrediction = totalPrediction + (p - totalPrediction)/(i + 1);
+	    totalPredictionMean = totalPredictionMean + (mean - totalPredictionMean)/(i + 1);
             cout<<"**********"<<endl;
             cout<<"p = "<<p<<endl;
             cout<<"prePre_"<<(i+1)<<" = "<<totalPrediction<<endl;
+	    cout<<"mean = "<<mean<<endl;
+            cout<<"preMean_"<<(i+1)<<" = "<<totalPredictionMean<<endl;
             cout<<"**********"<<endl;
         }
 	cout<<"next_f_bound:"<<next_f_bound<<endl;
         ss_timer_value = ss_timer();	
         cout<<"\ntotalPrediction : "<<totalPrediction<<"\n";
+	cout<<"\ntotalPredictionMean : "<<totalPredictionMean<<"\n";
         cout<<"ss_timer: "<<ss_timer_value<<"\n";
 	cout<<"probes: "<<probes<<"\n"; 
 	cout<<"threshold : "<<threshold<<"\n";
@@ -486,7 +498,11 @@ void SSSearch::probe()
 		  cout<<", w = "<<w<<"\n";fflush(stdout);
 #endif
 		vweight.push_back(s);
-		
+		//add the SSNode and Type
+		SSQueue smean;
+		smean.setNode(s);
+		smean.setT(out);
+		vmeanheur.push_back(smean);	
 	        
                 //Insert each node.
                 Node2 node(min_h + g_real, level);
@@ -1595,6 +1611,19 @@ void SSSearch::generateSSCCReport(int n_probes, bool termination) {
         		}
 		}//end run_min_heuristic
 	}//end termination
+}
+
+double SSSearch::getMeanHeurResult() {
+	double mean = 0;
+	for (size_t i = 0; i < vmeanheur.size(); i++) {
+		SSQueue n = vmeanheur.at(i);
+		SSNode node = n.getNode();
+		Type t = n.getT();
+		int heur_value = t.getH();
+		double w = node.getWeight();
+		mean += w*heur_value;	
+	}
+	return mean;
 }
 
 void SSSearch::printQueue() {
