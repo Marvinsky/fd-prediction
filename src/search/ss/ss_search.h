@@ -123,6 +123,7 @@ private:
         map<boost::dynamic_bitset<>,  double> collector;
         map<boost::dynamic_bitset<>,  double> full_collector;
 	int last_probe;
+	double last_n_expanded;
                 
 
 protected:

@@ -337,6 +337,7 @@ void SSSearch::predict(int probes) {
         cout<<"#probes : "<<probes<<",g_timer:"<<g_timer()<<endl;
 	cout<<"input heuristics:"<<heuristics.size()<<endl;
 	last_probe=0;
+	last_n_expanded=0;
         for (int i = 0; i < probes; i++) {
 	  cout<<"#probe:"<<i<<",g_timer:"<<g_timer()<<",search_time:"<<search_time()<<endl;
 	  if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
@@ -352,6 +353,11 @@ void SSSearch::predict(int probes) {
 	  }
             vweight.clear();
 	    vmeanheur.clear();
+	    //Validate that the number of probes do not exceed the order of 150
+	    if (last_n_expanded > 1*pow(10,150)) {
+		generateSSCCReport(true);
+		exit(0);
+	    }
             probe();
             double p = getProbingResult();
 	    double mean = getMeanHeurResult();
@@ -364,12 +370,13 @@ void SSSearch::predict(int probes) {
             cout<<"preMean_"<<(i+1)<<" = "<<totalPredictionMean<<endl;
             cout<<"**********"<<endl;
 	    last_probe=i;
+	    last_n_expanded=p;
         }
-	cout<<"next_f_bound:"<<next_f_bound<<endl;
+	cout<<"\tnext_f_bound:"<<next_f_bound<<"\n";
 	ss_timer_value = ss_timer();
-        cout<<"\ntotalPrediction : "<<totalPrediction<<"\n";
-	cout<<"ss_timer: "<<ss_timer_value<<"\n";
-	cout<<"probes: "<<probes<<"\n";
+        cout<<"\ttotalPrediction : "<<totalPrediction<<"\n";
+	cout<<"\tss_timer: "<<ss_timer_value<<"\n";
+	cout<<"\tprobes: "<<probes<<"\n";
         generateSSCCReport(false);
         //generateGeneratedReport();
         //generateExpandedReport();
@@ -428,18 +435,7 @@ void SSSearch::probe()
 	}
 	else{
 	  cout<<endl;
-	}
-
-	if(call_number%2000==0){
-	    cout<<"call_number==2000\n";
-	    //if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
-	      //cout<<"Search_timer past maximum sampling_time"<<endl;
-	      //cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
-	      generateSSCCReport(true);
-	      //select_best_heuristics_greedy();
-	      exit(0);
-	    //}
-	}
+	}	
 
         cout<<"f_boundary = "<<f_boundary<<endl;
         if (f_boundary) {
@@ -579,7 +575,11 @@ void SSSearch::probe()
 #endif
 
 		vweight.push_back(s.getWeight());
-		
+		//add the SSNode and Type
+                SSQueue smean;
+                smean.setNode(s);
+                smean.setT(out);
+                vmeanheur.push_back(smean);
 	        
                 //Insert each node.
                 //Node2 node(getMinHeur(h_global_v) + g_real, level);
@@ -1269,8 +1269,6 @@ void SSSearch::generateSSCCReport(bool termination) {
         	}
         	//cout<<"min_number_expanded = "<<min_number_expanded<<"\n";
         	//cout<<"min_number_heuristic = "<<min_number_heuristic<<"\n";
-        	//cout<<"ending m:\n";
-
 
         	vector<string> v_gapdb_string;
 		string heuristic_good = "gapdb_good";
