@@ -796,7 +796,6 @@ void SSSearch::probe()
                 			it2->second += amount*w;
                 			//cout<<", newcc : "<<it2->second<<"\n"; 
              			}
-				cout<<"LINE_787:h_child_v.size()="<<h_child_v.size()<<"\n";
 				//sum the heuristic values in the search tree.
 				ret4 = collector_heur.insert(std::pair<vector<int>, double>(h_child_v, amount*w));
 				//ret4 = collector_heur.insert(std::pair<vector<int>, double>(h_child_v, sum_all_h_child_values*w));
@@ -1966,12 +1965,10 @@ void SSSearch::select_random_greedy() {
 
                 	map_info_heur.insert(pair<string, vector<string> >(name, collector));
 
-			//number of heuristics values in the search tree.	
+			//number of heuristics values in the search tree.
 			double sum_heur_values = 0;
-			for (int j = 0; j < n_heuristics; j++) {
-				for (int i = 0; i < count_line; i++) {
-					sum_heur_values += harray[i][j]*ccarray[i][0];
-				}
+			for (int j = 0; j < count_line; j++) {
+				sum_heur_values += harray[j][i]*ccarray[j][0];
 			}
                 	add_line_map_heuristic.insert(pair<string, double>(name, sum_heur_values));
         	}
