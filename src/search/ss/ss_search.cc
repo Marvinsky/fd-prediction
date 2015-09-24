@@ -22,6 +22,7 @@ bool domination_check=false;
 set<vector<int> > F_culprits;
 double sampling_time_limit=150;
 double overall_time_limit=1400;
+int N_default = 2;
 
 //Root and fd information
 string _HOME_INFO = "/home";
@@ -136,7 +137,7 @@ SearchStatus SSSearch::step() {
 	if(next_f_bound==INT_MAX/2){
 	  cout<<"next_f_bound was not updated!, check code!"<<endl;
 	  cout<<"For now just selecting best_heuristics_greedy"<<endl;
-	  select_random_greedy();
+	  select_random_greedy(true);
 	  generateSSCCReport(true);
 	  ///select_best_heuristics_greedy();
 	  exit(1);
@@ -327,7 +328,7 @@ SearchStatus SSSearch::step() {
       }
   }
   cout<<"selecting best heuristic after,"<<search_time()<<", seconds"<<endl;
-  select_random_greedy();
+  select_random_greedy(true);
   generateSSCCReport(true);
   //select_best_heuristics_greedy();
         return SOLVED;
@@ -345,7 +346,7 @@ void SSSearch::predict(int probes) {
 	  if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
 	    cout<<"Search_timer past maximum sampling_time"<<endl;
 	    cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
-	    select_random_greedy();
+	    select_random_greedy(true);
 	    generateSSCCReport(true);
 	    //select_best_heuristics_greedy();
 	    exit(0);
@@ -358,7 +359,7 @@ void SSSearch::predict(int probes) {
 	    vmeanheur.clear();
 	    //Validate that the number of probes do not exceed the order of 150
 	    if (last_n_expanded > 1*pow(10,150)) {
-		select_random_greedy();
+		select_random_greedy(true);
 		generateSSCCReport(true);
 		exit(0);
 	    }
@@ -381,7 +382,8 @@ void SSSearch::predict(int probes) {
         cout<<"\ttotalPrediction : "<<totalPrediction<<"\n";
 	cout<<"\tss_timer: "<<ss_timer_value<<"\n";
 	cout<<"\tprobes: "<<probes<<"\n";
-	select_random_greedy();
+	
+	select_random_greedy(false);
         generateSSCCReport(false);
         //generateGeneratedReport();
         //generateExpandedReport();
@@ -531,7 +533,7 @@ void SSSearch::probe()
 	    if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
 	      cout<<"Search_timer past maximum sampling_time"<<endl;
 	      cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
-	      select_random_greedy();
+	      select_random_greedy(true);
 	      generateSSCCReport(true);
 	      //select_best_heuristics_greedy();
 	      exit(0);
@@ -1236,14 +1238,14 @@ void SSSearch::generateSSCCReport(bool termination) {
                 	pot[index] = s;
 
            		string heuristic_name_created = pot[0],
-	    				number_h = std::to_string(i), //consider this order because SS commands
-					mutation_rate,
-					mutation_rate_aux,
-					size_gapdb,
-					size_gapdb_aux,
-					wd,
-					wd_aux,
-					name;
+	    		number_h = std::to_string(i), //consider this order because SS commands
+			mutation_rate,
+			mutation_rate_aux,
+			size_gapdb,
+			size_gapdb_aux,
+			wd,
+			wd_aux,
+			name;
 
 	    		if (heuristic_name_created == "ipdb") {
             			name = "ipdb_" + number_h;
@@ -1811,7 +1813,7 @@ int SSSearch::getTotalGAHeurs(vector<string> v) {
         return total_ga_heur;
 }
 
-void SSSearch::select_random_greedy() {	
+void SSSearch::select_random_greedy(bool termination) {	
 	int n_probes = ss_probes;
 	string dominio = domain_name;
         string tarefa = problem_name2;
@@ -1894,14 +1896,14 @@ void SSSearch::select_random_greedy() {
                 counter_line++;
 	}
 	output.close();
-	bool termination = true;
+	
 	if (termination) {
 		//make it work in 30 minutes
 		string delimiter = ",";
 		//cout<<"heuristic-information\n";
-		map<string, double> add_line_map_heuristic;
+		map<string, double> Z_full_map;;
 		map<string, vector<string> > map_info_heur;
-		for (size_t i = 0; i < all_heuristics.size(); i++) {
+		for (int i = 0; i < n_heuristics; i++) {
 			vector<string> collector;
                 	string s =  all_heuristics[i]->get_heur_name();
                 	string pot[6];
@@ -1928,13 +1930,13 @@ void SSSearch::select_random_greedy() {
 			name;
 
 	    		if (heuristic_name_created == "ipdb") {
-            			name = "ipdb_" + number_h;
+            			name = number_h + "_ipdb";
             		} else if (heuristic_name_created == "lmcut") {
-            			name = "lmcut_" + number_h;
+            			name = number_h + "_lmcut";
             		} else if (heuristic_name_created == "merge_and_shrink") {
-            			name = "mands_" + number_h;
+            			name = number_h + "_mands";
             		} else {
-            			name = "gapdb_" + number_h;
+            			name = number_h + "_gapdb";
             		}
 			//cout<<"name="<<name<<"\n";
 			mutation_rate_aux = pot[1];
@@ -1970,7 +1972,7 @@ void SSSearch::select_random_greedy() {
 			for (int j = 0; j < count_line; j++) {
 				sum_heur_values += harray[j][i]*ccarray[j][0];
 			}
-                	add_line_map_heuristic.insert(pair<string, double>(name, sum_heur_values));
+                	Z_full_map.insert(pair<string, double>(name, sum_heur_values));
         	}
 		//cout<<"\n\n";
 		//cout<<"printing m:\n";
@@ -1978,7 +1980,7 @@ void SSSearch::select_random_greedy() {
         	double min_number_expanded =  std::numeric_limits<double>::max();
         	string min_number_heuristic;
 		vector<string> number_gapdb_heurs;
-        	for (iter_test = add_line_map_heuristic.begin(); iter_test != add_line_map_heuristic.end(); iter_test++) {
+        	for (iter_test = Z_full_map.begin(); iter_test != Z_full_map.end(); iter_test++) {
                 	string s = iter_test->first;
                 	double d = iter_test->second;
 			number_gapdb_heurs.push_back(s);
@@ -1991,6 +1993,52 @@ void SSSearch::select_random_greedy() {
         	cout<<"min_number_expanded = "<<min_number_expanded<<"\n";
         	cout<<"min_number_heuristic = "<<min_number_heuristic<<"\n";
 
+		//order the map
+		vector<pair<string, double> > Z_full_vector(Z_full_map.begin(), Z_full_map.end());
+		sort(Z_full_vector.begin(), Z_full_vector.end(), greater_second<string, double>());	
+		printVectorPair(Z_full_vector);
+		
+		vector<pair<string, double> > Z_subset;
+
+		while ((int)Z_subset.size() < N_default) {
+			if (N_default < n_heuristics) {
+				int index_max = Z_full_vector.size() - N_default;
+				std::vector<pair<string, double> > Z_cut_vector(Z_full_vector.begin(), Z_full_vector.end() - index_max);
+				cout<<"CUT_PAIR_ORDERED: "<<N_default<<"\n";
+				typedef std::vector<std::pair<std::string, double> > vector_type_cut;
+                		for (vector_type_cut::const_iterator pos = Z_cut_vector.begin();
+                			pos != Z_cut_vector.end(); ++pos)
+                		{
+                			string s = pos->first;
+                			double d = pos->second;
+                			cout<<"\t\t\t"<<s<<"  -  "<<d<<"\n";
+                		}
+				int random_index = g_rng() * index_max;
+				pair<string, double> Z_choosed = Z_cut_vector.at(random_index);
+				string s_choosed = Z_choosed.first;
+				double d_choosed = Z_choosed.second;
+				cout<<"string = "<<s_choosed<<"\n";
+				cout<<"double = "<<d_choosed<<"\n";
+				cout<<"before broke\n";
+				Z_subset.push_back(pair<string, double>(s_choosed, d_choosed));
+				cout<<"after broke\n";
+				//remove the Z_choosed from Z_full_map and update the Z_full_vector
+				map<string, double>::iterator zIter = Z_full_map.find(Z_choosed.first);
+				if (zIter != Z_full_map.end()) {
+					//Is found, then remove it.
+					Z_full_map.erase(Z_choosed.first);
+				} else {
+					//Is not found.
+				}
+				//clear the Z_full_vector
+				Z_full_vector.clear();
+
+				vector<pair<string, double> >  Z_full_vector(Z_full_map.begin(), Z_full_map.end());
+				sort(Z_full_vector.begin(), Z_full_vector.end(), greater_second<string, double>());
+				printVectorPair(Z_full_vector);
+			}
+		}
+		cout<<"OUT OF WHILE\n";
 		/*
 
         	vector<string> v_gapdb_string;
@@ -2422,6 +2470,19 @@ void SSSearch::select_random_greedy() {
 		}//end run_min_heuristic
 		*/
 	}//end termination
+}
+
+void SSSearch::printVectorPair(vector<pair<string, double> > vpair) {	
+	cout<<"-------------beging print vector pair---------\n";
+	typedef std::vector<std::pair<std::string, double> > vector_type;
+        for (vector_type::const_iterator pos = vpair.begin();
+        pos != vpair.end(); ++pos)
+        {
+        	string s = pos->first;
+                double d = pos->second;
+                cout<<"\t\t\t"<<s<<"  -  "<<d<<"\n";
+        }
+	cout<<"-------------end print vector pair-----------\n";
 }
 
 void SSSearch::select_best_heuristics_greedy(){

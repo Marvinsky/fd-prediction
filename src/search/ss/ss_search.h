@@ -10,6 +10,8 @@
 #include "type_system.h"
 #include "node2.h"
 
+#include <algorithm>
+
 #include <map>
 #include <queue>
 #include <set>
@@ -31,6 +33,21 @@ class ScalarEvaluator;
 
 using namespace std;
 
+template <typename T1, typename T2>
+struct less_second {
+    typedef pair<T1, T2> type;
+    bool operator ()(type const& a, type const& b) const {
+        return a.second < b.second;
+    }
+};
+
+template <typename T1, typename T2>
+struct greater_second {
+    typedef pair<T1, T2> type;
+    bool operator ()(type const& a, type const& b) const {
+        return a.second > b.second;
+    }
+};
 
 class SSNode{
 private:
@@ -137,6 +154,7 @@ public:
 	SSSearch(const Options &opts);
 	virtual ~SSSearch();
         void printQueue(); 
+	void printVectorPair(vector<pair<string, double> > vpair);
         void generateExpandedReport();
         void generateGeneratedReport();
 	void generateSSCCReport(bool termination);
@@ -150,5 +168,5 @@ public:
 	bool isGAPDB(string heuristic);
         int getTotalGAHeurs(vector<string> v);
 	void select_best_heuristics_greedy_stocastic(int cardinality);
-	void select_random_greedy();
+	void select_random_greedy(bool termination);
 };
