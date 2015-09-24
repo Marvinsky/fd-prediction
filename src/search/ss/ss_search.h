@@ -80,23 +80,6 @@ struct classcomp2 {
         }
 };
 
-class classcomp3 {
-	public:
-		bool operator()(const vector<int> x, const vector<int> y) {
-			bool two_keys_are_different = false;
-			if (x.size() == y.size()) {
-				for (size_t i = 0; i < x.size(); i++) {
-					int hx = x.at(i), hy = y.at(i);
-					if (hx != hy) {
-						two_keys_are_different = true;
-					}
-				}
-			}  else {
-				two_keys_are_different = true;
-			}
-			return two_keys_are_different;	
-		}
-};
 #endif /*MRW_H_*/
 
 class SSSearch : public SearchEngine { 
@@ -139,7 +122,7 @@ private:
         int threshold;
         map<boost::dynamic_bitset<>,  double> collector;
         map<boost::dynamic_bitset<>,  double> full_collector;
-        map<std::vector<int>,  double, classcomp3> collector_heur;
+        map<std::vector<int>,  double> collector_heur;
 	int last_probe;
 	double last_n_expanded;
                 
