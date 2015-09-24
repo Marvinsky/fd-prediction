@@ -22,7 +22,7 @@ bool domination_check=false;
 set<vector<int> > F_culprits;
 double sampling_time_limit=150;
 double overall_time_limit=1400;
-int N_default = 2;
+int N_default = 6;
 
 //Root and fd information
 string _HOME_INFO = "/home";
@@ -2003,10 +2003,14 @@ void SSSearch::select_random_greedy(bool termination) {
 		while ((int)Z_subset.size() < N_default) {
 			if (N_default < n_heuristics) {
 				int index_max = Z_full_vector.size() - N_default;
-				std::vector<pair<string, double> > Z_cut_vector(Z_full_vector.begin(), Z_full_vector.end() - index_max);
+				cout<<"Z_full_vector.size()="<<Z_full_vector.size()<<"\n";	
 				cout<<"CUT_PAIR_ORDERED: "<<N_default<<"\n";
+				cout<<"index_max="<<index_max<<"\n";
+				std::vector<pair<string, double> > Z_cut_vector(Z_full_vector.begin(), Z_full_vector.end() - index_max);
 				typedef std::vector<std::pair<std::string, double> > vector_type_cut;
-                		for (vector_type_cut::const_iterator pos = Z_cut_vector.begin();
+                		
+				cout<<"Z_cut_vector.size()="<<Z_cut_vector.size()<<"\n";
+				for (vector_type_cut::const_iterator pos = Z_cut_vector.begin();
                 			pos != Z_cut_vector.end(); ++pos)
                 		{
                 			string s = pos->first;
@@ -2471,6 +2475,11 @@ void SSSearch::select_random_greedy(bool termination) {
 		*/
 	}//end termination
 }
+
+void SSSearch::heuristicCombinator() {
+	cout<<"combine heuristics...\n";
+}
+
 
 void SSSearch::printVectorPair(vector<pair<string, double> > vpair) {	
 	cout<<"-------------beging print vector pair---------\n";
