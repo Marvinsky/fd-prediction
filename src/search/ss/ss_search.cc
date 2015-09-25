@@ -1814,172 +1814,7 @@ int SSSearch::getTotalGAHeurs(vector<string> v) {
 }
 
 void SSSearch::select_random_greedy(bool termination) {	
-	/*
-	int n_probes = ss_probes;
-	string dominio = domain_name;
-        string tarefa = problem_name2;
-        string heuristica = heuristic_name2;
-	string domain_pddl = domain_instance_pddl;
-
-        cout<<"dominio = "<<dominio<<endl;
-        cout<<"tarefa_pddl = "<<tarefa<<endl;
-	cout<<"domain_pddl = "<<domain_pddl<<"\n";
-        cout<<"heuristica = "<<heuristica<<endl;
-        size_t found = tarefa.find(".");
-        string name = tarefa.substr(0, found);
-        name+="_F_";
-        name+=boost::lexical_cast<std::string>(threshold);
-        name += ".csv";
-	
-	string dirDomain_greedy, dirDomain, dirSSCC, outputFile;
-	string nameProbes = "reportss_greedy_";
-        nameProbes += boost::lexical_cast<std::string>(ss_probes);
-        nameProbes += "_probes";
-        cout<<"nameProbes = "<<nameProbes<<"\n";
-
-	dirDomain_greedy = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+nameProbes;
-	dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
-        dirSSCC = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc";
-        outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc/"+name;
-
-	if (system(dirDomain_greedy.c_str())) {
-           cout<<"Directory: "<<dirDomain_greedy.c_str()<<" created."<<endl;
-        }
-
-        if (system(dirDomain.c_str())) {
-           cout<<"Directory: "<<dirDomain.c_str()<<" created."<<endl;
-        }
-
-        if (system(dirSSCC.c_str())) {
-           cout<<"Directory: SSCC created."<<endl;
-        }
-
-	ofstream output;
-        output.open(outputFile.c_str());
-
-	//print the name of the all_heuristics just to be analyzed later
-        for (size_t i = 0; i < all_heuristics.size(); i++) {
-            string heur_name = all_heuristics[i]->get_heur_name();
-            output<<"h(,"<<i<<"):,"<<heur_name<<"\n";
-        }
-
-	int n_heuristics = all_heuristics.size();
-	int count_line = collector_heur.size();
-	cout<<"n_heuristics="<<n_heuristics<<"\n";
-	cout<<"count_line="<<count_line<<"\n";
-
-	//get the combintation 1/0/1/0..../1/1
-        int** harray = new int*[count_line];
-        double** ccarray = new double*[count_line];
-        for (int i = 0; i < count_line; i++) {
-                harray[i] = new int[n_heuristics];
-                ccarray[i] = new double[1];
-        }
-
-        int counter_line = 0;
-	for (map<std::vector<int>, double>::iterator iter = collector_heur.begin(); iter != collector_heur.end(); iter++) {
-		vector<int> h_node_v = iter->first;
-		output<<"bc(";
-		double cc = iter->second;
-		for (size_t i = 0; i < h_node_v.size(); i++) {
-			int h = h_node_v.at(i);
-			output<<h;
-			//cout<<h;	
-			harray[counter_line][i] = h_node_v.at(i);
-			if (i != h_node_v.size() - 1) {
-				output<<"/";
-				//cout<<"/";
-			}
-		}
-                double result_cc = (double)cc/(double)n_probes;
-                output<<")cc="<<result_cc<<"\n";
-                ccarray[counter_line][0] = result_cc;
-                counter_line++;
-	}
-	output.close();
-
-
-
-	*/
 	if (termination) {	
-		/*
-		//make it work in 30 minutes
-		string delimiter = ",";
-		//cout<<"heuristic-information\n";
-		map<string, double> Z_full_map = heuristicCombinator(true);
-		map<string, vector<string> > map_info_heur;
-		for (int i = 0; i < n_heuristics; i++) {
-			vector<string> collector;
-                	string s =  all_heuristics[i]->get_heur_name();
-                	string pot[6];
-                	size_t pos = 0;
-                	string token;
-                	int index = 0;
-                	while ((pos = s.find(delimiter)) != std::string::npos) {
-                        	token = s.substr(0, pos);
-				//cout<<"token="<<token<<"\n";
-                        	pot[index] = token;
-                        	s.erase(0, pos + delimiter.length());
-                        	index++;
-                	}
-                	pot[index] = s;
-
-           		string heuristic_name_created = pot[0],
-	    		number_h = std::to_string(i), //consider this order because SS commands
-			mutation_rate,
-			mutation_rate_aux,
-			size_gapdb,
-			size_gapdb_aux,
-			wd,
-			wd_aux,
-			name;
-
-	    		if (heuristic_name_created == "ipdb") {
-            			name = number_h + "_ipdb";
-            		} else if (heuristic_name_created == "lmcut") {
-            			name = number_h + "_lmcut";
-            		} else if (heuristic_name_created == "merge_and_shrink") {
-            			name = number_h + "_mands";
-            		} else {
-            			name = number_h + "_gapdb";
-            		}
-			//cout<<"name="<<name<<"\n";
-			mutation_rate_aux = pot[1];
-                	size_t t2 = mutation_rate_aux.find(":");
-                	mutation_rate = mutation_rate_aux.substr(t2 + 1, mutation_rate_aux.length());
-                	//cout<<"mutation_rate = "<<mutation_rate<<"\n";
-
-			size_gapdb_aux = pot[2];
-                	size_t t3 = size_gapdb_aux.find("=");
-                	size_gapdb = size_gapdb_aux.substr(t3 + 1);
-                	//cout<<"size_gapdb = "<<size_gapdb<<"\n";
-
-                	//without disjoint patterns
-                	wd_aux = pot[3];
-                	//cout<<"wd_aux = "<<wd_aux<<"\n";
-                	size_t t4 = wd_aux.find("out");
-                	if (t4 < 100) {
-                        	wd = "false";
-                	} else {
-                        	wd = "true";
-                	}
-                	//cout<<"wd = "<<wd<<"\n\n";
-
-			collector.push_back(number_h);
-                	collector.push_back(mutation_rate);
-                	collector.push_back(size_gapdb);
-                	collector.push_back(wd);
-
-                	map_info_heur.insert(pair<string, vector<string> >(name, collector));
-
-			//number of heuristics values in the search tree.
-			double sum_heur_values = 0;
-			for (int j = 0; j < count_line; j++) {
-				sum_heur_values += harray[j][i]*ccarray[j][0];
-			}
-                	Z_full_map.insert(pair<string, double>(name, sum_heur_values));
-        	}
-		*/
 		cout<<"call heuristicCombinator:\n";
 		vector<pair<string, double> > Z_subset;
 		vector<pair<string, double> > Z_full_vector_combiner;
@@ -2036,46 +1871,19 @@ void SSSearch::select_random_greedy(bool termination) {
 				cout<<"Imprimiendo el Z_full_vector despues de eliminar el pair elegido.\n";
 				printVectorPair(Z_full_vector);
 				cout<<"Fin Imprimiendo el Z_full_vector despues de eliminar el pair elegido.\n";
-				//std::vector<pair<string, double> > Z_full_vector_combiner(Z_full_vector.begin(), Z_full_vector.end());
-
-				/*typedef std::vector<std::pair<std::string, double> > vector_type_comb;
-				for (vector_type_comb::const_iterator pos = Z_full_vector.begin();
-                			pos != Z_full_vector.end(); ++pos)
-                		{
-                			string s = pos->first;
-                			double d = pos->second;
-
-					string delimiter_comb = "_";
-                			//int size_pot = size_subset + size_full;
-                			vector<vector<string> > vector_index_comb;
-                			for (size_t i = 0; i < combination.size(); i++) {
-                        			string s = combination.at(i);
-                        			//string pot[10];
-                        			vector<string> pot;
-                        			size_t pos = 0;
-                        			string token;
-                        			int index = 0;
-                        			while ((pos = s.find(delimiter_comb)) != std::string::npos) {
-                                			token = s.substr(0, pos);
-                                			//pot[index] = token;
-                                			pot.insert(pot.begin() + index, token);
-                                			s.erase(0, pos + delimiter_comb.length());
-                                			index++;
-                        			}
-                        			//pot[index] = s;
-                        			pot.insert(pot.begin() + index, s);
-                        			vector_index_comb.push_back(pot);
-                			}
-                		}*/
-
+				
 				Z_full_vector_combiner = Z_full_vector;
 				//Z_full_vector_combiner must contains at this point only the heuristics without combine.. The combination only happens in heuristicCombiner. Here only must have the following:
 				//h1, h2, h3, h5 - The Z_subet contains h4 then in the heuristicCombiner happens the magic of combination h1_h4, h2_h4, h3_h4, h5_h4
 			}
 		}
 		cout<<"OUT OF WHILE\n";
-		/*
+		cout<<"PRINTING THE SUBSET OF HEURISTICS\n";
+		printVectorPair(Z_subset);
+		cout<<"ENDING PRINTING THE SUBSET OF HEURISTICS\n";
 
+		
+		/*
         	vector<string> v_gapdb_string;
 		string heuristic_good = "gapdb_good";
 
