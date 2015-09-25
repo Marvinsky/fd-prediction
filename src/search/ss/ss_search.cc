@@ -2677,24 +2677,78 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 		printVectorPair(Z_full);
 		cout<<"End Dentro del heuristicCombinator Imprimiendo Z_subset y Z_full respectivamente\n";
 		
-		vector<string> combination;
+		cout<<"-----------------------BEGIN PRINT EACH COMBINATION------------------------\n";		
 		typedef std::vector<std::pair<std::string, double> > vector_type;		
 		for (vector_type::const_iterator pos = Z_full.begin();
                 pos != Z_full.end(); ++pos)
                 {
                 	string s = pos->first;
-			string s_inner;
+			string new_s = s;
+			size_t f_s = new_s.find("_");
+			string first_key_string = new_s.substr(0, f_s);
+			int first_key = std::atoi(first_key_string.c_str());
+			double sum_combination_heur = 0;
+			string key_name = s;
 			typedef std::vector<std::pair<std::string, double> > vector_type_inner;
 			for (vector_type_inner::const_iterator posinner = Z_subset.begin();
 			posinner != Z_subset.end(); ++posinner) {
-				s_inner += "_" + posinner->first;
-			}
-			s += s_inner;
-			combination.push_back(s);
-			//cout<<s<<"\n";
-                }
+				string s_inner = posinner->first;
+				string new_s_inner = s_inner;
+				size_t f_s_inner = new_s_inner.find("_");
+				string second_key_string = new_s_inner.substr(0, f_s_inner);
+				int second_key = std::atoi(second_key_string.c_str());
+				string delimiter = ",";
+				cout<<"first_key = "<<first_key<<", second_key = "<<second_key<<"\n";
+				//cout<<"heuristic-information\n";
+				for (int i = 0; i < n_heuristics; i++) {
+					if (first_key == i || second_key == i) {
+                				string s =  all_heuristics[i]->get_heur_name();
+                				string pot[6];//six is the max string allowed for heuristic string
+                				size_t pos = 0;
+                				string token;
+                				int index = 0;
+                				while ((pos = s.find(delimiter)) != std::string::npos) {
+                					token = s.substr(0, pos);
+							//cout<<"token="<<token<<"\n";
+                        				pot[index] = token;
+                        				s.erase(0, pos + delimiter.length());
+                        				index++;
+                				}
+                				pot[index] = s;
 
-		string delimiter_comb = "_";
+           					string heuristic_name_created = pot[0],
+	    					number_h = std::to_string(i), //consider this order because SS commands	
+						name;
+
+	    					if (heuristic_name_created == "ipdb") {
+            						name = number_h + "_ipdb";
+            					} else if (heuristic_name_created == "lmcut") {
+            						name = number_h + "_lmcut";
+            					} else if (heuristic_name_created == "merge_and_shrink") {
+            						name = number_h + "_mands";
+            					} else {
+            						name = number_h + "_gapdb";
+            					}
+						//cout<<"name="<<name<<"\n";
+						//number of heuristics values in the search tree.
+						double sum_heur_values = 0;
+						for (int j = 0; j < count_line; j++) {
+							sum_heur_values += harray[j][i]*ccarray[j][0];
+						}
+						cout<<"i="<<i<<", sum_heur_values="<<sum_heur_values<<"\n";
+						sum_combination_heur += sum_heur_values;
+						if (first_key == i) {
+							first_key = -1;//set -1 in order to avoid enter again
+						}
+					} // key comparator
+        			}//end n_heuristics loop
+			}//end Z_subset
+			cout<<"key_name ending="<<key_name<<"\n\n";	 
+                	Z_full_map.insert(pair<string, double>(key_name, sum_combination_heur));
+			cout<<"\n";
+		}//end Z_full
+		cout<<"-------------------------END PRINT EACH COMBINATION------------------------\n";
+		/*string delimiter_comb = "_";
 		//int size_pot = size_subset + size_full;
 		vector<vector<string> > vector_index_comb;
 		for (size_t i = 0; i < combination.size(); i++) {
@@ -2714,73 +2768,7 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 			//pot[index] = s;
 			pot.insert(pot.begin() + index, s);
 			vector_index_comb.push_back(pot);
-		}
-	
-		cout<<"-----------------------BEGIN PRINT EACH COMBINATION------------------------\n";		
-		for (size_t i = 0; i < vector_index_comb.size(); i++) {
-			vector<string> v = vector_index_comb.at(i);
-			double sum_combination_heur = 0;
-			string key_name;
-			for (size_t k = 0; k < v.size(); k++) {
-				string key_string = v.at(k);
-				if (k > 0) {
-					key_name += "_" + key_string;
-				} else {
-					key_name += key_string;
-				}
-				//cout<<"key = "<<key_string<<"\n";
-				if (key_string == "ipdb" || key_string == "lmcut" || key_string == "gapdb") {
-
-				} else {
-					int key = std::atoi(key_string.c_str());
-					//cout<<key<<"\n";
-					string delimiter = ",";
-					//cout<<"heuristic-information\n";
-					for (int i = 0; i < n_heuristics; i++) {
-						if (key == i) {
-                					string s =  all_heuristics[i]->get_heur_name();
-                					string pot[6];
-                					size_t pos = 0;
-                					string token;
-                					int index = 0;
-                					while ((pos = s.find(delimiter)) != std::string::npos) {
-                						token = s.substr(0, pos);
-								//cout<<"token="<<token<<"\n";
-                        					pot[index] = token;
-                        					s.erase(0, pos + delimiter.length());
-                        					index++;
-                					}
-                					pot[index] = s;
-
-           						string heuristic_name_created = pot[0],
-	    						number_h = std::to_string(i), //consider this order because SS commands	
-							name;
-
-	    						if (heuristic_name_created == "ipdb") {
-            							name = number_h + "_ipdb";
-            						} else if (heuristic_name_created == "lmcut") {
-            							name = number_h + "_lmcut";
-            						} else if (heuristic_name_created == "merge_and_shrink") {
-            							name = number_h + "_mands";
-            						} else {
-            							name = number_h + "_gapdb";
-            						}
-							//cout<<"name="<<name<<"\n";
-							//number of heuristics values in the search tree.
-							double sum_heur_values = 0;
-							for (int j = 0; j < count_line; j++) {
-								sum_heur_values += harray[j][i]*ccarray[j][0];
-							}
-							sum_combination_heur += sum_heur_values;
-						}
-        				}//end n_heuristics loop
-				}//end else of only number
-			}//end v
-			cout<<"key_name ending="<<key_name<<"\n\n";	 
-                	Z_full_map.insert(pair<string, double>(key_name, sum_combination_heur));
-			cout<<"\n";
-		}//end map_index_comb
-		cout<<"-------------------------END PRINT EACH COMBINATION------------------------\n";
+		}*/
 	}	
 	cout<<"Z_full_map empty\n";
 	return Z_full_map;
