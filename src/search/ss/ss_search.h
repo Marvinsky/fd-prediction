@@ -169,5 +169,5 @@ public:
         int getTotalGAHeurs(vector<string> v);
 	void select_best_heuristics_greedy_stocastic(int cardinality);
 	void select_random_greedy(bool termination);
-	map<string, double>  heuristicCombinator(bool is_individual);
+	map<string, double>  heuristicCombinator(bool call_first_time, vector<pair<string, double> > Z_subset, vector<pair<string, double> > Z_full);
 };
