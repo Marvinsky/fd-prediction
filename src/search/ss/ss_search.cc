@@ -22,7 +22,7 @@ bool domination_check=false;
 set<vector<int> > F_culprits;
 double sampling_time_limit=150;
 double overall_time_limit=1400;
-int N_default = 6;
+int N_default = 4;
 
 //Root and fd information
 string _HOME_INFO = "/home";
@@ -1849,7 +1849,8 @@ void SSSearch::select_random_greedy(bool termination) {
                 			cout<<"\t\t\t"<<s<<"  -  "<<d<<"\n";
                 		}
 				cout<<"End printing Z_cut_vector\n";
-				int random_index = g_rng() * index_max;
+				int random_index = g_rng() * (index_max-1);
+				cout<<"random_index="<<random_index<<"\n";
 				pair<string, double> Z_choosed = Z_cut_vector.at(random_index);
 				string s_choosed = Z_choosed.first;
 				double d_choosed = Z_choosed.second;
