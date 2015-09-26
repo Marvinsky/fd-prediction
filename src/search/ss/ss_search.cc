@@ -1134,54 +1134,46 @@ void SSSearch::generateExpandedReport() {
         expanded.clear();
 }
 
-void SSSearch::generateSSCCReport(bool termination) {
-	int n_probes = ss_probes;
-	string dominio = domain_name;
-        string tarefa = problem_name2;
-        string heuristica = heuristic_name2;
-	string domain_pddl = domain_instance_pddl;
+void SSSearch::updateSSCC() {
+	n_probes_sscc = ss_probes;
+	dominio_global2 = domain_name;
+        tarefa_global2 = problem_name2;
+        heuristica_global2 = heuristic_name2;
+	domain_pddl_global2 = domain_instance_pddl;
 
-        cout<<"dominio = "<<dominio<<endl;
-        cout<<"tarefa_pddl = "<<tarefa<<endl;
-	cout<<"domain_pddl = "<<domain_pddl<<"\n";
-        cout<<"heuristica = "<<heuristica<<endl;
-        //int length = tarefa.size();
-        //cout<<"length = "<<length<<endl;
-        size_t found = tarefa.find(".");
-        //cout<<"found = "<<found<<endl;
-        string name = tarefa.substr(0, found);
+        size_t found = tarefa_global2.find(".");
+        string name = tarefa_global2.substr(0, found);
         name+="_F_";
         name+=boost::lexical_cast<std::string>(threshold);
         name += ".csv";
-        //cout<<"name = "<<name<<endl;
 	
 	string dirDomain, dirSSCC, outputFile;
 	if (is_mov_bound) {
 		string nameProbes = "reportss_bounds";
                 nameProbes += "_probes_";
-                nameProbes += boost::lexical_cast<std::string>(ss_probes);
+                nameProbes += boost::lexical_cast<std::string>(n_probes_sscc);
                 cout<<"nameProbes = "<<nameProbes<<"\n";
 
-        	dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
-        	dirSSCC = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc";
-        	outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc/"+name;
+        	dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global2+"/"+ nameProbes +"/"+dominio_global2;
+        	dirSSCC = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global2+"/"+ nameProbes +"/"+dominio_global2+"/bc";
+        	outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica_global2+"/"+ nameProbes +"/"+dominio_global2+"/bc/"+name;
 	} else {
 		string nameProbes = "reportss_";
-                nameProbes += boost::lexical_cast<std::string>(ss_probes);
+                nameProbes += boost::lexical_cast<std::string>(n_probes_sscc);
                 nameProbes += "_probes";
                 cout<<"nameProbes = "<<nameProbes<<"\n";
 
-		dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
-        	dirSSCC = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc";
-        	outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc/"+name;
+		dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global2+"/"+ nameProbes +"/"+dominio_global2;
+        	dirSSCC = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global2+"/"+ nameProbes +"/"+dominio_global2+"/bc";
+        	outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica_global2+"/"+ nameProbes +"/"+dominio_global2+"/bc/"+name;
 	}
 
         if (system(dirDomain.c_str())) {
-           cout<<"Directory: "<<heuristica<<" created."<<endl;
+           cout<<"Directory: "<<dirDomain.c_str()<<" created."<<endl;
         }
 
         if (system(dirSSCC.c_str())) {
-           cout<<"Directory: SSCC created."<<endl;
+           cout<<"Directory: "<<dirSSCC.c_str()<<" created."<<endl;
         }
 
         ofstream output;
@@ -1193,21 +1185,19 @@ void SSSearch::generateSSCCReport(bool termination) {
             output<<"h(,"<<i<<"):,"<<heur_name<<"\n";
         }
 
-	int n_heuristics = all_heuristics.size();
-	int count_line = collector.size();
-	//cout<<"n_heuristics="<<n_heuristics<<"\n";
-	//cout<<"count_line="<<count_line<<"\n";
+	n_heuristics_global2 = all_heuristics.size();
+	count_line_sscc = collector.size();
 
 	//get the combintation 1/0/1/0..../1/1
-	int** harray = new int*[count_line];
-	double** ccarray = new double*[count_line];
-	for (int i = 0; i < count_line; i++) {
-		harray[i] = new int[n_heuristics];
-		ccarray[i] = new double[1];
+	harray_sscc = new int*[count_line_sscc];
+	ccarray_sscc = new double*[count_line_sscc];
+	for (int i = 0; i < count_line_sscc; i++) {
+		harray_sscc[i] = new int[n_heuristics_global2];
+		ccarray_sscc[i] = new double[1];
 	}
 
 	int counter_line = 0;
-       for (map<boost::dynamic_bitset<>, double>::iterator iter = collector.begin(); iter != collector.end(); iter++) {
+        for (map<boost::dynamic_bitset<>, double>::iterator iter = collector.begin(); iter != collector.end(); iter++) {
                 boost::dynamic_bitset<> b_node_v = iter->first;
                 double cc = iter->second;
                 //cout<<"bc(";
@@ -1215,28 +1205,31 @@ void SSSearch::generateSSCCReport(bool termination) {
                 for (size_t i = 0; i < b_node_v.size(); i++) {
                         //cout<<b_node_v.test(i);
                         output<<b_node_v.test(i);
-			harray[counter_line][i] = b_node_v.test(i);
+			harray_sscc[counter_line][i] = b_node_v.test(i);
                         if (i != b_node_v.size() - 1) {
                                 //cout<<"/";
                                 output<<"/";
                         }
                 }
-                //cout<<")cc="<<(double)cc/(double)n_probes<<"\n";
-		double result_cc = (double)cc/(double)n_probes; 
-                //output<<")cc="<<(double)cc/(double)n_probes<<"\n";
+                //cout<<")cc="<<(double)cc/(double)n_probes_sscc<<"\n";
+		double result_cc = (double)cc/(double)n_probes_sscc; 
+                //output<<")cc="<<(double)cc/(double)n_probes_sscc<<"\n";
                 output<<")cc="<<result_cc<<"\n";
-		ccarray[counter_line][0] = result_cc;
+		ccarray_sscc[counter_line][0] = result_cc;
 		counter_line++;
         }
         output.close();
+}
 
+void SSSearch::generateSSCCReport(bool termination) {
+	updateSSCC();
 	if (termination) {
 		//make it work in 30 minutes
 		string delimiter = ",";
 		//cout<<"heuristic-information\n";
 		map<string, double> add_line_map_heuristic;
 		map<string, vector<string> > map_info_heur;
-		for (size_t i = 0; i < all_heuristics.size(); i++) {
+		for (int i = 0; i < n_heuristics_global2; i++) {
 			vector<string> collector;
                 	string s =  all_heuristics[i]->get_heur_name();
                 	string pot[6];
@@ -1302,9 +1295,9 @@ void SSSearch::generateSSCCReport(bool termination) {
 
 			//number of nodes expanded by each heuristic
                 	double sum_ones = 0;
-                	for (int j = 0; j < count_line; j++) {
-                        	if (harray[j][i] == 1) {
-                                	sum_ones += ccarray[j][0];
+                	for (int j = 0; j < count_line_sscc; j++) {
+                        	if (harray_sscc[j][i] == 1) {
+                                	sum_ones += ccarray_sscc[j][0];
                         	}
                 	}
                 	add_line_map_heuristic.insert(pair<string, double>(name, sum_ones));
@@ -1449,7 +1442,7 @@ void SSSearch::generateSSCCReport(bool termination) {
         	//end astar_gpdb call the bc from ss
 
 		string PROB_GOOD = "problemas_";
-                PROB_GOOD += boost::lexical_cast<std::string>(ss_probes);
+                PROB_GOOD += boost::lexical_cast<std::string>(n_probes_sscc);
                 PROB_GOOD += "_probes";
                 //cout<<"PROB_GOOD = "<<PROB_GOOD<<"\n";
 		string ASTAR_GOOD_NAME = "_SS_ASTAR";
@@ -1472,12 +1465,12 @@ void SSSearch::generateSSCCReport(bool termination) {
                 	cout<<"create directory "<<dirResultado.c_str()<<"\n";
                 }
 
-		string pastaProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  + "/"+dominio;
+		string pastaProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  + "/"+dominio_global2;
 		if (system(pastaProblema.c_str())) {
 			cout<<"create directory "<<pastaProblema.c_str()<<"\n";
 		}
 
-		string pastaResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  +  "/"+dominio+"/resultado";
+		string pastaResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  +  "/"+dominio_global2+"/resultado";
 		if (system(pastaResultado.c_str())) {
 			cout<<"create directory "<<pastaResultado.c_str()<<"\n";
 		}
@@ -1555,7 +1548,7 @@ void SSSearch::generateSSCCReport(bool termination) {
                 			cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
                 		}
 
-				string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan/"+dominio;
+				string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan/"+dominio_global2;
                 		if (system(dirSASPLANDomain.c_str())) {
                 			cout<<"create directory "<<dirSASPLANDomain.c_str()<<"\n";
                 		}
@@ -1569,7 +1562,7 @@ void SSSearch::generateSSCCReport(bool termination) {
 
                 		arquivo = new_problem_name_mod + "_gapdb_" + final_number_heur + ".sh";
                 		arquivo = "/" + arquivo;
-                		arquivo = dominio + arquivo;
+                		arquivo = dominio_global2 + arquivo;
                 		arquivo = "astar/"+heuristic_good+"/" + PROB_GOOD  +  "/" + arquivo;
                 		arquivo = "marvin/" + arquivo;
                 		arquivo = "marvin/"+ arquivo;
@@ -1577,7 +1570,7 @@ void SSSearch::generateSSCCReport(bool termination) {
 				cout<<"arquivo="<<arquivo<<"\n";
                 		ofstream outfile(arquivo.c_str(), ios::out);
 
-				string newdominio = dominio + "_" + final_number_heur + "_" + new_problem_name_mod;
+				string newdominio = dominio_global2 + "_" + final_number_heur + "_" + new_problem_name_mod;
 
                 		sas = "Inside_Astar";
                 		sas += newdominio;
@@ -1606,21 +1599,21 @@ void SSSearch::generateSSCCReport(bool termination) {
 				outfile<<"source /usr/share/modules/init/bash\n\n";
 				outfile<<"module load python\nmodule load mercurial\n\n";
 
-				//cout<<"pasta = "<<dominio<<"\n\n;
+				//cout<<"pasta = "<<dominio_global2<<"\n\n;
 				outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
         			outfile<<"TEMP="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/temp\n\n";
         			outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";	
-                		outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado\n\n";
+                		outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio_global2<<"/resultado\n\n";
 				outfile<<"cd ${DIR}\n\n";
-                		outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<domain_pddl<<" ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<tarefa<<"\n\n";
+                		outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio_global2<<"/"<<domain_pddl_global2<<" ${FD_ROOT}/benchmarks/"<<dominio_global2<<"/"<<tarefa_global2<<"\n\n";
 
                 		outfile<<"${FD_ROOT}/src/preprocess/preprocess < output.sas"<<"\n\n"; 
 				//Santiago's code to find the F_boundary on the fly
-                		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio<<" --problem_name "<<tarefa<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --search \"astar_original("<<parameter<<")\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+                		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio_global2<<" --problem_name "<<tarefa_global2<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --search \"astar_original("<<parameter<<")\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
                 	
 
 				outfile<<"\n\nrm ${DIR}\n\n";
-                		outfile<<"\n\nmv sas_plan ${FD_ROOT}/plan/"<<dominio<<"/"<<tarefa<<"\n\n";
+                		outfile<<"\n\nmv sas_plan ${FD_ROOT}/plan/"<<dominio_global2<<"/"<<tarefa_global2<<"\n\n";
 
                 		outfile.close();
 
@@ -1654,7 +1647,7 @@ void SSSearch::generateSSCCReport(bool termination) {
                 		cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
                 	}
 
-			string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan_"+heuristic_good+"/"+dominio;
+			string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan_"+heuristic_good+"/"+dominio_global2;
                 	if (system(dirSASPLANDomain.c_str())) {
                 		cout<<"create directory "<<dirSASPLANDomain.c_str()<<"\n";
                 	}	
@@ -1692,7 +1685,7 @@ void SSSearch::generateSSCCReport(bool termination) {
 
         		arquivo = new_problem_name_mod + "_gapdb_all.sh";
 			arquivo = "/" + arquivo;
-        		arquivo = dominio + arquivo;
+        		arquivo = dominio_global2 + arquivo;
         		arquivo = "astar/"+heuristic_good+"/" + PROB_GOOD  +  "/" + arquivo;
         		arquivo = "marvin/" + arquivo;
         		arquivo = "marvin/"+ arquivo;
@@ -1714,17 +1707,17 @@ void SSSearch::generateSSCCReport(bool termination) {
         		outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";
         		//cout<<"pasta = "<<pasta.c_str()<<"\n\n";
 
-        		outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado"<<"\n\n";
+        		outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio_global2<<"/resultado"<<"\n\n";
         		//outfile<<"cd "<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
         		outfile<<"cd ${DIR}\n\n";
-                	outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<domain_pddl<<" ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<tarefa<<"\n\n";
+                	outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio_global2<<"/"<<domain_pddl_global2<<" ${FD_ROOT}/benchmarks/"<<dominio_global2<<"/"<<tarefa_global2<<"\n\n";
 
         		outfile<<"${FD_ROOT}/src/preprocess/preprocess < output.sas"<<"\n\n";
 
-        		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio<<" --problem_name "<<tarefa<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+        		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio_global2<<" --problem_name "<<tarefa_global2<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 
         		outfile<<"\n\nrm ${DIR}\n\n";
-			outfile<<"\n\nmv sas_plan ${FD_ROOT}/plan_"<<heuristic_good<<"/"<<dominio<<"/"<<tarefa<<"\n\n";
+			outfile<<"\n\nmv sas_plan ${FD_ROOT}/plan_"<<heuristic_good<<"/"<<dominio_global2<<"/"<<tarefa_global2<<"\n\n";
 
         		outfile.close();
 
@@ -1751,6 +1744,11 @@ void SSSearch::generateSSCCReport(bool termination) {
         		}
 		}//end run_min_heuristic
 	}//end termination
+
+	delete harray_sscc; //freed memory
+	harray_sscc = NULL; //pointed dangling pt to NULL
+	delete ccarray_sscc;
+	ccarray_sscc = NULL;
 }
 
 double SSSearch::getProbingResult() {
@@ -2038,7 +2036,7 @@ void SSSearch::updateGRHS() {
 	
 	string dirDomain_greedy, dirDomain, dirSSCC, outputFile;
 	string nameProbes = "reportss_greedy_";
-        nameProbes += boost::lexical_cast<std::string>(ss_probes);
+        nameProbes += boost::lexical_cast<std::string>(n_probes_grhs);
        	nameProbes += "_probes";
         cout<<"nameProbes = "<<nameProbes<<"\n";
 

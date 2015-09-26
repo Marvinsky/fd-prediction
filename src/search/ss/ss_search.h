@@ -143,7 +143,7 @@ private:
 	int last_probe;
 	double last_n_expanded;
 
-	//parameters
+	//parameters GRHS
 	int** harray_grhs;
 	double** ccarray_grhs;
 	string dominio_global;
@@ -153,6 +153,18 @@ private:
 	int n_heuristics_global;
 	int count_line_grhs;                
 	int n_probes_grhs;
+
+	//parameters SSCC
+	int** harray_sscc;
+	double** ccarray_sscc;
+	int n_heuristics_global2;
+	int count_line_sscc;
+	int n_probes_sscc;
+	string dominio_global2;
+	string tarefa_global2;
+	string heuristica_global2;
+	string domain_pddl_global2;
+
 protected:
 
 	virtual SearchStatus step();
@@ -182,4 +194,5 @@ public:
 	map<string, double>  heuristicCombinator(bool call_first_time, vector<pair<string, double> > Z_subset, vector<pair<string, double> > Z_full);
 	double getSumSubset(vector<pair<string, double> > Z_subset);
 	void updateGRHS();
+	void updateSSCC();
 };
