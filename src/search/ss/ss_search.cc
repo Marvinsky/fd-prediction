@@ -1048,20 +1048,13 @@ void SSSearch::generateGeneratedReport() {
 }
 
 void SSSearch::generateExpandedReport() {
-      	string dominio = domain_name;
-        string tarefa = problem_name2;
-        string heuristica = heuristic_name2;
         double total_nodes = 0.0;
         for (map<Node2, double>::iterator iter = expanded.begin(); iter != expanded.end(); iter++) {
             double n = iter->second;
             total_nodes += n;
         }
-	double predictionExpanded = (double)total_nodes/(double)ss_probes;
+	double predictionExpanded = (double)total_nodes/(double)n_probes_global;
         cout<<"count nodes expanded : "<<predictionExpanded <<endl;
-
-        cout<<"dominio = "<<dominio<<endl;
-        cout<<"tarefa = "<<tarefa<<endl;
-        cout<<"heuristica = "<<heuristica<<endl;
 
 	string dirDomain, dirfDist, outputFile;
 
@@ -1070,18 +1063,18 @@ void SSSearch::generateExpandedReport() {
                 nameProbes += "_probes_";
                 nameProbes += boost::lexical_cast<std::string>(ss_probes);
                 cout<<"nameProbes = "<<nameProbes<<"\n";
-                dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio;
-                dirfDist = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio+"/fdist";
-                outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes  +"/"+dominio+"/fdist/"+tarefa;
+                dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+ nameProbes  +"/"+dominio_global;
+                dirfDist = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+ nameProbes  +"/"+dominio_global+"/fdist";
+                outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+ nameProbes  +"/"+dominio_global+"/fdist/"+tarefa_global;
 	} else {
 		string nameProbes = "reportss_";
                 nameProbes += boost::lexical_cast<std::string>(ss_probes);
                 nameProbes += "_probes";
                 cout<<"nameProbes = "<<nameProbes<<"\n";
 
-        	dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
-        	dirfDist = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/fdist";
-        	outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/fdist/"+tarefa;
+        	dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+ nameProbes +"/"+dominio_global;
+        	dirfDist = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+ nameProbes +"/"+dominio_global+"/fdist";
+        	outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+ nameProbes +"/"+dominio_global+"/fdist/"+tarefa_global;
 	}
 
         ofstream output;
@@ -1094,11 +1087,11 @@ void SSSearch::generateExpandedReport() {
         
 
         if (system(dirDomain.c_str())) {
-           cout<<"Directory: "<<heuristica<<" created."<<endl;
+           cout<<"Directory: "<<dirDomain.c_str()<<" created."<<endl;
         }
 
         if (system(dirfDist.c_str())) {
-           cout<<"Directory: fdist created."<<endl;
+           cout<<"Directory: "<<dirfDist.c_str()<<" created."<<endl;
         }
         cout<<"print."<<endl;
         for (int i = 0; i <= threshold; i++) {
@@ -1111,7 +1104,7 @@ void SSSearch::generateExpandedReport() {
                  if (i == n.getL()) {
                     k++;
                     f.push_back(n.getF());
-                    q.push_back(((double)iter->second)/(double)ss_probes);
+                    q.push_back(((double)iter->second)/(double)n_probes_global);
 
                     //cout<<"l = "<<n.getL()<<" f = "<<n.getF()<<" q = "<<(iter->second)/ss_probes<<endl;
                     //output<<"l = "<<n.getL()<<" f = "<<n.getF()<<" q = "<<(iter->second)/ss_probes<<"\n";
