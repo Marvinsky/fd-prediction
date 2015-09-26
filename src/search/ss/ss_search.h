@@ -163,6 +163,7 @@ public:
         void probe();
         void predict(int probes);
 	int getMinHeur(vector<int> v);
+	int getMaxHeur(vector<int> v);
 	void select_best_heuristics_greedy();
 	void BFS(SSNode root, Type type);
 	bool isGAPDB(string heuristic);
