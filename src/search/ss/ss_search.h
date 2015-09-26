@@ -145,25 +145,22 @@ private:
 
 	//parameters GRHS
 	int** harray_grhs;
-	double** ccarray_grhs;
-	string dominio_global;
-	string tarefa_global;
-	string heuristica_global;
-	string domain_pddl_global;
-	int n_heuristics_global;
+	double** ccarray_grhs;	
 	int count_line_grhs;                
-	int n_probes_grhs;
 
 	//parameters SSCC
 	int** harray_sscc;
 	double** ccarray_sscc;
 	int n_heuristics_global2;
 	int count_line_sscc;
-	int n_probes_sscc;
-	string dominio_global2;
-	string tarefa_global2;
-	string heuristica_global2;
-	string domain_pddl_global2;
+
+	//global parameters
+	string dominio_global;
+	string tarefa_global;
+	string heuristica_global;
+	string domain_pddl_global;
+	int n_heuristics_global;
+	int n_probes_global;
 
 protected:
 
@@ -195,4 +192,5 @@ public:
 	double getSumSubset(vector<pair<string, double> > Z_subset);
 	void updateGRHS();
 	void updateSSCC();
+	void updateGlobalVariables();
 };
