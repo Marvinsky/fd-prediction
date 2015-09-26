@@ -1024,12 +1024,15 @@ int SSSearch::getMinHeur(vector<int> v) {
 
 int SSSearch::getMaxHeur(vector<int> v) {
 	int h_max = 0;
+	//cout<<"print v\n";
 	for (size_t i = 0; i < v.size(); i++) {
 		int aux = v.at(i);
+		//cout<<aux<<", ";
 		if (h_max < aux) {
 			h_max = aux;
 		}
 	}
+	//cout<<"\n";
 	return h_max;
 }
 
@@ -1875,6 +1878,10 @@ void SSSearch::select_random_greedy(bool termination) {
 				Z_full_vector.erase(std::remove(Z_full_vector.begin(), Z_full_vector.end(), Z_choosed), Z_full_vector.end());
 				
 				//Remove from the Z_full the heuristics that when combined with the heuristics you already have in Z_subset do not yeald in any improvements to the objective function.	
+				
+				cout<<"Begin sum_Heur_by_Z_subset\n";
+				double sumHeur_by_Z_subset = getSumSubset(Z_subset);
+				cout<<"End sum_Heur_by_Z_subset\n";
 				typedef std::vector<std::pair<std::string, double> > vector_type;
         			for (vector_type::const_iterator pos = Z_full_vector.begin();
         			pos != Z_full_vector.end(); ++pos)
@@ -1882,7 +1889,7 @@ void SSSearch::select_random_greedy(bool termination) {
 					
 					vector<pair<string, double> > Z_subset_aux(Z_subset.begin(), Z_subset.end());
 					Z_subset_aux.push_back(*pos);
-        				if (getSumSubset(Z_subset) == getSumSubset(Z_subset_aux)) {
+        				if (sumHeur_by_Z_subset == getSumSubset(Z_subset_aux)) {
 						//remove pos
 						cout<<"Removing pos\n";
 						Z_full_vector.erase(std::remove(Z_full_vector.begin(), Z_full_vector.end(), *pos), Z_full_vector.end());
@@ -2013,99 +2020,102 @@ void SSSearch::select_random_greedy(bool termination) {
 	}//end termination
 }
 
+void SSSearch::updateGRHS() {
+	dominio_global = domain_name;
+        tarefa_global = problem_name2;
+        heuristica_global = heuristic_name2;
+	domain_pddl_global = domain_instance_pddl;
+
+        cout<<"dominio_ghrs = "<<dominio_global<<endl;
+        cout<<"tarefa_pddl = "<<tarefa_global<<endl;
+	cout<<"domain_pddl = "<<domain_pddl_global<<"\n";
+        cout<<"heuristica = "<<heuristica_global<<endl;
+        size_t found = tarefa_global.find(".");
+        string name = tarefa_global.substr(0, found);
+        name+="_F_";
+        name+=boost::lexical_cast<std::string>(threshold);
+        name += ".csv";
+	
+	string dirDomain_greedy, dirDomain, dirSSCC, outputFile;
+	string nameProbes = "reportss_greedy_";
+        nameProbes += boost::lexical_cast<std::string>(ss_probes);
+       	nameProbes += "_probes";
+        cout<<"nameProbes = "<<nameProbes<<"\n";
+
+	dirDomain_greedy = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+nameProbes;
+	dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+ nameProbes +"/"+dominio_global;
+        dirSSCC = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+ nameProbes +"/"+dominio_global+"/bc";
+        outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+ nameProbes +"/"+dominio_global+"/bc/"+name;
+
+	if (system(dirDomain_greedy.c_str())) {
+        	cout<<"Directory: "<<dirDomain_greedy.c_str()<<" created."<<endl;
+        }
+
+        if (system(dirDomain.c_str())) {
+        	cout<<"Directory: "<<dirDomain.c_str()<<" created."<<endl;
+        }
+
+        if (system(dirSSCC.c_str())) {
+           	cout<<"Directory: SSCC created."<<endl;
+        }
+
+	ofstream output;
+        output.open(outputFile.c_str());
+	
+	//print the name of the all_heuristics just to be analyzed later
+        for (size_t i = 0; i < all_heuristics.size(); i++) {
+            	string heur_name = all_heuristics[i]->get_heur_name();
+            	output<<"h(,"<<i<<"):,"<<heur_name<<"\n";
+        }
+
+	n_heuristics_global = all_heuristics.size();
+	count_line_grhs = collector_heur.size();
+	cout<<"n_heuristics_grhs="<<n_heuristics_global<<"\n";
+	cout<<"count_line_grhs="<<count_line_grhs<<"\n";
+
+	//get the combintation 1/0/1/0..../1/1
+        harray_grhs = new int*[count_line_grhs];
+        ccarray_grhs = new double*[count_line_grhs];
+        for (int i = 0; i < count_line_grhs; i++) {
+                harray_grhs[i] = new int[n_heuristics_global];
+               	ccarray_grhs[i] = new double[1];
+        }
+
+        int counter_line = 0;
+	for (map<std::vector<int>, double>::iterator iter = collector_heur.begin(); iter != collector_heur.end(); iter++) {
+		vector<int> h_node_v = iter->first;
+		output<<"bc(";
+		double cc = iter->second;
+		for (size_t i = 0; i < h_node_v.size(); i++) {
+			int h = h_node_v.at(i);
+			output<<h;
+			//cout<<h;	
+			harray_grhs[counter_line][i] = h_node_v.at(i);
+			if (i != h_node_v.size() - 1) {
+				output<<"/";
+				//cout<<"/";
+			}
+		}
+                double result_cc = (double)cc/(double)n_probes_grhs;
+                output<<")cc="<<result_cc<<"\n";
+                ccarray_grhs[counter_line][0] = result_cc;
+                counter_line++;
+	}
+	output.close();
+}
+
 map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<pair<string, double> > Z_subset, vector<pair<string, double> > Z_full) {
 	cout<<"combine heuristics..."<<call_first_time<<"\n";	
 	map<string, double> Z_full_map;
-	int n_probes = ss_probes;
+	n_probes_grhs = ss_probes;
 
 	if (call_first_time) {
-		string dominio = domain_name;
-        	string tarefa = problem_name2;
-        	string heuristica = heuristic_name2;
-		string domain_pddl = domain_instance_pddl;
-
-        	cout<<"dominio = "<<dominio<<endl;
-        	cout<<"tarefa_pddl = "<<tarefa<<endl;
-		cout<<"domain_pddl = "<<domain_pddl<<"\n";
-        	cout<<"heuristica = "<<heuristica<<endl;
-        	size_t found = tarefa.find(".");
-        	string name = tarefa.substr(0, found);
-        	name+="_F_";
-        	name+=boost::lexical_cast<std::string>(threshold);
-        	name += ".csv";
-	
-		string dirDomain_greedy, dirDomain, dirSSCC, outputFile;
-		string nameProbes = "reportss_greedy_";
-        	nameProbes += boost::lexical_cast<std::string>(ss_probes);
-       		nameProbes += "_probes";
-        	cout<<"nameProbes = "<<nameProbes<<"\n";
-
-		dirDomain_greedy = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+nameProbes;
-		dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio;
-        	dirSSCC = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc";
-        	outputFile = _HOME_INFO+"/marvin/marvin/testss/"+heuristica+"/"+ nameProbes +"/"+dominio+"/bc/"+name;
-
-		if (system(dirDomain_greedy.c_str())) {
-           		cout<<"Directory: "<<dirDomain_greedy.c_str()<<" created."<<endl;
-        	}
-
-        	if (system(dirDomain.c_str())) {
-           		cout<<"Directory: "<<dirDomain.c_str()<<" created."<<endl;
-        	}
-
-        	if (system(dirSSCC.c_str())) {
-           		cout<<"Directory: SSCC created."<<endl;
-        	}
-
-		ofstream output;
-        	output.open(outputFile.c_str());
-	
-		//print the name of the all_heuristics just to be analyzed later
-        	for (size_t i = 0; i < all_heuristics.size(); i++) {
-            		string heur_name = all_heuristics[i]->get_heur_name();
-            		output<<"h(,"<<i<<"):,"<<heur_name<<"\n";
-        	}
-
-		int n_heuristics = all_heuristics.size();
-		int count_line = collector_heur.size();
-		cout<<"n_heuristics="<<n_heuristics<<"\n";
-		cout<<"count_line="<<count_line<<"\n";
-
-		//get the combintation 1/0/1/0..../1/1
-        	int** harray = new int*[count_line];
-        	double** ccarray = new double*[count_line];
-        	for (int i = 0; i < count_line; i++) {
-                	harray[i] = new int[n_heuristics];
-               	 	ccarray[i] = new double[1];
-        	}
-
-        	int counter_line = 0;
-		for (map<std::vector<int>, double>::iterator iter = collector_heur.begin(); iter != collector_heur.end(); iter++) {
-			vector<int> h_node_v = iter->first;
-			output<<"bc(";
-			double cc = iter->second;
-			for (size_t i = 0; i < h_node_v.size(); i++) {
-				int h = h_node_v.at(i);
-				output<<h;
-				//cout<<h;	
-				harray[counter_line][i] = h_node_v.at(i);
-				if (i != h_node_v.size() - 1) {
-					output<<"/";
-					//cout<<"/";
-				}
-			}
-                	double result_cc = (double)cc/(double)n_probes;
-                	output<<")cc="<<result_cc<<"\n";
-                	ccarray[counter_line][0] = result_cc;
-                	counter_line++;
-		}
-		output.close();
-	
+		updateGRHS();	
 		//make it work in 30 minutes
 		string delimiter = ",";
 		//cout<<"heuristic-information\n";
 		map<string, vector<string> > map_info_heur;
-		for (int i = 0; i < n_heuristics; i++) {
+		for (int i = 0; i < n_heuristics_global; i++) {
 			vector<string> collector;
                 	string s =  all_heuristics[i]->get_heur_name();
                 	string pot[6];
@@ -2137,53 +2147,17 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 
 			//number of heuristics values in the search tree.
 			double sum_heur_values = 0;
-			for (int j = 0; j < count_line; j++) {
-				sum_heur_values += harray[j][i]*ccarray[j][0];
+			for (int j = 0; j < count_line_grhs; j++) {
+				sum_heur_values += harray_grhs[j][i]*ccarray_grhs[j][0];
 			}
                 	Z_full_map.insert(pair<string, double>(name, sum_heur_values));
         	}
 	}  else {//end_true call_first_time
 		
-		//print the name of the all_heuristics just to be analyzed later
-        	for (size_t i = 0; i < all_heuristics.size(); i++) {
-            		string heur_name = all_heuristics[i]->get_heur_name();
-        	}
-
-		int n_heuristics = all_heuristics.size();
-		int count_line = collector_heur.size();
-		cout<<"n_heuristics="<<n_heuristics<<"\n";
-		cout<<"count_line="<<count_line<<"\n";
-
-		//get the combintation 1/0/1/0..../1/1
-        	int** harray = new int*[count_line];
-        	double** ccarray = new double*[count_line];
-        	for (int i = 0; i < count_line; i++) {
-                	harray[i] = new int[n_heuristics];
-               	 	ccarray[i] = new double[1];
-        	}
-
-        	int counter_line = 0;
-		for (map<std::vector<int>, double>::iterator iter = collector_heur.begin(); iter != collector_heur.end(); iter++) {
-			vector<int> h_node_v = iter->first;
-			double cc = iter->second;
-			for (size_t i = 0; i < h_node_v.size(); i++) {
-				//int h = h_node_v.at(i);
-				//cout<<h;	
-				harray[counter_line][i] = h_node_v.at(i);
-				/*if (i != h_node_v.size() - 1) {
-					//cout<<"/";
-				}*/
-			}
-                	double result_cc = (double)cc/(double)n_probes;
-                	ccarray[counter_line][0] = result_cc;
-                	counter_line++;
-		}
 		cout<<"Dentro del heuristicCombinator Imprimiendo Z_subset y Z_full respectivamente\n";
 		printVectorPair(Z_subset);
 		printVectorPair(Z_full);
 		cout<<"End Dentro del heuristicCombinator Imprimiendo Z_subset y Z_full respectivamente\n";
-	
-
 		bool use_sum_of_the_max = true; //use the sum of the max instead of the sum of the sum
 	
 		cout<<"-----------------------BEGIN PRINT EACH COMBINATION------------------------\n";
@@ -2211,7 +2185,7 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 				string delimiter = ",";
 				cout<<"first_key = "<<first_key<<", second_key = "<<second_key<<"\n";
 				//cout<<"heuristic-information\n";
-				for (int i = 0; i < n_heuristics; i++) {
+				for (int i = 0; i < n_heuristics_global; i++) {
 					if (first_key == i || second_key == i) {
                 				string s =  all_heuristics[i]->get_heur_name();
                 				string pot[6];//six is the max string allowed for heuristic string
@@ -2244,18 +2218,18 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 						//number of heuristics values in the search tree.
 						double sum_heur_values = 0;
 						if (use_sum_of_the_max) {
-							for (int j = 0; j < count_line; j++) {
+							for (int j = 0; j < count_line_grhs; j++) {
 								map<int, vector<int> >::iterator itmap = map_max.find(j);
 								if (itmap != map_max.end()) {
 									//int bring_c = itmap->first;
 									vector<int> bring_v = itmap->second;
-									bring_v.push_back(harray[j][i]);
+									bring_v.push_back(harray_grhs[j][i]);
 									itmap->second = bring_v;
 									//cout<<"count_line_repeated\n";
 								} else {
 									//cout<<"count_line="<<j<<"\n";
 									vector<int> add_max_heuristic_values;
-									add_max_heuristic_values.push_back(harray[j][i]);
+									add_max_heuristic_values.push_back(harray_grhs[j][i]);
 									map_max.insert(pair<int, vector<int> >(j, add_max_heuristic_values));	
 								}
 
@@ -2263,12 +2237,12 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 								if (itmap2 != map_cc.end()) {
 									//DO NOTHING
 								} else {
-									map_cc.insert(pair<int, double>(j, ccarray[j][0]));
+									map_cc.insert(pair<int, double>(j, ccarray_grhs[j][0]));
 								}
 							}
 						} else { 
-							for (int j = 0; j < count_line; j++) {
-								sum_heur_values += harray[j][i]*ccarray[j][0];
+							for (int j = 0; j < count_line_grhs; j++) {
+								sum_heur_values += harray_grhs[j][i]*ccarray_grhs[j][0];
 							}
 							cout<<"i="<<i<<", sum_heur_values="<<sum_heur_values<<"\n";
 							sum_combination_heur += sum_heur_values;
@@ -2313,30 +2287,6 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 }
 
 double SSSearch::getSumSubset(vector<pair<string, double> > Z_subset) {
-	int n_heuristics = all_heuristics.size();
-	int count_line = collector_heur.size();
-	int n_probes = ss_probes;
-
-	//get the combintation 1/0/1/0..../1/1
-        int** harray = new int*[count_line];
-        double** ccarray = new double*[count_line];
-        for (int i = 0; i < count_line; i++) {
-        	harray[i] = new int[n_heuristics];
-               	ccarray[i] = new double[1];
-        }
-
-        int counter_line = 0;
-	for (map<std::vector<int>, double>::iterator iter = collector_heur.begin(); iter != collector_heur.end(); iter++) {
-		vector<int> h_node_v = iter->first;
-		double cc = iter->second;
-		for (size_t i = 0; i < h_node_v.size(); i++) {
-			harray[counter_line][i] = h_node_v.at(i);
-		}
-                double result_cc = (double)cc/(double)n_probes;
-                ccarray[counter_line][0] = result_cc;
-                counter_line++;
-	}
-
 	bool use_sum_of_the_max = true;
 	double sum_combination_heur = 0, sum_max_combination_heur = 0;
 	map<int, vector<int> > map_max;
@@ -2352,7 +2302,7 @@ double SSSearch::getSumSubset(vector<pair<string, double> > Z_subset) {
 		string delimiter = ",";
 		cout<<"key = "<<key<<"\n";
 		//cout<<"heuristic-information\n";
-		for (int i = 0; i < n_heuristics; i++) {
+		for (int i = 0; i < n_heuristics_global; i++) {
 			if (key == i) {
                 		string s =  all_heuristics[i]->get_heur_name();
                 		string pot[6];//six is the max string allowed for heuristic string
@@ -2385,18 +2335,18 @@ double SSSearch::getSumSubset(vector<pair<string, double> > Z_subset) {
 				//number of heuristics values in the search tree.
 				double sum_heur_values = 0;
 				if (use_sum_of_the_max) {
-					for (int j = 0; j < count_line; j++) {
+					for (int j = 0; j < count_line_grhs; j++) {
 						map<int, vector<int> >::iterator itmap = map_max.find(j);
 						if (itmap != map_max.end()) {
 							//int bring_c = itmap->first;
 							vector<int> bring_v = itmap->second;
-							bring_v.push_back(harray[j][i]);
+							bring_v.push_back(harray_grhs[j][i]);
 							itmap->second = bring_v;
 							//cout<<"count_line_repeated\n";
 						} else {
 							//cout<<"count_line="<<j<<"\n";
 							vector<int> add_max_heuristic_values;
-							add_max_heuristic_values.push_back(harray[j][i]);
+							add_max_heuristic_values.push_back(harray_grhs[j][i]);
 							map_max.insert(pair<int, vector<int> >(j, add_max_heuristic_values));	
 						}
 
@@ -2404,12 +2354,12 @@ double SSSearch::getSumSubset(vector<pair<string, double> > Z_subset) {
 						if (itmap2 != map_cc.end()) {
 							//DO NOTHING
 						} else {
-							map_cc.insert(pair<int, double>(j, ccarray[j][0]));
+							map_cc.insert(pair<int, double>(j, ccarray_grhs[j][0]));
 						}
 					}
 				} else { 
-					for (int j = 0; j < count_line; j++) {
-						sum_heur_values += harray[j][i]*ccarray[j][0];
+					for (int j = 0; j < count_line_grhs; j++) {
+						sum_heur_values += harray_grhs[j][i]*ccarray_grhs[j][0];
 					}
 					cout<<"i="<<i<<", sum_heur_values="<<sum_heur_values<<"\n";
 					sum_combination_heur += sum_heur_values;

@@ -142,8 +142,17 @@ private:
         map<std::vector<int>,  double> collector_heur;
 	int last_probe;
 	double last_n_expanded;
-                
 
+	//parameters
+	int** harray_grhs;
+	double** ccarray_grhs;
+	string dominio_global;
+	string tarefa_global;
+	string heuristica_global;
+	string domain_pddl_global;
+	int n_heuristics_global;
+	int count_line_grhs;                
+	int n_probes_grhs;
 protected:
 
 	virtual SearchStatus step();
@@ -172,4 +181,5 @@ public:
 	void select_random_greedy(bool termination);
 	map<string, double>  heuristicCombinator(bool call_first_time, vector<pair<string, double> > Z_subset, vector<pair<string, double> > Z_full);
 	double getSumSubset(vector<pair<string, double> > Z_subset);
+	void updateGRHS();
 };
