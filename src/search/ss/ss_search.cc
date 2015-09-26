@@ -22,7 +22,7 @@ bool domination_check=false;
 set<vector<int> > F_culprits;
 double sampling_time_limit=150;
 double overall_time_limit=1400;
-int N_default = 4;
+int N_default = 6;
 
 //Root and fd information
 string _HOME_INFO = "/home";
@@ -1849,9 +1849,7 @@ void SSSearch::select_random_greedy(bool termination) {
 				cout<<"Z_full_vector.size()="<<Z_full_vector.size()<<"\n";	
 				cout<<"N_default: "<<N_default<<"\n";
 				cout<<"index_max=Z_full_vector.size()-N-default="<<index_max<<"\n";
-				std::vector<pair<string, double> > Z_cut_vector(Z_full_vector.begin(), Z_full_vector.end() - index_max);
-				typedef std::vector<std::pair<std::string, double> > vector_type_cut;
-                		
+				std::vector<pair<string, double> > Z_cut_vector(Z_full_vector.begin(), Z_full_vector.end() - index_max);	
 				cout<<"printing: Z_cut:"<<Z_cut_vector.size() <<"\n";
 				printVectorPair(Z_cut_vector);
 				cout<<"end printing: Z_cut\n";	
@@ -1875,10 +1873,30 @@ void SSSearch::select_random_greedy(bool termination) {
 				//Z_full_vector.clear();
 
 				Z_full_vector.erase(std::remove(Z_full_vector.begin(), Z_full_vector.end(), Z_choosed), Z_full_vector.end());
-				//cout<<"Imprimiendo el Z_full_vector despues de eliminar el pair elegido.\n";
-				//printVectorPair(Z_full_vector);
-				//cout<<"Fin Imprimiendo el Z_full_vector despues de eliminar el pair elegido.\n";
 				
+				//Remove from the Z_full the heuristics that when combined with the heuristics you already have in Z_subset do not yeald in any improvements to the objective function.	
+				typedef std::vector<std::pair<std::string, double> > vector_type;
+        			for (vector_type::const_iterator pos = Z_full_vector.begin();
+        			pos != Z_full_vector.end(); ++pos)
+        			{
+					
+					vector<pair<string, double> > Z_subset_aux(Z_subset.begin(), Z_subset.end());
+					Z_subset_aux.push_back(*pos);
+        				if (getSumSubset(Z_subset) == getSumSubset(Z_subset_aux)) {
+						//remove pos
+						cout<<"Removing pos\n";
+						Z_full_vector.erase(std::remove(Z_full_vector.begin(), Z_full_vector.end(), *pos), Z_full_vector.end());
+					} else {
+						cout<<"not removing\n";
+					}
+					Z_subset_aux.clear();
+        			}
+
+				if ((int)Z_full_vector.size() < N_default) {
+					//because we required to index_max and it could not be negative 
+					break;
+				}
+	
 				Z_full_vector_combiner = Z_full_vector;
 				//Z_full_vector_combiner must contains at this point only the heuristics without combine.. The combination only happens in heuristicCombiner. Here only must have the following:
 				//h1, h2, h3, h5 - The Z_subet contains h4 then in the heuristicCombiner happens the magic of combination h1_h4, h2_h4, h3_h4, h5_h4
@@ -1889,360 +1907,33 @@ void SSSearch::select_random_greedy(bool termination) {
 		printVectorPair(Z_subset);
 		cout<<"ENDING PRINTING THE SUBSET OF HEURISTICS\n";
 
-		
 		/*
-        	vector<string> v_gapdb_string;
-		string heuristic_good = "gapdb_good";
+		string dirSASPLAN = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan_"+heuristic_good+"/";
+                if (system(dirSASPLAN.c_str())) {
+                	cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
+                }
 
-		int counter_just_ga_heur = 0;
-		int total_gapdb_heuristics = getTotalGAHeurs(number_gapdb_heurs);
-        	map<string, vector<string> >::iterator iter;
-        	for (iter = map_info_heur.begin(); iter != map_info_heur.end(); iter++) {
-                	string gapdb_string; //the name of each heuristic, just remember that the fd only support gapdb and do not gapdb_deep or gapdb_good => both need to be changed to gapdb
-                	string s = iter->first;
-                	vector<string> info = iter->second;
+		string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan_"+heuristic_good+"/"+dominio;
+                if (system(dirSASPLANDomain.c_str())) {
+                	cout<<"create directory "<<dirSASPLANDomain.c_str()<<"\n";
+                }	
 
-			if (run_min_heuristic) {
-                		if (s == min_number_heuristic) {
-                			gapdb_string =  heuristic_good + "(mp=";
-                        		//cout<<"heuristic (s) = "<<s<<"\n";
-                        		//find the number
-                        		string t = s;
-                        		size_t found = t.find("_");
-                        		string t_final = t.substr(found + 1, t.length());
-                        		//cout<<"t_final = "<<t_final<<"\n";
-
-                        		bool is_blind_heuristic = false;
-                        		for (size_t i = 0; i < info.size(); i++) {
-                                		string parameter = info.at(i);
-                                		//cout<<"\t"<<parameter<<"\n";
-                                		if (i == 1) {
-                                        		gapdb_string += parameter;
-                                		} else if (i == 2) {
-                                        		gapdb_string += ",size="+parameter;
-                                        		if (parameter == "") {
-                                                		is_blind_heuristic = true;
-                                        		}
-                                		} else if (i == 3) {
-                                        		gapdb_string += ",disjoint="+parameter;
-                                		}
-                        		}
-                        		gapdb_string+=")_" + t_final;
-                        		//gapdb_string+=",eps=120,colls=5)";
-                        		//cout<<"\tgapdb_string = "<<gapdb_string<<"\n\n";
-
-					if (is_blind_heuristic) {
-                                		//Workaround
-                                		string task2 = s;
-
-                                		size_t found_task2 =  task2.find("_");
-                                		string new_s = task2.substr(0, found_task2);
-
-                                		string heur_blind = "blind()_" + t_final;
-                                		if (new_s == "ipdb") {
-                                        		heur_blind = "ipdb()_" + t_final;
-                                		} else if (new_s == "lmcut") {
-                                        		heur_blind = "lmcut()_" + t_final;
-                                		} else if (new_s == "mands") {
-                                        		heur_blind = "mands()_" + t_final;
-                                		}
-                                		v_gapdb_string.push_back(heur_blind);
-                        		} else {
-                                		v_gapdb_string.push_back(gapdb_string);
-                        		}
-                        		//cout<<"gapdb_string = "<<gapdb_string<<"\n";
-                		}// s == min_number_heuristic
-			} else { //end run_min_heuristic
-				if (isGAPDB(s)) {
-                			gapdb_string = "gapdb(mp=";
-					//cout<<"heuristic (s) = "<<s<<"\n";
-                        		//find the number
-                        		string t = s;
-                        		size_t found = t.find("_");
-                        		string t_final = t.substr(found + 1, t.length());
-                        		//cout<<"t_final = "<<t_final<<"\n";
-
-                        		bool is_blind_heuristic = false;
-                        		for (size_t i = 0; i < info.size(); i++) {
-                                		string parameter = info.at(i);
-                                		//cout<<"\t"<<parameter<<"\n";
-                                		if (i == 1) {
-                                        		gapdb_string += parameter;
-                                		} else if (i == 2) {
-                                        		gapdb_string += ",size="+parameter;
-                                        		if (parameter == "") {
-                                                		is_blind_heuristic = true;
-                                        		}
-                                		} else if (i == 3) {
-                                        		gapdb_string += ",disjoint="+parameter;
-                                		}
-                        		}
-                        		gapdb_string+=")";//+ t_final;
-                        		if (counter_just_ga_heur != total_gapdb_heuristics - 1) {
-                                		gapdb_string+=",";//+ t_final;
-                        		}
-                        		//cout<<"counter_just_ga_heur = "<<counter_just_ga_heur<<"\n";
-                        		counter_just_ga_heur++;
-
-					if (is_blind_heuristic) {
-                                		//Workaround
-                                		string task2 = s;
-
-                                		size_t found_task2 =  task2.find("_");
-                                		string new_s = task2.substr(0, found_task2);
-
-                                		string heur_blind = "blind()_" + t_final;
-                                		if (new_s == "ipdb") {
-                                        		heur_blind = "ipdb()_" + t_final;
-                                		} else if (new_s == "lmcut") {
-                                        		heur_blind = "lmcut()_" + t_final;
-                                		} else if (new_s == "mands") {
-                                        		heur_blind = "mands()_" + t_final;
-                                		}
-                                		v_gapdb_string.push_back(heur_blind);
-                        		} else {
-                                		v_gapdb_string.push_back(gapdb_string);
-                        		}
-                        	//cout<<"gapdb_string = "<<gapdb_string<<"\n";
-				}//end isGAPDB
-			}//end run_min_heuristic
+		string heuristic_generator;
+        	for (size_t i = 0; i < Z_subset.size(); i++) {
+                	string heur = v_gapdb_string.at(i);
+                	heuristic_generator += heur;
         	}
-		*/
-        	//cout<<"v_gapdb_string.size() = "<<v_gapdb_string.size()<<"\n";
-        	//end astar_gpdb call the bc from ss
+        	//heuristic_generator += ")";
 
-		/*
+        	cout<<"heuristic_genertor= "<<heuristic_generator<<"\n";			
 
-		string PROB_GOOD = "problemas_";
-                PROB_GOOD += boost::lexical_cast<std::string>(ss_probes);
-                PROB_GOOD += "_probes";
-                //cout<<"PROB_GOOD = "<<PROB_GOOD<<"\n";
-		string ASTAR_GOOD_NAME = "_SS_ASTAR";
-		int deep_F_boundary = threshold;
+		//create new variable called deep_F_boundary
+        	//cout<<"deep_F_boundary = "<<deep_F_boundary<<"\n";
 
-		//create directories, running individual heuristic and running all gapdb heuristics using the same heuristic_good
-
-		string dirProbGood = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/";
-                if (system(dirProbGood.c_str())) {
-                	cout<<"create directory "<<dirProbGood.c_str()<<"\n";
-                }
-
-                string dirProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD;
-                if (system(dirProblema.c_str())) {
-                	cout<<"create directory "<<dirProblema.c_str()<<"\n";
-                }
-
-		string dirResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/reportastar";
-                if (system(dirResultado.c_str())) {
-                	cout<<"create directory "<<dirResultado.c_str()<<"\n";
-                }
-
-		string pastaProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  + "/"+dominio;
-		if (system(pastaProblema.c_str())) {
-			cout<<"create directory "<<pastaProblema.c_str()<<"\n";
-		}
-
-		string pastaResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  +  "/"+dominio+"/resultado";
-		if (system(pastaResultado.c_str())) {
-			cout<<"create directory "<<pastaResultado.c_str()<<"\n";
-		}
-
-		if (run_min_heuristic) {
-	 		for (size_t i = 0; i < v_gapdb_string.size(); i++) {
-                		//get the real name
-                		string real_heur = v_gapdb_string.at(i);
-                		string task = real_heur;
-                		//cout<<"task = "<<task<<"\n";
-                		//size_t found_task_deep = task.find("deep");
-                		size_t found_task_good = task.find("good");
-                		string final_real_heur, final_number_heur;
-                		string delimiter = "_";
-                		if (found_task_good > 1000) {
-					string t0 = real_heur;
-                        		size_t found_t0 = t0.find("_");
-                        		string previous_real_heur = t0.substr(0, found_t0);			
-					final_real_heur = previous_real_heur;
-                        		//cout<<"previous_real_heur = "<<final_real_heur<<"\n";
-                        		if (previous_real_heur == "mands()") {
-                                		final_real_heur = "merge_and_shrink(shrink_strategy=shrink_bisimulation(max_states=100000,threshold=1,greedy=false),merge_strategy=merge_dfp())";
-                                		//final_real_heur = "merge_and_shrink()";
-                        		} else if (previous_real_heur == "ipdb()") {
-                                		final_real_heur = "ipdb(max_time=200)";
-                        		}
-
-                        		//get the heuristic number
-                        		string t1 = real_heur;
-                        		size_t found_t1 = t1.find("_");
-                        		final_number_heur = t1.substr(found_t1 + 1, t1.length());
-                		} else {
-                        		string s2 = real_heur;
-                        		string pot[6];
-                        		size_t pos = 0;
-                        		string token;
-                        		int index = 0;
-                        		while ((pos = s2.find(delimiter)) != std::string::npos) {
-                                		token = s2.substr(0, pos);
-                                		pot[index] = token;
-                                		s2.erase(0, pos + delimiter.length());
-                                		index++;
-                        		}
-                        		//cout<<"index = "<<index<<"\n";
-                        		pot[index] = s2;
-
-                        		//cout<<"pot[0] = "<<pot[0]<<"\n";
-                        		//cout<<"pot[1] = "<<pot[1]<<"\n";
-                        		//cout<<"pot[2] = "<<pot[2]<<"\n";
-                        		//remove deep from pot[1]
-                        		string pot1 = pot[1];
-                        		size_t found_pot1 = pot1.find("(");
-                        		string new_pot1 = pot1.substr(found_pot1, pot1.length());
-                        		//end remove deep from pot[1]
-
-                        		final_real_heur = "gapdb" + new_pot1;
-                        		final_number_heur = pot[2];
-				}
-				//cout<<"final_real_heur = "<<final_real_heur<<"\n";
-                		//cout<<"final_number_heur = "<<final_number_heur<<"\n\n";
-
-				//begin
-                		string new_problem_name = problem_name2; //--problem_name == problema.c_str()
-                		string t = new_problem_name;
-                		size_t found = t.find(".");
-                		string new_problem_name_mod = t.substr(0, found);
-
-				string prob_name_gapdb = new_problem_name_mod + "_gapdb_" + final_number_heur  + ".pddl";
-
-				//end get real name
-				//create the directory of the problemas_500_probes_good
-
-				string dirSASPLAN = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan/";
-                		if (system(dirSASPLAN.c_str())) {
-                			cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
-                		}
-
-				string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan/"+dominio;
-                		if (system(dirSASPLANDomain.c_str())) {
-                			cout<<"create directory "<<dirSASPLANDomain.c_str()<<"\n";
-                		}
-
-                		//creation of each sh file for the gapdb heuristic
-                		string arquivo;
-                		string sas;
-                		stringstream Resultado;
-
-                		Resultado<<i+1;
-
-                		arquivo = new_problem_name_mod + "_gapdb_" + final_number_heur + ".sh";
-                		arquivo = "/" + arquivo;
-                		arquivo = dominio + arquivo;
-                		arquivo = "astar/"+heuristic_good+"/" + PROB_GOOD  +  "/" + arquivo;
-                		arquivo = "marvin/" + arquivo;
-                		arquivo = "marvin/"+ arquivo;
-                		arquivo =  _HOME_INFO+"/" + arquivo;
-				cout<<"arquivo="<<arquivo<<"\n";
-                		ofstream outfile(arquivo.c_str(), ios::out);
-
-				string newdominio = dominio + "_" + final_number_heur + "_" + new_problem_name_mod;
-
-                		sas = "Inside_Astar";
-                		sas += newdominio;
-
-				sas += Resultado.str();
-                		//End creation of each sh file for the gapdb heuristic
-
-                		string parameter =  final_real_heur;//v_gapdb_string.at(i);
-                		cout<<"parameter_"<<i<<" = "<<parameter<<"\n";
-
-				//Calculate the time to execute the process	
-				//Timer good_time = 1800 - g_timer();
-				double duration = 1800 - g_timer();
-				string good_timer;
-				ostringstream convert;
-				convert<<duration;
-				good_timer = convert.str();
-				cout<<"search_time()="<<search_time()<<"\n";
-				cout<<"g_timer()="<<g_timer()<<"\n";
-				cout<<"duration="<<good_timer<<"\n";
-
-                		//Begin construction of the sh file
-				outfile<<"#!/bin/bash\n\n";
-                		outfile<<"#PBS -N "<<ASTAR_GOOD_NAME<<"\n\n#PBS -m a\n\n#PBS -l walltime="<<good_timer<<"\n\n";
-				outfile<<"#PBS -M marvin.zarate@ufv.br\n\n";
-				outfile<<"source /usr/share/modules/init/bash\n\n";
-				outfile<<"module load python\nmodule load mercurial\n\n";
-
-				//cout<<"pasta = "<<dominio<<"\n\n;
-				outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
-        			outfile<<"TEMP="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/temp\n\n";
-        			outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";	
-                		outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio<<"/resultado\n\n";
-				outfile<<"cd ${DIR}\n\n";
-                		outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<domain_pddl<<" ${FD_ROOT}/benchmarks/"<<dominio<<"/"<<tarefa<<"\n\n";
-
-                		outfile<<"${FD_ROOT}/src/preprocess/preprocess < output.sas"<<"\n\n"; 
-				//Santiago's code to find the F_boundary on the fly
-                		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio<<" --problem_name "<<tarefa<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --search \"astar_original("<<parameter<<")\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
-                	
-
-				outfile<<"\n\nrm ${DIR}\n\n";
-                		outfile<<"\n\nmv sas_plan ${FD_ROOT}/plan/"<<dominio<<"/"<<tarefa<<"\n\n";
-
-                		outfile.close();
-
-				string executeFile;
-				bool is_in_cluster = false;
-
-                		if (is_in_cluster) {
-                        		executeFile = "qsub -l select=1:ncpus=1:mem=6GB "+arquivo;
-                        		cout<<executeFile<<"\n\n";
-					if(system(executeFile.c_str())) {
-						cout<<"running in the cluster...\n";
-					}
-                		} else {
-                        		string allow;
-                        		allow = "chmod +x "+arquivo;
-                        		cout<<allow<<"\n";
-                        		if(system(allow.c_str())) {
-						cout<<"adding permition...\n";
-					}
-
-			       		executeFile = "timeout "+ good_timer +" sh "+arquivo; //setting the limit time	
-                        		cout<<executeFile<<"\n\n";
-                        		if(system(executeFile.c_str())) {
-						cout<<"running in the local...\n";
-					}
-                		}
-			}//v_gapdb_string for loop
-			
-		}*/
-
-		/* else { //end else run_min_heuristic
-			string dirSASPLAN = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan_"+heuristic_good+"/";
-                	if (system(dirSASPLAN.c_str())) {
-                		cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
-                	}
-
-			string dirSASPLANDomain = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan_"+heuristic_good+"/"+dominio;
-                	if (system(dirSASPLANDomain.c_str())) {
-                		cout<<"create directory "<<dirSASPLANDomain.c_str()<<"\n";
-                	}	
-
-			string heuristic_generator;
-        		for (size_t i = 0; i < v_gapdb_string.size(); i++) {
-                		string heur = v_gapdb_string.at(i);
-                		heuristic_generator += heur;
-        		}
-        		//heuristic_generator += ")";
-
-        		cout<<"heuristic_genertor= "<<heuristic_generator<<"\n";			
-
-			//create new variable called deep_F_boundary
-        		//cout<<"deep_F_boundary = "<<deep_F_boundary<<"\n";
-
-        		//begin
-			
-                	string new_problem_name = problem_name2; //--problem_name == problema.c_str()
-        		string t = new_problem_name;
+        	//begin
+		
+                string new_problem_name = problem_name2; //--problem_name == problema.c_str()
+        	string t = new_problem_name;
         		size_t found = t.find(".");
         		string new_problem_name_mod = t.substr(0, found);
         		//cout<<"new_problem_name_mod = "<<new_problem_name_mod<<"\n";
@@ -2621,6 +2312,136 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 	return Z_full_map;
 }
 
+double SSSearch::getSumSubset(vector<pair<string, double> > Z_subset) {
+	int n_heuristics = all_heuristics.size();
+	int count_line = collector_heur.size();
+	int n_probes = ss_probes;
+
+	//get the combintation 1/0/1/0..../1/1
+        int** harray = new int*[count_line];
+        double** ccarray = new double*[count_line];
+        for (int i = 0; i < count_line; i++) {
+        	harray[i] = new int[n_heuristics];
+               	ccarray[i] = new double[1];
+        }
+
+        int counter_line = 0;
+	for (map<std::vector<int>, double>::iterator iter = collector_heur.begin(); iter != collector_heur.end(); iter++) {
+		vector<int> h_node_v = iter->first;
+		double cc = iter->second;
+		for (size_t i = 0; i < h_node_v.size(); i++) {
+			harray[counter_line][i] = h_node_v.at(i);
+		}
+                double result_cc = (double)cc/(double)n_probes;
+                ccarray[counter_line][0] = result_cc;
+                counter_line++;
+	}
+
+	bool use_sum_of_the_max = true;
+	double sum_combination_heur = 0, sum_max_combination_heur = 0;
+	map<int, vector<int> > map_max;
+	map<int, double> map_cc;
+	typedef std::vector<std::pair<std::string, double> > vector_type;
+	for (vector_type::const_iterator posinner = Z_subset.begin();
+	posinner != Z_subset.end(); ++posinner) {
+		string s_inner = posinner->first;
+		string new_s_inner = s_inner;
+		size_t f_s_inner = new_s_inner.find("_");
+		string key_string = new_s_inner.substr(0, f_s_inner);
+		int key = std::atoi(key_string.c_str());
+		string delimiter = ",";
+		cout<<"key = "<<key<<"\n";
+		//cout<<"heuristic-information\n";
+		for (int i = 0; i < n_heuristics; i++) {
+			if (key == i) {
+                		string s =  all_heuristics[i]->get_heur_name();
+                		string pot[6];//six is the max string allowed for heuristic string
+                		size_t pos = 0;
+                		string token;
+                		int index = 0;
+                		while ((pos = s.find(delimiter)) != std::string::npos) {
+                			token = s.substr(0, pos);
+					//cout<<"token="<<token<<"\n";
+                        		pot[index] = token;
+                        		s.erase(0, pos + delimiter.length());
+                        		index++;
+                		}
+                		pot[index] = s;
+
+           			string heuristic_name_created = pot[0],
+	    			number_h = std::to_string(i), //consider this order because SS commands	
+				name;
+
+	    			if (heuristic_name_created == "ipdb") {
+            				name = number_h + "_ipdb";
+            			} else if (heuristic_name_created == "lmcut") {
+            				name = number_h + "_lmcut";
+            			} else if (heuristic_name_created == "merge_and_shrink") {
+            				name = number_h + "_mands";
+            			} else {
+            				name = number_h + "_gapdb";
+            			}
+				//cout<<"name="<<name<<"\n";
+				//number of heuristics values in the search tree.
+				double sum_heur_values = 0;
+				if (use_sum_of_the_max) {
+					for (int j = 0; j < count_line; j++) {
+						map<int, vector<int> >::iterator itmap = map_max.find(j);
+						if (itmap != map_max.end()) {
+							//int bring_c = itmap->first;
+							vector<int> bring_v = itmap->second;
+							bring_v.push_back(harray[j][i]);
+							itmap->second = bring_v;
+							//cout<<"count_line_repeated\n";
+						} else {
+							//cout<<"count_line="<<j<<"\n";
+							vector<int> add_max_heuristic_values;
+							add_max_heuristic_values.push_back(harray[j][i]);
+							map_max.insert(pair<int, vector<int> >(j, add_max_heuristic_values));	
+						}
+
+						map<int, double>::iterator itmap2 = map_cc.find(j);
+						if (itmap2 != map_cc.end()) {
+							//DO NOTHING
+						} else {
+							map_cc.insert(pair<int, double>(j, ccarray[j][0]));
+						}
+					}
+				} else { 
+					for (int j = 0; j < count_line; j++) {
+						sum_heur_values += harray[j][i]*ccarray[j][0];
+					}
+					cout<<"i="<<i<<", sum_heur_values="<<sum_heur_values<<"\n";
+					sum_combination_heur += sum_heur_values;
+				}	
+			} // key comparator
+        	}//end n_heuristics loop
+		//cout<<"count_line="<<count_line<<"\n";
+		//cout<<"map_max.size()="<<map_max.size()<<"\n";
+		if (use_sum_of_the_max) {
+			for (map<int, vector<int> >::iterator it = map_max.begin(); it != map_max.end(); it++) {
+				int row = it->first;
+				vector<int> v = it->second;
+				int max_heuristic = getMaxHeur(v);
+				//cout<<"max_heuristic="<<max_heuristic<<"\n";
+				map<int, double>::iterator it_inner = map_cc.find(row);
+				double cc = it_inner->second;
+				//cout<<"cc="<<cc<<"\n";
+				sum_max_combination_heur += max_heuristic*cc;
+				//cout<<"max_heuristic="<<max_heuristic<<", cc="<<cc<<"\n";
+			}	
+			//cout<<"sum_max_combination_heur="<<sum_max_combination_heur<<"\n";
+		}
+	}//end Z_subset
+
+	if (use_sum_of_the_max) {
+		cout<<"returning the max.\n";
+		return sum_max_combination_heur;
+	} else {
+		cout<<"returning no max.\n";
+		return sum_combination_heur;
+	}
+}
 
 void SSSearch::printVectorPair(vector<pair<string, double> > vpair) {	
 	cout<<"\n\t-------------beging print vector pair---------\n";
