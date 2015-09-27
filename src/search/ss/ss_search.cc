@@ -23,6 +23,8 @@ set<vector<int> > F_culprits;
 double sampling_time_limit=150;
 double overall_time_limit=1400;
 int N_default = 6;
+//run experiments
+bool run_grhs = true;
 
 //Root and fd information
 string _HOME_INFO = "/home";
@@ -138,8 +140,11 @@ SearchStatus SSSearch::step() {
 	if(next_f_bound==INT_MAX/2){
 	  cout<<"next_f_bound was not updated!, check code!"<<endl;
 	  cout<<"For now just selecting best_heuristics_greedy"<<endl;
-	  select_random_greedy(true);
-	  generateSSCCReport(true);
+	  if (run_grhs) {
+	  	select_random_greedy(true);
+	  } else {
+	  	generateSSCCReport(true);
+          }
 	  ///select_best_heuristics_greedy();
 	  exit(1);
 	}
@@ -329,8 +334,11 @@ SearchStatus SSSearch::step() {
       }
   }
   cout<<"selecting best heuristic after,"<<search_time()<<", seconds"<<endl;
-  select_random_greedy(true);
-  generateSSCCReport(true);
+  if (run_grhs) {
+  	select_random_greedy(true);
+  } else {
+  	generateSSCCReport(true);
+  } 
   //select_best_heuristics_greedy();
         return SOLVED;
 }
@@ -346,9 +354,12 @@ void SSSearch::predict(int probes) {
 	  cout<<"#probe:"<<i<<",g_timer:"<<g_timer()<<",search_time:"<<search_time()<<endl;
 	  if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
 	    cout<<"Search_timer past maximum sampling_time"<<endl;
-	    cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
-	    select_random_greedy(true);
-	    generateSSCCReport(true);
+	    cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;	    
+	    if (run_grhs) {
+  	    	select_random_greedy(true);
+  	    } else {
+  	    	generateSSCCReport(true);
+  	    }
 	    //select_best_heuristics_greedy();
 	    exit(0);
 	  }
@@ -360,8 +371,11 @@ void SSSearch::predict(int probes) {
 	    vmeanheur.clear();
 	    //Validate that the number of probes do not exceed the order of 150
 	    if (last_n_expanded > 1*pow(10,150)) {
-		select_random_greedy(true);
-		generateSSCCReport(true);
+		if (run_grhs) {
+                	select_random_greedy(true);
+            	} else {
+                	generateSSCCReport(true);
+            	}
 		exit(0);
 	    }
             probe();
@@ -383,9 +397,12 @@ void SSSearch::predict(int probes) {
         cout<<"\ttotalPrediction : "<<totalPrediction<<"\n";
 	cout<<"\tss_timer: "<<ss_timer_value<<"\n";
 	cout<<"\tprobes: "<<probes<<"\n";
-	
-	select_random_greedy(false);
-        generateSSCCReport(false);
+
+	if (run_grhs) {
+        	select_random_greedy(false);
+        } else {
+        	generateSSCCReport(false);
+        }
         //generateGeneratedReport();
         //generateExpandedReport();
 }
@@ -534,8 +551,11 @@ void SSSearch::probe()
 	    if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
 	      cout<<"Search_timer past maximum sampling_time"<<endl;
 	      cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
-	      select_random_greedy(true);
-	      generateSSCCReport(true);
+	      if (run_grhs) {
+		select_random_greedy(true);
+              } else {
+              	generateSSCCReport(true);
+              }
 	      //select_best_heuristics_greedy();
 	      exit(0);
 	    }
