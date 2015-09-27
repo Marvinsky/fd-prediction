@@ -194,4 +194,5 @@ public:
 	void updateSSCC();
 	void updateGlobalVariables();
 	void mkdirAstar(string method, string heuristic, string logs);
+	void executeQsub(string arquivo, string final_real_heur, string heuristic_good, string PROB_GOOD, string prob_name_gapdb, int deep_F_boundary, string method, string plan_dir_file, bool apply_max);
 };
