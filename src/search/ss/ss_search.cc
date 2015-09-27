@@ -1484,7 +1484,6 @@ void SSSearch::generateSSCCReport(bool termination) {
                 PROB_GOOD += boost::lexical_cast<std::string>(n_probes_global);
                 PROB_GOOD += "_probes_sscc";
                 //cout<<"PROB_GOOD = "<<PROB_GOOD<<"\n";
-		string ASTAR_GOOD_NAME = "_SS_ASTAR";
 		int deep_F_boundary = threshold;
 		string method = "sscc";
 		//create directories, running individual heuristic and running all gapdb heuristics using the same heuristic_good
@@ -1898,7 +1897,6 @@ void SSSearch::select_random_greedy(bool termination) {
                 PROB_GOOD += boost::lexical_cast<std::string>(n_probes_global);
                 PROB_GOOD += "_probes_grhs";
                 //cout<<"PROB_GOOD = "<<PROB_GOOD<<"\n";
-		string ASTAR_GOOD_NAME = "_SS_ASTAR";
         	//begin
 		vector<string> v_gapdb_string;//store the heuristics with properties
 
@@ -2052,54 +2050,9 @@ void SSSearch::select_random_greedy(bool termination) {
         	arquivo =  _HOME_INFO+"/" + arquivo;
         	ofstream outfile(arquivo.c_str(), ios::out);
 
-        	string parameter =  heuristic_generator;
-        	//Begin construction of the sh file
-        	outfile<<"#!/bin/bash\n\n";
-        	outfile<<"#PBS -N "<<ASTAR_GOOD_NAME<<"\n\n#PBS -m a\n\n#PBS -l walltime=00:30:00\n\n";
-        	outfile<<"#PBS -M marvin.zarate@ufv.br\n\n";
-        	outfile<<"cd $PBS_O_WORKDIR\n\n";
-        	outfile<<"source /usr/share/modules/init/bash\n\n";
-        	outfile<<"module load python\nmodule load mercurial\n\n";
-
-        	outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
-        	outfile<<"TEMP="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/temp\n\n";
-        	outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";
-
-        	outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio_global<<"/resultado"<<"\n\n";
-        	//outfile<<"cd "<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
-        	outfile<<"cd ${DIR}\n\n";
-                outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio_global<<"/"<<domain_pddl_global<<" ${FD_ROOT}/benchmarks/"<<dominio_global<<"/"<<tarefa_global<<"\n\n";
-
-        	outfile<<"${FD_ROOT}/src/preprocess/preprocess < output.sas"<<"\n\n";
-
-        	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<" --dir_creation grhs --search \"astar_original(max(["<<parameter<<"]))\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
-
-        	outfile<<"\n\nrm ${DIR}\n\n";
-		outfile<<"\n\nmv sas_plan ${FD_ROOT}/plan_"<<STORE_PLAN<<"/"<<dominio_global<<"/"<<tarefa_global<<"\n\n";
-
-        	outfile.close();
-
-		string executeFile;
-        	bool is_in_cluster = false;
-
-        	if (is_in_cluster) {
-                	executeFile = "qsub -l select=1:ncpus=1:mem=6GB "+arquivo;
-                	cout<<executeFile<<"\n\n";
-			if(system(executeFile.c_str())) {
-				cout<<"running in the cluster...\n";
-			}
-        	} else {
-                	string allow;
-                	allow = "chmod +x "+arquivo;
-                	cout<<allow<<"\n";
-			if(system(allow.c_str())) {
-				cout<<"adding permition...\n";
-			}
-                	executeFile = "timeout 1800 sh "+arquivo; //setting the limit time
-			if(system(executeFile.c_str())) {
-				cout<<"running in the local...\n";
-			}
-        	}
+		string plan_dir_file = "/plan_"+STORE_PLAN+"/"+dominio_global+"/"+tarefa_global;
+		
+		executeQsub(arquivo, heuristic_generator, heuristic_good, PROB_GOOD, prob_name_gapdb, deep_F_boundary, method, plan_dir_file, true);	
 	}//end termination
 }
 
