@@ -21,8 +21,8 @@ SearchProgress::SearchProgress() {
 
     lastjump_f_value = -1;
     //A* prediction
-    fetch_first_node = true;
-    lastjump_f_value2 = -1;
+    //fetch_first_node = true;
+    //lastjump_f_value2 = -1;
     lastjump_f_value_sscc = -1;
 }
 
@@ -35,10 +35,10 @@ void SearchProgress::add_heuristic(Heuristic *h) {
 }
 
 void SearchProgress::report_f_value(int f) {
-    lastjump_f_value2 = lastjump_f_value;
+    //lastjump_f_value2 = lastjump_f_value;
     if (f > lastjump_f_value) {
         lastjump_f_value = f;
-        if (fetch_first_node) {
+        /*if (fetch_first_node) {
 	   
 		int expanded_by_level = (expanded_states == 0)?evaluated_states:expanded_states;
 
@@ -56,7 +56,7 @@ void SearchProgress::report_f_value(int f) {
 		cout<<"nodesGeneratedByLevel: "<<expanded_by_level<<endl;
 		cout<<" time0: "<<g_timer()<<endl;
 		cout<<"nodesGeneratedToTheLevel: "<<expanded_states<<endl;
-        }	
+        }*/	
 
 
         print_f_line();

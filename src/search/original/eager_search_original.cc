@@ -315,12 +315,13 @@ void EagerSearchOriginal::generateReport() {
         string dominio = domain_name;
         string tarefa = problem_name2;
         string heuristica = heuristic_name2;
+	string dir_name = dir_creation;
 
-        cout<<"dominio = "<<dominio<<endl;
-        cout<<"tarefa = "<<tarefa<<endl;
-        cout<<"heuristica = "<<heuristica<<endl;
+        cout<<"dominio = "<<dominio<<"\n";
+        cout<<"tarefa = "<<tarefa<<"\n";
+        cout<<"heuristica = "<<heuristica<<"\n";
         cout<<"problem_name_gapdb = "<<problem_name_gapdb<<"\n";
-
+	cout<<"dir_name = "<<dir_name<<"\n";
         string name, dirDomain, dirSSCC, dirSSCCFile, outputFile;
 
 	size_t found = tarefa.find(".");
@@ -328,9 +329,19 @@ void EagerSearchOriginal::generateReport() {
         name = tarefa.substr(0, found);
         name += ".csv";
 
-        dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio;
-        dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc";
-        outputFile = "/home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc/"+name;
+	if (dir_name == "temp") {
+        	dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio;
+        	dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc";
+        	outputFile = "/home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc/"+name;
+	} else if (dir_name == "sscc") {
+		dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio;
+        	dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio+"/bc";
+        	outputFile = "/home/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio+"/bc/"+name;
+	} else if (dir_name == "grhs") {
+		dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio;
+        	dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio+"/bc";
+        	outputFile = "/home/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio+"/bc/"+name;
+	}
 
         if (system(dirDomain.c_str())) {
         	cout<<"Directory: "<<heuristica<<" created."<<endl;

@@ -36,9 +36,9 @@ private:
     std::vector<Heuristic *> heuristics;
 
 //A* prediction
-    int lastjump_f_value2;
+    //int lastjump_f_value2;
     int lastjump_f_value_sscc;
-    bool fetch_first_node;
+    //bool fetch_first_node;
 
 public:
     SearchProgress();

@@ -142,4 +142,5 @@ extern vector<string> stored_GA_patterns;
 extern string problem_name_gapdb;
 extern int deep_F_boundary; //This is used by Santiago's code deep F boundary
 extern string domain_instance_pddl;
+extern string dir_creation;//create a directory for SSCC or GRHS
 #endif

@@ -446,3 +446,4 @@ vector<string> stored_GA_patterns;
 string problem_name_gapdb = "temp";
 int deep_F_boundary = 0;
 string domain_instance_pddl = "temp";
+string dir_creation = "temp";

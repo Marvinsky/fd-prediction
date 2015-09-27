@@ -151,8 +151,8 @@ private:
 	//parameters SSCC
 	int** harray_sscc;
 	double** ccarray_sscc;
-	int n_heuristics_global2;
 	int count_line_sscc;
+	map<string, vector<string> > map_heur_properties;
 
 	//global parameters
 	string dominio_global;
