@@ -193,4 +193,5 @@ public:
 	void updateGRHS();
 	void updateSSCC();
 	void updateGlobalVariables();
+	void mkdirAstar(string method, string heuristic, string logs);
 };

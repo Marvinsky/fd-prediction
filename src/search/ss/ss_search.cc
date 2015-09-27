@@ -1467,33 +1467,10 @@ void SSSearch::generateSSCCReport(bool termination) {
                 //cout<<"PROB_GOOD = "<<PROB_GOOD<<"\n";
 		string ASTAR_GOOD_NAME = "_SS_ASTAR";
 		int deep_F_boundary = threshold;
+		string method = "sscc";
 
 		//create directories, running individual heuristic and running all gapdb heuristics using the same heuristic_good
-
-		string dirProbGood = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/";
-                if (system(dirProbGood.c_str())) {
-                	cout<<"create directory "<<dirProbGood.c_str()<<"\n";
-                }
-
-                string dirProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD;
-                if (system(dirProblema.c_str())) {
-                	cout<<"create directory "<<dirProblema.c_str()<<"\n";
-                }
-
-		string dirResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/reportastar_sscc";
-                if (system(dirResultado.c_str())) {
-                	cout<<"create directory "<<dirResultado.c_str()<<"\n";
-                }
-
-		string pastaProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  + "/"+dominio_global;
-		if (system(pastaProblema.c_str())) {
-			cout<<"create directory "<<pastaProblema.c_str()<<"\n";
-		}
-
-		string pastaResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  +  "/"+dominio_global+"/resultado";
-		if (system(pastaResultado.c_str())) {
-			cout<<"create directory "<<pastaResultado.c_str()<<"\n";
-		}
+		mkdirAstar(method, heuristic_good, PROB_GOOD);
 
 		if (run_min_heuristic) {
 	 		for (size_t i = 0; i < v_gapdb_string.size(); i++) {
@@ -1771,6 +1748,33 @@ void SSSearch::generateSSCCReport(bool termination) {
 	ccarray_sscc = NULL;
 }
 
+void SSSearch::mkdirAstar(string  method, string heuristic, string probLogs) {
+	string dirProbGood = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic+"/";
+        if (system(dirProbGood.c_str())) {
+                cout<<"create directory "<<dirProbGood.c_str()<<"\n";
+        }
+
+        string dirProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic+"/" + probLogs;
+        if (system(dirProblema.c_str())) {
+                cout<<"create directory "<<dirProblema.c_str()<<"\n";
+        }
+
+	string dirResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic+"/reportastar_"+method;
+        if (system(dirResultado.c_str())) {
+        	cout<<"create directory "<<dirResultado.c_str()<<"\n";
+        }
+
+	string pastaProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic+"/" + probLogs  + "/"+dominio_global;
+	if (system(pastaProblema.c_str())) {
+		cout<<"create directory "<<pastaProblema.c_str()<<"\n";
+	}
+
+	string pastaResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic+"/" + probLogs  +  "/"+dominio_global+"/resultado";
+	if (system(pastaResultado.c_str())) {
+		cout<<"create directory "<<pastaResultado.c_str()<<"\n";
+	}
+}
+
 double SSSearch::getProbingResult() {
  //static map<boost::dynamic_bitset<>,double> prev_collector;
         double expansions = 0;
@@ -1944,31 +1948,9 @@ void SSSearch::select_random_greedy(bool termination) {
         	//begin
 		vector<string> v_gapdb_string;//store the heuristics with properties
 
-		string dirProbGood = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/";
-                if (system(dirProbGood.c_str())) {
-                	cout<<"create directory "<<dirProbGood.c_str()<<"\n";
-                }
-
-                string dirProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD;
-                if (system(dirProblema.c_str())) {
-                	cout<<"create directory "<<dirProblema.c_str()<<"\n";
-                }
-
-		string dirResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/reportastar_grhs";
-                if (system(dirResultado.c_str())) {
-                	cout<<"create directory "<<dirResultado.c_str()<<"\n";
-                }
-
-		string pastaProblema = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  + "/"+dominio_global;
-		if (system(pastaProblema.c_str())) {
-			cout<<"create directory "<<pastaProblema.c_str()<<"\n";
-		}
-
-		string pastaResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic_good+"/" + PROB_GOOD  +  "/"+dominio_global+"/resultado";
-		if (system(pastaResultado.c_str())) {
-			cout<<"create directory "<<pastaResultado.c_str()<<"\n";
-		}
-
+		string method = "grhs";	
+		mkdirAstar(method, heuristic_good, PROB_GOOD);
+	
 		string dirSASPLAN = "mkdir "+_HOME_INFO+"/marvin"+_FD_INFO+"/plan_"+STORE_PLAN+"/";
                 if (system(dirSASPLAN.c_str())) {
                 	cout<<"create directory "<<dirSASPLAN.c_str()<<"\n";
@@ -2139,7 +2121,7 @@ void SSSearch::select_random_greedy(bool termination) {
         	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<" --dir_creation grhs --search \"astar_original(max(["<<parameter<<"]))\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 
         	outfile<<"\n\nrm ${DIR}\n\n";
-		outfile<<"\n\nmv sas_plan ${FD_ROOT}/plan_"<<heuristic_good<<"/"<<dominio_global<<"/"<<tarefa_global<<"\n\n";
+		outfile<<"\n\nmv sas_plan ${FD_ROOT}/plan_"<<STORE_PLAN<<"/"<<dominio_global<<"/"<<tarefa_global<<"\n\n";
 
         	outfile.close();
 
