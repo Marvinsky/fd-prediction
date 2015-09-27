@@ -22,7 +22,7 @@ bool domination_check=false;
 set<vector<int> > F_culprits;
 double sampling_time_limit=150;
 double overall_time_limit=1400;
-int N_default = 6;
+int N_default = 8;
 //run experiments
 string run_method = "both";
 
@@ -1808,7 +1808,7 @@ void SSSearch::select_random_greedy(bool termination) {
 		//cout<<"call heuristicCombinator:\n";
 		vector<pair<string, double> > Z_subset;
 		vector<pair<string, double> > Z_full_vector_combiner;
-		
+		vector<pair<string, double> > Z_cut_vector;	
 		bool call_first_time = true;
 		while ((int)Z_subset.size() < N_default) {
 			if (N_default < (int)all_heuristics.size()) {
@@ -1824,15 +1824,32 @@ void SSSearch::select_random_greedy(bool termination) {
 				cout<<"End Imprimiendo el Z_full_vector\n";
 
 				int index_max = Z_full_vector.size() - N_default;
+	
 				cout<<"Z_full_vector.size()="<<Z_full_vector.size()<<"\n";	
 				cout<<"N_default: "<<N_default<<"\n";
-				cout<<"index_max=Z_full_vector.size()-N-default="<<index_max<<"\n";
-				std::vector<pair<string, double> > Z_cut_vector(Z_full_vector.begin(), Z_full_vector.end() - index_max);	
-				cout<<"printing: Z_cut:"<<Z_cut_vector.size() <<"\n";
+				cout<<"index_max=Z_full_vector.size()-N_default="<<index_max<<"\n";
+				if (index_max < 0) {
+					std::vector<pair<string, double> > Z_cut_vector_aux(Z_full_vector.begin(), Z_full_vector.end());
+					Z_cut_vector = Z_cut_vector_aux;
+				} else {
+					std::vector<pair<string, double> > Z_cut_vector_aux(Z_full_vector.begin(), Z_full_vector.end() - index_max);
+					Z_cut_vector = Z_cut_vector_aux;
+				}
+
+				int size_Z_cut_vector = Z_cut_vector.size();
+				cout<<"printing: Z_cut:"<<size_Z_cut_vector<<"\n";
 				printVectorPair(Z_cut_vector);
-				cout<<"end printing: Z_cut\n";	
-				int random_index =  RanGen2->IRandom(0, N_default - 1);//g_rng() * (index_max-1);
+				cout<<"end printing: Z_cut\n";
+				int random_index;
+				if (size_Z_cut_vector > 0) {	
+					random_index =  RanGen2->IRandom(0, size_Z_cut_vector - 1);//g_rng() * (index_max-1);
+				}  else {
+					//Then Z_full is empty
+					cout<<"The size of the Z_cut is zero.\n";
+					break;
+				}
 				cout<<"random_index="<<random_index<<"\n";
+
 				pair<string, double> Z_choosed = Z_cut_vector.at(random_index);
 				string s_choosed = Z_choosed.first;
 				double d_choosed = Z_choosed.second;
@@ -1873,11 +1890,6 @@ void SSSearch::select_random_greedy(bool termination) {
 					}
 					Z_subset_aux.clear();
         			}
-
-				if ((int)Z_full_vector.size() < N_default) {
-					//because we required to index_max and it could not be negative 
-					break;
-				}
 	
 				Z_full_vector_combiner = Z_full_vector;
 				//Z_full_vector_combiner must contains at this point only the heuristics without combine.. The combination only happens in heuristicCombiner. Here only must have the following:
