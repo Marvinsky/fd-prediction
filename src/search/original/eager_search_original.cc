@@ -18,6 +18,8 @@
 
 using namespace std;
 
+string _HOME_INFO_ASTAR = "/home";
+
 EagerSearchOriginal::EagerSearchOriginal(
     const Options &opts)
     : SearchEngine(opts),
@@ -330,17 +332,17 @@ void EagerSearchOriginal::generateReport() {
         name += ".csv";
 
 	if (dir_name == "temp") {
-        	dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio;
-        	dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc";
-        	outputFile = "/home/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc/"+name;
+        	dirDomain = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio;
+        	dirSSCC = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc";
+        	outputFile =  _HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc/"+name;
 	} else if (dir_name == "sscc") {
-		dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio;
-        	dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio+"/bc";
-        	outputFile = "/home/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio+"/bc/"+name;
+		dirDomain = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio;
+        	dirSSCC = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio+"/bc";
+        	outputFile = _HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio+"/bc/"+name;
 	} else if (dir_name == "grhs") {
-		dirDomain = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio;
-        	dirSSCC = "mkdir /home/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio+"/bc";
-        	outputFile = "/home/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio+"/bc/"+name;
+		dirDomain = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio;
+        	dirSSCC = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio+"/bc";
+        	outputFile = _HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio+"/bc/"+name;
 	}
 
         if (system(dirDomain.c_str())) {
@@ -348,7 +350,7 @@ void EagerSearchOriginal::generateReport() {
         }
 
         if (system(dirSSCC.c_str())) {
-        	cout<<"Directory: SSCC created."<<endl;
+        	cout<<"Directory: "<<dirSSCC.c_str()<<" created."<<endl;
         }
 
 	ofstream output;
