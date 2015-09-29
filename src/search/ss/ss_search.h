@@ -201,4 +201,6 @@ public:
 	double calculate_time_costs_specific(boost::dynamic_bitset<> h_comb);
 	void runReports(bool cmd);
 	string getHeuristicInfo(int index);
+	string processHeuristicProperties(string heuristic, vector<string> info, string heuristic_good);
+	string processAllHeuristicProperties(string heuristic, vector<string> info, string heuristic_good, int total_gapdb_heuristics, int &counter_just_ga_heur);
 };

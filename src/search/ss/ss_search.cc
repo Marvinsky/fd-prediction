@@ -29,8 +29,8 @@ string run_method = "both";
 //Root and fd information
 string _HOME_INFO = "/home";
 string _FD_INFO = "/fd";
-bool run_min_heuristic = true;//true=select from all the heuristics/false=select just gapdb
-bool run_min_eval_time_approach = true;//true run min_eval_time in order to use time to apply meta-reasoning
+bool run_min_heuristic = false;//true=select from all the heuristics/false=select just gapdb
+bool run_min_eval_time_approach = false;//true run min_eval_time in order to use time to apply meta-reasoning
 
 //#define _SS_DEBUG
 //#define _LMCUT_EARLY_TERM
@@ -1442,157 +1442,23 @@ void SSSearch::generateSSCCReport(bool termination) {
 
 			if (run_min_eval_time_approach) {
 				if (s == min_eval_time_heur) {
-					gapdb_string =  heuristic_good + "(mp=";
-                        		//cout<<"heuristic (s) = "<<s<<"\n";
-                        		//find the number
-                        		string t = s;
-                        		size_t found = t.find("_");
-                        		string t_final = t.substr(found + 1, t.length());
-                        		//cout<<"t_final = "<<t_final<<"\n";
-
-                        		bool is_blind_heuristic = false;
-                        		for (size_t i = 0; i < info.size(); i++) {
-                                		string parameter = info.at(i);
-                                		//cout<<"\t"<<parameter<<"\n";
-                                		if (i == 1) {
-                                        		gapdb_string += parameter;
-                                		} else if (i == 2) {
-                                        		gapdb_string += ",size="+parameter;
-                                        		if (parameter == "") {
-                                                		is_blind_heuristic = true;
-                                        		}
-                                		} else if (i == 3) {
-                                        		gapdb_string += ",disjoint="+parameter;
-                                		}
-                        		}
-                        		gapdb_string+=")_" + t_final;
-                        		//gapdb_string+=",eps=120,colls=5)";
-                        		//cout<<"\tgapdb_string = "<<gapdb_string<<"\n\n";
-
-					if (is_blind_heuristic) {
-                                		//Workaround
-                                		string task2 = s;
-
-                                		size_t found_task2 =  task2.find("_");
-                                		string new_s = task2.substr(0, found_task2);
-
-                                		string heur_blind = "blind()_" + t_final;
-                                		if (new_s == "ipdb") {
-                                        		heur_blind = "ipdb()_" + t_final;
-                                		} else if (new_s == "lmcut") {
-                                        		heur_blind = "lmcut()_" + t_final;
-                                		} else if (new_s == "mands") {
-                                        		heur_blind = "mands()_" + t_final;
-                                		}
-                                		v_gapdb_string.push_back(heur_blind);
-                        		} else {
-                                		v_gapdb_string.push_back(gapdb_string);
-                        		}
+					gapdb_string = processHeuristicProperties(s, info, heuristic_good);
+                                	v_gapdb_string.push_back(gapdb_string);	
                         		//cout<<"gapdb_string = "<<gapdb_string<<"\n";
 				}// s == min_eval_time_heur
 			} else {
 				if (run_min_heuristic) {
                 			if (s == min_number_heuristic) {
-                				gapdb_string =  heuristic_good + "(mp=";
-                        			//cout<<"heuristic (s) = "<<s<<"\n";
-                        			//find the number
-                        			string t = s;
-                        			size_t found = t.find("_");
-                        			string t_final = t.substr(found + 1, t.length());
-                        			//cout<<"t_final = "<<t_final<<"\n";
-
-                        			bool is_blind_heuristic = false;
-                        			for (size_t i = 0; i < info.size(); i++) {
-                                			string parameter = info.at(i);
-                                			//cout<<"\t"<<parameter<<"\n";
-                                			if (i == 1) {
-                                        			gapdb_string += parameter;
-                                			} else if (i == 2) {
-                                        			gapdb_string += ",size="+parameter;
-                                        			if (parameter == "") {
-                                                			is_blind_heuristic = true;
-                                        			}
-                                			} else if (i == 3) {
-                                        			gapdb_string += ",disjoint="+parameter;
-                                			}
-                        			}
-                        			gapdb_string+=")_" + t_final;
-                        			//gapdb_string+=",eps=120,colls=5)";
-                        			//cout<<"\tgapdb_string = "<<gapdb_string<<"\n\n";
-
-						if (is_blind_heuristic) {
-                                			//Workaround
-                                			string task2 = s;
-
-                                			size_t found_task2 =  task2.find("_");
-                                			string new_s = task2.substr(0, found_task2);
-
-                                			string heur_blind = "blind()_" + t_final;
-                                			if (new_s == "ipdb") {
-                                        			heur_blind = "ipdb()_" + t_final;
-                                			} else if (new_s == "lmcut") {
-                                        			heur_blind = "lmcut()_" + t_final;
-                                			} else if (new_s == "mands") {
-                                        			heur_blind = "mands()_" + t_final;
-                                			}
-                                			v_gapdb_string.push_back(heur_blind);
-                        			} else {
-                                			v_gapdb_string.push_back(gapdb_string);
-                        			}
+                				gapdb_string = processHeuristicProperties(s, info, heuristic_good);
+                                		v_gapdb_string.push_back(gapdb_string);		
                         			//cout<<"gapdb_string = "<<gapdb_string<<"\n";
                 			}// s == min_number_heuristic
 				} else { //end run_min_heuristic
 					if (isGAPDB(s)) {
-                				gapdb_string = "gapdb(mp=";
-						//cout<<"heuristic (s) = "<<s<<"\n";
-                        			//find the number
-                        			string t = s;
-                        			size_t found = t.find("_");
-                        			string t_final = t.substr(found + 1, t.length());
-                        			//cout<<"t_final = "<<t_final<<"\n";
-
-                        			bool is_blind_heuristic = false;
-                        			for (size_t i = 0; i < info.size(); i++) {
-                                			string parameter = info.at(i);
-                                			//cout<<"\t"<<parameter<<"\n";
-                                			if (i == 1) {
-                                        			gapdb_string += parameter;
-                                			} else if (i == 2) {
-                                        			gapdb_string += ",size="+parameter;
-                                        			if (parameter == "") {
-                                                			is_blind_heuristic = true;
-                                        			}
-                                			} else if (i == 3) {
-                                        			gapdb_string += ",disjoint="+parameter;
-                                			}
-                        			}
-                        			gapdb_string+=")";//+ t_final;
-                        			if (counter_just_ga_heur != total_gapdb_heuristics - 1) {
-                                			gapdb_string+=",";//+ t_final;
-                        			}
-                        			//cout<<"counter_just_ga_heur = "<<counter_just_ga_heur<<"\n";
-                        			counter_just_ga_heur++;
-
-						if (is_blind_heuristic) {
-                                			//Workaround
-                                			string task2 = s;
-
-                                			size_t found_task2 =  task2.find("_");
-                                			string new_s = task2.substr(0, found_task2);
-
-                                			string heur_blind = "blind()_" + t_final;
-                                			if (new_s == "ipdb") {
-                                        			heur_blind = "ipdb()_" + t_final;
-                                			} else if (new_s == "lmcut") {
-                                        			heur_blind = "lmcut()_" + t_final;
-                                			} else if (new_s == "mands") {
-                                        			heur_blind = "mands()_" + t_final;
-                                			}
-                                			v_gapdb_string.push_back(heur_blind);
-                        			} else {
-                                			v_gapdb_string.push_back(gapdb_string);
-                        			}
-                        		//cout<<"gapdb_string = "<<gapdb_string<<"\n";
+						string all_heur_gapdb_good = "gapdb";	
+						gapdb_string = processAllHeuristicProperties(s, info, all_heur_gapdb_good, total_gapdb_heuristics, counter_just_ga_heur);
+                                		v_gapdb_string.push_back(gapdb_string);	
+                        			//cout<<"gapdb_string = "<<gapdb_string<<"\n";
 					}//end isGAPDB
 				}//end run_min_heuristic
 			} //end run_min_eval_time_approach
@@ -1905,6 +1771,114 @@ string SSSearch::getHeuristicInfo(int index) {
 	return result;
 }
 
+string SSSearch::processHeuristicProperties(string s, vector<string> info, string heuristic_good) {
+	string result_string;
+	string gapdb_string =  heuristic_good + "(mp=";
+        //cout<<"heuristic (s) = "<<s<<"\n";
+        //find the number
+        string t = s;
+        size_t found = t.find("_");
+        string t_final = t.substr(found + 1, t.length());
+        //cout<<"t_final = "<<t_final<<"\n";
+
+        bool is_blind_heuristic = false;
+        for (size_t i = 0; i < info.size(); i++) {
+        	string parameter = info.at(i);
+                //cout<<"\t"<<parameter<<"\n";
+        	if (i == 1) {
+        		gapdb_string += parameter;
+                } else if (i == 2) {
+                	gapdb_string += ",size="+parameter;
+                	if (parameter == "") {
+                        	is_blind_heuristic = true;
+                        }
+                } else if (i == 3) {
+                	gapdb_string += ",disjoint="+parameter;
+                }
+	}
+        gapdb_string+=")_" + t_final;
+        //gapdb_string+=",eps=120,colls=5)";
+        //cout<<"\tgapdb_string = "<<gapdb_string<<"\n\nif (is_blind_heuristic) {
+
+	if (is_blind_heuristic) {
+        	//Workaround
+                string task2 = s;
+		size_t found_task2 =  task2.find("_");
+                string new_s = task2.substr(0, found_task2);
+
+                string heur_blind = "blind()_" + t_final;
+                if (new_s == "ipdb") {
+                	heur_blind = "ipdb()_" + t_final;
+                } else if (new_s == "lmcut") {
+                	heur_blind = "lmcut()_" + t_final;
+                } else if (new_s == "mands") {
+                	heur_blind = "mands()_" + t_final;
+                }
+		result_string = heur_blind;
+	} else {
+		result_string = gapdb_string;
+        }
+        //cout<<"gapdb_string = "<<gapdb_string<<"\n";
+	return result_string;
+}
+
+
+string SSSearch::processAllHeuristicProperties(string s, vector<string> info, string heuristic_good, int total_gapdb_heuristics, int &counter_just_ga_heur) {	
+	string result_string;
+	string gapdb_string =  heuristic_good +"(mp=";
+	//cout<<"heuristic (s) = "<<s<<"\n";
+        //find the number
+        string t = s;
+        size_t found = t.find("_");
+        string t_final = t.substr(found + 1, t.length());
+        //cout<<"t_final = "<<t_final<<"\n";
+
+        bool is_blind_heuristic = false;
+        for (size_t i = 0; i < info.size(); i++) {
+        	string parameter = info.at(i);
+                //cout<<"\t"<<parameter<<"\n";
+                if (i == 1) {
+                	gapdb_string += parameter;
+                } else if (i == 2) {
+                	gapdb_string += ",size="+parameter;
+                        if (parameter == "") {
+                        	is_blind_heuristic = true;
+                        }
+		} else if (i == 3) {
+                	gapdb_string += ",disjoint="+parameter;
+		}
+	}
+	gapdb_string+=")";//+ t_final;
+        if (counter_just_ga_heur != total_gapdb_heuristics - 1) {
+        	gapdb_string+=",";//+ t_final;
+        }
+        cout<<"counter_just_ga_heur = "<<counter_just_ga_heur<<"\n";
+        counter_just_ga_heur++;
+
+	if (is_blind_heuristic) {
+        	//Workaround
+                string task2 = s;
+
+                size_t found_task2 =  task2.find("_");
+                string new_s = task2.substr(0, found_task2);
+
+                string heur_blind = "blind()_" + t_final;
+                if (new_s == "ipdb") {
+                	heur_blind = "ipdb()_" + t_final;
+                } else if (new_s == "lmcut") {
+                	heur_blind = "lmcut()_" + t_final;
+                } else if (new_s == "mands") {
+                	heur_blind = "mands()_" + t_final;
+                }
+		result_string = heur_blind;
+	} else {
+		result_string = gapdb_string;
+	}
+	cout<<"result_string="<<result_string<<"\n";
+	return result_string;
+        //cout<<"gapdb_string = "<<gapdb_string<<"\n";	
+}
+
 void SSSearch::mkdirAstar(string  method, string heuristic, string probLogs) {
 	string dirProbGood = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic+"/";
         if (system(dirProbGood.c_str())) {
@@ -2211,52 +2185,9 @@ void SSSearch::select_random_greedy(bool termination) {
                 		string s_prop = iter->first;
                 		vector<string> info = iter->second;
 				if (s_subset == s_prop) {
-					cout<<"s_subset="<<s_subset<<"\n";
-					gapdb_string =  heuristic_good + "(mp=";
-                        		//find the number
-                        		string t = s_subset;
-                        		size_t found = t.find("_");
-                        		string t_final = t.substr(found + 1, t.length());
-
-                        		bool is_blind_heuristic = false;
-                        		for (size_t i = 0; i < info.size(); i++) {
-                                		string parameter = info.at(i);
-                                		//cout<<"\t"<<parameter<<"\n";
-                                		if (i == 1) {
-                                        		gapdb_string += parameter;
-                                		} else if (i == 2) {
-                                        		gapdb_string += ",size="+parameter;
-                                        		if (parameter == "") {
-                                                		is_blind_heuristic = true;
-                                        		}
-                                		} else if (i == 3) {
-                                        		gapdb_string += ",disjoint="+parameter;
-                                		}
-                        		}
-                        		gapdb_string+=")_" + t_final;
-					cout<<"gapdb_string="<<gapdb_string<<"\n";
-                        		//gapdb_string+=",eps=120,colls=5)";
-                        		//cout<<"\tgapdb_string = "<<gapdb_string<<"\n\n";
-
-					if (is_blind_heuristic) {
-						//Workaround
-                                		string task2 = s_subset;
-
-                                		size_t found_task2 =  task2.find("_");
-                                		string new_s = task2.substr(0, found_task2);
-
-                                		string heur_blind = "blind()_" + t_final;
-                                		if (new_s == "ipdb") {
-                                        		heur_blind = "ipdb()_" + t_final;
-                                		} else if (new_s == "lmcut") {
-                                        		heur_blind = "lmcut()_" + t_final;
-                                		} else if (new_s == "mands") {
-                                        		heur_blind = "mands()_" + t_final;
-                                		}
-                                		v_gapdb_string.push_back(heur_blind);                               
-                        		} else {
-                                		v_gapdb_string.push_back(gapdb_string);
-                        		}
+					gapdb_string = processHeuristicProperties(s_subset, info, heuristic_good);
+                                	v_gapdb_string.push_back(gapdb_string);
+					cout<<"s_subset="<<s_subset<<"\n";	
 				}
 			}
         	}
