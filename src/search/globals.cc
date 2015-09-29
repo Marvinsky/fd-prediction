@@ -442,6 +442,12 @@ int g_random_seed = 1;
 int pdb_dump_counter = 0;
 string problem_name = "temp";
 vector<string> stored_GA_patterns;
+
+double node_gen_and_exp_cost=pow(0.1,6);
+double aggr_TPN=0;
+double gen_to_eval_ratio;
+
+int node_time_adjusted_reval=0;
 //problem name gapdb is only for use of gapdb
 string problem_name_gapdb = "temp";
 int deep_F_boundary = 0;

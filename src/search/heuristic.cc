@@ -159,6 +159,13 @@ void Heuristic::add_options_to_parser(OptionParser &parser) {
         OptionFlags(false));
 }
 
+void Heuristic::set_measured_TPN(double input_TPN) {
+  measured_TPN=input_TPN;
+}
+
+double Heuristic::get_measured_TPN() {
+  return measured_TPN;
+}
 //this solution to get default values seems not optimal:
 Options Heuristic::default_options() {
     Options opts = Options();

@@ -138,6 +138,13 @@ extern int pdb_dump_counter;
 extern string problem_name;
 extern vector<string> stored_GA_patterns;
 
+extern double node_gen_and_exp_cost;
+extern double aggr_TPN;
+extern double gen_to_eval_ratio;
+
+
+extern int node_time_adjusted_reval;
+
 //problem name gapdb, this is only for use of gapdb test
 extern string problem_name_gapdb;
 extern int deep_F_boundary; //This is used by Santiago's code deep F boundary

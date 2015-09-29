@@ -24,6 +24,7 @@ class Heuristic : public ScalarEvaluator {
     // if set with set_evaluator_value which is done if we use precalculated
     // estimates, eg. when re-opening a search node
     bool stop_using;
+    double measured_TPN;
     std::vector<const GlobalOperator *> preferred_operators;
 protected:
     TaskProxy *task;
@@ -70,7 +71,8 @@ public:
 
     //Prediction  A* = Dijkstra + ss + kre
     virtual string get_heur_name() {string temp = "No Name"; return temp;}
-    virtual string get_heur_call_name(){string temp = "No Name"; return temp;} 
+    virtual void print_heur_name() {cout<<this->get_heur_name();}
+    virtual string get_heur_call_name(){string temp = "No Name"; return temp;}
 
 
     void set_evaluator_value(int val);
@@ -78,6 +80,8 @@ public:
 
     static void add_options_to_parser(OptionParser &parser);
     static Options default_options();
+    void set_measured_TPN(double input_TPN);
+    double get_measured_TPN();
 };
 
 TaskProxy *get_task_from_options(const Options &opts);

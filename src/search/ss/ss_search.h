@@ -161,6 +161,8 @@ private:
 	string domain_pddl_global;
 	int n_heuristics_global;
 	int n_probes_global;
+	double number_nodes_expanded;
+	double number_nodes_generated;
 
 protected:
 
@@ -173,7 +175,7 @@ public:
 	virtual ~SSSearch();
         void printQueue(); 
 	void printVectorPair(vector<pair<string, double> > vpair);
-        void generateExpandedReport();
+        void generateExpandedReport(bool create_report);
         void generateGeneratedReport();
 	void generateSSCCReport(bool termination);
         double getProbingResult();
@@ -191,8 +193,11 @@ public:
 	map<string, double>  heuristicCombinator(bool call_first_time, vector<pair<string, double> > Z_subset, vector<pair<string, double> > Z_full);
 	double getSumSubset(vector<pair<string, double> > Z_subset);
 	void updateGRHS();
-	void updateSSCC();
+	void updateSSCC(bool termination);
 	void updateGlobalVariables();
 	void mkdirAstar(string method, string heuristic, string logs);
 	void executeQsub(string arquivo, string final_real_heur, string heuristic_good, string PROB_GOOD, string prob_name_gapdb, int deep_F_boundary, string method, string plan_dir_file, bool apply_max);
+	//double calculate_time_costs_specific(boost::dynamic_bitset<> h_comb, vector<Heuristic *> orig_heuristics);
+	double calculate_time_costs_specific(boost::dynamic_bitset<> h_comb);
+	void runReports(bool cmd);
 };
