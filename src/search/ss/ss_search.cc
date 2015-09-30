@@ -106,9 +106,9 @@ if(f_boundary!=0){
 	  s= g_state_registry->lookup_state(succ_state.get_id());
 	}
 	node_gen_and_exp_cost=heur_timings.stop()/node_counter;
-	cout<<"node_gen_and_exp_cost:"<<node_gen_and_exp_cost<<endl;
+	//cout<<"node_gen_and_exp_cost:"<<node_gen_and_exp_cost<<endl;
 	node_time_adjusted_reval=0.5/node_gen_and_exp_cost;
-	cout<<"node_time_adjusted_reval="<<node_time_adjusted_reval<<"\n";
+	//cout<<"node_time_adjusted_reval="<<node_time_adjusted_reval<<"\n";
         cout<<"starting timing individual heuristics"<<endl;fflush(stdout);
         //Time each heuristic
 	double max_TPN=0;
@@ -2034,15 +2034,15 @@ void SSSearch::select_random_greedy(bool termination) {
 				//order the map
 				vector<pair<string, double> > Z_full_vector(Z_full_map.begin(), Z_full_map.end());
 				sort(Z_full_vector.begin(), Z_full_vector.end(), greater_second<string, double>());
-				cout<<"Imprimiendo el Z_full_vector\n";
-				printVectorPair(Z_full_vector);
-				cout<<"End Imprimiendo el Z_full_vector\n";
+				//cout<<"Imprimiendo el Z_full_vector\n";
+				//printVectorPair(Z_full_vector);
+				//cout<<"End Imprimiendo el Z_full_vector\n";
 
 				int index_max = Z_full_vector.size() - N_default;
 	
-				cout<<"Z_full_vector.size()="<<Z_full_vector.size()<<"\n";	
-				cout<<"N_default: "<<N_default<<"\n";
-				cout<<"index_max=Z_full_vector.size()-N_default="<<index_max<<"\n";
+				//cout<<"Z_full_vector.size()="<<Z_full_vector.size()<<"\n";	
+				//cout<<"N_default: "<<N_default<<"\n";
+				//cout<<"index_max=Z_full_vector.size()-N_default="<<index_max<<"\n";
 				if (index_max < 0) {
 					std::vector<pair<string, double> > Z_cut_vector_aux(Z_full_vector.begin(), Z_full_vector.end());
 					Z_cut_vector = Z_cut_vector_aux;
@@ -2052,9 +2052,9 @@ void SSSearch::select_random_greedy(bool termination) {
 				}
 
 				int size_Z_cut_vector = Z_cut_vector.size();
-				cout<<"printing: Z_cut:"<<size_Z_cut_vector<<"\n";
-				printVectorPair(Z_cut_vector);
-				cout<<"end printing: Z_cut\n";
+				//cout<<"printing: Z_cut:"<<size_Z_cut_vector<<"\n";
+				//printVectorPair(Z_cut_vector);
+				//cout<<"end printing: Z_cut\n";
 				int random_index;
 				if (size_Z_cut_vector > 0) {	
 					random_index =  RanGen2->IRandom(0, size_Z_cut_vector - 1);//g_rng() * (index_max-1);
@@ -2063,13 +2063,13 @@ void SSSearch::select_random_greedy(bool termination) {
 					cout<<"The size of the Z_cut is zero.\n";
 					break;
 				}
-				cout<<"random_index="<<random_index<<"\n";
+				//cout<<"random_index="<<random_index<<"\n";
 
 				pair<string, double> Z_choosed = Z_cut_vector.at(random_index);
 				string s_choosed = Z_choosed.first;
 				double d_choosed = Z_choosed.second;
-				cout<<"\t\t\tstring elegido para remover del Z_full= "<<s_choosed<<"\n";
-				cout<<"\t\t\tdouble elegido para remover del Z_full= "<<d_choosed<<"\n";
+				//cout<<"\t\t\tstring elegido para remover del Z_full= "<<s_choosed<<"\n";
+				//cout<<"\t\t\tdouble elegido para remover del Z_full= "<<d_choosed<<"\n";
 				Z_subset.push_back(pair<string, double>(s_choosed, d_choosed));
 				//remove the Z_choosed from Z_full_map and update the Z_full_vector
 				map<string, double>::iterator zIter = Z_full_map.find(Z_choosed.first);
@@ -2086,9 +2086,9 @@ void SSSearch::select_random_greedy(bool termination) {
 				
 				//Remove from the Z_full the heuristics that when combined with the heuristics you already have in Z_subset do not yeald in any improvements to the objective function.	
 				
-				cout<<"Begin sum_Heur_by_Z_subset\n";
+				//cout<<"Begin sum_Heur_by_Z_subset\n";
 				double sumHeur_by_Z_subset = getSumSubset(Z_subset);
-				cout<<"End sum_Heur_by_Z_subset\n";
+				//cout<<"End sum_Heur_by_Z_subset\n";
 				typedef std::vector<std::pair<std::string, double> > vector_type;
         			for (vector_type::const_iterator pos = Z_full_vector.begin();
         			pos != Z_full_vector.end(); ++pos)
@@ -2101,7 +2101,7 @@ void SSSearch::select_random_greedy(bool termination) {
 						cout<<"Removing pos\n";
 						Z_full_vector.erase(std::remove(Z_full_vector.begin(), Z_full_vector.end(), *pos), Z_full_vector.end());
 					} else {
-						cout<<"not removing\n";
+						//cout<<"not removing\n";
 					}
 					Z_subset_aux.clear();
         			}
@@ -2152,7 +2152,7 @@ void SSSearch::select_random_greedy(bool termination) {
 				if (s_subset == s_prop) {
 					gapdb_string = processHeuristicProperties(s_subset, info, heuristic_good);
                                 	v_gapdb_string.push_back(gapdb_string);
-					cout<<"s_subset="<<s_subset<<"\n";	
+					//cout<<"s_subset="<<s_subset<<"\n";	
 				}
 			}
         	}
@@ -2171,11 +2171,8 @@ void SSSearch::select_random_greedy(bool termination) {
 			} else {
 				heuristic_generator+=final_real_heur;
 			}
-			cout<<"final_real_heur_2315 = "<<final_real_heur<<"\n";
-                	cout<<"final_number_heur = "<<final_number_heur<<"\n\n";
 		}
-
-		cout<<"heuristic_generator="<<heuristic_generator<<"\n";
+		//cout<<"heuristic_generator="<<heuristic_generator<<"\n";
 		
                 string new_problem_name = tarefa_global;//--problem_name == problema.c_str()
 		string t = new_problem_name;
@@ -2238,8 +2235,8 @@ void SSSearch::updateGRHS() {
         }
 
 	count_line_grhs = collector_heur.size();
-	cout<<"n_heuristics_global="<<n_heuristics_global<<"\n";
-	cout<<"count_line_grhs="<<count_line_grhs<<"\n";
+	//cout<<"n_heuristics_global="<<n_heuristics_global<<"\n";
+	//cout<<"count_line_grhs="<<count_line_grhs<<"\n";
 
 	//get the combintation 1/0/1/0..../1/1
         harray_grhs = new int*[count_line_grhs];
@@ -2288,7 +2285,7 @@ double SSSearch::calculate_time_costs_specific(boost::dynamic_bitset<> h_comb){
 }
 
 map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<pair<string, double> > Z_subset, vector<pair<string, double> > Z_full) {
-	cout<<"combine heuristics..."<<call_first_time<<"\n";	
+	//cout<<"combine heuristics..."<<call_first_time<<"\n";	
 	map<string, double> Z_full_map;
 	if (call_first_time) {
 		updateGRHS();	
@@ -2381,13 +2378,13 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
         	}
 	}  else {//end_true call_first_time
 		
-		cout<<"Dentro del heuristicCombinator Imprimiendo Z_subset y Z_full respectivamente\n";
-		printVectorPair(Z_subset);
-		printVectorPair(Z_full);
-		cout<<"End Dentro del heuristicCombinator Imprimiendo Z_subset y Z_full respectivamente\n";
+		//cout<<"Dentro del heuristicCombinator Imprimiendo Z_subset y Z_full respectivamente\n";
+		//printVectorPair(Z_subset);
+		//printVectorPair(Z_full);
+		//cout<<"End Dentro del heuristicCombinator Imprimiendo Z_subset y Z_full respectivamente\n";
 		bool use_sum_of_the_max = true; //use the sum of the max instead of the sum of the sum
 	
-		cout<<"-----------------------BEGIN PRINT EACH COMBINATION------------------------\n";
+		//cout<<"-----------------------BEGIN PRINT EACH COMBINATION------------------------\n";
 		typedef std::vector<std::pair<std::string, double> > vector_type;		
 		for (vector_type::const_iterator pos = Z_full.begin();
                 pos != Z_full.end(); ++pos)
@@ -2487,7 +2484,7 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 							for (int j = 0; j < count_line_grhs; j++) {
 								sum_heur_values += harray_grhs[j][i]*ccarray_grhs[j][0];
 							}
-							cout<<"i="<<i<<", sum_heur_values="<<sum_heur_values<<"\n";
+							//cout<<"i="<<i<<", sum_heur_values="<<sum_heur_values<<"\n";
 							sum_combination_heur += sum_heur_values;
 						}
 						if (first_key == i) {
@@ -2516,16 +2513,15 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 			}//end Z_subset
 
 			if (use_sum_of_the_max) {
-				cout<<"key_name ending="<<key_name<<", sum_max="<<sum_max_combination_heur<<"\n";
+				//cout<<"key_name ending="<<key_name<<", sum_max="<<sum_max_combination_heur<<"\n";
 				Z_full_map.insert(pair<string, double>(key_name, sum_max_combination_heur));
 			} else {
-				cout<<"key_name ending="<<key_name<<", sum_combination="<<sum_combination_heur<<"\n";
+				//cout<<"key_name ending="<<key_name<<", sum_combination="<<sum_combination_heur<<"\n";
 				Z_full_map.insert(pair<string, double>(key_name, sum_combination_heur));
 			}
 		}//end Z_full
-		cout<<"-------------------------END PRINT EACH COMBINATION------------------------\n";	
+		//cout<<"-------------------------END PRINT EACH COMBINATION------------------------\n";	
 	}	
-	cout<<"Z_full_map empty\n";
 	return Z_full_map;
 }
 
@@ -2543,7 +2539,7 @@ double SSSearch::getSumSubset(vector<pair<string, double> > Z_subset) {
 		string key_string = new_s_inner.substr(f_s_inner + 1, new_s_inner.length());
 		int key = std::atoi(key_string.c_str());
 		string delimiter = ",";
-		cout<<"key = "<<key<<"\n";
+		//cout<<"key = "<<key<<"\n";
 		//cout<<"heuristic-information\n";
 		for (int i = 0; i < n_heuristics_global; i++) {
 			if (key == i) {
@@ -2617,7 +2613,7 @@ double SSSearch::getSumSubset(vector<pair<string, double> > Z_subset) {
 					for (int j = 0; j < count_line_grhs; j++) {
 						sum_heur_values += harray_grhs[j][i]*ccarray_grhs[j][0];
 					}
-					cout<<"i="<<i<<", sum_heur_values="<<sum_heur_values<<"\n";
+					//cout<<"i="<<i<<", sum_heur_values="<<sum_heur_values<<"\n";
 					sum_combination_heur += sum_heur_values;
 				}	
 			} // key comparator
@@ -2641,10 +2637,10 @@ double SSSearch::getSumSubset(vector<pair<string, double> > Z_subset) {
 	}//end Z_subset
 
 	if (use_sum_of_the_max) {
-		cout<<"returning the max.\n";
+		//cout<<"returning the max.\n";
 		return sum_max_combination_heur;
 	} else {
-		cout<<"returning no max.\n";
+		//cout<<"returning no max.\n";
 		return sum_combination_heur;
 	}
 }
