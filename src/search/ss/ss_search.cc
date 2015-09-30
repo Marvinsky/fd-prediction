@@ -29,6 +29,7 @@ string run_method = "both";
 //Root and fd information
 string _HOME_INFO = "/home";
 string _FD_INFO = "/fd";
+//sscc configuration
 bool run_min_heuristic = false;//true=select from all the heuristics/false=select just gapdb
 bool run_min_eval_time_approach = false;//true run min_eval_time in order to use time to apply meta-reasoning
 
@@ -1419,14 +1420,14 @@ void SSSearch::generateSSCCReport(bool termination) {
 			b_comb.reset();
 			b_comb.set(i);
 			double cost_heur = calculate_time_costs_specific(b_comb);
-			cout<<"heuristic="<<i<<",b_comb.size()="<<b_comb.size()<<"\t"<<b_comb<<"\tcost_heur="<<cost_heur<<"\n";
+			//cout<<"heuristic="<<i<<",b_comb.size()="<<b_comb.size()<<"\t"<<b_comb<<"\tcost_heur="<<cost_heur<<"\n";
 			if (min_eval_time > cost_heur) {
 				min_eval_time = cost_heur;
 				index_min_eval_time = i;
 			}
 		}
 		string min_eval_time_heur = getHeuristicInfo(index_min_eval_time);
-		cout<<"min_eval_time="<<min_eval_time<<",index_min_eval_time="<<index_min_eval_time<<"\theuristic_name="<<min_eval_time_heur<<"\n";
+		//cout<<"min_eval_time="<<min_eval_time<<",index_min_eval_time="<<index_min_eval_time<<"\theuristic_name="<<min_eval_time_heur<<"\n";
 		//end evaluation time for meta-reasoning
 
         	vector<string> v_gapdb_string;
@@ -1478,56 +1479,12 @@ void SSSearch::generateSSCCReport(bool termination) {
 		if (run_min_eval_time_approach) {
 			for (size_t i = 0; i < v_gapdb_string.size(); i++) {
                 		//get the real name
-                		string real_heur = v_gapdb_string.at(i);
-                		string task = real_heur;
-                		//cout<<"task = "<<task<<"\n";
-                		//size_t found_task_deep = task.find("deep");
-                		size_t found_task_good = task.find("good");
+                		pair<string, string> p_names = getPairRealNumber(v_gapdb_string.at(i));
+				
                 		string final_real_heur, final_number_heur;
-                		string delimiter = "_";
-                		if (found_task_good > 1000) {
-					string t0 = real_heur;
-                        		size_t found_t0 = t0.find("_");
-                        		string previous_real_heur = t0.substr(0, found_t0);			
-					final_real_heur = previous_real_heur;
-                        		//cout<<"previous_real_heur = "<<final_real_heur<<"\n";
-                        		if (previous_real_heur == "mands()") {
-                                		final_real_heur = "merge_and_shrink(shrink_strategy=shrink_bisimulation(max_states=100000,threshold=1,greedy=false),merge_strategy=merge_dfp())";
-                                		//final_real_heur = "merge_and_shrink()";
-                        		} else if (previous_real_heur == "ipdb()") {
-                                		final_real_heur = "ipdb(max_time=200)";
-                        		}
-
-                        		//get the heuristic number
-                        		string t1 = real_heur;
-                        		size_t found_t1 = t1.find("_");
-                        		final_number_heur = t1.substr(found_t1 + 1, t1.length());
-                		} else {
-                        		string s2 = real_heur;
-                        		string pot[6];
-                        		size_t pos = 0;
-                        		string token;
-                        		int index = 0;
-                        		while ((pos = s2.find(delimiter)) != std::string::npos) {
-                                		token = s2.substr(0, pos);
-                                		pot[index] = token;
-                                		s2.erase(0, pos + delimiter.length());
-                                		index++;
-                        		}
-                        		//cout<<"index = "<<index<<"\n";
-                        		pot[index] = s2;
-                        		//remove deep from pot[1]
-                        		string pot1 = pot[1];
-                        		size_t found_pot1 = pot1.find("(");
-                        		string new_pot1 = pot1.substr(found_pot1, pot1.length());
-                        		//end remove deep from pot[1]
-
-                        		final_real_heur = "gapdb" + new_pot1;
-                        		final_number_heur = pot[2];
-				}
-				cout<<"final_real_heur = "<<final_real_heur<<"\n";
-                		cout<<"final_number_heur = "<<final_number_heur<<"\n\n";
-
+				final_real_heur = p_names.first;
+				final_number_heur = p_names.second;
+	
 				//begin
                 		string new_problem_name = tarefa_global; //--problem_name == problema.c_str()
                 		string t = new_problem_name;
@@ -1563,60 +1520,16 @@ void SSSearch::generateSSCCReport(bool termination) {
 				string plan_dir_file = "/plan/"+dominio_global+"/"+tarefa_global;
 				executeQsub(arquivo, final_real_heur, heuristic_good, PROB_GOOD, prob_name_gapdb, deep_F_boundary, method, plan_dir_file, false);
 			}//v_gapdb_string for loop
-		} else {
+		} else {//else run_min_eval_time_approach
 			if (run_min_heuristic) {
 	 			for (size_t i = 0; i < v_gapdb_string.size(); i++) {
                 			//get the real name
-                			string real_heur = v_gapdb_string.at(i);
-                			string task = real_heur;
-                			//cout<<"task = "<<task<<"\n";
-                			//size_t found_task_deep = task.find("deep");
-                			size_t found_task_good = task.find("good");
+					pair<string, string> p_names = getPairRealNumber(v_gapdb_string.at(i));
+				
                 			string final_real_heur, final_number_heur;
-                			string delimiter = "_";
-                			if (found_task_good > 1000) {
-						string t0 = real_heur;
-                        			size_t found_t0 = t0.find("_");
-                        			string previous_real_heur = t0.substr(0, found_t0);			
-						final_real_heur = previous_real_heur;
-                        			//cout<<"previous_real_heur = "<<final_real_heur<<"\n";
-                        			if (previous_real_heur == "mands()") {
-                                			final_real_heur = "merge_and_shrink(shrink_strategy=shrink_bisimulation(max_states=100000,threshold=1,greedy=false),merge_strategy=merge_dfp())";
-                                			//final_real_heur = "merge_and_shrink()";
-                        			} else if (previous_real_heur == "ipdb()") {
-                                			final_real_heur = "ipdb(max_time=200)";
-                        			}
-
-                        			//get the heuristic number
-                        			string t1 = real_heur;
-                        			size_t found_t1 = t1.find("_");
-                        			final_number_heur = t1.substr(found_t1 + 1, t1.length());
-                			} else {
-                        			string s2 = real_heur;
-                        			string pot[6];
-                        			size_t pos = 0;
-                        			string token;
-                        			int index = 0;
-                        			while ((pos = s2.find(delimiter)) != std::string::npos) {
-                                			token = s2.substr(0, pos);
-                                			pot[index] = token;
-                                			s2.erase(0, pos + delimiter.length());
-                                			index++;
-                        			}
-                        			//cout<<"index = "<<index<<"\n";
-                        			pot[index] = s2;
-                        			//remove deep from pot[1]
-                        			string pot1 = pot[1];
-                        			size_t found_pot1 = pot1.find("(");
-                        			string new_pot1 = pot1.substr(found_pot1, pot1.length());
-                        			//end remove deep from pot[1]
-
-                        			final_real_heur = "gapdb" + new_pot1;
-                        			final_number_heur = pot[2];
-					}
-					//cout<<"final_real_heur = "<<final_real_heur<<"\n";
-                			//cout<<"final_number_heur = "<<final_number_heur<<"\n\n";
-
+					final_real_heur = p_names.first;
+					final_number_heur = p_names.second;
+	
 					//begin
                 			string new_problem_name = tarefa_global; //--problem_name == problema.c_str()
                 			string t = new_problem_name;
@@ -1757,7 +1670,7 @@ string SSSearch::getHeuristicInfo(int index) {
             		}
 		}
 		int index_heur = std::atoi(number_h.c_str());
-		cout<<"pair:"<<index_heur<<","<<name<<"\n";
+		//cout<<"pair:"<<index_heur<<","<<name<<"\n";
 		map_heuristic_name.insert(pair<int, string>(index_heur, name));
         }
 	string result;
@@ -1852,7 +1765,7 @@ string SSSearch::processAllHeuristicProperties(string s, vector<string> info, st
         if (counter_just_ga_heur != total_gapdb_heuristics - 1) {
         	gapdb_string+=",";//+ t_final;
         }
-        cout<<"counter_just_ga_heur = "<<counter_just_ga_heur<<"\n";
+        //cout<<"counter_just_ga_heur = "<<counter_just_ga_heur<<"\n";
         counter_just_ga_heur++;
 
 	if (is_blind_heuristic) {
@@ -1874,9 +1787,61 @@ string SSSearch::processAllHeuristicProperties(string s, vector<string> info, st
 	} else {
 		result_string = gapdb_string;
 	}
-	cout<<"result_string="<<result_string<<"\n";
+	//cout<<"result_string="<<result_string<<"\n";
 	return result_string;
         //cout<<"gapdb_string = "<<gapdb_string<<"\n";	
+}
+
+
+pair<string, string> SSSearch::getPairRealNumber(string real_heur) {
+        string task = real_heur;
+        //cout<<"task = "<<task<<"\n";
+        //size_t found_task_deep = task.find("deep");
+        size_t found_task_good = task.find("good");
+        string final_real_heur, final_number_heur;
+        string delimiter = "_";
+        if (found_task_good > 1000) {
+		string t0 = real_heur;
+                size_t found_t0 = t0.find("_");
+                string previous_real_heur = t0.substr(0, found_t0);			
+		final_real_heur = previous_real_heur;
+                //cout<<"previous_real_heur = "<<final_real_heur<<"\n";
+                if (previous_real_heur == "mands()") {
+                	final_real_heur = "merge_and_shrink(shrink_strategy=shrink_bisimulation(max_states=100000,threshold=1,greedy=false),merge_strategy=merge_dfp())";
+                        //final_real_heur = "merge_and_shrink()";
+                } else if (previous_real_heur == "ipdb()") {
+                	final_real_heur = "ipdb(max_time=200)";
+                }
+
+                //get the heuristic number
+                string t1 = real_heur;
+                size_t found_t1 = t1.find("_");
+                final_number_heur = t1.substr(found_t1 + 1, t1.length());
+	} else {
+        	string s2 = real_heur;
+                string pot[6];
+                size_t pos = 0;
+                string token;
+                int index = 0;
+                while ((pos = s2.find(delimiter)) != std::string::npos) {
+                	token = s2.substr(0, pos);
+                        pot[index] = token;
+                        s2.erase(0, pos + delimiter.length());
+                        index++;
+                }
+                //cout<<"index = "<<index<<"\n";
+                pot[index] = s2;
+                //remove deep from pot[1]
+                string pot1 = pot[1];
+                size_t found_pot1 = pot1.find("(");
+                string new_pot1 = pot1.substr(found_pot1, pot1.length());
+                //end remove deep from pot[1]
+
+                final_real_heur = "gapdb" + new_pot1;
+                final_number_heur = pot[2];
+	}
+	//pair<string, string> r = make_pair<final_real_heur, final_number_heur>;
+	return  make_pair(final_real_heur, final_number_heur);//std::pair<string, string>(final_real_heur, final_number_heur);
 }
 
 void SSSearch::mkdirAstar(string  method, string heuristic, string probLogs) {
@@ -2195,60 +2160,18 @@ void SSSearch::select_random_greedy(bool termination) {
 		string heuristic_generator;
 		for (size_t i = 0; i < v_gapdb_string.size(); i++) {
 			//get the real name
-                	string real_heur = v_gapdb_string.at(i);
-                	string task = real_heur;
-                	//cout<<"task = "<<task<<"\n";
-                	//size_t found_task_deep = task.find("deep");
-                	size_t found_task_good = task.find("good");
+			pair<string, string> p_names = getPairRealNumber(v_gapdb_string.at(i));
+				
                 	string final_real_heur, final_number_heur;
-                	string delimiter = "_";
-                	if (found_task_good > 1000) {
-				string t0 = real_heur;
-                        	size_t found_t0 = t0.find("_");
-                        	string previous_real_heur = t0.substr(0, found_t0);			
-				final_real_heur = previous_real_heur;
-                        	//cout<<"previous_real_heur = "<<final_real_heur<<"\n";
-                        	if (previous_real_heur == "mands()") {
-                                	final_real_heur = "merge_and_shrink(shrink_strategy=shrink_bisimulation(max_states=100000,threshold=1,greedy=false),merge_strategy=merge_dfp())";
-                                	//final_real_heur = "merge_and_shrink()";
-                        	} else if (previous_real_heur == "ipdb()") {
-                                	final_real_heur = "ipdb(max_time=200)";
-                        	}
-
-                        	//get the heuristic number
-                        	string t1 = real_heur;
-                        	size_t found_t1 = t1.find("_");
-                        	final_number_heur = t1.substr(found_t1 + 1, t1.length());
-                	} else {
-                        	string s2 = real_heur;
-                        	string pot[6];
-                        	size_t pos = 0;
-                        	string token;
-                        	int index = 0;
-                        	while ((pos = s2.find(delimiter)) != std::string::npos) {
-                                	token = s2.substr(0, pos);
-                                	pot[index] = token;
-                                	s2.erase(0, pos + delimiter.length());
-                                	index++;
-                        	}
-                        	//cout<<"index = "<<index<<"\n";
-                        	pot[index] = s2;
-                        	//remove deep from pot[1]
-                        	string pot1 = pot[1];
-                        	size_t found_pot1 = pot1.find("(");
-                        	string new_pot1 = pot1.substr(found_pot1, pot1.length());
-                        	//end remove deep from pot[1]
-
-                        	final_real_heur = "gapdb" + new_pot1;
-                        	final_number_heur = pot[2];
-			}
+			final_real_heur = p_names.first;
+			final_number_heur = p_names.second;	
 
 			if (i != v_gapdb_string.size() - 1) {
 				heuristic_generator+=final_real_heur+",";
 			} else {
 				heuristic_generator+=final_real_heur;
 			}
-			cout<<"final_real_heur = "<<final_real_heur<<"\n";
+			cout<<"final_real_heur_2315 = "<<final_real_heur<<"\n";
                 	cout<<"final_number_heur = "<<final_number_heur<<"\n\n";
 		}
 
@@ -3202,6 +3125,19 @@ void SSSearch::initialize() {
 	cout << "SSSearch ..." << endl;
 	search_time.reset();
 	level_time.reset();
+
+	cout<<"**********************************\n";
+	cout<<"*       Configuration             \n";
+	cout<<"*_HOME_INFO="<<_HOME_INFO<<"      \n";
+	cout<<"*_FD_INFO="<<_FD_INFO<<"          \n";
+	cout<<"*sampling_time_limit="<<sampling_time_limit<<"      \n";
+	cout<<"*overall_time_limit="<<overall_time_limit<<"        \n";
+	cout<<"*domination_check="<<domination_check<<"            \n";
+	cout<<"*method="<<(run_method=="both"?"grhs && sscc":run_method)<<"         \n";
+	cout<<"*run_min_heuristic="<<(run_min_heuristic?"true":"false")<<"          \n";
+	cout<<"*run_min_eval_time_approach="<<(run_min_eval_time_approach?"true":"false")<<"      \n";
+	cout<<"*N_default="<<N_default<<"        \n";
+	cout<<"**********************************\n";
 
 	if (gen_to_eval_ratio == 0) {
         	gen_to_eval_ratio=1;

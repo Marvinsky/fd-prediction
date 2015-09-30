@@ -203,4 +203,5 @@ public:
 	string getHeuristicInfo(int index);
 	string processHeuristicProperties(string heuristic, vector<string> info, string heuristic_good);
 	string processAllHeuristicProperties(string heuristic, vector<string> info, string heuristic_good, int total_gapdb_heuristics, int &counter_just_ga_heur);
+	pair<string, string> getPairRealNumber(string real_heur);
 };
