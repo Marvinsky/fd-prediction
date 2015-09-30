@@ -24,14 +24,14 @@ double sampling_time_limit=150;
 double overall_time_limit=1400;
 int N_default = 8;
 //run experiments
-string run_method = "both";
+string run_method = "sscc";
 
 //Root and fd information
 string _HOME_INFO = "/home";
 string _FD_INFO = "/fd";
 //sscc configuration
 bool run_min_heuristic = false;//true=select from all the heuristics/false=select just gapdb
-bool run_min_eval_time_approach = false;//true run min_eval_time in order to use time to apply meta-reasoning
+bool run_min_eval_time_approach = true;//true run min_eval_time in order to use time to apply meta-reasoning
 
 //#define _SS_DEBUG
 //#define _LMCUT_EARLY_TERM
@@ -1118,8 +1118,8 @@ void SSSearch::runReports(bool cmd) {
 	  	select_random_greedy(cmd);	
 	  	generateSSCCReport(cmd);
 	}
-	generateGeneratedReport();
-        generateExpandedReport(false);
+	//generateGeneratedReport();
+        //generateExpandedReport(false);
 	///select_best_heuristics_greedy();
 }
 
