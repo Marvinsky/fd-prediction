@@ -1402,14 +1402,13 @@ void SSSearch::generateSSCCReport(bool termination) {
                 	string s = iter_test->first;
                 	double d = iter_test->second;
 			number_gapdb_heurs.push_back(s);
-                	//cout<<s<<", "<<d<<"\n";
+                	cout<<s<<", "<<d<<"\n";
                 	if (min_number_expanded > d) {
                         	min_number_expanded = d;
                         	min_number_heuristic = s;
                 	}
         	}
-        	//cout<<"min_number_expanded = "<<min_number_expanded<<"\n";
-        	//cout<<"min_number_heuristic = "<<min_number_heuristic<<"\n";
+        	cout<<"min_number_expanded = "<<min_number_expanded<<"\tmin_number_heuristic = "<<min_number_heuristic<<"\n";
 		//Implement the evaluation time selection for the meta-reasoning
 
 
@@ -1419,15 +1418,21 @@ void SSSearch::generateSSCCReport(bool termination) {
 		for (int i = 0; i < n_heuristics_global; i++) {
 			b_comb.reset();
 			b_comb.set(i);
-			double cost_heur = calculate_time_costs_specific(b_comb);
-			//cout<<"heuristic="<<i<<",b_comb.size()="<<b_comb.size()<<"\t"<<b_comb<<"\tcost_heur="<<cost_heur<<"\n";
-			if (min_eval_time > cost_heur) {
-				min_eval_time = cost_heur;
-				index_min_eval_time = i;
+			string find_minheur = getHeuristicInfo(i);	
+			map<string, double>::iterator iter = add_line_map_heuristic.find(find_minheur);
+			if (iter != add_line_map_heuristic.end()) {
+				string found_heur = iter->first;
+				double search_tree_prediction = iter->second;
+				double cost_heur = search_tree_prediction*calculate_time_costs_specific(b_comb);
+				cout<<"heuristic="<<found_heur<<"prediction="<<search_tree_prediction<<",b_comb.size()="<<b_comb.size()<<"\t"<<b_comb<<"\tcost_heur="<<cost_heur<<"\n";
+				if (min_eval_time > cost_heur) {
+					min_eval_time = cost_heur;
+					index_min_eval_time = i;
+				}	
 			}
 		}
 		string min_eval_time_heur = getHeuristicInfo(index_min_eval_time);
-		//cout<<"min_eval_time="<<min_eval_time<<",index_min_eval_time="<<index_min_eval_time<<"\theuristic_name="<<min_eval_time_heur<<"\n";
+		cout<<"min_eval_time="<<min_eval_time<<",index_min_eval_time="<<index_min_eval_time<<"\theuristic_name="<<min_eval_time_heur<<"\n";
 		//end evaluation time for meta-reasoning
 
         	vector<string> v_gapdb_string;
@@ -2871,11 +2876,7 @@ void SSSearch::select_best_heuristics_greedy(){
     }
   }
   output<<"]))\" ";
-  output.close();
-
-  /*
-  best_current_time=double(best_current_nodes)*calculate_time_costs_specific(best_h_comb,selectable_heuristics);
-  cout<<",nodes:,"<<best_current_nodes<<",best_current_time:,"<<best_current_time<<endl;*/
+  output.close(); 
 
  cout<<"Memory before deleting states:";
  get_peak_memory_in_kb(true);
@@ -3102,10 +3103,6 @@ void SSSearch::select_best_heuristics_greedy_stocastic(int cardinality){
   }
   output<<"]))\" ";
   output.close();
-
-  /*
-  best_current_time=double(best_current_nodes)*calculate_time_costs_specific(best_h_comb,selectable_heuristics);
-  cout<<",nodes:,"<<best_current_nodes<<",best_current_time:,"<<best_current_time<<endl;*/
 
  cout<<"Memory before deleting states:";
  get_peak_memory_in_kb(true);
