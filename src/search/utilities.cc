@@ -9,6 +9,9 @@
 #include <iomanip>
 #include "../timer.h"
 
+#include "../ext/boost/dynamic_bitset.hpp"
+#include <boost/lexical_cast.hpp>
+
 using namespace std;
 
 
@@ -371,7 +374,17 @@ void load_GA_Patterns_from_file(){
   problem_name_mod += ".dat";
   problem_name_mod = "/" + problem_name_mod;
   problem_name_mod = domain_name + problem_name_mod;
-  problem_name_mod = "/home/marvin/fd/dat/" + problem_name_mod;
+
+  string datstr = "dat_";
+  if (ss_probes == 0) {
+  	datstr += "info";
+  } else {
+	datstr += boost::lexical_cast<std::string>(ss_probes);
+  	datstr += "_probes";
+  }
+  cout<<"datstr = "<<datstr<<"\n";
+ 
+  problem_name_mod = "/home/marvin/fd/"+datstr+"/" + problem_name_mod;
   cout<<"problem_name_mod = "<<problem_name_mod<<endl;
 
   ifstream in(problem_name_mod.c_str());

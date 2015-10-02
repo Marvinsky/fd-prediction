@@ -163,11 +163,20 @@ void PatternGenerationEdelkamp::dump_file() const {
 		//No GAPDB was chosen
 		return;
 	}
+
+	string datstr = "dat_";
+	if (ss_probes == 0) {
+        	datstr += "info";
+	} else {
+		datstr += boost::lexical_cast<std::string>(ss_probes);
+		datstr += "_probes";
+  	}
+  	cout<<"datstr = "<<datstr<<"\n";
         cout<<"pdb_dump_counter = "<<pdb_dump_counter<<endl;
 	if (pdb_dump_counter == 0) {
                 //Create directory dat
-                string datDirectory = "mkdir /home/marvin/fd/dat";
-                string domainDirectory = "mkdir /home/marvin/fd/dat/"+domain_name;
+                string datDirectory = "mkdir /home/marvin/fd/"+datstr;
+                string domainDirectory = "mkdir /home/marvin/fd/"+datstr+"/"+domain_name;
 		if (system(datDirectory.c_str())) {
 		   cout<<"dat directory created."<<endl;
 		} else {
@@ -181,7 +190,7 @@ void PatternGenerationEdelkamp::dump_file() const {
 		}
 
 		//string system_call = "/bin/rm dat/"+domain_name+"/";
-		string system_call = "rm /home/marvin/fd/dat/"+domain_name+"/";
+		string system_call = "rm /home/marvin/fd/"+datstr+"/"+domain_name+"/";
                 string task2 = problem_name2;
                 size_t found2 = task2.find(".");
                 string task2_final = task2.substr(0, found2);
@@ -206,7 +215,7 @@ void PatternGenerationEdelkamp::dump_file() const {
 	file_name += ".dat";
         file_name = "/" + file_name;
         file_name = domain_name + file_name;
-	file_name = "/home/marvin/fd/dat/" + file_name;
+	file_name = "/home/marvin/fd/"+datstr+"/" + file_name;
         cout<<"file_name: "<<file_name<<endl;
 
 	outputFile.open(file_name.c_str(), ios::app);
