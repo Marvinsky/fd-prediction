@@ -1,0 +1,7993 @@
+begin_version
+3
+end_version
+begin_metric
+1
+end_metric
+38
+begin_variable
+var0
+-1
+2
+Atom available(b0)
+<none of those>
+end_variable
+begin_variable
+var33
+-1
+3
+Atom empty(highspeed-saw0)
+Atom in-highspeed-saw(b0, highspeed-saw0)
+Atom in-highspeed-saw(b1, highspeed-saw0)
+end_variable
+begin_variable
+var1
+-1
+2
+Atom available(b1)
+<none of those>
+end_variable
+begin_variable
+var13
+-1
+2
+Atom boardsize(b0, s7)
+NegatedAtom boardsize(b0, s7)
+end_variable
+begin_variable
+var14
+-1
+2
+Atom boardsize(b0, s8)
+NegatedAtom boardsize(b0, s8)
+end_variable
+begin_variable
+var11
+-1
+2
+Atom boardsize(b0, s5)
+NegatedAtom boardsize(b0, s5)
+end_variable
+begin_variable
+var10
+-1
+2
+Atom boardsize(b0, s4)
+NegatedAtom boardsize(b0, s4)
+end_variable
+begin_variable
+var8
+-1
+2
+Atom boardsize(b0, s2)
+NegatedAtom boardsize(b0, s2)
+end_variable
+begin_variable
+var24
+-1
+2
+Atom colour(p1, white)
+NegatedAtom colour(p1, white)
+end_variable
+begin_variable
+var32
+-1
+2
+Atom colour(p3, white)
+NegatedAtom colour(p3, white)
+end_variable
+begin_variable
+var20
+-1
+2
+Atom colour(p0, white)
+NegatedAtom colour(p0, white)
+end_variable
+begin_variable
+var17
+-1
+2
+Atom colour(p0, blue)
+NegatedAtom colour(p0, blue)
+end_variable
+begin_variable
+var29
+-1
+2
+Atom colour(p3, blue)
+NegatedAtom colour(p3, blue)
+end_variable
+begin_variable
+var22
+-1
+2
+Atom colour(p1, mauve)
+NegatedAtom colour(p1, mauve)
+end_variable
+begin_variable
+var25
+-1
+2
+Atom colour(p2, blue)
+NegatedAtom colour(p2, blue)
+end_variable
+begin_variable
+var26
+-1
+2
+Atom colour(p2, mauve)
+NegatedAtom colour(p2, mauve)
+end_variable
+begin_variable
+var37
+-1
+4
+Atom surface-condition(p3, rough)
+Atom surface-condition(p3, smooth)
+Atom surface-condition(p3, verysmooth)
+<none of those>
+end_variable
+begin_variable
+var38
+-1
+5
+Atom treatment(p0, colourfragments)
+Atom treatment(p0, glazed)
+Atom treatment(p0, untreated)
+Atom treatment(p0, varnished)
+Atom unused(p0)
+end_variable
+begin_variable
+var19
+-1
+2
+Atom colour(p0, natural)
+NegatedAtom colour(p0, natural)
+end_variable
+begin_variable
+var39
+-1
+5
+Atom treatment(p1, colourfragments)
+Atom treatment(p1, glazed)
+Atom treatment(p1, untreated)
+Atom treatment(p1, varnished)
+Atom unused(p1)
+end_variable
+begin_variable
+var23
+-1
+2
+Atom colour(p1, natural)
+NegatedAtom colour(p1, natural)
+end_variable
+begin_variable
+var31
+-1
+2
+Atom colour(p3, natural)
+NegatedAtom colour(p3, natural)
+end_variable
+begin_variable
+var27
+-1
+2
+Atom colour(p2, natural)
+NegatedAtom colour(p2, natural)
+end_variable
+begin_variable
+var18
+-1
+2
+Atom colour(p0, mauve)
+NegatedAtom colour(p0, mauve)
+end_variable
+begin_variable
+var21
+-1
+2
+Atom colour(p1, blue)
+NegatedAtom colour(p1, blue)
+end_variable
+begin_variable
+var30
+-1
+2
+Atom colour(p3, mauve)
+NegatedAtom colour(p3, mauve)
+end_variable
+begin_variable
+var28
+-1
+2
+Atom colour(p2, white)
+NegatedAtom colour(p2, white)
+end_variable
+begin_variable
+var3
+-1
+2
+Atom available(p1)
+NegatedAtom available(p1)
+end_variable
+begin_variable
+var4
+-1
+2
+Atom available(p2)
+NegatedAtom available(p2)
+end_variable
+begin_variable
+var2
+-1
+2
+Atom available(p0)
+NegatedAtom available(p0)
+end_variable
+begin_variable
+var5
+-1
+2
+Atom available(p3)
+NegatedAtom available(p3)
+end_variable
+begin_variable
+var35
+-1
+4
+Atom surface-condition(p1, rough)
+Atom surface-condition(p1, smooth)
+Atom surface-condition(p1, verysmooth)
+<none of those>
+end_variable
+begin_variable
+var36
+-1
+4
+Atom surface-condition(p2, rough)
+Atom surface-condition(p2, smooth)
+Atom surface-condition(p2, verysmooth)
+<none of those>
+end_variable
+begin_variable
+var40
+-1
+5
+Atom treatment(p2, colourfragments)
+Atom treatment(p2, glazed)
+Atom treatment(p2, untreated)
+Atom treatment(p2, varnished)
+Atom unused(p2)
+end_variable
+begin_variable
+var34
+-1
+4
+Atom surface-condition(p0, rough)
+Atom surface-condition(p0, smooth)
+Atom surface-condition(p0, verysmooth)
+<none of those>
+end_variable
+begin_variable
+var41
+-1
+5
+Atom treatment(p3, colourfragments)
+Atom treatment(p3, glazed)
+Atom treatment(p3, untreated)
+Atom treatment(p3, varnished)
+Atom unused(p3)
+end_variable
+begin_variable
+var45
+-1
+2
+Atom wood(p3, pine)
+<none of those>
+end_variable
+begin_variable
+var44
+-1
+2
+Atom wood(p2, oak)
+<none of those>
+end_variable
+231
+begin_mutex_group
+exactly_one
+fw
+2
+0 0
+1 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+2 0
+1 2
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+29 0
+17 4
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+27 0
+19 4
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+28 0
+33 4
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+30 0
+35 4
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+4
+34 0
+34 1
+34 2
+17 4
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+4
+31 0
+31 1
+31 2
+19 4
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+4
+32 0
+32 1
+32 2
+33 4
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+4
+16 0
+16 1
+16 2
+35 4
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+33 4
+37 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+35 4
+36 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 1
+1 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 1
+1 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 1
+2 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 0
+2 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+2 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+13 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+19 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+19 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+19 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+27 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+31 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+16 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+30 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+35 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+35 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+35 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+35 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+17 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+17 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+17 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+18 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+11 0
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+11 0
+17 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+11 0
+17 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+11 0
+18 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+11 0
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+11 0
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+11 0
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 0
+16 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 0
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 0
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 0
+30 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 0
+35 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 0
+35 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 0
+35 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 0
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+19 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+19 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+27 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+31 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+26 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+28 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+32 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+33 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+33 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+33 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+26 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+28 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+32 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+33 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+33 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+33 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 0
+30 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 0
+35 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 0
+35 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 0
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 1
+30 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 1
+35 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 1
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 2
+30 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 2
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 3
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 3
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 3
+30 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 3
+35 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 3
+35 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 3
+35 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+16 3
+35 3
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+16 3
+36 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 0
+18 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 0
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 0
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 0
+34 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 0
+34 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 0
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 1
+18 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 1
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 1
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 2
+18 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 2
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 2
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 2
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 3
+18 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 3
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 3
+34 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 3
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 4
+18 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 4
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+18 0
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+18 0
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+18 0
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 0
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 0
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 0
+27 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 0
+31 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 0
+31 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 0
+31 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 1
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 1
+27 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 1
+31 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 2
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 2
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 2
+27 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 2
+31 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 3
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 3
+27 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 3
+31 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 3
+31 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 4
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 4
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 0
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 0
+27 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 0
+31 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+21 0
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+21 0
+30 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+21 0
+35 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+21 0
+35 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+21 0
+35 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+21 0
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+21 1
+35 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+21 1
+35 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+22 0
+26 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+22 0
+28 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+22 0
+32 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+22 0
+33 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+22 0
+33 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+22 0
+33 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+22 0
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+22 1
+33 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+22 1
+33 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+23 0
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+23 0
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+24 0
+27 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+24 0
+31 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+25 0
+30 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+25 0
+35 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+25 0
+35 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+25 0
+35 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+25 0
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+26 0
+28 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+26 0
+32 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+26 0
+33 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+26 0
+33 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+26 0
+33 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+26 0
+33 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+26 0
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+27 0
+31 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+27 1
+31 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+27 1
+31 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+27 1
+31 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+28 0
+32 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+28 0
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+28 1
+32 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+28 1
+32 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+28 1
+32 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+28 1
+33 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+28 1
+33 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+28 1
+33 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+28 1
+33 3
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+28 1
+37 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+29 0
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+29 1
+34 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+29 1
+34 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+29 1
+34 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+30 0
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+30 1
+35 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+30 1
+35 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+30 1
+35 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+30 1
+35 3
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+30 1
+36 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+32 0
+33 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+32 0
+33 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+32 0
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+32 1
+33 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+32 1
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+32 2
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+32 3
+33 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+32 3
+33 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+32 3
+33 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+32 3
+33 3
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+32 3
+37 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+33 0
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+33 1
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+33 2
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+33 3
+37 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+35 0
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+35 1
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+35 2
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+35 3
+36 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+6 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 0
+17 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 0
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 0
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 0
+17 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 0
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 0
+34 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 0
+17 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 0
+29 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 0
+34 3
+end_mutex_group
+begin_state
+0
+0
+0
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+3
+4
+1
+4
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+3
+3
+4
+3
+4
+1
+1
+end_state
+begin_goal
+15
+23 0
+24 0
+25 0
+26 0
+27 0
+28 0
+29 0
+30 0
+31 1
+32 1
+33 1
+34 1
+35 1
+36 0
+37 0
+end_goal
+192
+begin_operator
+cut-board-large b0 p1 highspeed-saw0 oak rough s10 s8 s9 s7
+1
+1 1
+5
+0 27 -1 0
+0 3 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+10
+end_operator
+begin_operator
+cut-board-large b0 p1 highspeed-saw0 oak rough s4 s2 s3 s1
+2
+6 0
+1 1
+4
+0 27 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+10
+end_operator
+begin_operator
+cut-board-large b0 p1 highspeed-saw0 oak rough s5 s3 s4 s2
+2
+5 0
+1 1
+5
+0 27 -1 0
+0 7 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+10
+end_operator
+begin_operator
+cut-board-large b0 p1 highspeed-saw0 oak rough s7 s5 s6 s4
+2
+3 0
+1 1
+5
+0 27 -1 0
+0 6 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+10
+end_operator
+begin_operator
+cut-board-large b0 p1 highspeed-saw0 oak rough s8 s6 s7 s5
+2
+4 0
+1 1
+5
+0 27 -1 0
+0 5 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+10
+end_operator
+begin_operator
+cut-board-large b0 p2 highspeed-saw0 oak rough s10 s8 s9 s7
+1
+1 1
+6
+0 28 -1 0
+0 3 -1 0
+0 22 -1 0
+0 32 -1 0
+0 33 4 2
+0 37 -1 0
+10
+end_operator
+begin_operator
+cut-board-large b0 p2 highspeed-saw0 oak rough s4 s2 s3 s1
+2
+6 0
+1 1
+5
+0 28 -1 0
+0 22 -1 0
+0 32 -1 0
+0 33 4 2
+0 37 -1 0
+10
+end_operator
+begin_operator
+cut-board-large b0 p2 highspeed-saw0 oak rough s5 s3 s4 s2
+2
+5 0
+1 1
+6
+0 28 -1 0
+0 7 -1 0
+0 22 -1 0
+0 32 -1 0
+0 33 4 2
+0 37 -1 0
+10
+end_operator
+begin_operator
+cut-board-large b0 p2 highspeed-saw0 oak rough s7 s5 s6 s4
+2
+3 0
+1 1
+6
+0 28 -1 0
+0 6 -1 0
+0 22 -1 0
+0 32 -1 0
+0 33 4 2
+0 37 -1 0
+10
+end_operator
+begin_operator
+cut-board-large b0 p2 highspeed-saw0 oak rough s8 s6 s7 s5
+2
+4 0
+1 1
+6
+0 28 -1 0
+0 5 -1 0
+0 22 -1 0
+0 32 -1 0
+0 33 4 2
+0 37 -1 0
+10
+end_operator
+begin_operator
+cut-board-large b1 p1 highspeed-saw0 pine rough s3 s1 s2 s0
+1
+1 2
+4
+0 27 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+10
+end_operator
+begin_operator
+cut-board-medium b0 p0 highspeed-saw0 oak rough s10 s9 s8
+1
+1 1
+5
+0 29 -1 0
+0 4 -1 0
+0 18 -1 0
+0 34 -1 0
+0 17 4 2
+10
+end_operator
+begin_operator
+cut-board-medium b0 p0 highspeed-saw0 oak rough s4 s3 s2
+2
+6 0
+1 1
+5
+0 29 -1 0
+0 7 -1 0
+0 18 -1 0
+0 34 -1 0
+0 17 4 2
+10
+end_operator
+begin_operator
+cut-board-medium b0 p0 highspeed-saw0 oak rough s7 s6 s5
+2
+3 0
+1 1
+5
+0 29 -1 0
+0 5 -1 0
+0 18 -1 0
+0 34 -1 0
+0 17 4 2
+10
+end_operator
+begin_operator
+cut-board-medium b1 p0 highspeed-saw0 pine rough s3 s2 s1
+1
+1 2
+4
+0 29 -1 0
+0 18 -1 0
+0 34 -1 0
+0 17 4 2
+10
+end_operator
+begin_operator
+cut-board-medium b1 p3 highspeed-saw0 pine rough s3 s2 s1
+1
+1 2
+5
+0 30 -1 0
+0 21 -1 0
+0 16 -1 0
+0 35 4 2
+0 36 -1 0
+10
+end_operator
+begin_operator
+do-glaze p0 glazer0 blue
+1
+29 0
+3
+0 11 -1 0
+0 18 -1 1
+0 17 2 1
+15
+end_operator
+begin_operator
+do-glaze p0 glazer0 mauve
+1
+29 0
+3
+0 23 -1 0
+0 18 -1 1
+0 17 2 1
+15
+end_operator
+begin_operator
+do-glaze p0 glazer0 white
+1
+29 0
+3
+0 18 -1 1
+0 10 -1 0
+0 17 2 1
+15
+end_operator
+begin_operator
+do-glaze p1 glazer0 blue
+1
+27 0
+3
+0 24 -1 0
+0 20 -1 1
+0 19 2 1
+20
+end_operator
+begin_operator
+do-glaze p1 glazer0 mauve
+1
+27 0
+3
+0 13 -1 0
+0 20 -1 1
+0 19 2 1
+20
+end_operator
+begin_operator
+do-glaze p1 glazer0 white
+1
+27 0
+3
+0 20 -1 1
+0 8 -1 0
+0 19 2 1
+20
+end_operator
+begin_operator
+do-glaze p2 glazer0 blue
+1
+28 0
+3
+0 14 -1 0
+0 22 -1 1
+0 33 2 1
+20
+end_operator
+begin_operator
+do-glaze p2 glazer0 mauve
+1
+28 0
+3
+0 15 -1 0
+0 22 -1 1
+0 33 2 1
+20
+end_operator
+begin_operator
+do-glaze p2 glazer0 white
+1
+28 0
+3
+0 22 -1 1
+0 26 -1 0
+0 33 2 1
+20
+end_operator
+begin_operator
+do-glaze p3 glazer0 blue
+1
+30 0
+3
+0 12 -1 0
+0 21 -1 1
+0 35 2 1
+15
+end_operator
+begin_operator
+do-glaze p3 glazer0 mauve
+1
+30 0
+3
+0 25 -1 0
+0 21 -1 1
+0 35 2 1
+15
+end_operator
+begin_operator
+do-glaze p3 glazer0 white
+1
+30 0
+3
+0 21 -1 1
+0 9 -1 0
+0 35 2 1
+15
+end_operator
+begin_operator
+do-grind p0 grinder0 smooth blue glazed untreated
+1
+29 0
+4
+0 11 0 1
+0 18 -1 0
+0 34 1 2
+0 17 1 2
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 smooth blue varnished colourfragments
+1
+29 0
+4
+0 11 0 1
+0 18 -1 0
+0 34 1 2
+0 17 3 0
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 smooth mauve glazed untreated
+1
+29 0
+4
+0 23 0 1
+0 18 -1 0
+0 34 1 2
+0 17 1 2
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 smooth mauve varnished colourfragments
+1
+29 0
+4
+0 23 0 1
+0 18 -1 0
+0 34 1 2
+0 17 3 0
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 smooth natural untreated untreated
+3
+29 0
+18 0
+17 2
+1
+0 34 1 2
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 smooth white glazed untreated
+1
+29 0
+4
+0 18 -1 0
+0 10 0 1
+0 34 1 2
+0 17 1 2
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 verysmooth blue glazed untreated
+2
+29 0
+34 2
+3
+0 11 0 1
+0 18 -1 0
+0 17 1 2
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 verysmooth blue varnished colourfragments
+2
+29 0
+34 2
+3
+0 11 0 1
+0 18 -1 0
+0 17 3 0
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 verysmooth mauve glazed untreated
+2
+29 0
+34 2
+3
+0 23 0 1
+0 18 -1 0
+0 17 1 2
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 verysmooth mauve varnished colourfragments
+2
+29 0
+34 2
+3
+0 23 0 1
+0 18 -1 0
+0 17 3 0
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 verysmooth natural colourfragments untreated
+3
+29 0
+18 0
+34 2
+1
+0 17 0 2
+30
+end_operator
+begin_operator
+do-grind p0 grinder0 verysmooth white glazed untreated
+2
+29 0
+34 2
+3
+0 18 -1 0
+0 10 0 1
+0 17 1 2
+30
+end_operator
+begin_operator
+do-grind p1 grinder0 smooth blue glazed untreated
+1
+27 0
+4
+0 24 0 1
+0 20 -1 0
+0 31 1 2
+0 19 1 2
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 smooth blue varnished colourfragments
+1
+27 0
+4
+0 24 0 1
+0 20 -1 0
+0 31 1 2
+0 19 3 0
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 smooth mauve glazed untreated
+1
+27 0
+4
+0 13 0 1
+0 20 -1 0
+0 31 1 2
+0 19 1 2
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 smooth mauve varnished colourfragments
+1
+27 0
+4
+0 13 0 1
+0 20 -1 0
+0 31 1 2
+0 19 3 0
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 smooth natural untreated untreated
+3
+27 0
+20 0
+19 2
+1
+0 31 1 2
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 smooth white glazed untreated
+1
+27 0
+4
+0 20 -1 0
+0 8 0 1
+0 31 1 2
+0 19 1 2
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 verysmooth blue glazed untreated
+2
+27 0
+31 2
+3
+0 24 0 1
+0 20 -1 0
+0 19 1 2
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 verysmooth blue varnished colourfragments
+2
+27 0
+31 2
+3
+0 24 0 1
+0 20 -1 0
+0 19 3 0
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 verysmooth mauve glazed untreated
+2
+27 0
+31 2
+3
+0 13 0 1
+0 20 -1 0
+0 19 1 2
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 verysmooth mauve varnished colourfragments
+2
+27 0
+31 2
+3
+0 13 0 1
+0 20 -1 0
+0 19 3 0
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 verysmooth natural colourfragments untreated
+3
+27 0
+20 0
+31 2
+1
+0 19 0 2
+45
+end_operator
+begin_operator
+do-grind p1 grinder0 verysmooth white glazed untreated
+2
+27 0
+31 2
+3
+0 20 -1 0
+0 8 0 1
+0 19 1 2
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 smooth blue glazed untreated
+1
+28 0
+4
+0 14 0 1
+0 22 -1 0
+0 32 1 2
+0 33 1 2
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 smooth blue varnished colourfragments
+1
+28 0
+4
+0 14 0 1
+0 22 -1 0
+0 32 1 2
+0 33 3 0
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 smooth mauve glazed untreated
+1
+28 0
+4
+0 15 0 1
+0 22 -1 0
+0 32 1 2
+0 33 1 2
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 smooth mauve varnished colourfragments
+1
+28 0
+4
+0 15 0 1
+0 22 -1 0
+0 32 1 2
+0 33 3 0
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 smooth natural untreated untreated
+3
+28 0
+22 0
+33 2
+1
+0 32 1 2
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 smooth white glazed untreated
+1
+28 0
+4
+0 22 -1 0
+0 26 0 1
+0 32 1 2
+0 33 1 2
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 verysmooth blue glazed untreated
+2
+28 0
+32 2
+3
+0 14 0 1
+0 22 -1 0
+0 33 1 2
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 verysmooth blue varnished colourfragments
+2
+28 0
+32 2
+3
+0 14 0 1
+0 22 -1 0
+0 33 3 0
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 verysmooth mauve glazed untreated
+2
+28 0
+32 2
+3
+0 15 0 1
+0 22 -1 0
+0 33 1 2
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 verysmooth mauve varnished colourfragments
+2
+28 0
+32 2
+3
+0 15 0 1
+0 22 -1 0
+0 33 3 0
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 verysmooth natural colourfragments untreated
+3
+28 0
+22 0
+32 2
+1
+0 33 0 2
+45
+end_operator
+begin_operator
+do-grind p2 grinder0 verysmooth white glazed untreated
+2
+28 0
+32 2
+3
+0 22 -1 0
+0 26 0 1
+0 33 1 2
+45
+end_operator
+begin_operator
+do-grind p3 grinder0 smooth blue glazed untreated
+1
+30 0
+4
+0 12 0 1
+0 21 -1 0
+0 16 1 2
+0 35 1 2
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 smooth blue varnished colourfragments
+1
+30 0
+4
+0 12 0 1
+0 21 -1 0
+0 16 1 2
+0 35 3 0
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 smooth mauve glazed untreated
+1
+30 0
+4
+0 25 0 1
+0 21 -1 0
+0 16 1 2
+0 35 1 2
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 smooth mauve varnished colourfragments
+1
+30 0
+4
+0 25 0 1
+0 21 -1 0
+0 16 1 2
+0 35 3 0
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 smooth natural untreated untreated
+3
+30 0
+21 0
+35 2
+1
+0 16 1 2
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 smooth white glazed untreated
+1
+30 0
+4
+0 21 -1 0
+0 9 0 1
+0 16 1 2
+0 35 1 2
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 verysmooth blue glazed untreated
+2
+30 0
+16 2
+3
+0 12 0 1
+0 21 -1 0
+0 35 1 2
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 verysmooth blue varnished colourfragments
+2
+30 0
+16 2
+3
+0 12 0 1
+0 21 -1 0
+0 35 3 0
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 verysmooth mauve glazed untreated
+2
+30 0
+16 2
+3
+0 25 0 1
+0 21 -1 0
+0 35 1 2
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 verysmooth mauve varnished colourfragments
+2
+30 0
+16 2
+3
+0 25 0 1
+0 21 -1 0
+0 35 3 0
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 verysmooth natural colourfragments untreated
+3
+30 0
+21 0
+16 2
+1
+0 35 0 2
+30
+end_operator
+begin_operator
+do-grind p3 grinder0 verysmooth white glazed untreated
+2
+30 0
+16 2
+3
+0 21 -1 0
+0 9 0 1
+0 35 1 2
+30
+end_operator
+begin_operator
+do-immersion-varnish p0 immersion-varnisher0 blue smooth
+2
+29 0
+34 1
+3
+0 11 -1 0
+0 18 -1 1
+0 17 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p0 immersion-varnisher0 blue verysmooth
+2
+29 0
+34 2
+3
+0 11 -1 0
+0 18 -1 1
+0 17 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p0 immersion-varnisher0 mauve smooth
+2
+29 0
+34 1
+3
+0 23 -1 0
+0 18 -1 1
+0 17 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p0 immersion-varnisher0 mauve verysmooth
+2
+29 0
+34 2
+3
+0 23 -1 0
+0 18 -1 1
+0 17 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p1 immersion-varnisher0 blue smooth
+2
+27 0
+31 1
+3
+0 24 -1 0
+0 20 -1 1
+0 19 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p1 immersion-varnisher0 blue verysmooth
+2
+27 0
+31 2
+3
+0 24 -1 0
+0 20 -1 1
+0 19 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p1 immersion-varnisher0 mauve smooth
+2
+27 0
+31 1
+3
+0 13 -1 0
+0 20 -1 1
+0 19 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p1 immersion-varnisher0 mauve verysmooth
+2
+27 0
+31 2
+3
+0 13 -1 0
+0 20 -1 1
+0 19 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p2 immersion-varnisher0 blue smooth
+2
+28 0
+32 1
+3
+0 14 -1 0
+0 22 -1 1
+0 33 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p2 immersion-varnisher0 blue verysmooth
+2
+28 0
+32 2
+3
+0 14 -1 0
+0 22 -1 1
+0 33 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p2 immersion-varnisher0 mauve smooth
+2
+28 0
+32 1
+3
+0 15 -1 0
+0 22 -1 1
+0 33 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p2 immersion-varnisher0 mauve verysmooth
+2
+28 0
+32 2
+3
+0 15 -1 0
+0 22 -1 1
+0 33 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p3 immersion-varnisher0 blue smooth
+2
+30 0
+16 1
+3
+0 12 -1 0
+0 21 -1 1
+0 35 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p3 immersion-varnisher0 blue verysmooth
+2
+30 0
+16 2
+3
+0 12 -1 0
+0 21 -1 1
+0 35 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p3 immersion-varnisher0 mauve smooth
+2
+30 0
+16 1
+3
+0 25 -1 0
+0 21 -1 1
+0 35 2 3
+10
+end_operator
+begin_operator
+do-immersion-varnish p3 immersion-varnisher0 mauve verysmooth
+2
+30 0
+16 2
+3
+0 25 -1 0
+0 21 -1 1
+0 35 2 3
+10
+end_operator
+begin_operator
+do-plane p0 planer0 rough blue glazed
+1
+29 0
+4
+0 11 0 1
+0 18 -1 0
+0 34 0 1
+0 17 1 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 rough mauve glazed
+1
+29 0
+4
+0 23 0 1
+0 18 -1 0
+0 34 0 1
+0 17 1 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 rough natural untreated
+3
+29 0
+18 0
+17 2
+1
+0 34 0 1
+20
+end_operator
+begin_operator
+do-plane p0 planer0 rough white glazed
+1
+29 0
+4
+0 18 -1 0
+0 10 0 1
+0 34 0 1
+0 17 1 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 smooth blue glazed
+2
+29 0
+34 1
+3
+0 11 0 1
+0 18 -1 0
+0 17 1 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 smooth blue varnished
+2
+29 0
+34 1
+3
+0 11 0 1
+0 18 -1 0
+0 17 3 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 smooth mauve glazed
+2
+29 0
+34 1
+3
+0 23 0 1
+0 18 -1 0
+0 17 1 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 smooth mauve varnished
+2
+29 0
+34 1
+3
+0 23 0 1
+0 18 -1 0
+0 17 3 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 smooth white glazed
+2
+29 0
+34 1
+3
+0 18 -1 0
+0 10 0 1
+0 17 1 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 verysmooth blue glazed
+1
+29 0
+4
+0 11 0 1
+0 18 -1 0
+0 34 2 1
+0 17 1 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 verysmooth blue varnished
+1
+29 0
+4
+0 11 0 1
+0 18 -1 0
+0 34 2 1
+0 17 3 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 verysmooth mauve glazed
+1
+29 0
+4
+0 23 0 1
+0 18 -1 0
+0 34 2 1
+0 17 1 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 verysmooth mauve varnished
+1
+29 0
+4
+0 23 0 1
+0 18 -1 0
+0 34 2 1
+0 17 3 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 verysmooth natural colourfragments
+2
+29 0
+18 0
+2
+0 34 2 1
+0 17 0 2
+20
+end_operator
+begin_operator
+do-plane p0 planer0 verysmooth natural untreated
+3
+29 0
+18 0
+17 2
+1
+0 34 2 1
+20
+end_operator
+begin_operator
+do-plane p0 planer0 verysmooth white glazed
+1
+29 0
+4
+0 18 -1 0
+0 10 0 1
+0 34 2 1
+0 17 1 2
+20
+end_operator
+begin_operator
+do-plane p1 planer0 rough blue glazed
+1
+27 0
+4
+0 24 0 1
+0 20 -1 0
+0 31 0 1
+0 19 1 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 rough mauve glazed
+1
+27 0
+4
+0 13 0 1
+0 20 -1 0
+0 31 0 1
+0 19 1 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 rough natural untreated
+3
+27 0
+20 0
+19 2
+1
+0 31 0 1
+30
+end_operator
+begin_operator
+do-plane p1 planer0 rough white glazed
+1
+27 0
+4
+0 20 -1 0
+0 8 0 1
+0 31 0 1
+0 19 1 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 smooth blue glazed
+2
+27 0
+31 1
+3
+0 24 0 1
+0 20 -1 0
+0 19 1 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 smooth blue varnished
+2
+27 0
+31 1
+3
+0 24 0 1
+0 20 -1 0
+0 19 3 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 smooth mauve glazed
+2
+27 0
+31 1
+3
+0 13 0 1
+0 20 -1 0
+0 19 1 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 smooth mauve varnished
+2
+27 0
+31 1
+3
+0 13 0 1
+0 20 -1 0
+0 19 3 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 smooth white glazed
+2
+27 0
+31 1
+3
+0 20 -1 0
+0 8 0 1
+0 19 1 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 verysmooth blue glazed
+1
+27 0
+4
+0 24 0 1
+0 20 -1 0
+0 31 2 1
+0 19 1 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 verysmooth blue varnished
+1
+27 0
+4
+0 24 0 1
+0 20 -1 0
+0 31 2 1
+0 19 3 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 verysmooth mauve glazed
+1
+27 0
+4
+0 13 0 1
+0 20 -1 0
+0 31 2 1
+0 19 1 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 verysmooth mauve varnished
+1
+27 0
+4
+0 13 0 1
+0 20 -1 0
+0 31 2 1
+0 19 3 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 verysmooth natural colourfragments
+2
+27 0
+20 0
+2
+0 31 2 1
+0 19 0 2
+30
+end_operator
+begin_operator
+do-plane p1 planer0 verysmooth natural untreated
+3
+27 0
+20 0
+19 2
+1
+0 31 2 1
+30
+end_operator
+begin_operator
+do-plane p1 planer0 verysmooth white glazed
+1
+27 0
+4
+0 20 -1 0
+0 8 0 1
+0 31 2 1
+0 19 1 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 rough blue glazed
+1
+28 0
+4
+0 14 0 1
+0 22 -1 0
+0 32 0 1
+0 33 1 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 rough mauve glazed
+1
+28 0
+4
+0 15 0 1
+0 22 -1 0
+0 32 0 1
+0 33 1 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 rough natural untreated
+3
+28 0
+22 0
+33 2
+1
+0 32 0 1
+30
+end_operator
+begin_operator
+do-plane p2 planer0 rough white glazed
+1
+28 0
+4
+0 22 -1 0
+0 26 0 1
+0 32 0 1
+0 33 1 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 smooth blue glazed
+2
+28 0
+32 1
+3
+0 14 0 1
+0 22 -1 0
+0 33 1 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 smooth blue varnished
+2
+28 0
+32 1
+3
+0 14 0 1
+0 22 -1 0
+0 33 3 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 smooth mauve glazed
+2
+28 0
+32 1
+3
+0 15 0 1
+0 22 -1 0
+0 33 1 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 smooth mauve varnished
+2
+28 0
+32 1
+3
+0 15 0 1
+0 22 -1 0
+0 33 3 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 smooth white glazed
+2
+28 0
+32 1
+3
+0 22 -1 0
+0 26 0 1
+0 33 1 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 verysmooth blue glazed
+1
+28 0
+4
+0 14 0 1
+0 22 -1 0
+0 32 2 1
+0 33 1 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 verysmooth blue varnished
+1
+28 0
+4
+0 14 0 1
+0 22 -1 0
+0 32 2 1
+0 33 3 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 verysmooth mauve glazed
+1
+28 0
+4
+0 15 0 1
+0 22 -1 0
+0 32 2 1
+0 33 1 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 verysmooth mauve varnished
+1
+28 0
+4
+0 15 0 1
+0 22 -1 0
+0 32 2 1
+0 33 3 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 verysmooth natural colourfragments
+2
+28 0
+22 0
+2
+0 32 2 1
+0 33 0 2
+30
+end_operator
+begin_operator
+do-plane p2 planer0 verysmooth natural untreated
+3
+28 0
+22 0
+33 2
+1
+0 32 2 1
+30
+end_operator
+begin_operator
+do-plane p2 planer0 verysmooth white glazed
+1
+28 0
+4
+0 22 -1 0
+0 26 0 1
+0 32 2 1
+0 33 1 2
+30
+end_operator
+begin_operator
+do-plane p3 planer0 rough blue glazed
+1
+30 0
+4
+0 12 0 1
+0 21 -1 0
+0 16 0 1
+0 35 1 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 rough mauve glazed
+1
+30 0
+4
+0 25 0 1
+0 21 -1 0
+0 16 0 1
+0 35 1 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 rough natural untreated
+3
+30 0
+21 0
+35 2
+1
+0 16 0 1
+20
+end_operator
+begin_operator
+do-plane p3 planer0 rough white glazed
+1
+30 0
+4
+0 21 -1 0
+0 9 0 1
+0 16 0 1
+0 35 1 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 smooth blue glazed
+2
+30 0
+16 1
+3
+0 12 0 1
+0 21 -1 0
+0 35 1 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 smooth blue varnished
+2
+30 0
+16 1
+3
+0 12 0 1
+0 21 -1 0
+0 35 3 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 smooth mauve glazed
+2
+30 0
+16 1
+3
+0 25 0 1
+0 21 -1 0
+0 35 1 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 smooth mauve varnished
+2
+30 0
+16 1
+3
+0 25 0 1
+0 21 -1 0
+0 35 3 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 smooth white glazed
+2
+30 0
+16 1
+3
+0 21 -1 0
+0 9 0 1
+0 35 1 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 verysmooth blue glazed
+1
+30 0
+4
+0 12 0 1
+0 21 -1 0
+0 16 2 1
+0 35 1 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 verysmooth blue varnished
+1
+30 0
+4
+0 12 0 1
+0 21 -1 0
+0 16 2 1
+0 35 3 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 verysmooth mauve glazed
+1
+30 0
+4
+0 25 0 1
+0 21 -1 0
+0 16 2 1
+0 35 1 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 verysmooth mauve varnished
+1
+30 0
+4
+0 25 0 1
+0 21 -1 0
+0 16 2 1
+0 35 3 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 verysmooth natural colourfragments
+2
+30 0
+21 0
+2
+0 16 2 1
+0 35 0 2
+20
+end_operator
+begin_operator
+do-plane p3 planer0 verysmooth natural untreated
+3
+30 0
+21 0
+35 2
+1
+0 16 2 1
+20
+end_operator
+begin_operator
+do-plane p3 planer0 verysmooth white glazed
+1
+30 0
+4
+0 21 -1 0
+0 9 0 1
+0 16 2 1
+0 35 1 2
+20
+end_operator
+begin_operator
+do-saw-large b0 p1 saw0 oak rough s10 s8 s9 s7
+1
+0 0
+5
+0 27 -1 0
+0 3 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+30
+end_operator
+begin_operator
+do-saw-large b0 p1 saw0 oak rough s4 s2 s3 s1
+2
+0 0
+6 0
+4
+0 27 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+30
+end_operator
+begin_operator
+do-saw-large b0 p1 saw0 oak rough s5 s3 s4 s2
+2
+0 0
+5 0
+5
+0 27 -1 0
+0 7 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+30
+end_operator
+begin_operator
+do-saw-large b0 p1 saw0 oak rough s7 s5 s6 s4
+2
+0 0
+3 0
+5
+0 27 -1 0
+0 6 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+30
+end_operator
+begin_operator
+do-saw-large b0 p1 saw0 oak rough s8 s6 s7 s5
+2
+0 0
+4 0
+5
+0 27 -1 0
+0 5 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+30
+end_operator
+begin_operator
+do-saw-large b0 p2 saw0 oak rough s10 s8 s9 s7
+1
+0 0
+6
+0 28 -1 0
+0 3 -1 0
+0 22 -1 0
+0 32 -1 0
+0 33 4 2
+0 37 -1 0
+30
+end_operator
+begin_operator
+do-saw-large b0 p2 saw0 oak rough s4 s2 s3 s1
+2
+0 0
+6 0
+5
+0 28 -1 0
+0 22 -1 0
+0 32 -1 0
+0 33 4 2
+0 37 -1 0
+30
+end_operator
+begin_operator
+do-saw-large b0 p2 saw0 oak rough s5 s3 s4 s2
+2
+0 0
+5 0
+6
+0 28 -1 0
+0 7 -1 0
+0 22 -1 0
+0 32 -1 0
+0 33 4 2
+0 37 -1 0
+30
+end_operator
+begin_operator
+do-saw-large b0 p2 saw0 oak rough s7 s5 s6 s4
+2
+0 0
+3 0
+6
+0 28 -1 0
+0 6 -1 0
+0 22 -1 0
+0 32 -1 0
+0 33 4 2
+0 37 -1 0
+30
+end_operator
+begin_operator
+do-saw-large b0 p2 saw0 oak rough s8 s6 s7 s5
+2
+0 0
+4 0
+6
+0 28 -1 0
+0 5 -1 0
+0 22 -1 0
+0 32 -1 0
+0 33 4 2
+0 37 -1 0
+30
+end_operator
+begin_operator
+do-saw-large b1 p1 saw0 pine rough s3 s1 s2 s0
+1
+2 0
+4
+0 27 -1 0
+0 20 -1 0
+0 31 -1 0
+0 19 4 2
+30
+end_operator
+begin_operator
+do-saw-medium b0 p0 saw0 oak rough s10 s9 s8
+1
+0 0
+5
+0 29 -1 0
+0 4 -1 0
+0 18 -1 0
+0 34 -1 0
+0 17 4 2
+30
+end_operator
+begin_operator
+do-saw-medium b0 p0 saw0 oak rough s4 s3 s2
+2
+0 0
+6 0
+5
+0 29 -1 0
+0 7 -1 0
+0 18 -1 0
+0 34 -1 0
+0 17 4 2
+30
+end_operator
+begin_operator
+do-saw-medium b0 p0 saw0 oak rough s7 s6 s5
+2
+0 0
+3 0
+5
+0 29 -1 0
+0 5 -1 0
+0 18 -1 0
+0 34 -1 0
+0 17 4 2
+30
+end_operator
+begin_operator
+do-saw-medium b1 p0 saw0 pine rough s3 s2 s1
+1
+2 0
+4
+0 29 -1 0
+0 18 -1 0
+0 34 -1 0
+0 17 4 2
+30
+end_operator
+begin_operator
+do-saw-medium b1 p3 saw0 pine rough s3 s2 s1
+1
+2 0
+5
+0 30 -1 0
+0 21 -1 0
+0 16 -1 0
+0 35 4 2
+0 36 -1 0
+30
+end_operator
+begin_operator
+do-spray-varnish p0 spray-varnisher0 blue smooth
+2
+29 0
+34 1
+3
+0 11 -1 0
+0 18 -1 1
+0 17 2 3
+10
+end_operator
+begin_operator
+do-spray-varnish p0 spray-varnisher0 blue verysmooth
+2
+29 0
+34 2
+3
+0 11 -1 0
+0 18 -1 1
+0 17 2 3
+10
+end_operator
+begin_operator
+do-spray-varnish p0 spray-varnisher0 mauve smooth
+2
+29 0
+34 1
+3
+0 23 -1 0
+0 18 -1 1
+0 17 2 3
+10
+end_operator
+begin_operator
+do-spray-varnish p0 spray-varnisher0 mauve verysmooth
+2
+29 0
+34 2
+3
+0 23 -1 0
+0 18 -1 1
+0 17 2 3
+10
+end_operator
+begin_operator
+do-spray-varnish p1 spray-varnisher0 blue smooth
+2
+27 0
+31 1
+3
+0 24 -1 0
+0 20 -1 1
+0 19 2 3
+15
+end_operator
+begin_operator
+do-spray-varnish p1 spray-varnisher0 blue verysmooth
+2
+27 0
+31 2
+3
+0 24 -1 0
+0 20 -1 1
+0 19 2 3
+15
+end_operator
+begin_operator
+do-spray-varnish p1 spray-varnisher0 mauve smooth
+2
+27 0
+31 1
+3
+0 13 -1 0
+0 20 -1 1
+0 19 2 3
+15
+end_operator
+begin_operator
+do-spray-varnish p1 spray-varnisher0 mauve verysmooth
+2
+27 0
+31 2
+3
+0 13 -1 0
+0 20 -1 1
+0 19 2 3
+15
+end_operator
+begin_operator
+do-spray-varnish p2 spray-varnisher0 blue smooth
+2
+28 0
+32 1
+3
+0 14 -1 0
+0 22 -1 1
+0 33 2 3
+15
+end_operator
+begin_operator
+do-spray-varnish p2 spray-varnisher0 blue verysmooth
+2
+28 0
+32 2
+3
+0 14 -1 0
+0 22 -1 1
+0 33 2 3
+15
+end_operator
+begin_operator
+do-spray-varnish p2 spray-varnisher0 mauve smooth
+2
+28 0
+32 1
+3
+0 15 -1 0
+0 22 -1 1
+0 33 2 3
+15
+end_operator
+begin_operator
+do-spray-varnish p2 spray-varnisher0 mauve verysmooth
+2
+28 0
+32 2
+3
+0 15 -1 0
+0 22 -1 1
+0 33 2 3
+15
+end_operator
+begin_operator
+do-spray-varnish p3 spray-varnisher0 blue smooth
+2
+30 0
+16 1
+3
+0 12 -1 0
+0 21 -1 1
+0 35 2 3
+10
+end_operator
+begin_operator
+do-spray-varnish p3 spray-varnisher0 blue verysmooth
+2
+30 0
+16 2
+3
+0 12 -1 0
+0 21 -1 1
+0 35 2 3
+10
+end_operator
+begin_operator
+do-spray-varnish p3 spray-varnisher0 mauve smooth
+2
+30 0
+16 1
+3
+0 25 -1 0
+0 21 -1 1
+0 35 2 3
+10
+end_operator
+begin_operator
+do-spray-varnish p3 spray-varnisher0 mauve verysmooth
+2
+30 0
+16 2
+3
+0 25 -1 0
+0 21 -1 1
+0 35 2 3
+10
+end_operator
+begin_operator
+load-highspeed-saw b0 highspeed-saw0
+0
+2
+0 0 0 1
+0 1 0 1
+30
+end_operator
+begin_operator
+load-highspeed-saw b1 highspeed-saw0
+0
+2
+0 2 0 1
+0 1 0 2
+30
+end_operator
+begin_operator
+unload-highspeed-saw b0 highspeed-saw0
+0
+2
+0 0 -1 0
+0 1 1 0
+10
+end_operator
+begin_operator
+unload-highspeed-saw b1 highspeed-saw0
+0
+2
+0 2 -1 0
+0 1 2 0
+10
+end_operator
+0
+begin_SG
+switch 0
+check 0
+switch 6
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+168
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+157
+switch 33
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+162
+check 0
+check 0
+switch 5
+check 0
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+158
+switch 33
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+163
+check 0
+check 0
+switch 3
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+169
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+159
+switch 33
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+164
+check 0
+check 0
+switch 4
+check 0
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+160
+switch 33
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+165
+check 0
+check 0
+switch 1
+check 0
+check 1
+188
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+167
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+156
+switch 33
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+161
+check 0
+check 0
+switch 2
+check 0
+switch 1
+check 0
+check 1
+189
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+170
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+166
+switch 35
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+171
+check 0
+check 0
+switch 29
+check 0
+switch 11
+check 0
+switch 34
+check 0
+switch 17
+check 0
+check 0
+check 1
+92
+check 0
+check 0
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 2
+28
+96
+check 0
+check 2
+29
+97
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 2
+34
+101
+check 0
+check 2
+35
+102
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 23
+check 0
+switch 34
+check 0
+switch 17
+check 0
+check 0
+check 1
+93
+check 0
+check 0
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 2
+30
+98
+check 0
+check 2
+31
+99
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 2
+36
+103
+check 0
+check 2
+37
+104
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 18
+check 0
+switch 34
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 1
+94
+check 0
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 1
+32
+check 0
+check 0
+check 0
+switch 17
+check 0
+check 2
+38
+105
+check 0
+check 1
+106
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 10
+check 0
+switch 34
+check 0
+switch 17
+check 0
+check 0
+check 1
+95
+check 0
+check 0
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 2
+33
+100
+check 0
+check 0
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 2
+39
+107
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 34
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 4
+76
+78
+172
+174
+check 0
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 4
+77
+79
+173
+175
+check 0
+check 0
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 3
+16
+17
+18
+check 0
+check 0
+check 0
+check 0
+switch 27
+check 0
+switch 24
+check 0
+switch 31
+check 0
+switch 19
+check 0
+check 0
+check 1
+108
+check 0
+check 0
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 2
+40
+112
+check 0
+check 2
+41
+113
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 2
+46
+117
+check 0
+check 2
+47
+118
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 13
+check 0
+switch 31
+check 0
+switch 19
+check 0
+check 0
+check 1
+109
+check 0
+check 0
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 2
+42
+114
+check 0
+check 2
+43
+115
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 2
+48
+119
+check 0
+check 2
+49
+120
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 20
+check 0
+switch 31
+check 0
+switch 19
+check 0
+check 0
+check 0
+check 1
+110
+check 0
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 0
+check 1
+44
+check 0
+check 0
+check 0
+switch 19
+check 0
+check 2
+50
+121
+check 0
+check 1
+122
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 8
+check 0
+switch 31
+check 0
+switch 19
+check 0
+check 0
+check 1
+111
+check 0
+check 0
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 2
+45
+116
+check 0
+check 0
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 2
+51
+123
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 31
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 0
+check 4
+80
+82
+176
+178
+check 0
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 0
+check 4
+81
+83
+177
+179
+check 0
+check 0
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 0
+check 3
+19
+20
+21
+check 0
+check 0
+check 0
+check 0
+switch 28
+check 0
+switch 14
+check 0
+switch 32
+check 0
+switch 33
+check 0
+check 0
+check 1
+124
+check 0
+check 0
+check 0
+check 0
+switch 33
+check 0
+check 0
+check 2
+52
+128
+check 0
+check 2
+53
+129
+check 0
+check 0
+switch 33
+check 0
+check 0
+check 2
+58
+133
+check 0
+check 2
+59
+134
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 15
+check 0
+switch 32
+check 0
+switch 33
+check 0
+check 0
+check 1
+125
+check 0
+check 0
+check 0
+check 0
+switch 33
+check 0
+check 0
+check 2
+54
+130
+check 0
+check 2
+55
+131
+check 0
+check 0
+switch 33
+check 0
+check 0
+check 2
+60
+135
+check 0
+check 2
+61
+136
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 22
+check 0
+switch 32
+check 0
+switch 33
+check 0
+check 0
+check 0
+check 1
+126
+check 0
+check 0
+check 0
+switch 33
+check 0
+check 0
+check 0
+check 1
+56
+check 0
+check 0
+check 0
+switch 33
+check 0
+check 2
+62
+137
+check 0
+check 1
+138
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 26
+check 0
+switch 32
+check 0
+switch 33
+check 0
+check 0
+check 1
+127
+check 0
+check 0
+check 0
+check 0
+switch 33
+check 0
+check 0
+check 2
+57
+132
+check 0
+check 0
+check 0
+check 0
+switch 33
+check 0
+check 0
+check 2
+63
+139
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 32
+check 0
+check 0
+switch 33
+check 0
+check 0
+check 0
+check 4
+84
+86
+180
+182
+check 0
+check 0
+check 0
+switch 33
+check 0
+check 0
+check 0
+check 4
+85
+87
+181
+183
+check 0
+check 0
+check 0
+check 0
+switch 33
+check 0
+check 0
+check 0
+check 3
+22
+23
+24
+check 0
+check 0
+check 0
+check 0
+switch 30
+check 0
+switch 12
+check 0
+switch 16
+check 0
+switch 35
+check 0
+check 0
+check 1
+140
+check 0
+check 0
+check 0
+check 0
+switch 35
+check 0
+check 0
+check 2
+64
+144
+check 0
+check 2
+65
+145
+check 0
+check 0
+switch 35
+check 0
+check 0
+check 2
+70
+149
+check 0
+check 2
+71
+150
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 25
+check 0
+switch 16
+check 0
+switch 35
+check 0
+check 0
+check 1
+141
+check 0
+check 0
+check 0
+check 0
+switch 35
+check 0
+check 0
+check 2
+66
+146
+check 0
+check 2
+67
+147
+check 0
+check 0
+switch 35
+check 0
+check 0
+check 2
+72
+151
+check 0
+check 2
+73
+152
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 21
+check 0
+switch 16
+check 0
+switch 35
+check 0
+check 0
+check 0
+check 1
+142
+check 0
+check 0
+check 0
+switch 35
+check 0
+check 0
+check 0
+check 1
+68
+check 0
+check 0
+check 0
+switch 35
+check 0
+check 2
+74
+153
+check 0
+check 1
+154
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 9
+check 0
+switch 16
+check 0
+switch 35
+check 0
+check 0
+check 1
+143
+check 0
+check 0
+check 0
+check 0
+switch 35
+check 0
+check 0
+check 2
+69
+148
+check 0
+check 0
+check 0
+check 0
+switch 35
+check 0
+check 0
+check 2
+75
+155
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 16
+check 0
+check 0
+switch 35
+check 0
+check 0
+check 0
+check 4
+88
+90
+184
+186
+check 0
+check 0
+check 0
+switch 35
+check 0
+check 0
+check 0
+check 4
+89
+91
+185
+187
+check 0
+check 0
+check 0
+check 0
+switch 35
+check 0
+check 0
+check 0
+check 3
+25
+26
+27
+check 0
+check 0
+check 0
+check 0
+switch 6
+check 0
+switch 1
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+12
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+1
+switch 33
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+6
+check 0
+check 0
+check 0
+check 0
+switch 5
+check 0
+switch 1
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+2
+switch 33
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+7
+check 0
+check 0
+check 0
+check 0
+switch 3
+check 0
+switch 1
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+13
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+3
+switch 33
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+8
+check 0
+check 0
+check 0
+check 0
+switch 4
+check 0
+switch 1
+check 0
+check 0
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+4
+switch 33
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+9
+check 0
+check 0
+check 0
+check 0
+switch 1
+check 0
+check 0
+switch 34
+check 1
+190
+check 0
+check 0
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+11
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+0
+switch 33
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+5
+check 0
+switch 34
+check 1
+191
+check 0
+check 0
+check 0
+check 0
+switch 17
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+14
+switch 19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+10
+switch 35
+check 0
+check 0
+check 0
+check 0
+check 0
+check 1
+15
+check 0
+check 0
+end_SG
+begin_DTG
+1
+1
+188
+1
+1 0
+1
+0
+190
+1
+1 1
+end_DTG
+begin_DTG
+2
+1
+188
+1
+0 0
+2
+189
+1
+2 0
+1
+0
+190
+0
+1
+0
+191
+0
+end_DTG
+begin_DTG
+1
+1
+189
+1
+1 0
+1
+0
+191
+1
+1 2
+end_DTG
+begin_DTG
+0
+4
+0
+0
+2
+1 1
+19 4
+0
+5
+2
+1 1
+33 4
+0
+156
+2
+0 0
+19 4
+0
+161
+2
+0 0
+33 4
+end_DTG
+begin_DTG
+0
+2
+0
+11
+2
+1 1
+17 4
+0
+167
+2
+0 0
+17 4
+end_DTG
+begin_DTG
+0
+6
+0
+4
+3
+4 0
+1 1
+19 4
+0
+9
+3
+4 0
+1 1
+33 4
+0
+13
+3
+3 0
+1 1
+17 4
+0
+160
+3
+0 0
+4 0
+19 4
+0
+165
+3
+0 0
+4 0
+33 4
+0
+169
+3
+0 0
+3 0
+17 4
+end_DTG
+begin_DTG
+0
+4
+0
+3
+3
+3 0
+1 1
+19 4
+0
+8
+3
+3 0
+1 1
+33 4
+0
+159
+3
+0 0
+3 0
+19 4
+0
+164
+3
+0 0
+3 0
+33 4
+end_DTG
+begin_DTG
+0
+6
+0
+2
+3
+5 0
+1 1
+19 4
+0
+7
+3
+5 0
+1 1
+33 4
+0
+12
+3
+6 0
+1 1
+17 4
+0
+158
+3
+0 0
+5 0
+19 4
+0
+163
+3
+0 0
+5 0
+33 4
+0
+168
+3
+0 0
+6 0
+17 4
+end_DTG
+begin_DTG
+3
+1
+111
+3
+27 0
+31 0
+19 1
+1
+116
+3
+27 0
+31 1
+19 1
+1
+123
+3
+27 0
+31 2
+19 1
+1
+0
+21
+2
+27 0
+19 2
+end_DTG
+begin_DTG
+3
+1
+143
+3
+30 0
+16 0
+35 1
+1
+148
+3
+30 0
+16 1
+35 1
+1
+155
+3
+30 0
+16 2
+35 1
+1
+0
+27
+2
+30 0
+35 2
+end_DTG
+begin_DTG
+3
+1
+95
+3
+29 0
+34 0
+17 1
+1
+100
+3
+29 0
+34 1
+17 1
+1
+107
+3
+29 0
+34 2
+17 1
+1
+0
+18
+2
+29 0
+17 2
+end_DTG
+begin_DTG
+5
+1
+92
+3
+29 0
+34 0
+17 1
+1
+96
+3
+29 0
+34 1
+17 1
+1
+97
+3
+29 0
+34 1
+17 3
+1
+101
+3
+29 0
+34 2
+17 1
+1
+102
+3
+29 0
+34 2
+17 3
+3
+0
+16
+2
+29 0
+17 2
+0
+76
+3
+29 0
+34 1
+17 2
+0
+77
+3
+29 0
+34 2
+17 2
+end_DTG
+begin_DTG
+5
+1
+140
+3
+30 0
+16 0
+35 1
+1
+144
+3
+30 0
+16 1
+35 1
+1
+145
+3
+30 0
+16 1
+35 3
+1
+149
+3
+30 0
+16 2
+35 1
+1
+150
+3
+30 0
+16 2
+35 3
+3
+0
+25
+2
+30 0
+35 2
+0
+88
+3
+30 0
+16 1
+35 2
+0
+89
+3
+30 0
+16 2
+35 2
+end_DTG
+begin_DTG
+5
+1
+109
+3
+27 0
+31 0
+19 1
+1
+114
+3
+27 0
+31 1
+19 1
+1
+115
+3
+27 0
+31 1
+19 3
+1
+119
+3
+27 0
+31 2
+19 1
+1
+120
+3
+27 0
+31 2
+19 3
+3
+0
+20
+2
+27 0
+19 2
+0
+82
+3
+27 0
+31 1
+19 2
+0
+83
+3
+27 0
+31 2
+19 2
+end_DTG
+begin_DTG
+5
+1
+124
+3
+28 0
+32 0
+33 1
+1
+128
+3
+28 0
+32 1
+33 1
+1
+129
+3
+28 0
+32 1
+33 3
+1
+133
+3
+28 0
+32 2
+33 1
+1
+134
+3
+28 0
+32 2
+33 3
+3
+0
+22
+2
+28 0
+33 2
+0
+84
+3
+28 0
+32 1
+33 2
+0
+85
+3
+28 0
+32 2
+33 2
+end_DTG
+begin_DTG
+5
+1
+125
+3
+28 0
+32 0
+33 1
+1
+130
+3
+28 0
+32 1
+33 1
+1
+131
+3
+28 0
+32 1
+33 3
+1
+135
+3
+28 0
+32 2
+33 1
+1
+136
+3
+28 0
+32 2
+33 3
+3
+0
+23
+2
+28 0
+33 2
+0
+86
+3
+28 0
+32 1
+33 2
+0
+87
+3
+28 0
+32 2
+33 2
+end_DTG
+begin_DTG
+4
+1
+140
+3
+30 0
+12 0
+35 1
+1
+141
+3
+30 0
+25 0
+35 1
+1
+142
+3
+30 0
+21 0
+35 2
+1
+143
+3
+30 0
+9 0
+35 1
+8
+0
+15
+2
+1 2
+35 4
+0
+171
+2
+2 0
+35 4
+2
+64
+3
+30 0
+12 0
+35 1
+2
+65
+3
+30 0
+12 0
+35 3
+2
+66
+3
+30 0
+25 0
+35 1
+2
+67
+3
+30 0
+25 0
+35 3
+2
+68
+3
+30 0
+21 0
+35 2
+2
+69
+3
+30 0
+9 0
+35 1
+9
+0
+15
+2
+1 2
+35 4
+0
+171
+2
+2 0
+35 4
+1
+149
+3
+30 0
+12 0
+35 1
+1
+150
+3
+30 0
+12 0
+35 3
+1
+151
+3
+30 0
+25 0
+35 1
+1
+152
+3
+30 0
+25 0
+35 3
+1
+153
+3
+30 0
+21 0
+35 0
+1
+154
+3
+30 0
+21 0
+35 2
+1
+155
+3
+30 0
+9 0
+35 1
+2
+0
+15
+2
+1 2
+35 4
+0
+171
+2
+2 0
+35 4
+end_DTG
+begin_DTG
+1
+2
+105
+3
+29 0
+18 0
+34 2
+9
+2
+92
+3
+29 0
+11 0
+34 0
+2
+93
+3
+29 0
+23 0
+34 0
+2
+95
+3
+29 0
+10 0
+34 0
+2
+96
+3
+29 0
+11 0
+34 1
+2
+98
+3
+29 0
+23 0
+34 1
+2
+100
+3
+29 0
+10 0
+34 1
+2
+101
+3
+29 0
+11 0
+34 2
+2
+103
+3
+29 0
+23 0
+34 2
+2
+107
+3
+29 0
+10 0
+34 2
+3
+1
+16
+1
+29 0
+3
+76
+2
+29 0
+34 1
+3
+77
+2
+29 0
+34 2
+8
+0
+29
+3
+29 0
+11 0
+34 1
+0
+31
+3
+29 0
+23 0
+34 1
+0
+35
+3
+29 0
+11 0
+34 2
+0
+37
+3
+29 0
+23 0
+34 2
+2
+97
+3
+29 0
+11 0
+34 1
+2
+99
+3
+29 0
+23 0
+34 1
+2
+102
+3
+29 0
+11 0
+34 2
+2
+104
+3
+29 0
+23 0
+34 2
+4
+2
+11
+1
+1 1
+2
+14
+1
+1 2
+2
+167
+1
+0 0
+2
+170
+1
+2 0
+end_DTG
+begin_DTG
+3
+1
+16
+2
+29 0
+17 2
+1
+76
+3
+29 0
+34 1
+17 2
+1
+77
+3
+29 0
+34 2
+17 2
+17
+0
+11
+2
+1 1
+17 4
+0
+14
+2
+1 2
+17 4
+0
+170
+2
+2 0
+17 4
+0
+167
+2
+0 0
+17 4
+0
+97
+4
+29 0
+11 0
+34 1
+17 3
+0
+107
+4
+29 0
+10 0
+34 2
+17 1
+0
+104
+4
+29 0
+23 0
+34 2
+17 3
+0
+103
+4
+29 0
+23 0
+34 2
+17 1
+0
+102
+4
+29 0
+11 0
+34 2
+17 3
+0
+101
+4
+29 0
+11 0
+34 2
+17 1
+0
+100
+4
+29 0
+10 0
+34 1
+17 1
+0
+99
+4
+29 0
+23 0
+34 1
+17 3
+0
+98
+4
+29 0
+23 0
+34 1
+17 1
+0
+96
+4
+29 0
+11 0
+34 1
+17 1
+0
+95
+4
+29 0
+10 0
+34 0
+17 1
+0
+93
+4
+29 0
+23 0
+34 0
+17 1
+0
+92
+4
+29 0
+11 0
+34 0
+17 1
+end_DTG
+begin_DTG
+1
+2
+121
+3
+27 0
+20 0
+31 2
+9
+2
+108
+3
+27 0
+24 0
+31 0
+2
+109
+3
+27 0
+13 0
+31 0
+2
+111
+3
+27 0
+8 0
+31 0
+2
+112
+3
+27 0
+24 0
+31 1
+2
+114
+3
+27 0
+13 0
+31 1
+2
+116
+3
+27 0
+8 0
+31 1
+2
+117
+3
+27 0
+24 0
+31 2
+2
+119
+3
+27 0
+13 0
+31 2
+2
+123
+3
+27 0
+8 0
+31 2
+3
+1
+19
+1
+27 0
+3
+80
+2
+27 0
+31 1
+3
+81
+2
+27 0
+31 2
+8
+0
+41
+3
+27 0
+24 0
+31 1
+0
+43
+3
+27 0
+13 0
+31 1
+0
+47
+3
+27 0
+24 0
+31 2
+0
+49
+3
+27 0
+13 0
+31 2
+2
+113
+3
+27 0
+24 0
+31 1
+2
+115
+3
+27 0
+13 0
+31 1
+2
+118
+3
+27 0
+24 0
+31 2
+2
+120
+3
+27 0
+13 0
+31 2
+4
+2
+0
+1
+1 1
+2
+10
+1
+1 2
+2
+156
+1
+0 0
+2
+166
+1
+2 0
+end_DTG
+begin_DTG
+3
+1
+19
+2
+27 0
+19 2
+1
+80
+3
+27 0
+31 1
+19 2
+1
+81
+3
+27 0
+31 2
+19 2
+17
+0
+0
+2
+1 1
+19 4
+0
+10
+2
+1 2
+19 4
+0
+166
+2
+2 0
+19 4
+0
+156
+2
+0 0
+19 4
+0
+113
+4
+27 0
+24 0
+31 1
+19 3
+0
+123
+4
+27 0
+8 0
+31 2
+19 1
+0
+120
+4
+27 0
+13 0
+31 2
+19 3
+0
+119
+4
+27 0
+13 0
+31 2
+19 1
+0
+118
+4
+27 0
+24 0
+31 2
+19 3
+0
+117
+4
+27 0
+24 0
+31 2
+19 1
+0
+116
+4
+27 0
+8 0
+31 1
+19 1
+0
+115
+4
+27 0
+13 0
+31 1
+19 3
+0
+114
+4
+27 0
+13 0
+31 1
+19 1
+0
+112
+4
+27 0
+24 0
+31 1
+19 1
+0
+111
+4
+27 0
+8 0
+31 0
+19 1
+0
+109
+4
+27 0
+13 0
+31 0
+19 1
+0
+108
+4
+27 0
+24 0
+31 0
+19 1
+end_DTG
+begin_DTG
+3
+1
+25
+2
+30 0
+35 2
+1
+88
+3
+30 0
+16 1
+35 2
+1
+89
+3
+30 0
+16 2
+35 2
+15
+0
+15
+2
+1 2
+35 4
+0
+171
+2
+2 0
+35 4
+0
+141
+4
+30 0
+25 0
+16 0
+35 1
+0
+155
+4
+30 0
+9 0
+16 2
+35 1
+0
+152
+4
+30 0
+25 0
+16 2
+35 3
+0
+151
+4
+30 0
+25 0
+16 2
+35 1
+0
+150
+4
+30 0
+12 0
+16 2
+35 3
+0
+149
+4
+30 0
+12 0
+16 2
+35 1
+0
+148
+4
+30 0
+9 0
+16 1
+35 1
+0
+147
+4
+30 0
+25 0
+16 1
+35 3
+0
+146
+4
+30 0
+25 0
+16 1
+35 1
+0
+145
+4
+30 0
+12 0
+16 1
+35 3
+0
+144
+4
+30 0
+12 0
+16 1
+35 1
+0
+143
+4
+30 0
+9 0
+16 0
+35 1
+0
+140
+4
+30 0
+12 0
+16 0
+35 1
+end_DTG
+begin_DTG
+3
+1
+22
+2
+28 0
+33 2
+1
+84
+3
+28 0
+32 1
+33 2
+1
+85
+3
+28 0
+32 2
+33 2
+15
+0
+5
+2
+1 1
+33 4
+0
+161
+2
+0 0
+33 4
+0
+129
+4
+28 0
+14 0
+32 1
+33 3
+0
+139
+4
+28 0
+26 0
+32 2
+33 1
+0
+136
+4
+28 0
+15 0
+32 2
+33 3
+0
+135
+4
+28 0
+15 0
+32 2
+33 1
+0
+134
+4
+28 0
+14 0
+32 2
+33 3
+0
+133
+4
+28 0
+14 0
+32 2
+33 1
+0
+132
+4
+28 0
+26 0
+32 1
+33 1
+0
+131
+4
+28 0
+15 0
+32 1
+33 3
+0
+130
+4
+28 0
+15 0
+32 1
+33 1
+0
+128
+4
+28 0
+14 0
+32 1
+33 1
+0
+127
+4
+28 0
+26 0
+32 0
+33 1
+0
+125
+4
+28 0
+15 0
+32 0
+33 1
+0
+124
+4
+28 0
+14 0
+32 0
+33 1
+end_DTG
+begin_DTG
+5
+1
+93
+3
+29 0
+34 0
+17 1
+1
+98
+3
+29 0
+34 1
+17 1
+1
+99
+3
+29 0
+34 1
+17 3
+1
+103
+3
+29 0
+34 2
+17 1
+1
+104
+3
+29 0
+34 2
+17 3
+3
+0
+17
+2
+29 0
+17 2
+0
+78
+3
+29 0
+34 1
+17 2
+0
+79
+3
+29 0
+34 2
+17 2
+end_DTG
+begin_DTG
+5
+1
+108
+3
+27 0
+31 0
+19 1
+1
+112
+3
+27 0
+31 1
+19 1
+1
+113
+3
+27 0
+31 1
+19 3
+1
+117
+3
+27 0
+31 2
+19 1
+1
+118
+3
+27 0
+31 2
+19 3
+3
+0
+19
+2
+27 0
+19 2
+0
+80
+3
+27 0
+31 1
+19 2
+0
+81
+3
+27 0
+31 2
+19 2
+end_DTG
+begin_DTG
+5
+1
+141
+3
+30 0
+16 0
+35 1
+1
+146
+3
+30 0
+16 1
+35 1
+1
+147
+3
+30 0
+16 1
+35 3
+1
+151
+3
+30 0
+16 2
+35 1
+1
+152
+3
+30 0
+16 2
+35 3
+3
+0
+26
+2
+30 0
+35 2
+0
+90
+3
+30 0
+16 1
+35 2
+0
+91
+3
+30 0
+16 2
+35 2
+end_DTG
+begin_DTG
+3
+1
+127
+3
+28 0
+32 0
+33 1
+1
+132
+3
+28 0
+32 1
+33 1
+1
+139
+3
+28 0
+32 2
+33 1
+1
+0
+24
+2
+28 0
+33 2
+end_DTG
+begin_DTG
+0
+4
+0
+0
+2
+1 1
+19 4
+0
+10
+2
+1 2
+19 4
+0
+156
+2
+0 0
+19 4
+0
+166
+2
+2 0
+19 4
+end_DTG
+begin_DTG
+0
+2
+0
+5
+2
+1 1
+33 4
+0
+161
+2
+0 0
+33 4
+end_DTG
+begin_DTG
+0
+4
+0
+11
+2
+1 1
+17 4
+0
+14
+2
+1 2
+17 4
+0
+167
+2
+0 0
+17 4
+0
+170
+2
+2 0
+17 4
+end_DTG
+begin_DTG
+0
+2
+0
+15
+2
+1 2
+35 4
+0
+171
+2
+2 0
+35 4
+end_DTG
+begin_DTG
+4
+1
+108
+3
+27 0
+24 0
+19 1
+1
+109
+3
+27 0
+13 0
+19 1
+1
+110
+3
+27 0
+20 0
+19 2
+1
+111
+3
+27 0
+8 0
+19 1
+10
+0
+0
+2
+1 1
+19 4
+0
+10
+2
+1 2
+19 4
+0
+166
+2
+2 0
+19 4
+0
+156
+2
+0 0
+19 4
+2
+40
+3
+27 0
+24 0
+19 1
+2
+41
+3
+27 0
+24 0
+19 3
+2
+42
+3
+27 0
+13 0
+19 1
+2
+43
+3
+27 0
+13 0
+19 3
+2
+44
+3
+27 0
+20 0
+19 2
+2
+45
+3
+27 0
+8 0
+19 1
+11
+0
+0
+2
+1 1
+19 4
+0
+10
+2
+1 2
+19 4
+0
+166
+2
+2 0
+19 4
+0
+156
+2
+0 0
+19 4
+1
+117
+3
+27 0
+24 0
+19 1
+1
+118
+3
+27 0
+24 0
+19 3
+1
+119
+3
+27 0
+13 0
+19 1
+1
+120
+3
+27 0
+13 0
+19 3
+1
+121
+3
+27 0
+20 0
+19 0
+1
+122
+3
+27 0
+20 0
+19 2
+1
+123
+3
+27 0
+8 0
+19 1
+4
+0
+0
+2
+1 1
+19 4
+0
+10
+2
+1 2
+19 4
+0
+156
+2
+0 0
+19 4
+0
+166
+2
+2 0
+19 4
+end_DTG
+begin_DTG
+4
+1
+124
+3
+28 0
+14 0
+33 1
+1
+125
+3
+28 0
+15 0
+33 1
+1
+126
+3
+28 0
+22 0
+33 2
+1
+127
+3
+28 0
+26 0
+33 1
+8
+0
+5
+2
+1 1
+33 4
+0
+161
+2
+0 0
+33 4
+2
+52
+3
+28 0
+14 0
+33 1
+2
+53
+3
+28 0
+14 0
+33 3
+2
+54
+3
+28 0
+15 0
+33 1
+2
+55
+3
+28 0
+15 0
+33 3
+2
+56
+3
+28 0
+22 0
+33 2
+2
+57
+3
+28 0
+26 0
+33 1
+9
+0
+5
+2
+1 1
+33 4
+0
+161
+2
+0 0
+33 4
+1
+138
+3
+28 0
+22 0
+33 2
+1
+139
+3
+28 0
+26 0
+33 1
+1
+137
+3
+28 0
+22 0
+33 0
+1
+136
+3
+28 0
+15 0
+33 3
+1
+135
+3
+28 0
+15 0
+33 1
+1
+134
+3
+28 0
+14 0
+33 3
+1
+133
+3
+28 0
+14 0
+33 1
+2
+0
+5
+2
+1 1
+33 4
+0
+161
+2
+0 0
+33 4
+end_DTG
+begin_DTG
+1
+2
+137
+3
+28 0
+22 0
+32 2
+9
+2
+124
+3
+28 0
+14 0
+32 0
+2
+125
+3
+28 0
+15 0
+32 0
+2
+127
+3
+28 0
+26 0
+32 0
+2
+128
+3
+28 0
+14 0
+32 1
+2
+130
+3
+28 0
+15 0
+32 1
+2
+132
+3
+28 0
+26 0
+32 1
+2
+133
+3
+28 0
+14 0
+32 2
+2
+135
+3
+28 0
+15 0
+32 2
+2
+139
+3
+28 0
+26 0
+32 2
+3
+1
+22
+1
+28 0
+3
+84
+2
+28 0
+32 1
+3
+85
+2
+28 0
+32 2
+8
+0
+53
+3
+28 0
+14 0
+32 1
+0
+55
+3
+28 0
+15 0
+32 1
+0
+59
+3
+28 0
+14 0
+32 2
+0
+61
+3
+28 0
+15 0
+32 2
+2
+129
+3
+28 0
+14 0
+32 1
+2
+131
+3
+28 0
+15 0
+32 1
+2
+134
+3
+28 0
+14 0
+32 2
+2
+136
+3
+28 0
+15 0
+32 2
+2
+2
+5
+1
+1 1
+2
+161
+1
+0 0
+end_DTG
+begin_DTG
+4
+1
+92
+3
+29 0
+11 0
+17 1
+1
+93
+3
+29 0
+23 0
+17 1
+1
+94
+3
+29 0
+18 0
+17 2
+1
+95
+3
+29 0
+10 0
+17 1
+10
+0
+11
+2
+1 1
+17 4
+0
+14
+2
+1 2
+17 4
+0
+167
+2
+0 0
+17 4
+0
+170
+2
+2 0
+17 4
+2
+28
+3
+29 0
+11 0
+17 1
+2
+29
+3
+29 0
+11 0
+17 3
+2
+30
+3
+29 0
+23 0
+17 1
+2
+31
+3
+29 0
+23 0
+17 3
+2
+32
+3
+29 0
+18 0
+17 2
+2
+33
+3
+29 0
+10 0
+17 1
+11
+0
+11
+2
+1 1
+17 4
+0
+14
+2
+1 2
+17 4
+0
+167
+2
+0 0
+17 4
+0
+170
+2
+2 0
+17 4
+1
+101
+3
+29 0
+11 0
+17 1
+1
+102
+3
+29 0
+11 0
+17 3
+1
+103
+3
+29 0
+23 0
+17 1
+1
+104
+3
+29 0
+23 0
+17 3
+1
+105
+3
+29 0
+18 0
+17 0
+1
+106
+3
+29 0
+18 0
+17 2
+1
+107
+3
+29 0
+10 0
+17 1
+4
+0
+11
+2
+1 1
+17 4
+0
+14
+2
+1 2
+17 4
+0
+167
+2
+0 0
+17 4
+0
+170
+2
+2 0
+17 4
+end_DTG
+begin_DTG
+1
+2
+153
+3
+30 0
+21 0
+16 2
+9
+2
+140
+3
+30 0
+12 0
+16 0
+2
+141
+3
+30 0
+25 0
+16 0
+2
+143
+3
+30 0
+9 0
+16 0
+2
+144
+3
+30 0
+12 0
+16 1
+2
+146
+3
+30 0
+25 0
+16 1
+2
+148
+3
+30 0
+9 0
+16 1
+2
+149
+3
+30 0
+12 0
+16 2
+2
+151
+3
+30 0
+25 0
+16 2
+2
+155
+3
+30 0
+9 0
+16 2
+3
+1
+25
+1
+30 0
+3
+88
+2
+30 0
+16 1
+3
+89
+2
+30 0
+16 2
+8
+0
+65
+3
+30 0
+12 0
+16 1
+0
+67
+3
+30 0
+25 0
+16 1
+0
+71
+3
+30 0
+12 0
+16 2
+0
+73
+3
+30 0
+25 0
+16 2
+2
+145
+3
+30 0
+12 0
+16 1
+2
+147
+3
+30 0
+25 0
+16 1
+2
+150
+3
+30 0
+12 0
+16 2
+2
+152
+3
+30 0
+25 0
+16 2
+2
+2
+15
+1
+1 2
+2
+171
+1
+2 0
+end_DTG
+begin_DTG
+0
+2
+0
+15
+2
+1 2
+35 4
+0
+171
+2
+2 0
+35 4
+end_DTG
+begin_DTG
+0
+2
+0
+5
+2
+1 1
+33 4
+0
+161
+2
+0 0
+33 4
+end_DTG
+begin_CG
+19
+29 3
+27 5
+28 5
+7 3
+6 2
+5 3
+3 2
+4 1
+18 3
+20 5
+22 5
+1 1
+34 3
+31 5
+32 5
+17 3
+19 5
+33 5
+37 5
+25
+0 2
+2 2
+29 4
+27 6
+28 5
+30 1
+7 3
+6 2
+5 3
+3 2
+4 1
+18 4
+20 6
+22 5
+21 1
+34 4
+31 6
+32 5
+16 1
+17 4
+19 6
+33 5
+35 1
+37 5
+36 1
+14
+29 1
+27 1
+30 1
+18 1
+20 1
+21 1
+1 1
+34 1
+31 1
+16 1
+17 1
+19 1
+35 1
+36 1
+15
+29 2
+27 2
+28 2
+6 4
+5 2
+18 2
+20 2
+22 2
+34 2
+31 2
+32 2
+17 2
+19 2
+33 2
+37 2
+10
+27 2
+28 2
+5 4
+20 2
+22 2
+31 2
+32 2
+19 2
+33 2
+37 2
+10
+27 2
+28 2
+7 4
+20 2
+22 2
+31 2
+32 2
+19 2
+33 2
+37 2
+14
+29 2
+27 2
+28 2
+7 2
+18 2
+20 2
+22 2
+34 2
+31 2
+32 2
+17 2
+19 2
+33 2
+37 2
+0
+3
+20 5
+31 3
+19 5
+3
+21 5
+16 3
+35 5
+3
+18 5
+34 3
+17 5
+3
+18 9
+34 5
+17 9
+3
+21 9
+16 5
+35 9
+3
+20 9
+31 5
+19 9
+3
+22 9
+32 5
+33 9
+3
+22 9
+32 5
+33 9
+5
+12 13
+25 13
+21 31
+9 5
+35 33
+9
+29 8
+7 2
+5 2
+4 2
+11 14
+23 14
+18 42
+10 6
+34 25
+2
+34 4
+17 2
+10
+27 12
+7 2
+6 2
+5 2
+3 2
+24 14
+13 14
+20 46
+8 6
+31 29
+2
+31 4
+19 2
+2
+16 4
+35 2
+2
+32 4
+33 2
+3
+18 9
+34 5
+17 9
+3
+20 9
+31 5
+19 9
+3
+21 9
+16 5
+35 9
+3
+22 5
+32 3
+33 5
+6
+24 14
+13 14
+20 34
+8 6
+31 17
+19 36
+6
+14 14
+15 14
+22 34
+26 6
+32 17
+33 36
+6
+11 14
+23 14
+18 34
+10 6
+34 17
+17 36
+6
+12 14
+25 14
+21 34
+9 6
+16 17
+35 36
+5
+24 13
+13 13
+20 31
+8 5
+19 33
+5
+14 13
+15 13
+22 31
+26 5
+33 33
+11
+28 10
+7 2
+6 2
+5 2
+3 2
+14 14
+15 14
+22 44
+26 6
+32 27
+37 10
+5
+11 13
+23 13
+18 31
+10 5
+17 33
+7
+30 2
+12 14
+25 14
+21 36
+9 6
+16 19
+36 2
+0
+0
+end_CG

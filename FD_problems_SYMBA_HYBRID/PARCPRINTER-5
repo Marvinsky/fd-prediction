@@ -1,0 +1,6311 @@
+begin_version
+3
+end_version
+begin_metric
+1
+end_metric
+26
+begin_variable
+var49
+-1
+2
+Atom uninitialized()
+NegatedAtom uninitialized()
+end_variable
+begin_variable
+var6
+-1
+2
+Atom available(uime-rsrc)
+NegatedAtom available(uime-rsrc)
+end_variable
+begin_variable
+var5
+-1
+2
+Atom available(uc1-rsrc)
+NegatedAtom available(uc1-rsrc)
+end_variable
+begin_variable
+var4
+-1
+2
+Atom available(sys-rsrc)
+NegatedAtom available(sys-rsrc)
+end_variable
+begin_variable
+var3
+-1
+2
+Atom available(lime-rsrc)
+NegatedAtom available(lime-rsrc)
+end_variable
+begin_variable
+var2
+-1
+2
+Atom available(lc1-rsrc)
+NegatedAtom available(lc1-rsrc)
+end_variable
+begin_variable
+var1
+-1
+2
+Atom available(hw1-rsrc)
+NegatedAtom available(hw1-rsrc)
+end_variable
+begin_variable
+var0
+-1
+2
+Atom available(fe1-rsrc)
+NegatedAtom available(fe1-rsrc)
+end_variable
+begin_variable
+var31
+-1
+2
+Atom notprintedwith(sheet1, front, color)
+NegatedAtom notprintedwith(sheet1, front, color)
+end_variable
+begin_variable
+var40
+-1
+2
+Atom sideup(sheet1, back)
+NegatedAtom sideup(sheet1, back)
+end_variable
+begin_variable
+var25
+-1
+8
+Atom location(sheet1, fe1_exit-hw1_leftentry)
+Atom location(sheet1, hw1_rightexit-sys_entry)
+Atom location(sheet1, lc1_entry-hw1_bottomleftexit)
+Atom location(sheet1, lc1_entryfromime-lime_exit)
+Atom location(sheet1, lc1_exit-hw1_bottomrightentry)
+Atom location(sheet1, lime_entry-lc1_exittoime)
+Atom location(sheet1, some_feeder_tray)
+Atom location(sheet1, some_finisher_tray)
+end_variable
+begin_variable
+var41
+-1
+2
+Atom sideup(sheet1, front)
+NegatedAtom sideup(sheet1, front)
+end_variable
+begin_variable
+var46
+-1
+2
+Atom stackedin(sheet1, sys_outputtray)
+NegatedAtom stackedin(sheet1, sys_outputtray)
+end_variable
+begin_variable
+var34
+-1
+2
+Atom notprintedwith(sheet2, front, black)
+NegatedAtom notprintedwith(sheet2, front, black)
+end_variable
+begin_variable
+var42
+-1
+2
+Atom sideup(sheet2, back)
+NegatedAtom sideup(sheet2, back)
+end_variable
+begin_variable
+var26
+-1
+12
+Atom location(sheet2, fe1_exit-hw1_leftentry)
+Atom location(sheet2, hw1_rightexit-sys_entry)
+Atom location(sheet2, hw1_toprightentry-uc1_exit)
+Atom location(sheet2, lc1_entry-hw1_bottomleftexit)
+Atom location(sheet2, lc1_entryfromime-lime_exit)
+Atom location(sheet2, lc1_exit-hw1_bottomrightentry)
+Atom location(sheet2, lime_entry-lc1_exittoime)
+Atom location(sheet2, some_feeder_tray)
+Atom location(sheet2, some_finisher_tray)
+Atom location(sheet2, uc1_entry-hw1_topleftexit)
+Atom location(sheet2, uc1_exittoime-uime_entry)
+Atom location(sheet2, uime_exit-uc1_entryfromime)
+end_variable
+begin_variable
+var43
+-1
+2
+Atom sideup(sheet2, front)
+NegatedAtom sideup(sheet2, front)
+end_variable
+begin_variable
+var47
+-1
+2
+Atom stackedin(sheet2, sys_outputtray)
+NegatedAtom stackedin(sheet2, sys_outputtray)
+end_variable
+begin_variable
+var38
+-1
+2
+Atom notprintedwith(sheet3, front, black)
+NegatedAtom notprintedwith(sheet3, front, black)
+end_variable
+begin_variable
+var44
+-1
+2
+Atom sideup(sheet3, back)
+NegatedAtom sideup(sheet3, back)
+end_variable
+begin_variable
+var27
+-1
+12
+Atom location(sheet3, fe1_exit-hw1_leftentry)
+Atom location(sheet3, hw1_rightexit-sys_entry)
+Atom location(sheet3, hw1_toprightentry-uc1_exit)
+Atom location(sheet3, lc1_entry-hw1_bottomleftexit)
+Atom location(sheet3, lc1_entryfromime-lime_exit)
+Atom location(sheet3, lc1_exit-hw1_bottomrightentry)
+Atom location(sheet3, lime_entry-lc1_exittoime)
+Atom location(sheet3, some_feeder_tray)
+Atom location(sheet3, some_finisher_tray)
+Atom location(sheet3, uc1_entry-hw1_topleftexit)
+Atom location(sheet3, uc1_exittoime-uime_entry)
+Atom location(sheet3, uime_exit-uc1_entryfromime)
+end_variable
+begin_variable
+var45
+-1
+2
+Atom sideup(sheet3, front)
+NegatedAtom sideup(sheet3, front)
+end_variable
+begin_variable
+var48
+-1
+2
+Atom stackedin(sheet3, sys_outputtray)
+NegatedAtom stackedin(sheet3, sys_outputtray)
+end_variable
+begin_variable
+var24
+-1
+2
+Atom hasimage(sheet3, front, image-3)
+NegatedAtom hasimage(sheet3, front, image-3)
+end_variable
+begin_variable
+var17
+-1
+2
+Atom hasimage(sheet2, front, image-2)
+NegatedAtom hasimage(sheet2, front, image-2)
+end_variable
+begin_variable
+var10
+-1
+2
+Atom hasimage(sheet1, front, image-1)
+NegatedAtom hasimage(sheet1, front, image-1)
+end_variable
+681
+begin_mutex_group
+exactly_one
+fw
+2
+0 0
+1 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 0
+2 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 0
+3 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 0
+4 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 0
+5 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 0
+6 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 0
+7 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+8 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+9 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+10 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+10 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+10 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+10 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+10 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+10 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+10 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+13 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+14 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+15 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+18 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+20 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+0 0
+25 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 1
+1 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 1
+2 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 1
+3 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 1
+4 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 1
+5 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 1
+6 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+0 1
+7 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+1 0
+2 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+1 0
+3 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+1 0
+4 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+1 0
+5 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+1 0
+6 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+1 0
+7 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+2 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+3 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+4 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+5 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+6 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+7 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+8 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+9 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+10 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+10 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+10 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+10 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+10 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+10 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+10 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+13 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+14 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+15 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+18 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+20 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+1 1
+25 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+2 0
+3 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+2 0
+4 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+2 0
+5 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+2 0
+6 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+2 0
+7 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+3 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+4 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+5 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+6 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+7 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+8 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+9 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+10 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+10 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+10 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+10 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+10 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+10 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+10 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+13 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+14 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+15 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+18 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+20 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+2 1
+25 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+3 0
+4 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+3 0
+5 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+3 0
+6 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+3 0
+7 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+4 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+5 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+6 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+7 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+8 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+9 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+10 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+10 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+10 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+10 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+10 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+10 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+10 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+13 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+14 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+15 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+18 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+20 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+3 1
+25 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+4 0
+5 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+4 0
+6 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+4 0
+7 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+5 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+6 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+7 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+8 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+9 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+10 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+10 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+10 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+10 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+10 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+10 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+10 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+13 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+14 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+15 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+18 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+20 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+4 1
+25 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+5 0
+6 1
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+5 0
+7 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+6 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+7 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+8 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+9 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+10 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+10 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+10 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+10 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+10 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+10 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+10 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+13 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+14 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+15 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+18 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+20 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+5 1
+25 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+6 0
+7 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+7 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+8 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+9 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+10 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+10 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+10 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+10 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+10 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+10 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+10 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+13 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+14 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+15 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+18 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+20 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+6 1
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+8 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+9 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+10 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+10 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+10 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+10 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+10 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+10 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+10 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+13 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+14 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+15 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+18 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 10
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+20 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+7 1
+25 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+8 0
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 1
+10 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 1
+10 6
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+8 1
+25 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+10 6
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 1
+10 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 0
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 1
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 1
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 2
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 2
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 2
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 2
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 2
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 3
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 3
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 3
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 3
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 3
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 4
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 4
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 4
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 4
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 4
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 5
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 5
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 5
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 5
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 5
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 6
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 6
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 6
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 6
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 6
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 6
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 6
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 7
+12 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 1
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+12 1
+22 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+13 0
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 1
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 1
+15 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+15 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 1
+15 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 0
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 2
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 2
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 2
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 3
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 3
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 3
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 4
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 4
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 4
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 5
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 5
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 5
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 6
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 6
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 6
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 7
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 7
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 7
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 7
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 7
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 8
+17 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 9
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 9
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 9
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 10
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 10
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 10
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 11
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 11
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 11
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+17 1
+22 0
+end_mutex_group
+begin_mutex_group
+exactly_one
+fw
+2
+18 0
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+18 1
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+18 1
+20 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 0
+20 7
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 0
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 1
+20 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 0
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 0
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 2
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 3
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 4
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 5
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 6
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 7
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 7
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 7
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 8
+22 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 9
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 10
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 11
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 0
+10 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 0
+10 7
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 0
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 0
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 0
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 0
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 1
+10 2
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 1
+10 5
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+9 0
+10 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+9 0
+10 5
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+9 0
+10 7
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+9 0
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+9 0
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+9 0
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+9 0
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+9 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+10 1
+11 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+10 1
+25 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+10 2
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+10 5
+11 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+10 5
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+10 7
+11 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+10 7
+25 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+11 1
+12 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+11 1
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+11 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+11 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+11 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+12 0
+25 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 0
+15 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 0
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 0
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 0
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 1
+15 3
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 1
+15 6
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 1
+15 9
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 1
+15 10
+end_mutex_group
+begin_mutex_group
+exactly_one
+bw
+2
+13 1
+24 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+14 0
+15 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+14 0
+15 6
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+14 0
+15 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+14 0
+15 10
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+14 0
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+14 0
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+14 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 1
+16 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 1
+24 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 3
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 6
+16 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 6
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 8
+16 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 8
+24 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 8
+25 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 9
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 10
+16 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 10
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+16 1
+17 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+16 1
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+16 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+17 0
+24 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+17 0
+25 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+18 0
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+18 0
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+18 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+18 1
+20 3
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+18 1
+20 6
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+18 1
+20 9
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+18 1
+20 10
+end_mutex_group
+begin_mutex_group
+exactly_one
+bw
+2
+18 1
+23 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+19 0
+20 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+19 0
+20 6
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+19 0
+20 8
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+19 0
+20 10
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+19 0
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 1
+21 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 1
+23 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 3
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 6
+21 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 6
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 8
+21 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 8
+23 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 8
+24 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 8
+25 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 9
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 10
+21 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 10
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+21 1
+22 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+22 0
+23 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+22 0
+24 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+22 0
+25 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+10 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+8 0
+10 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 0
+10 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+9 1
+10 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 2
+11 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 3
+11 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 3
+25 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+10 4
+25 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+15 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+15 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+15 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+13 0
+15 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+15 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 0
+15 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 1
+15 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+14 1
+15 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 2
+24 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 3
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 4
+16 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 4
+24 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 5
+24 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 9
+16 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 11
+16 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+15 11
+24 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+18 0
+20 2
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+18 0
+20 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+18 0
+20 5
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+18 0
+20 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 0
+20 4
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 0
+20 11
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 1
+20 3
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+19 1
+20 9
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 2
+23 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 3
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 4
+21 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 4
+23 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 5
+23 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 9
+21 0
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 11
+21 1
+end_mutex_group
+begin_mutex_group
+mutex
+fw
+2
+20 11
+23 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 1
+9 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+8 1
+11 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+9 0
+10 4
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+9 0
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+10 4
+11 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+11 1
+25 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 1
+14 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+13 1
+16 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+14 0
+15 2
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+14 0
+15 5
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+14 0
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 2
+16 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+15 5
+16 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+16 1
+24 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+18 1
+19 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+18 1
+21 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+19 0
+20 2
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+19 0
+20 5
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+19 0
+23 0
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 2
+21 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+20 5
+21 1
+end_mutex_group
+begin_mutex_group
+mutex
+bw
+2
+21 1
+23 0
+end_mutex_group
+begin_state
+0
+1
+1
+1
+1
+1
+1
+1
+0
+1
+6
+1
+1
+0
+1
+7
+1
+1
+0
+1
+7
+1
+1
+1
+1
+1
+end_state
+begin_goal
+9
+11 0
+12 0
+16 0
+17 0
+21 0
+22 0
+23 0
+24 0
+25 0
+end_goal
+35
+begin_operator
+fe1-feed-letter sheet1
+1
+7 0
+2
+0 10 6 0
+0 9 -1 0
+224
+end_operator
+begin_operator
+fe1-feed-letter sheet2
+1
+7 0
+2
+0 15 7 0
+0 14 -1 0
+224
+end_operator
+begin_operator
+fe1-feed-letter sheet3
+1
+7 0
+2
+0 20 7 0
+0 19 -1 0
+224
+end_operator
+begin_operator
+fe1-feedmsi-letter sheet1
+1
+7 0
+2
+0 10 6 0
+0 9 -1 0
+125
+end_operator
+begin_operator
+fe1-feedmsi-letter sheet2
+1
+7 0
+2
+0 15 7 0
+0 14 -1 0
+125
+end_operator
+begin_operator
+fe1-feedmsi-letter sheet3
+1
+7 0
+2
+0 20 7 0
+0 19 -1 0
+125
+end_operator
+begin_operator
+hw1-bottomrightentrytorightexit-letter sheet1
+1
+6 0
+1
+0 10 4 1
+1499
+end_operator
+begin_operator
+hw1-bottomrightentrytorightexit-letter sheet2
+1
+6 0
+1
+0 15 5 1
+1499
+end_operator
+begin_operator
+hw1-bottomrightentrytorightexit-letter sheet3
+1
+6 0
+1
+0 20 5 1
+1499
+end_operator
+begin_operator
+hw1-leftentrytobottomleftexit-letter sheet1
+1
+6 0
+1
+0 10 0 2
+1499
+end_operator
+begin_operator
+hw1-leftentrytobottomleftexit-letter sheet2
+1
+6 0
+1
+0 15 0 3
+1499
+end_operator
+begin_operator
+hw1-leftentrytobottomleftexit-letter sheet3
+1
+6 0
+1
+0 20 0 3
+1499
+end_operator
+begin_operator
+hw1-leftentrytotopleftexit-letter sheet2
+1
+6 0
+1
+0 15 0 9
+1499
+end_operator
+begin_operator
+hw1-leftentrytotopleftexit-letter sheet3
+1
+6 0
+1
+0 20 0 9
+1499
+end_operator
+begin_operator
+hw1-toprightentrytorightexit-letter sheet2
+1
+6 0
+1
+0 15 2 1
+1499
+end_operator
+begin_operator
+hw1-toprightentrytorightexit-letter sheet3
+1
+6 0
+1
+0 20 2 1
+1499
+end_operator
+begin_operator
+initialize 
+0
+8
+0 7 -1 0
+0 6 -1 0
+0 5 -1 0
+0 4 -1 0
+0 3 -1 0
+0 2 -1 0
+0 1 -1 0
+0 0 0 1
+0
+end_operator
+begin_operator
+lc1-fromime-letter sheet1
+1
+5 0
+1
+0 10 3 4
+4999
+end_operator
+begin_operator
+lc1-fromime-letter sheet2
+1
+5 0
+1
+0 15 4 5
+4999
+end_operator
+begin_operator
+lc1-fromime-letter sheet3
+1
+5 0
+1
+0 20 4 5
+4999
+end_operator
+begin_operator
+lc1-inverttoime-letter sheet1 back front
+1
+5 0
+3
+0 10 2 5
+0 9 0 1
+0 11 -1 0
+9999
+end_operator
+begin_operator
+lc1-inverttoime-letter sheet2 back front
+1
+5 0
+3
+0 15 3 6
+0 14 0 1
+0 16 -1 0
+9999
+end_operator
+begin_operator
+lc1-inverttoime-letter sheet3 back front
+1
+5 0
+3
+0 20 3 6
+0 19 0 1
+0 21 -1 0
+9999
+end_operator
+begin_operator
+lime-simplex-letter sheet1 front image-1
+2
+4 0
+11 0
+3
+0 25 -1 0
+0 10 5 3
+0 8 0 1
+212790
+end_operator
+begin_operator
+lime-simplexmono-letter sheet2 front image-2
+2
+4 0
+16 0
+3
+0 24 -1 0
+0 15 6 4
+0 13 0 1
+212790
+end_operator
+begin_operator
+lime-simplexmono-letter sheet3 front image-3
+2
+4 0
+21 0
+3
+0 23 -1 0
+0 20 6 4
+0 18 0 1
+212790
+end_operator
+begin_operator
+sys-stack-letter sheet1 dummy-sheet
+1
+3 0
+2
+0 10 1 7
+0 12 -1 0
+1499
+end_operator
+begin_operator
+sys-stack-letter sheet2 sheet1
+2
+3 0
+10 7
+2
+0 15 1 8
+0 17 -1 0
+1499
+end_operator
+begin_operator
+sys-stack-letter sheet3 sheet2
+2
+3 0
+15 8
+2
+0 20 1 8
+0 22 -1 0
+1499
+end_operator
+begin_operator
+uc1-fromime-letter sheet2
+1
+2 0
+1
+0 15 11 2
+2999
+end_operator
+begin_operator
+uc1-fromime-letter sheet3
+1
+2 0
+1
+0 20 11 2
+2999
+end_operator
+begin_operator
+uc1-inverttoime-letter sheet2 back front
+1
+2 0
+3
+0 15 9 10
+0 14 0 1
+0 16 -1 0
+8000
+end_operator
+begin_operator
+uc1-inverttoime-letter sheet3 back front
+1
+2 0
+3
+0 20 9 10
+0 19 0 1
+0 21 -1 0
+8000
+end_operator
+begin_operator
+uime-simplex-letter sheet2 front image-2
+2
+1 0
+16 0
+3
+0 24 -1 0
+0 15 10 11
+0 13 0 1
+127790
+end_operator
+begin_operator
+uime-simplex-letter sheet3 front image-3
+2
+1 0
+21 0
+3
+0 23 -1 0
+0 20 10 11
+0 18 0 1
+127790
+end_operator
+0
+begin_SG
+switch 7
+check 0
+switch 10
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 2
+0
+3
+check 0
+switch 15
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 2
+1
+4
+check 0
+check 0
+check 0
+check 0
+switch 20
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 2
+2
+5
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 6
+check 0
+switch 10
+check 0
+check 1
+9
+check 0
+check 0
+check 0
+check 1
+6
+check 0
+check 0
+check 0
+switch 15
+check 0
+check 2
+10
+12
+check 0
+check 1
+14
+check 0
+check 0
+check 1
+7
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 20
+check 0
+check 2
+11
+13
+check 0
+check 1
+15
+check 0
+check 0
+check 1
+8
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 5
+check 0
+switch 10
+check 0
+check 0
+check 0
+switch 9
+check 0
+check 1
+20
+check 0
+check 0
+check 1
+17
+check 0
+check 0
+check 0
+check 0
+switch 15
+check 0
+check 0
+check 0
+check 0
+switch 14
+check 0
+check 1
+21
+check 0
+check 0
+check 1
+18
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 20
+check 0
+check 0
+check 0
+check 0
+switch 19
+check 0
+check 1
+22
+check 0
+check 0
+check 1
+19
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 4
+check 0
+switch 10
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 8
+check 0
+switch 11
+check 0
+check 1
+23
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 15
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 13
+check 0
+switch 16
+check 0
+check 1
+24
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 20
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 18
+check 0
+switch 21
+check 0
+check 1
+25
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 3
+check 0
+switch 10
+check 0
+check 0
+check 1
+26
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 15
+check 0
+check 0
+check 1
+27
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 15
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 20
+check 0
+check 0
+check 1
+28
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 2
+check 0
+switch 15
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 14
+check 0
+check 1
+31
+check 0
+check 0
+check 0
+check 1
+29
+switch 20
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 19
+check 0
+check 1
+32
+check 0
+check 0
+check 0
+check 1
+30
+check 0
+check 0
+switch 1
+check 0
+switch 15
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 13
+check 0
+switch 16
+check 0
+check 1
+33
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 20
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 18
+check 0
+switch 21
+check 0
+check 1
+34
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+check 0
+switch 0
+check 0
+check 1
+16
+check 0
+check 0
+end_SG
+begin_DTG
+1
+1
+16
+0
+0
+end_DTG
+begin_DTG
+0
+1
+0
+16
+1
+0 0
+end_DTG
+begin_DTG
+0
+1
+0
+16
+1
+0 0
+end_DTG
+begin_DTG
+0
+1
+0
+16
+1
+0 0
+end_DTG
+begin_DTG
+0
+1
+0
+16
+1
+0 0
+end_DTG
+begin_DTG
+0
+1
+0
+16
+1
+0 0
+end_DTG
+begin_DTG
+0
+1
+0
+16
+1
+0 0
+end_DTG
+begin_DTG
+0
+1
+0
+16
+1
+0 0
+end_DTG
+begin_DTG
+1
+1
+23
+3
+4 0
+10 5
+11 0
+0
+end_DTG
+begin_DTG
+1
+1
+20
+2
+5 0
+10 2
+1
+0
+3
+2
+7 0
+10 6
+end_DTG
+begin_DTG
+1
+2
+9
+1
+6 0
+1
+7
+26
+1
+3 0
+1
+5
+20
+2
+5 0
+9 0
+1
+4
+17
+1
+5 0
+1
+1
+6
+1
+6 0
+1
+3
+23
+3
+4 0
+8 0
+11 0
+1
+0
+3
+1
+7 0
+0
+end_DTG
+begin_DTG
+0
+1
+0
+20
+3
+5 0
+10 2
+9 0
+end_DTG
+begin_DTG
+0
+1
+0
+26
+2
+3 0
+10 1
+end_DTG
+begin_DTG
+2
+1
+33
+3
+1 0
+15 10
+16 0
+1
+24
+3
+4 0
+15 6
+16 0
+0
+end_DTG
+begin_DTG
+2
+1
+31
+2
+2 0
+15 9
+1
+21
+2
+5 0
+15 3
+1
+0
+4
+2
+7 0
+15 7
+end_DTG
+begin_DTG
+2
+3
+10
+1
+6 0
+9
+12
+1
+6 0
+1
+8
+27
+2
+3 0
+10 7
+1
+1
+14
+1
+6 0
+1
+6
+21
+2
+5 0
+14 0
+1
+5
+18
+1
+5 0
+1
+1
+7
+1
+6 0
+1
+4
+24
+3
+4 0
+13 0
+16 0
+1
+0
+4
+1
+7 0
+0
+1
+10
+31
+2
+2 0
+14 0
+1
+11
+33
+3
+1 0
+13 0
+16 0
+1
+2
+29
+1
+2 0
+end_DTG
+begin_DTG
+0
+2
+0
+31
+3
+2 0
+15 9
+14 0
+0
+21
+3
+5 0
+15 3
+14 0
+end_DTG
+begin_DTG
+0
+1
+0
+27
+3
+3 0
+10 7
+15 1
+end_DTG
+begin_DTG
+2
+1
+34
+3
+1 0
+20 10
+21 0
+1
+25
+3
+4 0
+20 6
+21 0
+0
+end_DTG
+begin_DTG
+2
+1
+32
+2
+2 0
+20 9
+1
+22
+2
+5 0
+20 3
+1
+0
+5
+2
+7 0
+20 7
+end_DTG
+begin_DTG
+2
+3
+11
+1
+6 0
+9
+13
+1
+6 0
+1
+8
+28
+2
+3 0
+15 8
+1
+1
+15
+1
+6 0
+1
+6
+22
+2
+5 0
+19 0
+1
+5
+19
+1
+5 0
+1
+1
+8
+1
+6 0
+1
+4
+25
+3
+4 0
+18 0
+21 0
+1
+0
+5
+1
+7 0
+0
+1
+10
+32
+2
+2 0
+19 0
+1
+11
+34
+3
+1 0
+18 0
+21 0
+1
+2
+30
+1
+2 0
+end_DTG
+begin_DTG
+0
+2
+0
+32
+3
+2 0
+20 9
+19 0
+0
+22
+3
+5 0
+20 3
+19 0
+end_DTG
+begin_DTG
+0
+1
+0
+28
+3
+3 0
+15 8
+20 1
+end_DTG
+begin_DTG
+0
+2
+0
+34
+4
+1 0
+20 10
+18 0
+21 0
+0
+25
+4
+4 0
+20 6
+18 0
+21 0
+end_DTG
+begin_DTG
+0
+2
+0
+33
+4
+1 0
+15 10
+13 0
+16 0
+0
+24
+4
+4 0
+15 6
+13 0
+16 0
+end_DTG
+begin_DTG
+0
+1
+0
+23
+4
+4 0
+10 5
+8 0
+11 0
+end_DTG
+begin_CG
+7
+7 1
+6 1
+5 1
+4 1
+3 1
+2 1
+1 1
+6
+24 1
+23 1
+15 1
+20 1
+13 1
+18 1
+6
+15 2
+20 2
+14 1
+16 1
+19 1
+21 1
+6
+10 1
+15 1
+20 1
+12 1
+17 1
+22 1
+9
+25 1
+24 1
+23 1
+10 1
+15 1
+20 1
+8 1
+13 1
+18 1
+9
+10 2
+15 2
+20 2
+9 1
+11 1
+14 1
+16 1
+19 1
+21 1
+3
+10 2
+15 4
+20 4
+6
+10 2
+15 2
+20 2
+9 2
+14 2
+19 2
+2
+25 1
+10 1
+2
+10 1
+11 1
+7
+25 1
+15 1
+8 1
+9 3
+11 1
+12 1
+17 1
+3
+25 1
+10 1
+8 1
+0
+2
+24 2
+15 2
+2
+15 2
+16 2
+7
+24 2
+20 1
+13 2
+14 4
+16 2
+17 1
+22 1
+3
+24 2
+15 2
+13 2
+0
+2
+23 2
+20 2
+2
+20 2
+21 2
+5
+23 2
+18 2
+19 4
+21 2
+22 1
+3
+23 2
+20 2
+18 2
+0
+0
+0
+0
+end_CG
