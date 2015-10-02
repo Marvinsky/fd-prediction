@@ -16,6 +16,9 @@
 #include <fstream>
 #include <iomanip>
 
+#include "../ext/boost/dynamic_bitset.hpp"
+#include <boost/lexical_cast.hpp>
+
 using namespace std;
 
 string _HOME_INFO_ASTAR = "/home";
@@ -317,7 +320,7 @@ void EagerSearchOriginal::generateReport() {
         string dominio = domain_name;
         string tarefa = problem_name2;
         string heuristica = heuristic_name2;
-	string dir_name = dir_creation;
+	string dir_name = dir_creation;	
 
         cout<<"dominio = "<<dominio<<"\n";
         cout<<"tarefa = "<<tarefa<<"\n";
@@ -331,19 +334,14 @@ void EagerSearchOriginal::generateReport() {
         name = tarefa.substr(0, found);
         name += ".csv";
 
-	if (dir_name == "temp") {
-        	dirDomain = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio;
-        	dirSSCC = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc";
-        	outputFile =  _HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar/"+dominio+"/bc/"+name;
-	} else if (dir_name == "sscc") {
-		dirDomain = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio;
-        	dirSSCC = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio+"/bc";
-        	outputFile = _HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_sscc/"+dominio+"/bc/"+name;
-	} else if (dir_name == "grhs") {
-		dirDomain = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio;
-        	dirSSCC = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio+"/bc";
-        	outputFile = _HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/reportastar_grhs/"+dominio+"/bc/"+name;
-	}
+	string reportstr = "reportastar_";
+	reportstr += boost::lexical_cast<std::string>(ss_probes);
+	reportstr += "_" + dir_name;
+	cout<<"reportstr = "<<reportstr<<"\n";
+
+        dirDomain = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/"+reportstr+"/"+dominio;
+        dirSSCC = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/"+reportstr+"/"+dominio+"/bc";
+        outputFile =  _HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/"+reportstr+"/"+dominio+"/bc/"+name;
 
         if (system(dirDomain.c_str())) {
         	cout<<"Directory: "<<heuristica<<" created."<<endl;

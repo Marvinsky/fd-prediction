@@ -190,7 +190,7 @@ if(f_boundary!=0){
 	    ss_probes=250;
 	  }
 	  else{
-	    ss_probes=500;
+	    //ss_probes=500;
 	  }
 	  cout<<"Not doing domination_check, setting probes to :"<<ss_probes<<endl;
 	}
@@ -390,7 +390,7 @@ SearchStatus SSSearch::step() {
 	    ss_probes=250;
 	  }
 	  else{
-	    ss_probes=500;
+	    //ss_probes=500;
 	  }
 	  cout<<"setting probes to "<<ss_probes<<endl;
       }
@@ -1860,7 +1860,12 @@ void SSSearch::mkdirAstar(string  method, string heuristic, string probLogs) {
                 cout<<"create directory "<<dirProblema.c_str()<<"\n";
         }
 
-	string dirResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic+"/reportastar_"+method;
+	string reportstr = "reportastar_";
+        reportstr += boost::lexical_cast<std::string>(ss_probes);
+        reportstr += "_" + method;
+        cout<<"reportstr = "<<reportstr<<"\n";
+
+	string dirResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic+"/"+reportstr;
         if (system(dirResultado.c_str())) {
         	cout<<"create directory "<<dirResultado.c_str()<<"\n";
         }
@@ -1913,9 +1918,9 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 
 
 	if (apply_max) {
-		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 	} else {
-	 	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+	 	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 	}
 
 	outfile<<"\n\nrm ${DIR}\n\n";
