@@ -327,7 +327,7 @@ void EagerSearchOriginal::generateReport() {
         cout<<"heuristica = "<<heuristica<<"\n";
         cout<<"problem_name_gapdb = "<<problem_name_gapdb<<"\n";
 	cout<<"dir_name = "<<dir_name<<"\n";
-        string name, dirDomain, dirSSCC, dirSSCCFile, outputFile;
+        string name, dirReportSTR, dirDomain, dirSSCC, dirSSCCFile, outputFile;
 
 	size_t found = tarefa.find(".");
         //cout<<"found = "<<found<<endl;
@@ -335,13 +335,22 @@ void EagerSearchOriginal::generateReport() {
         name += ".csv";
 
 	string reportstr = "reportastar_";
-	reportstr += boost::lexical_cast<std::string>(ss_probes);
-	reportstr += "_" + dir_name;
+	if (ss_probes == 0) {
+		reportstr += "single_astar";
+	} else {
+		reportstr += boost::lexical_cast<std::string>(ss_probes);	
+		reportstr += "_" + dir_name;
+	}
 	cout<<"reportstr = "<<reportstr<<"\n";
 
+        dirReportSTR = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/"+reportstr;
         dirDomain = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/"+reportstr+"/"+dominio;
         dirSSCC = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/"+reportstr+"/"+dominio+"/bc";
         outputFile =  _HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/"+reportstr+"/"+dominio+"/bc/"+name;
+
+	if (system(dirReportSTR.c_str())) {
+        	cout<<"Directory: "<<dirReportSTR.c_str()<<" created."<<endl;
+        }
 
         if (system(dirDomain.c_str())) {
         	cout<<"Directory: "<<heuristica<<" created."<<endl;
