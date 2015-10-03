@@ -1900,27 +1900,32 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 	
 	//Begin construction of the sh file
 	outfile<<"#!/bin/bash\n\n";
-        outfile<<"#PBS -N "<<ASTAR_GOOD_NAME<<"\n\n#PBS -m a\n\n#PBS -l walltime="<<good_timer<<"\n\n";
-	outfile<<"#PBS -M marvin.zarate@ufv.br\n\n";
+        outfile<<"#PBS -N "<<ASTAR_GOOD_NAME<<"\n\n";
+	//outfile<<"#PBS -m a\n\n";	
+	//outfile<<"#PBS -M marvin.zarate@ufv.br\n\n";
+	outfile<<"#PBS -l walltime="<<good_timer<<"\n\n";
 	outfile<<"source /usr/share/modules/init/bash\n\n";
 	outfile<<"module load python\nmodule load mercurial\n\n";
 
 	//cout<<"pasta = "<<dominio_global<<"\n\n;
+	outfile<<"FD_SYMBA_HIBRIDS=/home/marvin/fd/FD_problems_SYMBA_HYBRID\n\n";
 	outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
         outfile<<"TEMP="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/temp\n\n";
         outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";	
         outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio_global<<"/resultado\n\n";
 	outfile<<"cd ${DIR}\n\n";
-        outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio_global<<"/"<<domain_pddl_global<<" ${FD_ROOT}/benchmarks/"<<dominio_global<<"/"<<tarefa_global<<"\n\n";
+        //outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio_global<<"/"<<domain_pddl_global<<" ${FD_ROOT}/benchmarks/"<<dominio_global<<"/"<<tarefa_global<<"\n\n";
 
-        outfile<<"${FD_ROOT}/src/preprocess/preprocess < output.sas"<<"\n\n"; 
+        //outfile<<"${FD_ROOT}/src/preprocess/preprocess < output.sas"<<"\n\n"; 
 	//Santiago's code to find the F_boundary on the fly
 
+	string outputSA = translator(dominio_global, tarefa_global);
+	cout<<"outputSA="<<outputSA<<"\n";
 
 	if (apply_max) {
-		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 	} else {
-	 	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  output > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+	 	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 	}
 
 	outfile<<"\n\nrm ${DIR}\n\n";
@@ -1953,6 +1958,231 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 		}
 	}
 }
+
+int SSSearch::toDecimal(int n_no) {
+	int n;
+	switch (n_no) {
+		case 11:
+			n = 1;
+			break;
+		case 12:
+			n = 2;
+			break;
+		case 13:
+			n = 3;
+			break;
+		case 14:
+			n = 4;
+			break;
+		case 15:
+			n = 5;
+			break;
+		case 16:
+			n = 6;
+			break;
+		case 17:
+			n = 7;
+			break;
+		case 18:
+			n = 8;
+			break;
+		case 19:
+			n = 9;
+			break;
+		case 20:
+			n = 10;
+			break;
+		case 21:
+			n = 11;
+			break;
+		case 22:
+			n = 12;
+			break;
+		case 23:
+			n = 13;
+			break;
+		case 24:
+			n = 14;
+			break;
+		case 25:
+			n = 15;
+			break;
+		case 26:
+			n = 16;
+			break;
+		case 27:
+			n = 17;
+			break;
+		case 28:
+			n = 18;
+			break;
+		case 29:
+			n = 19;
+			break;
+		case 30:
+			n = 20;
+			break;
+		default:
+			n = 0;
+			break;
+	}
+	return n;
+}
+
+int SSSearch::getVisitAllInt(string instance) {
+	int n;
+	if (instance == "problem02-full.pddl") {
+		n = 1;
+	} else if (instance == "problem02-half.pddl") {
+		n = 2;
+	} else if (instance == "problem03-full.pddl") {
+		n = 3;
+	} else if (instance == "problem03-half.pddl") {
+		n = 4;
+	} else if (instance == "problem04-full.pddl") {
+		n = 5;
+	} else if (instance == "problem04-half.pddl") {
+		n = 6;
+	} else if (instance == "problem05-full.pddl") {
+		n = 7;
+	} else if (instance == "problem05-half.pddl") {
+		n = 8;
+	} else if (instance == "problem06-full.pddl") {
+		n = 9;
+	} else if (instance == "problem06-half.pddl") {
+		n = 10;
+	} else if (instance == "problem07-full.pddl") {
+		n = 11;
+	} else if (instance == "problem07-half.pddl") {
+		n = 12;
+	} else if (instance == "problem08-full.pddl") {
+		n = 13;
+	} else if (instance == "problem08-half.pddl") {
+		n = 14;
+	} else if (instance == "problem09-full.pddl") {
+		n = 15;
+	} else if (instance == "problem09-half.pddl") {
+		n = 16;
+	} else if (instance == "problem10-full.pddl") {
+		n = 17;
+	} else if (instance == "problem10-half.pddl") {
+		n = 18;
+	} else if (instance == "problem11-full.pddl") {
+		n = 19;
+	} else if (instance == "problem11-half.pddl") {
+		n = 20;
+	} else {
+		n = 0;
+	}
+	return n;
+}
+
+string SSSearch::getSimplePXX(string instance, string FINAL_NAME) {
+	string result;
+	string s = instance;
+        size_t t = s.find(".");
+        string p_number = s.substr(0, t);
+        size_t t2 = p_number.find("p");
+        string number = p_number.substr(t2 +1, p_number.length());
+        int n = atoi(number.c_str());
+        ostringstream convert_number;
+        convert_number << n;
+        string Result_n = convert_number.str();
+        string globalpxx = FINAL_NAME;
+        globalpxx += Result_n;
+        result = globalpxx;
+	return result;
+}
+
+string SSSearch::translator(string key, string instance) {
+	cout<<"key="<<key<<"\n";
+	string result;
+	cout<<"instance="<<instance<<"\n";
+        if (key == "barman-opt11-strips") {
+                string s = instance;
+                size_t t = s.find("-");
+                string number_pddl = s.substr(t + 1, s.length());
+		size_t t2 = number_pddl.find(".");
+		string number = number_pddl.substr(0, t2);
+		int n = atoi(number.c_str());
+		ostringstream convert_number;
+                convert_number << n;
+                string Result_n = convert_number.str();	
+		string barman = "BARMAN-";
+		barman += Result_n;
+		result = barman;
+        } else if (key == "elevators-opt11-strips") {
+		result = getSimplePXX(instance, "ELEVATORS-");	
+        } else if (key == "floortile-opt11-strips") {
+		string s = instance;
+		string delimiter = "-";
+                string pot[6];
+                size_t pos = 0;
+                string token;
+                int index = 0;
+                while ((pos = s.find(delimiter)) != std::string::npos) {
+                	token = s.substr(0, pos);
+                        //cout<<"token="<<token<<"\n";
+                        pot[index] = token;
+                        s.erase(0, pos + delimiter.length());
+                        index++;
+                }
+                pot[index] = s;
+		string number_pddl = pot[2];
+		size_t t2 = number_pddl.find(".");
+		string number = number_pddl.substr(0, t2);
+		int n = atoi(number.c_str());
+		ostringstream convert_number;
+                convert_number << n;
+                string Result_n = convert_number.str();	
+		string floortile = "FLOORTILE-";
+		floortile += Result_n;
+		result = floortile;
+        } else if (key == "nomystery-opt11-strips") {
+		result = getSimplePXX(instance, "NOMYSTERY-");
+        } else if (key == "openstacks-opt11-strips") {
+		result = getSimplePXX(instance, "OPENSTACKS-");
+        } else if (key == "parcprinter-opt11-strips") {
+		result = getSimplePXX(instance, "PARCPRINTER-");
+        } else if (key == "parking-opt11-strips") {
+		string s = instance;
+                size_t t = s.find("-");
+                string number_pddl = s.substr(t + 1, s.length());
+		size_t t2 = number_pddl.find(".");
+		string number = number_pddl.substr(0, t2);
+		int n_no_translate = atoi(number.c_str());
+		int n = toDecimal(n_no_translate);
+		ostringstream convert_number;
+                convert_number << n;
+                string Result_n = convert_number.str();	
+		string parking = "PARKING-";
+		parking += Result_n;
+		result = parking;
+        } else if (key == "pegsol-opt11-strips") {
+		result = getSimplePXX(instance, "PEGSOL-");
+        } else if (key == "scanalyzer-opt11-strips") {	
+		result = getSimplePXX(instance, "SCANALYZER-");
+        } else if (key == "sokoban-opt11-strips") {	
+		result = getSimplePXX(instance, "SOKOBAN-");
+        } else if (key == "tidybot-opt11-strips") {
+		result = getSimplePXX(instance, "TIDYBOT-");
+        } else if (key == "transport-opt11-strips") {	
+		result = getSimplePXX(instance, "TRANSPORT-");
+        } else if (key == "visitall-opt11-strips") {
+		int n = getVisitAllInt(instance);
+		ostringstream convert_number;
+                convert_number << n;
+                string Result_n = convert_number.str();	
+		string visitall = "VISITALL-";
+		visitall += Result_n;
+		result = visitall;
+	
+        } else if (key == "woodworking-opt11-strips") {	
+		result = getSimplePXX(instance, "WOODWORKING-");
+        }
+        return result;
+}
+
 
 double SSSearch::getProbingResult() {
  //static map<boost::dynamic_bitset<>,double> prev_collector;

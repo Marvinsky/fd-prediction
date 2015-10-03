@@ -204,4 +204,8 @@ public:
 	string processHeuristicProperties(string heuristic, vector<string> info, string heuristic_good);
 	string processAllHeuristicProperties(string heuristic, vector<string> info, string heuristic_good, int total_gapdb_heuristics, int &counter_just_ga_heur);
 	pair<string, string> getPairRealNumber(string real_heur);
+	string translator(string domain, string instance);
+	string getSimplePXX(string instance, string FINAL_NAME);
+	int getVisitAllInt(string instance);
+	int toDecimal(int n_no);
 };
