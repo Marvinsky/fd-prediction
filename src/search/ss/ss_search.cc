@@ -1908,7 +1908,7 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 	outfile<<"module load python\nmodule load mercurial\n\n";
 
 	//cout<<"pasta = "<<dominio_global<<"\n\n;
-	outfile<<"FD_SYMBA_HIBRIDS=/home/marvin/fd/FD_problems_SYMBA_HYBRID\n\n";
+	outfile<<"FD_SYMBA_HIBRIDS="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/FD_problems_SYMBA_HYBRID\n\n";
 	outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
         outfile<<"TEMP="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/temp\n\n";
         outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";	
