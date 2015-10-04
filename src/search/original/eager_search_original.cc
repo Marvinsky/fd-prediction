@@ -335,12 +335,16 @@ void EagerSearchOriginal::generateReport() {
         name += ".csv";
 
 	string reportstr = "reportastar_";
-	if (ss_probes == 0) {
+	if (ss_probes == 0) {//lmcut, ipdb, m&s
 		reportstr += "single_astar";
-	} else {
+	} else if (run_n_heuristics == 0) {//no heuristics changes
 		reportstr += boost::lexical_cast<std::string>(ss_probes);	
 		reportstr += "_" + dir_name;
+	} else {
+		reportstr += boost::lexical_cast<std::string>(ss_probes);	
+		reportstr += "_" + dir_name + "_" + boost::lexical_cast<std::string>(run_n_heuristics);
 	}
+
 	cout<<"reportstr = "<<reportstr<<"\n";
 
         dirReportSTR = "mkdir "+_HOME_INFO_ASTAR+"/marvin/marvin/astar/"+heuristica+"/"+reportstr;

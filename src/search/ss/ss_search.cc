@@ -190,7 +190,7 @@ if(f_boundary!=0){
 	    ss_probes=250;
 	  }
 	  else{
-	    //ss_probes=500;
+	    ss_probes=500;
 	  }
 	  cout<<"Not doing domination_check, setting probes to :"<<ss_probes<<endl;
 	}
@@ -390,7 +390,7 @@ SearchStatus SSSearch::step() {
 	    ss_probes=250;
 	  }
 	  else{
-	    //ss_probes=500;
+	    ss_probes=500;
 	  }
 	  cout<<"setting probes to "<<ss_probes<<endl;
       }
@@ -1227,6 +1227,7 @@ void SSSearch::updateGlobalVariables() {
         tarefa_global = problem_name2;
         heuristica_global = heuristic_name2;
 	domain_pddl_global = domain_instance_pddl;
+	num_htc = run_n_heuristics;
 }
 
 void SSSearch::updateSSCC() {
@@ -1249,7 +1250,12 @@ void SSSearch::updateSSCC() {
 	} else {
 		string nameProbes = "reportss_";
                 nameProbes += boost::lexical_cast<std::string>(n_probes_global);
-                nameProbes += "_probes_sscc";
+
+		if (num_htc == 0) {
+                	nameProbes += "_probes_sscc";
+		} else {	
+                	nameProbes += "_probes_sscc_" +  boost::lexical_cast<std::string>(num_htc);;
+		}
                 cout<<"nameProbes = "<<nameProbes<<"\n";
 
 		dirDomain = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+ nameProbes +"/"+dominio_global;
@@ -1402,7 +1408,7 @@ void SSSearch::generateSSCCReport(bool termination) {
                 	string s = iter_test->first;
                 	double d = iter_test->second;
 			number_gapdb_heurs.push_back(s);
-                	cout<<s<<", "<<d<<"\n";
+                	//cout<<s<<", "<<d<<"\n";
                 	if (min_number_expanded > d) {
                         	min_number_expanded = d;
                         	min_number_heuristic = s;
@@ -1424,7 +1430,7 @@ void SSSearch::generateSSCCReport(bool termination) {
 				string found_heur = iter->first;
 				double search_tree_prediction = iter->second;
 				double cost_heur = search_tree_prediction*calculate_time_costs_specific(b_comb);
-				cout<<"heuristic="<<found_heur<<"prediction="<<search_tree_prediction<<",b_comb.size()="<<b_comb.size()<<"\t"<<b_comb<<"\tcost_heur="<<cost_heur<<"\n";
+				//cout<<"heuristic="<<found_heur<<"prediction="<<search_tree_prediction<<",b_comb.size()="<<b_comb.size()<<"\t"<<b_comb<<"\tcost_heur="<<cost_heur<<"\n";
 				if (min_eval_time > cost_heur) {
 					min_eval_time = cost_heur;
 					index_min_eval_time = i;
@@ -1474,7 +1480,11 @@ void SSSearch::generateSSCCReport(bool termination) {
 
 		string PROB_GOOD = "problemas_";
                 PROB_GOOD += boost::lexical_cast<std::string>(n_probes_global);
-                PROB_GOOD += "_probes_sscc";
+		if (num_htc == 0) {
+                	PROB_GOOD += "_probes_sscc";
+		} else {
+                	PROB_GOOD += "_probes_sscc_" + boost::lexical_cast<std::string>(num_htc); 
+		}
                 //cout<<"PROB_GOOD = "<<PROB_GOOD<<"\n";
 		int deep_F_boundary = threshold;
 		string method = "sscc";
@@ -1862,7 +1872,11 @@ void SSSearch::mkdirAstar(string  method, string heuristic, string probLogs) {
 
 	string reportstr = "reportastar_";
         reportstr += boost::lexical_cast<std::string>(ss_probes);
-        reportstr += "_" + method;
+	if (num_htc == 0) {
+        	reportstr += "_" + method;
+	} else {
+        	reportstr += "_" + method + "_" + boost::lexical_cast<std::string>(num_htc);
+	}
         cout<<"reportstr = "<<reportstr<<"\n";
 
 	string dirResultado = "mkdir "+_HOME_INFO+"/marvin/marvin/astar/"+heuristic+"/"+reportstr;
@@ -1923,9 +1937,9 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 	cout<<"outputSA="<<outputSA<<"\n";
 
 	if (apply_max) {
-		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<" --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 	} else {
-	 	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+	 	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<"  --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 	}
 
 	outfile<<"\n\nrm ${DIR}\n\n";
@@ -2361,9 +2375,13 @@ void SSSearch::select_random_greedy(bool termination) {
 		//create new variable called deep_F_boundary
 		int deep_F_boundary = threshold;
       		//cout<<"deep_F_boundary = "<<deep_F_boundary<<"\n";
-		string PROB_GOOD = "problemas_";
+		string PROB_GOOD = "problemas_";	
                 PROB_GOOD += boost::lexical_cast<std::string>(n_probes_global);
-                PROB_GOOD += "_probes_grhs";
+		if (num_htc == 0) {
+                	PROB_GOOD += "_probes_grhs";
+		} else {
+                	PROB_GOOD += "_probes_grhs_" + boost::lexical_cast<std::string>(num_htc);
+		}
                 //cout<<"PROB_GOOD = "<<PROB_GOOD<<"\n";
         	//begin
 		vector<string> v_gapdb_string;//store the heuristics with properties
@@ -2446,7 +2464,11 @@ void SSSearch::updateGRHS() {
 	string dirDomain_greedy, dirDomain, dirSSCC, outputFile;
 	string nameProbes = "reportss_";
         nameProbes += boost::lexical_cast<std::string>(n_probes_global);
-       	nameProbes += "_probes_grhs";
+	if (num_htc == 0) {
+       		nameProbes += "_probes_grhs";
+	} else {	
+       		nameProbes += "_probes_grhs_" + boost::lexical_cast<std::string>(num_htc);
+	}
         cout<<"nameProbes = "<<nameProbes<<"\n";
 
 	dirDomain_greedy = "mkdir "+_HOME_INFO+"/marvin/marvin/testss/"+heuristica_global+"/"+nameProbes;

@@ -14,6 +14,10 @@
 
 using namespace std;
 
+//Root and fd information
+string _HOME_INFO_UTIL = "/home";
+string _FD_INFO_UTIL = "/fd";
+
 
 #if OPERATING_SYSTEM == LINUX
 static void exit_handler(int exit_code, void *hint);
@@ -378,13 +382,16 @@ void load_GA_Patterns_from_file(){
   string datstr = "dat_";
   if (ss_probes == 0) {
   	datstr += "info";
-  } else {
+  } else if (run_n_heuristics == 0) {
 	datstr += boost::lexical_cast<std::string>(ss_probes);
   	datstr += "_probes";
+  } else {
+	datstr += boost::lexical_cast<std::string>(ss_probes);
+  	datstr += "_probes_" + boost::lexical_cast<std::string>(run_n_heuristics);
   }
   cout<<"datstr = "<<datstr<<"\n";
  
-  problem_name_mod = "/home/marvin/fd/"+datstr+"/" + problem_name_mod;
+  problem_name_mod = _HOME_INFO_UTIL+"/marvin"+_FD_INFO_UTIL+"/"+datstr+"/" + problem_name_mod;
   cout<<"problem_name_mod = "<<problem_name_mod<<endl;
 
   ifstream in(problem_name_mod.c_str());

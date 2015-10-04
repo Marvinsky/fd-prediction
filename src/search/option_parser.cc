@@ -239,6 +239,7 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
 	    string arg2=string(args[i]);
 	    cout<<"args["<<i<<"]:"<<args[i]<<endl;
 
+
 	if(arg2.find("automate_GAs")!=string::npos){
 	      //string GAs_heur_call_list;
 	      cout<<"input arg:"<<arg2<<endl;
@@ -246,7 +247,7 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
 	      cout<<"new arg after erase:"<<arg2<<endl;
 	      //first allocate all the availabe mp probs to a vector to ensure no repetion of random probabilities
 	      vector<string> mp_probs;
-	      double heurs_to_generate=10;
+	      double heurs_to_generate=(run_n_heuristics==0?10:run_n_heuristics);
 	      cout<<"heurs_to_generate:"<<heurs_to_generate<<endl;
 	        for(int j=0;j<int(heurs_to_generate);j++){
 		  std::stringstream str;
@@ -339,7 +340,10 @@ SearchEngine *OptionParser::parse_cmd_line_aux(
 	} else if (arg.compare("--dir_creation") == 0) {
 		++i;
 		dir_creation = args[i];
-	} else if (arg.compare("--random-seed") == 0) {
+	} else if (arg.compare("--run_n_heuristics") == 0) {
+            ++i;
+            run_n_heuristics = std::stoi(args[i]);
+        } else if (arg.compare("--random-seed") == 0) {
             if (is_last)
                 throw ArgError("missing argument after --random-seed");
             ++i;

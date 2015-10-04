@@ -161,6 +161,7 @@ private:
 	string domain_pddl_global;
 	int n_heuristics_global;
 	int n_probes_global;
+	int num_htc;
 	double number_nodes_expanded;
 	double number_nodes_generated;
 
