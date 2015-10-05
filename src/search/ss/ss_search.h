@@ -209,4 +209,5 @@ public:
 	string getSimplePXX(string instance, string FINAL_NAME);
 	int getVisitAllInt(string instance);
 	int toDecimal(int n_no);
+	string getRealHeuristicName(string h_name);
 };

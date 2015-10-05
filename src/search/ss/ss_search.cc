@@ -90,6 +90,7 @@ if(f_boundary!=0){
         //const GlobalState &s = g_initial_state();
         StateID initial_state_id = g_initial_state().get_id();
 	GlobalState s= g_state_registry->lookup_state(initial_state_id);
+	cout<<"line_93:"<<g_timer()<<"\n";
 	std::cout << "scientific:\n" << std::scientific;
 	while(heur_timings()<1.0){//||node_counter<1000)//in situ measure node generation costs
 	  node_counter++;
@@ -131,33 +132,116 @@ if(f_boundary!=0){
 	else{
 	  time_limit=0.1;
 	}
-	
-	for (size_t i = 0; i < heuristics.size(); i++){
-	   // heuristics[i]->evaluate(*g_initial_state);
-	    //cout<<"h[,"<<i<<",] time_cost is,"<<heuristics[i]->get_time_cost()<<endl;
-	      heur_timings.reset();heur_timings.resume();
-	      double counter=0;
-	      double counter_limit=1000;
-	      while(heur_timings()<time_limit){
-		while(counter<counter_limit){//in situ measure heuristic evaluation costs
-		  counter++;
-		  heuristics[i]->evaluate(s);
+	//cout<<"time_limit="<<time_limit<<"\n";
+	if (true) {
+		int default_evaluation = 100;
+		int counter_evaluation = 0;
+		double default_TPN_gapdb = 0;
+		double sum_default_TPN_gapdb = 0;
+		double heur_timing_limit=0.1;
+
+		for (size_t i = 0; i < heuristics.size(); i++) {
+			string s_hn=heuristics[i]->get_heur_name();
+			string heur_name = getRealHeuristicName(s_hn);
+			//cout<<"heur_name="<<heur_name<<"\n";
+			if(heur_name.find("lmcut")!=string::npos){
+				heur_timing_limit=1;
+	      			heur_timings.reset();heur_timings.resume();
+	      			double counter=0;
+	      			double counter_limit=1000;
+	      			while(heur_timings()<heur_timing_limit){
+					while(counter<counter_limit){//in situ measure heuristic evaluation costs
+		  				counter++;
+		  				heuristics[i]->evaluate(s);
+					}
+					counter_limit+=1000;
+	      			}
+	      			double TPN=double(heur_timings())/counter;
+	      			heur_timings.stop();
+	      			cout<<"heur_timings:"<<heur_timings()<<",counter:"<<counter<<",TPN:"<<TPN<<endl;
+	      			max_TPN=max(TPN,max_TPN);
+	      			aggr_TPN+=TPN;
+	      			HUST_TPN+=TPN; 
+	      			heuristics[i]->set_measured_TPN(TPN);
+	      			cout<<"h[,"<<i<<",] is:,"<<heuristics[i]->get_heur_name()<<",measured time cost:"<<heuristics[i]->get_measured_TPN()<<",h:"<<heuristics[i]->get_heuristic()<<endl;
+	  		} else if (heur_name.find("ipdb")!=string::npos) {
+				heur_timing_limit=0.5;	
+	      			heur_timings.reset();heur_timings.resume();
+	      			double counter=0;
+	      			double counter_limit=1000;
+	      			while(heur_timings()<heur_timing_limit){
+					while(counter<counter_limit){//in situ measure heuristic evaluation costs
+		  				counter++;
+		  				heuristics[i]->evaluate(s);
+					}
+					counter_limit+=1000;
+	      			}
+	      			double TPN=double(heur_timings())/counter;
+	      			heur_timings.stop();
+	      			cout<<"heur_timings:"<<heur_timings()<<",counter:"<<counter<<",TPN:"<<TPN<<endl;
+	      			max_TPN=max(TPN,max_TPN);
+	      			aggr_TPN+=TPN;
+	      			HUST_TPN+=TPN; 
+	      			heuristics[i]->set_measured_TPN(TPN);
+	      			cout<<"h[,"<<i<<",] is:,"<<heuristics[i]->get_heur_name()<<",measured time cost:"<<heuristics[i]->get_measured_TPN()<<",h:"<<heuristics[i]->get_heuristic()<<endl;	
+			} else if (heur_name.find("gapdb")!=string::npos){
+				if (counter_evaluation == default_evaluation) {
+					continue;
+				}
+	    			heur_timing_limit=0.01;
+				heur_timings.reset();heur_timings.resume();
+	      			double counter=0;
+	      			double counter_limit=1000;
+	      			while(heur_timings()<heur_timing_limit){
+					while(counter<counter_limit){//in situ measure heuristic evaluation costs
+		  				counter++;
+		  				heuristics[i]->evaluate(s);
+					}
+					counter_limit+=1000;
+	      			}
+				counter_evaluation++;
+				sum_default_TPN_gapdb+=double(heur_timings())/counter;
+	  		}
 		}
-		counter_limit+=1000;
-	      }
+
+		default_TPN_gapdb = double(sum_default_TPN_gapdb/default_evaluation);
+
+		for (size_t i = 0; i < heuristics.size(); i++) {
+			string heur_name= getRealHeuristicName(heuristics[i]->get_heur_name());
+	  		if (heur_name.find("gapdb")!=string::npos){
+	      			heuristics[i]->set_measured_TPN(default_TPN_gapdb);
+	  		}
+	      		cout<<"h[,"<<i<<",] is:,"<<heuristics[i]->get_heur_name()<<",measured time cost:"<<heuristics[i]->get_measured_TPN()<<",h:"<<heuristics[i]->get_heuristic()<<endl;
+		}
+	} else {
+		for (size_t i = 0; i < heuristics.size(); i++){
+	   		// heuristics[i]->evaluate(*g_initial_state);
+	    		//cout<<"h[,"<<i<<",] time_cost is,"<<heuristics[i]->get_time_cost()<<endl;
+	      		heur_timings.reset();heur_timings.resume();
+	      		double counter=0;
+	      		double counter_limit=1000;
+	      		while(heur_timings()<time_limit){
+				while(counter<counter_limit){//in situ measure heuristic evaluation costs
+		  			counter++;
+		  			heuristics[i]->evaluate(s);
+				}
+				counter_limit+=1000;
+	      		}
 	    
-	      double TPN=double(heur_timings())/counter;
-	      heur_timings.stop();
-	      cout<<"heur_timings:"<<heur_timings()<<",counter:"<<counter<<",TPN:"<<TPN<<endl;
-	      max_TPN=max(TPN,max_TPN);
-	      aggr_TPN+=TPN;
-	      HUST_TPN+=TPN;
+	      		double TPN=double(heur_timings())/counter;
+	      		heur_timings.stop();
+	      		cout<<"heur_timings:"<<heur_timings()<<",counter:"<<counter<<",TPN:"<<TPN<<endl;
+	      		max_TPN=max(TPN,max_TPN);
+	      		aggr_TPN+=TPN;
+	      		HUST_TPN+=TPN;
 	        
-	      heuristics[i]->set_measured_TPN(TPN);
-	      cout<<"h[,"<<i<<",] is:,"<<heuristics[i]->get_heur_name()<<",measured time cost:"<<heuristics[i]->get_measured_TPN()<<",h:"<<heuristics[i]->get_heuristic()<<endl;
+	      		heuristics[i]->set_measured_TPN(TPN);
+	      		cout<<"h[,"<<i<<",] is:,"<<heuristics[i]->get_heur_name()<<",measured time cost:"<<heuristics[i]->get_measured_TPN()<<",h:"<<heuristics[i]->get_heuristic()<<endl;
+		}
+
 	}
 	//Ending timing node generation time
-	      
+	cout<<"line_161:"<<g_timer()<<"\n";    
 	cout<<"max_h before lmcut:"<<max_h<<endl;fflush(stdout);
 #ifdef _LMCUT_EARLY_TERM
 	cout<<"_LMCUT_EARLY_TERM:"<<endl;fflush(stdout);
@@ -177,7 +261,7 @@ if(f_boundary!=0){
 	this->RanGen2 = new CRandomMersenne(1);        
 	cout<<"random seed set to 1"<<endl;
 	if(!domination_check){
-	  if(heuristics.size()>1000){
+	  /*if(heuristics.size()>1000){
 	    ss_probes=20;
 	  }
 	  else if(heuristics.size()>500){
@@ -191,7 +275,7 @@ if(f_boundary!=0){
 	  }
 	  else{
 	    ss_probes=500;
-	  }
+	  }*/
 	  cout<<"Not doing domination_check, setting probes to :"<<ss_probes<<endl;
 	}
 }
@@ -377,7 +461,7 @@ SearchStatus SSSearch::step() {
 	  cout<<"domination checks overall time:"<<search_time()-start_time_dom_check<<endl;
 	  cout<<"setting threshold back to "<<original_threshold<<endl;
 	  threshold=original_threshold;f_boundary=threshold;
-	  if(heuristics.size()>1000){
+	  /*if(heuristics.size()>1000){
 	    ss_probes=20;
 	  }
 	  else if(heuristics.size()>500){
@@ -391,7 +475,7 @@ SearchStatus SSSearch::step() {
 	  }
 	  else{
 	    ss_probes=500;
-	  }
+	  }*/
 	  cout<<"setting probes to "<<ss_probes<<endl;
       }
       if(!domination_check){
@@ -1108,6 +1192,35 @@ int SSSearch::getMaxHeur(vector<int> v) {
 	//cout<<"\n";
 	return h_max;
 }
+
+string SSSearch::getRealHeuristicName(string s_hn) {
+	string delimiter = ",";
+        string pot[6];
+        size_t pos = 0;
+        string token;
+        int index = 0;
+        while ((pos = s_hn.find(delimiter)) != std::string::npos) {
+        	token = s_hn.substr(0, pos);
+                pot[index] = token;
+                s_hn.erase(0, pos + delimiter.length());
+                index++;
+        }
+        pot[index] = s_hn;
+	string heur_name=pot[0];
+
+	string name;
+	if (heur_name == "ipdb") {
+        	name = "ipdb";
+        } else if (heur_name == "lmcut") {
+        	name = "lmcut";
+        } else if (heur_name == "merge_and_shrink") {
+        	name = "merge_and_shrink";
+        } else {
+        	name = "gapdb";
+        }
+	return name;
+}
+
 
 void SSSearch::runReports(bool cmd) {
 	if (run_method == "grhs") {

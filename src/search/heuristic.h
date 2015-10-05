@@ -71,7 +71,7 @@ public:
 
     //Prediction  A* = Dijkstra + ss + kre
     virtual string get_heur_name() {string temp = "No Name"; return temp;}
-    virtual void print_heur_name() {cout<<this->get_heur_name();}
+    virtual void print_heur_name() {/*cout<<this->get_heur_name();*/}
     virtual string get_heur_call_name(){string temp = "No Name"; return temp;}
 
 
