@@ -2064,7 +2064,7 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 	bool is_in_cluster = false;
 
         if (is_in_cluster) {
-		executeFile = "qsub -l nodes=1:ppn=1,mem=6000mb "+arquivo;
+		executeFile = "qsub -l nodes=1:ppn=1,mem=4000mb "+arquivo;
         	//executeFile = "qsub -l select=1:ncpus=1:mem=6GB "+arquivo;
         	cout<<executeFile<<"\n\n";
 		if(system(executeFile.c_str())) {
