@@ -169,15 +169,17 @@ void PatternGenerationEdelkamp::dump_file() const {
 	}
 
 	string datstr = "dat_";
-	if (ss_probes == 0) {
+  	if (ss_probes == 0 && dir_creation == "temp") {
         	datstr += "info";
+	} else if (ss_probes == 0 && run_n_heuristics > 0) {
+        	datstr += "info_"+dir_creation+"_"+boost::lexical_cast<std::string>(run_n_heuristics);
 	} else if (run_n_heuristics == 0) {
-		datstr += boost::lexical_cast<std::string>(ss_probes);
-		datstr += "_probes";
+        	datstr += boost::lexical_cast<std::string>(ss_probes);
+        	datstr += "_probes";
   	} else {
-		datstr += boost::lexical_cast<std::string>(ss_probes);
-		datstr += "_probes_" + boost::lexical_cast<std::string>(run_n_heuristics);
-	}
+        	datstr += boost::lexical_cast<std::string>(ss_probes);
+        	datstr += "_probes_" + boost::lexical_cast<std::string>(run_n_heuristics);
+  	}
   	cout<<"datstr = "<<datstr<<"\n";
         cout<<"pdb_dump_counter = "<<pdb_dump_counter<<endl;
 	if (pdb_dump_counter == 0) {

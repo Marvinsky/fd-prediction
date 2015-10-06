@@ -380,8 +380,10 @@ void load_GA_Patterns_from_file(){
   problem_name_mod = domain_name + problem_name_mod;
 
   string datstr = "dat_";
-  if (ss_probes == 0) {
+  if (ss_probes == 0 && dir_creation == "temp") {
   	datstr += "info";
+  } else if (ss_probes == 0 && run_n_heuristics > 0) {
+	datstr += "info_"+dir_creation+"_"+boost::lexical_cast<std::string>(run_n_heuristics);
   } else if (run_n_heuristics == 0) {
 	datstr += boost::lexical_cast<std::string>(ss_probes);
   	datstr += "_probes";
