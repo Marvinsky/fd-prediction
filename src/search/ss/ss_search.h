@@ -113,7 +113,6 @@ private:
         double totalPrediction;
 	double totalPredictionMean;
 
-        std::vector<Heuristic*> heuristics;
 	std::vector<Heuristic*> lmcut_heuristic; 
 	std::vector<Heuristic*> all_heuristics; 
 	Heuristic* heuristic;
@@ -210,4 +209,8 @@ public:
 	int getVisitAllInt(string instance);
 	int toDecimal(int n_no);
 	string getRealHeuristicName(string h_name);
+	//drop heuristics
+	void runReportsBwtProbes();
+	//double getSumSizeTree(vector<pair<string, double> > Z_subset);
+
 };

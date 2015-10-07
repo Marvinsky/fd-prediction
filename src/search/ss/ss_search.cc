@@ -59,7 +59,7 @@ if(f_boundary!=0){
 	    }
 	    else{
 #endif
-	      heuristics.push_back(*it);
+	      //all_heuristics.push_back(*it);
 #ifdef _LMCUT_EARLY_TERM
 	    }
 #endif
@@ -67,16 +67,16 @@ if(f_boundary!=0){
 	    heuristics_active++;
 	  }
 	}
-	assert(heuristics.size() == 1);
+	assert(all_heuristics.size() == 1);
 
 	int min_h = INT_MAX/2;
 	int max_h = 0;
-        for (size_t i = 0; i < heuristics.size(); i++) {
-            heuristics[i]->evaluate(g_initial_state());
-            int aux = heuristics[i]->get_heuristic();
+        for (size_t i = 0; i < all_heuristics.size(); i++) {
+            all_heuristics[i]->evaluate(g_initial_state());
+            int aux = all_heuristics[i]->get_heuristic();
             if (min_h > aux) {
 		min_h = aux;
-                heuristic = heuristics[i];
+                heuristic = all_heuristics[i];
 	    }
 	    max_h=max(aux,max_h);
 	}
@@ -120,13 +120,13 @@ if(f_boundary!=0){
 	s= g_state_registry->lookup_state(initial_state_id);
 	std::cout << "scientific:\n" << std::scientific;
 	double time_limit=0;
-	if(heuristics.size()>10000){
+	if(all_heuristics.size()>10000){
 	  time_limit=0.0001;
 	}
-	else if(heuristics.size()>1000){
+	else if(all_heuristics.size()>1000){
 	  time_limit=0.001;
 	}
-	else if(heuristics.size()>100){
+	else if(all_heuristics.size()>100){
 	  time_limit=0.01;
 	}
 	else{
@@ -140,8 +140,8 @@ if(f_boundary!=0){
 		double sum_default_TPN_gapdb = 0;
 		double heur_timing_limit=0.1;
 
-		for (size_t i = 0; i < heuristics.size(); i++) {
-			string s_hn=heuristics[i]->get_heur_name();
+		for (size_t i = 0; i < all_heuristics.size(); i++) {
+			string s_hn=all_heuristics[i]->get_heur_name();
 			string heur_name = getRealHeuristicName(s_hn);
 			//cout<<"heur_name="<<heur_name<<"\n";
 			if(heur_name.find("lmcut")!=string::npos){
@@ -152,7 +152,7 @@ if(f_boundary!=0){
 	      			while(heur_timings()<heur_timing_limit){
 					while(counter<counter_limit){//in situ measure heuristic evaluation costs
 		  				counter++;
-		  				heuristics[i]->evaluate(s);
+		  				all_heuristics[i]->evaluate(s);
 					}
 					counter_limit+=1000;
 	      			}
@@ -162,8 +162,8 @@ if(f_boundary!=0){
 	      			max_TPN=max(TPN,max_TPN);
 	      			aggr_TPN+=TPN;
 	      			HUST_TPN+=TPN; 
-	      			heuristics[i]->set_measured_TPN(TPN);
-	      			cout<<"h[,"<<i<<",] is:,"<<heuristics[i]->get_heur_name()<<",measured time cost:"<<heuristics[i]->get_measured_TPN()<<",h:"<<heuristics[i]->get_heuristic()<<endl;
+	      			all_heuristics[i]->set_measured_TPN(TPN);
+	      			cout<<"h[,"<<i<<",] is:,"<<all_heuristics[i]->get_heur_name()<<",measured time cost:"<<all_heuristics[i]->get_measured_TPN()<<",h:"<<all_heuristics[i]->get_heuristic()<<endl;
 	  		} else if (heur_name.find("ipdb")!=string::npos) {
 				heur_timing_limit=0.5;	
 	      			heur_timings.reset();heur_timings.resume();
@@ -172,7 +172,7 @@ if(f_boundary!=0){
 	      			while(heur_timings()<heur_timing_limit){
 					while(counter<counter_limit){//in situ measure heuristic evaluation costs
 		  				counter++;
-		  				heuristics[i]->evaluate(s);
+		  				all_heuristics[i]->evaluate(s);
 					}
 					counter_limit+=1000;
 	      			}
@@ -182,8 +182,8 @@ if(f_boundary!=0){
 	      			max_TPN=max(TPN,max_TPN);
 	      			aggr_TPN+=TPN;
 	      			HUST_TPN+=TPN; 
-	      			heuristics[i]->set_measured_TPN(TPN);
-	      			cout<<"h[,"<<i<<",] is:,"<<heuristics[i]->get_heur_name()<<",measured time cost:"<<heuristics[i]->get_measured_TPN()<<",h:"<<heuristics[i]->get_heuristic()<<endl;	
+	      			all_heuristics[i]->set_measured_TPN(TPN);
+	      			cout<<"h[,"<<i<<",] is:,"<<all_heuristics[i]->get_heur_name()<<",measured time cost:"<<all_heuristics[i]->get_measured_TPN()<<",h:"<<all_heuristics[i]->get_heuristic()<<endl;	
 			} else if (heur_name.find("gapdb")!=string::npos){
 				if (counter_evaluation == default_evaluation) {
 					continue;
@@ -195,7 +195,7 @@ if(f_boundary!=0){
 	      			while(heur_timings()<heur_timing_limit){
 					while(counter<counter_limit){//in situ measure heuristic evaluation costs
 		  				counter++;
-		  				heuristics[i]->evaluate(s);
+		  				all_heuristics[i]->evaluate(s);
 					}
 					counter_limit+=1000;
 	      			}
@@ -206,24 +206,24 @@ if(f_boundary!=0){
 
 		default_TPN_gapdb = double(sum_default_TPN_gapdb/default_evaluation);
 
-		for (size_t i = 0; i < heuristics.size(); i++) {
-			string heur_name= getRealHeuristicName(heuristics[i]->get_heur_name());
+		for (size_t i = 0; i < all_heuristics.size(); i++) {
+			string heur_name= getRealHeuristicName(all_heuristics[i]->get_heur_name());
 	  		if (heur_name.find("gapdb")!=string::npos){
-	      			heuristics[i]->set_measured_TPN(default_TPN_gapdb);
+	      			all_heuristics[i]->set_measured_TPN(default_TPN_gapdb);
 	  		}
-	      		cout<<"h[,"<<i<<",] is:,"<<heuristics[i]->get_heur_name()<<",measured time cost:"<<heuristics[i]->get_measured_TPN()<<",h:"<<heuristics[i]->get_heuristic()<<endl;
+	      		cout<<"h[,"<<i<<",] is:,"<<all_heuristics[i]->get_heur_name()<<",measured time cost:"<<all_heuristics[i]->get_measured_TPN()<<",h:"<<all_heuristics[i]->get_heuristic()<<endl;
 		}
 	} else {
-		for (size_t i = 0; i < heuristics.size(); i++){
-	   		// heuristics[i]->evaluate(*g_initial_state);
-	    		//cout<<"h[,"<<i<<",] time_cost is,"<<heuristics[i]->get_time_cost()<<endl;
+		for (size_t i = 0; i < all_heuristics.size(); i++){
+	   		// all_heuristics[i]->evaluate(*g_initial_state);
+	    		//cout<<"h[,"<<i<<",] time_cost is,"<<all_heuristics[i]->get_time_cost()<<endl;
 	      		heur_timings.reset();heur_timings.resume();
 	      		double counter=0;
 	      		double counter_limit=1000;
 	      		while(heur_timings()<time_limit){
 				while(counter<counter_limit){//in situ measure heuristic evaluation costs
 		  			counter++;
-		  			heuristics[i]->evaluate(s);
+		  			all_heuristics[i]->evaluate(s);
 				}
 				counter_limit+=1000;
 	      		}
@@ -235,8 +235,8 @@ if(f_boundary!=0){
 	      		aggr_TPN+=TPN;
 	      		HUST_TPN+=TPN;
 	        
-	      		heuristics[i]->set_measured_TPN(TPN);
-	      		cout<<"h[,"<<i<<",] is:,"<<heuristics[i]->get_heur_name()<<",measured time cost:"<<heuristics[i]->get_measured_TPN()<<",h:"<<heuristics[i]->get_heuristic()<<endl;
+	      		all_heuristics[i]->set_measured_TPN(TPN);
+	      		cout<<"h[,"<<i<<",] is:,"<<all_heuristics[i]->get_heur_name()<<",measured time cost:"<<all_heuristics[i]->get_measured_TPN()<<",h:"<<all_heuristics[i]->get_heuristic()<<endl;
 		}
 
 	}
@@ -261,16 +261,16 @@ if(f_boundary!=0){
 	this->RanGen2 = new CRandomMersenne(1);        
 	cout<<"random seed set to 1"<<endl;
 	if(!domination_check){
-	  /*if(heuristics.size()>1000){
+	  /*if(all_heuristics.size()>1000){
 	    ss_probes=20;
 	  }
-	  else if(heuristics.size()>500){
+	  else if(all_heuristics.size()>500){
 	    ss_probes=50;
 	  }
-	  else if(heuristics.size()>250){
+	  else if(all_heuristics.size()>250){
 	    ss_probes=100;
 	  }
-	  else if(heuristics.size()>100){
+	  else if(all_heuristics.size()>100){
 	    ss_probes=250;
 	  }
 	  else{
@@ -318,7 +318,7 @@ SearchStatus SSSearch::step() {
 	  cout<<"domination check, F_culprits:"<<F_culprits.size()<<",b_culprits:"<<collector.size()<<endl;
 	  cout<<"domination checks start, time:"<<search_time()<<endl;double start_time_dom_check=search_time();
 	  set<int> undominated_heuristics;
-	  for (size_t i = 0; i < heuristics.size(); i++){
+	  for (size_t i = 0; i < all_heuristics.size(); i++){
 	    undominated_heuristics.insert(i);
 	  }
 	  set<int> remaining_heurs_to_check=undominated_heuristics;
@@ -374,11 +374,11 @@ SearchStatus SSSearch::step() {
 		just_demoted=false;
 		continue;
 	      }
-	      /*  if(dominator_counter[*it2]==heuristics.size()-1){
+	      /*  if(dominator_counter[*it2]==all_heuristics.size()-1){
 		cout<<"skipping h("<<*it2<<") it is undominated from b_counters"<<endl;
 	      }
 	      else{
-		//cout<<"h is undominated,"<<dominator_counter[*it2]<<",heuristics:"<<heuristics.size()<<endl;
+		//cout<<"h is undominated,"<<dominator_counter[*it2]<<",heuristics:"<<all_heuristics.size()<<endl;
 	      }*/
 	      if(skip_checking.find(make_pair(*it2,*it3))!=skip_checking.end()){
 		  //cout<<"skipping pair("<<*it2<<","<<*it3<<")"<<endl;
@@ -411,7 +411,7 @@ SearchStatus SSSearch::step() {
 	    }
 	    if(just_demoted){
 	      //skip_checking.insert(make_pair(last_heuristic,*it2));//so reverse not possible, in case heuristics have same f values all over!!
-	      heuristics[*it2]->set_stop_using(true);
+	      all_heuristics[*it2]->set_stop_using(true);
 	      demotted_heurs.push_back(*it2);
 	      cout<<"h("<<*it2<<" was dominated by heuristic "<<last_heuristic<<", demoting it to weak,time;"<<search_time()<<endl;
 	      at_least_one_dominated=true;
@@ -448,29 +448,29 @@ SearchStatus SSSearch::step() {
 	}
 	  cout<<"Cleared F_culprits"<<endl;F_culprits.clear();
 	  vector<Heuristic *> temp_heuristics;
-	  for(size_t i=0;i<heuristics.size();i++){
-	    if(heuristics[i]->is_using()){
-	      temp_heuristics.push_back(heuristics[i]);
+	  for(size_t i=0;i<all_heuristics.size();i++){
+	    if(all_heuristics[i]->is_using()){
+	      temp_heuristics.push_back(all_heuristics[i]);
 	    }
 	  }
 	  cout<<"Finished checking for dominated_heuristics, heuristics left:"<<temp_heuristics.size()<<",demotted_heurs:"<<demotted_heurs.size()<<",search_time:"<<search_time()<<endl;
 	  //update list of heuristics to the remaining ones
 	  cout<<"NEED TO FREE MEMORY OF UNUSED HEURISTICS!!!"<<endl;
-	  heuristics=temp_heuristics;
+	  all_heuristics=temp_heuristics;
 	  cout<<"domination checks finished, time:"<<search_time()<<endl;
 	  cout<<"domination checks overall time:"<<search_time()-start_time_dom_check<<endl;
 	  cout<<"setting threshold back to "<<original_threshold<<endl;
 	  threshold=original_threshold;f_boundary=threshold;
-	  /*if(heuristics.size()>1000){
+	  /*if(all_heuristics.size()>1000){
 	    ss_probes=20;
 	  }
-	  else if(heuristics.size()>500){
+	  else if(all_heuristics.size()>500){
 	    ss_probes=50;
 	  }
-	  else if(heuristics.size()>250){
+	  else if(all_heuristics.size()>250){
 	    ss_probes=100;
 	  }
-	  else if(heuristics.size()>100){
+	  else if(all_heuristics.size()>100){
 	    ss_probes=250;
 	  }
 	  else{
@@ -479,7 +479,7 @@ SearchStatus SSSearch::step() {
 	  cout<<"setting probes to "<<ss_probes<<endl;
       }
       if(!domination_check){
-	boost::dynamic_bitset<> b_zeros(heuristics.size());b_zeros.reset();
+	boost::dynamic_bitset<> b_zeros(all_heuristics.size());b_zeros.reset();
 	if(collector.find(b_zeros)!=collector.end()){
 	    if(collector[b_zeros]>1000000000){
 	      cout<<"minimum expanded nodes==1,000,000,000,stopping sampling"<<endl;
@@ -500,7 +500,7 @@ void SSSearch::predict(int probes) {
         totalPrediction = 0;
 	totalPredictionMean = 0;
         cout<<"#probes : "<<probes<<",g_timer:"<<g_timer()<<endl;
-	cout<<"input heuristics:"<<heuristics.size()<<endl;
+	cout<<"input heuristics:"<<all_heuristics.size()<<endl;
 	last_probe=0;
 	last_n_expanded=0;
         for (int i = 0; i < probes; i++) {
@@ -524,6 +524,7 @@ void SSSearch::predict(int probes) {
 	    } 
 
             probe();
+	    //runReportsBwtProbes();
             double p = getProbingResult();
 	    double mean = getMeanHeurResult();
             totalPrediction = totalPrediction + (p - totalPrediction)/(i + 1);
@@ -558,21 +559,21 @@ void SSSearch::probe()
 
         queue.clear();
 	// evaluating the initial state
-	boost::dynamic_bitset<> b_initial_v(heuristics.size()+lmcut_heuristic.size()); 
+	boost::dynamic_bitset<> b_initial_v(all_heuristics.size()+lmcut_heuristic.size()); 
         int min_h = INT_MAX/2;
 	int max_h=0;
 	vector<int> h_initial_v;
-        for (size_t i = 0; i < heuristics.size(); i++) {
-	  heuristics[i]->evaluate(g_initial_state());
-	  if(heuristics[i]->is_dead_end()){
+        for (size_t i = 0; i < all_heuristics.size(); i++) {
+	  all_heuristics[i]->evaluate(g_initial_state());
+	  if(all_heuristics[i]->is_dead_end()){
 	    cout<<"initial state is dead_end, no solution possible!"<<endl;exit(0);
 	      min_h=min(min_h,INT_MAX/2);
 	      h_initial_v.push_back(INT_MAX/2);
 	      }
 	  else{
-	    min_h = min(min_h, heuristics[i]->get_heuristic());
-	    max_h = max(max_h, heuristics[i]->get_heuristic());
-	    h_initial_v.push_back(heuristics[i]->get_heuristic());            	
+	    min_h = min(min_h, all_heuristics[i]->get_heuristic());
+	    max_h = max(max_h, all_heuristics[i]->get_heuristic());
+	    h_initial_v.push_back(all_heuristics[i]->get_heuristic());            	
 	  }
         }
 
@@ -710,7 +711,7 @@ void SSSearch::probe()
 
 
 		/*  
-                boost::dynamic_bitset<> b_raiz_v(heuristics.size());
+                boost::dynamic_bitset<> b_raiz_v(all_heuristics.size());
                 std::vector<int> f_global_v;
 
                 for (size_t i = 0; i < h_global_v.size(); i++) {
@@ -818,7 +819,7 @@ void SSSearch::probe()
                         GlobalState child = g_state_registry->get_successor_state(global_state, *op);
 
 			vector<int> h_child_v;
-                  	boost::dynamic_bitset<> b_child_v(heuristics.size()+lmcut_heuristic.size());b_child_v.set();
+                  	boost::dynamic_bitset<> b_child_v(all_heuristics.size()+lmcut_heuristic.size());b_child_v.set();
                   	vector<int> F_culprit;
 #ifdef _SS_DEBUG
 			cout<<"initial b_child_v:"<<b_child_v<<endl;fflush(NULL);
@@ -827,9 +828,9 @@ void SSSearch::probe()
                   	//vector<string> heur_name_v;
 			//int max_h=0;
 			
-                  	for (size_t i = 0; i < heuristics.size(); ++i){
-                      		heuristics[i]->evaluate(child);
-				if(heuristics[i]->is_dead_end()){
+                  	for (size_t i = 0; i < all_heuristics.size(); ++i){
+                      		all_heuristics[i]->evaluate(child);
+				if(all_heuristics[i]->is_dead_end()){
 				  b_child_v.reset(i);
 				  if(domination_check){
 				    F_culprit.push_back(INT_MAX/2);
@@ -839,30 +840,30 @@ void SSSearch::probe()
 				  h_child_v.push_back(INT_MAX/2);
 				}
 				else{
-				  h = min(h, heuristics[i]->get_heuristic());
-				  //max_h = max(h, heuristics[*it]->get_heuristic());
+				  h = min(h, all_heuristics[i]->get_heuristic());
+				  //max_h = max(h, all_heuristics[*it]->get_heuristic());
 #ifdef _SS_DEBUG
-				  //cout<<"h("<<i<<"):"<<heuristics[i]->get_heuristic()<<",f:"<< heuristics[i]->get_heuristic() + g_real + get_adjusted_cost(*op)<<",thresh:"<<threshold<<endl;
+				  //cout<<"h("<<i<<"):"<<all_heuristics[i]->get_heuristic()<<",f:"<< all_heuristics[i]->get_heuristic() + g_real + get_adjusted_cost(*op)<<",thresh:"<<threshold<<endl;
 				  int prev_f_bound=next_f_bound;
 #endif
-				  if ( heuristics[i]->get_heuristic() + g_real + get_adjusted_cost(*op)  > threshold) {
-				    next_f_bound=min(next_f_bound,heuristics[i]->get_heuristic() + g_real + get_adjusted_cost(*op));
+				  if ( all_heuristics[i]->get_heuristic() + g_real + get_adjusted_cost(*op)  > threshold) {
+				    next_f_bound=min(next_f_bound,all_heuristics[i]->get_heuristic() + g_real + get_adjusted_cost(*op));
 #ifdef _SS_DEBUG
 				    if(next_f_bound!=prev_f_bound){
 				      cout<<"prev_f_bound:"<<prev_f_bound<<",next_f_bound:"<<next_f_bound<<endl;
 				    }
 #endif
-				  //cout<<"h("<<i<<"):"<<heuristics[i]->get_heuristic()<<",f:"<< heuristics[i]->get_heuristic() + g_real + get_adjusted_cost(*op)<<",thresh:"<<threshold<<endl;
+				  //cout<<"h("<<i<<"):"<<all_heuristics[i]->get_heuristic()<<",f:"<< all_heuristics[i]->get_heuristic() + g_real + get_adjusted_cost(*op)<<",thresh:"<<threshold<<endl;
 				    b_child_v.reset(i);
  	
 					//Record F values until domination check finished
 				  } 
-				  int new_heur = heuristics[i]->get_heuristic() + g_real + get_adjusted_cost(*op);
+				  int new_heur = all_heuristics[i]->get_heuristic() + g_real + get_adjusted_cost(*op);
 				  if(domination_check){
 				    F_culprit.push_back(new_heur);
 				  }
 				  h_child_v.push_back(new_heur);
-				  //string heur_name = heuristics[i]->get_heur_name();
+				  //string heur_name = all_heuristics[i]->get_heur_name();
 				  //heur_name_v.push_back(heur_name);
 				}
 			}
@@ -871,17 +872,17 @@ void SSSearch::probe()
         if(lmcut_heuristic.size()>0&&s.get_lmcut_expanding()){
 	  lmcut_heuristic[0]->evaluate(child);
 	  if(lmcut_heuristic[0]->is_dead_end()){
-	    b_child_v.reset(heuristics.size());
+	    b_child_v.reset(all_heuristics.size());
 	    lmcut_expanding=false;
 	  }
 	  else if ( lmcut_heuristic[0]->get_heuristic() + g_real + get_adjusted_cost(*op)  > threshold) {
 	    lmcut_expanding=false;
-	    b_child_v.reset(heuristics.size());
+	    b_child_v.reset(all_heuristics.size());
 	    next_f_bound=min(next_f_bound,lmcut_heuristic[0]->get_heuristic() + g_real + get_adjusted_cost(*op));
 	  }
 	}
 	else{//automatically mark as prunning, ancestor already pruned path with LMCUT
-	    b_child_v.reset(heuristics.size());
+	    b_child_v.reset(all_heuristics.size());
 	}
 
 	//sum heuristics values
@@ -1221,6 +1222,144 @@ string SSSearch::getRealHeuristicName(string s_hn) {
 	return name;
 }
 
+void SSSearch::runReportsBwtProbes() {
+	int** harray_probes;
+        double** ccarray_probes;
+	int count_line_probes = collector.size();
+	harray_probes = new int*[count_line_probes];
+	ccarray_probes = new double*[count_line_probes];
+	for (int i = 0; i < count_line_probes; i++) {
+		harray_probes[i] = new int[n_heuristics_global];
+		ccarray_probes[i] = new double[1];
+	}
+
+	int counter_line = 0;	
+	for (map<boost::dynamic_bitset<>, double>::iterator iter = collector.begin(); iter != collector.end(); iter++) {
+                boost::dynamic_bitset<> b_node_v = iter->first;
+                double cc = iter->second;
+                for (size_t i = 0; i < b_node_v.size(); i++) {
+			harray_probes[counter_line][i] = b_node_v.test(i);
+                }
+		double result_cc = (double)cc/(double)n_probes_global; 
+		ccarray_probes[counter_line][0] = result_cc;
+		counter_line++;
+        }
+
+	map<string, double> add_line_map_heuristic;
+	map<string, vector<string> > map_info_heur;
+	string delimiter = ",";
+	vector<pair<string, double> > full_heur_value;
+	for (int i = 0; i < n_heuristics_global; i++) {
+		vector<string> collector;
+                string s =  all_heuristics[i]->get_heur_name();
+                string pot[6];
+                size_t pos = 0;
+                string token;
+                int index = 0;
+                while ((pos = s.find(delimiter)) != std::string::npos) {
+                	token = s.substr(0, pos);
+			//cout<<"token="<<token<<"\n";
+                        pot[index] = token;
+                        s.erase(0, pos + delimiter.length());
+                        index++;
+                }
+                pot[index] = s;
+
+           	string heuristic_name_created = pot[0],
+	    	number_h = std::to_string(i), //consider this order because SS commands
+		mutation_rate,
+		mutation_rate_aux,
+		size_gapdb,
+		size_gapdb_aux,
+		wd,
+		wd_aux,
+		name;
+
+	    	if (heuristic_name_created == "ipdb") {
+            		name = "ipdb_" + number_h;
+            	} else if (heuristic_name_created == "lmcut") {
+            		name = "lmcut_" + number_h;
+            	} else if (heuristic_name_created == "merge_and_shrink") {
+            		name = "mands_" + number_h;
+            	} else {
+            		name = "gapdb_" + number_h;
+            	}
+		//cout<<"name="<<name<<"\n";
+		mutation_rate_aux = pot[1];
+                size_t t2 = mutation_rate_aux.find(":");
+                mutation_rate = mutation_rate_aux.substr(t2 + 1, mutation_rate_aux.length());
+                //cout<<"mutation_rate = "<<mutation_rate<<"\n";
+
+		size_gapdb_aux = pot[2];
+                size_t t3 = size_gapdb_aux.find("=");
+                size_gapdb = size_gapdb_aux.substr(t3 + 1);
+                //cout<<"size_gapdb = "<<size_gapdb<<"\n";
+
+                //without disjoint patterns
+                wd_aux = pot[3];
+                //cout<<"wd_aux = "<<wd_aux<<"\n";
+                size_t t4 = wd_aux.find("out");
+                if (t4 < 100) {
+                        wd = "false";
+                } else {
+                        wd = "true";
+                }
+                //cout<<"wd = "<<wd<<"\n\n";
+
+		collector.push_back(number_h);
+                collector.push_back(mutation_rate);
+                collector.push_back(size_gapdb);
+                collector.push_back(wd);
+
+                map_info_heur.insert(pair<string, vector<string> >(name, collector));
+
+		//number of nodes expanded by each heuristic
+                double sum_ones = 0;
+                for (int j = 0; j < count_line_probes; j++) {
+                        if (harray_probes[j][i] == 1) {
+                                sum_ones += ccarray_probes[j][0];
+                        }
+                }
+                add_line_map_heuristic.insert(pair<string, double>(name, sum_ones));
+		full_heur_value.push_back(pair<string, double>(name, sum_ones));
+        }
+
+	//double getSumSizeTree();
+        map<string, double>::iterator iter_test;
+	double max_expanded =  0;
+        string max_heuristic;
+        for (iter_test = add_line_map_heuristic.begin(); iter_test != add_line_map_heuristic.end(); iter_test++) {
+                string s = iter_test->first;
+                double d = iter_test->second;
+                cout<<s<<", "<<d<<"\n";
+                if (max_expanded < d) {
+                        max_expanded = d;
+                        max_heuristic = s;
+                }
+        }
+        cout<<"in_each_probe:max_expanded:"<<max_expanded<<"\tmax_number_h:"<<max_heuristic<<"\n";
+
+	//extract index
+	string s_extract = max_heuristic;
+	size_t f_extract = s_extract.find("_");
+	string s_extracted = s_extract.substr(f_extract + 1, s_extract.length());	
+        int index_heur = atoi(s_extracted.c_str());
+
+	//get the heuristic information
+	//Heuristic* heur_to_delete = all_heuristics.at(index_heur);
+
+
+	//all_heuristics.erase(std::remove(all_heuristics.begin(), all_heuristics.end(), heur_to_delete), all_heuristics.end());
+	
+	//n_heuristics_global = all_heuristics.size();
+	//cout<<"n_heuristics_global_1355="<<n_heuristics_global<<"\n";
+
+	
+	add_line_map_heuristic.clear();
+
+	delete harray_probes; //freed memory
+	harray_probes = NULL; //pointed dangling pt to NULL	
+}
 
 void SSSearch::runReports(bool cmd) {
 	if (run_method == "grhs") {
@@ -2321,7 +2460,7 @@ double SSSearch::getProbingResult() {
         }
 	cout << endl;
         cout<<"expansions = "<<expansions<<endl;
-	boost::dynamic_bitset<> max_comb(heuristics.size()+lmcut_heuristic.size());max_comb.set();
+	boost::dynamic_bitset<> max_comb(all_heuristics.size()+lmcut_heuristic.size());max_comb.set();
 	cout <<std::scientific<<",max_comb_nodes:"<<collector[max_comb]<<endl;
 	  /*if(collector[max_comb]>pow(10.0,100.0)){
 	  cout<<"Sampling went too far, selecting heuristics now with data from prev next_f_boundary!"<<endl;
@@ -2652,8 +2791,8 @@ double SSSearch::calculate_time_costs_specific(boost::dynamic_bitset<> h_comb){
  // cout<<"\t node_gen_and_exp_cost:"<<time_cost<<",";
   for (size_t i = 0; i < h_comb.size(); i++){
     if(h_comb.test(i)){//add heuristic time cost to total if heuristic is active
-      time_cost+=(heuristics[i]->get_measured_TPN()/gen_to_eval_ratio);
-      //cout<<",h["<<i<<"]:"<<heuristics[i]->get_measured_TPN();
+      time_cost+=(all_heuristics[i]->get_measured_TPN()/gen_to_eval_ratio);
+      //cout<<",h["<<i<<"]:"<<all_heuristics[i]->get_measured_TPN();
     }
   }
   //cout<<",TPN:"<<time_cost<<endl;
@@ -2661,7 +2800,7 @@ double SSSearch::calculate_time_costs_specific(boost::dynamic_bitset<> h_comb){
 }
 
 map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<pair<string, double> > Z_subset, vector<pair<string, double> > Z_full) {
-	//cout<<"combine heuristics..."<<call_first_time<<"\n";	
+	//cout<<"combine all_heuristics..."<<call_first_time<<"\n";	
 	map<string, double> Z_full_map;
 	if (call_first_time) {
 		updateGRHS();	
@@ -2901,6 +3040,128 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 	return Z_full_map;
 }
 
+/*
+double SSSearch::getSumSizeTree(vector<pair<string, double> > Z_subset) {
+	bool use_sum_of_the_max = true;
+	double sum_combination_heur = 0, sum_max_combination_heur = 0;
+	map<int, vector<int> > map_max;
+	map<int, double> map_cc;
+	typedef std::vector<std::pair<std::string, double> > vector_type;
+	for (vector_type::const_iterator posinner = Z_subset.begin();
+	posinner != Z_subset.end(); ++posinner) {
+		string s_inner = posinner->first;
+		string new_s_inner = s_inner;
+		size_t f_s_inner = new_s_inner.find("_");
+		string key_string = new_s_inner.substr(f_s_inner + 1, new_s_inner.length());
+		int key = std::atoi(key_string.c_str());
+		string delimiter = ",";
+		//cout<<"key = "<<key<<"\n";
+		//cout<<"heuristic-information\n";
+		for (int i = 0; i < n_heuristics_global; i++) {
+			if (key == i) {
+                		string s =  all_heuristics[i]->get_heur_name();
+                		string pot[6];//six is the max string allowed for heuristic string
+                		size_t pos = 0;
+                		string token;
+                		int index = 0;
+                		while ((pos = s.find(delimiter)) != std::string::npos) {
+                			token = s.substr(0, pos);
+					//cout<<"token="<<token<<"\n";
+                        		pot[index] = token;
+                        		s.erase(0, pos + delimiter.length());
+                        		index++;
+                		}
+                		pot[index] = s;
+
+           			string heuristic_name_created = pot[0],
+	    			number_h = std::to_string(i), //consider this order because SS commands	
+				name;
+
+				if (false) {
+	    				if (heuristic_name_created == "ipdb") {
+            					name = number_h + "_ipdb";
+            				} else if (heuristic_name_created == "lmcut") {
+            					name = number_h + "_lmcut";
+            				} else if (heuristic_name_created == "merge_and_shrink") {
+            					name = number_h + "_mands";
+            				} else {
+            					name = number_h + "_gapdb";
+            				}
+				} else {
+					if (heuristic_name_created == "ipdb") {
+            					name = "ipdb_" + number_h;
+            				} else if (heuristic_name_created == "lmcut") {
+            					name = "lmcut_" + number_h;
+            				} else if (heuristic_name_created == "merge_and_shrink") {
+            					name = "mands_" + number_h;
+            				} else {
+            					name = "gapdb_" + number_h;
+            				}
+				}
+
+				//cout<<"name="<<name<<"\n";
+				//number of heuristics values in the search tree.
+				double sum_heur_values = 0;
+				if (use_sum_of_the_max) {
+					for (int j = 0; j < count_line_grhs; j++) {
+						map<int, vector<int> >::iterator itmap = map_max.find(j);
+						if (itmap != map_max.end()) {
+							//int bring_c = itmap->first;
+							vector<int> bring_v = itmap->second;
+							bring_v.push_back(harray_grhs[j][i]);
+							itmap->second = bring_v;
+							//cout<<"count_line_repeated\n";
+						} else {
+							//cout<<"count_line="<<j<<"\n";
+							vector<int> add_max_heuristic_values;
+							add_max_heuristic_values.push_back(harray_grhs[j][i]);
+							map_max.insert(pair<int, vector<int> >(j, add_max_heuristic_values));	
+						}
+
+						map<int, double>::iterator itmap2 = map_cc.find(j);
+						if (itmap2 != map_cc.end()) {
+							//DO NOTHING
+						} else {
+							map_cc.insert(pair<int, double>(j, ccarray_grhs[j][0]));
+						}
+					}
+				} else { 
+					for (int j = 0; j < count_line_grhs; j++) {
+						sum_heur_values += harray_grhs[j][i]*ccarray_grhs[j][0];
+					}
+					//cout<<"i="<<i<<", sum_heur_values="<<sum_heur_values<<"\n";
+					sum_combination_heur += sum_heur_values;
+				}	
+			} // key comparator
+        	}//end n_heuristics loop
+		//cout<<"count_line="<<count_line<<"\n";
+		//cout<<"map_max.size()="<<map_max.size()<<"\n";
+		if (use_sum_of_the_max) {
+			for (map<int, vector<int> >::iterator it = map_max.begin(); it != map_max.end(); it++) {
+				int row = it->first;
+				vector<int> v = it->second;
+				int max_heuristic = getMaxHeur(v);
+				//cout<<"max_heuristic="<<max_heuristic<<"\n";
+				map<int, double>::iterator it_inner = map_cc.find(row);
+				double cc = it_inner->second;
+				//cout<<"cc="<<cc<<"\n";
+				sum_max_combination_heur += max_heuristic*cc;
+				//cout<<"max_heuristic="<<max_heuristic<<", cc="<<cc<<"\n";
+			}	
+			//cout<<"sum_max_combination_heur="<<sum_max_combination_heur<<"\n";
+		}
+	}//end Z_subset
+
+	if (use_sum_of_the_max) {
+		//cout<<"returning the max.\n";
+		return sum_max_combination_heur;
+	} else {
+		//cout<<"returning no max.\n";
+		return sum_combination_heur;
+	}
+}
+*/
+
 double SSSearch::getSumSubset(vector<pair<string, double> > Z_subset) {
 	bool use_sum_of_the_max = true;
 	double sum_combination_heur = 0, sum_max_combination_heur = 0;
@@ -3047,8 +3308,8 @@ void SSSearch::select_best_heuristics_greedy(){
   
   //double best_current_time=0;
   //long best_initial_nodes=0;
-  boost::dynamic_bitset<> current_h_comb(heuristics.size()+lmcut_heuristic.size());
-  boost::dynamic_bitset<> best_h_comb(heuristics.size()+lmcut_heuristic.size());
+  boost::dynamic_bitset<> current_h_comb(all_heuristics.size()+lmcut_heuristic.size());
+  boost::dynamic_bitset<> best_h_comb(all_heuristics.size()+lmcut_heuristic.size());
   //double last_best_h_comb_time=0;
   
   //First Greedy selection
@@ -3065,15 +3326,15 @@ void SSSearch::select_best_heuristics_greedy(){
   cout<<"finding greedily best h_comb, starting degree:"<<best_h_comb.count()<<endl;
   double best_comb_nodes=DBL_MAX;
   cout<<"starting best_comb_nodes="<<best_comb_nodes<<endl;
-  cout<<"lmcut_heuristic.size():"<<lmcut_heuristic.size()<<",heuristics.size:"<<heuristics.size()<<",collector bc size:"<<(collector.begin())->first.size()<<endl;
+  cout<<"lmcut_heuristic.size():"<<lmcut_heuristic.size()<<",all_heuristics.size:"<<all_heuristics.size()<<",collector bc size:"<<(collector.begin())->first.size()<<endl;
   
 	  
 
-  vector<double> initial_heur_sizes(heuristics.size()+lmcut_heuristic.size());
+  vector<double> initial_heur_sizes(all_heuristics.size()+lmcut_heuristic.size());
   if(best_h_comb.count()==0){
     for (map<boost::dynamic_bitset<>,double>::const_iterator it_h_values= collector.begin(); it_h_values != collector.end();it_h_values++){
 	//cout<<"it_h_values:"<<it_h_values->first<<endl;
-      for(size_t heur=0;heur<heuristics.size()+lmcut_heuristic.size();heur++){
+      for(size_t heur=0;heur<all_heuristics.size()+lmcut_heuristic.size();heur++){
 	if(it_h_values->first.test(heur)){//if indiv heuristic is active and culling the counter then this counter does not apply to the h_comb
 	  initial_heur_sizes[heur]+=it_h_values->second;
 	  //cout<<"added "<<it_h_values->second<<" to initial_heur_"<<heur<<endl;
@@ -3088,7 +3349,7 @@ void SSSearch::select_best_heuristics_greedy(){
     for(size_t heur=0;heur<initial_heur_sizes.size();heur++){
       cout<<"initial_heur_sizes("<<heur<<"):"<<initial_heur_sizes.at(heur)<<endl;
 #ifdef _LMCUT_EARLY_TERM
-	  if((heur==heuristics.size())&&lmcut_heuristic.size()>0){//so we are dealing with lmcut
+	  if((heur==all_heuristics.size())&&lmcut_heuristic.size()>0){//so we are dealing with lmcut
 	    cout<<"skipping lmcut for now, will check later once best ipdb/gapdbs comb is found"<<endl;
 	    continue;
 	  }
@@ -3124,7 +3385,7 @@ void SSSearch::select_best_heuristics_greedy(){
     cout<<"active_heurs"<<active_heurs<<",remaining candidates:"<<candidate_heurs.size()<<endl;
     //cout<<"candidate_heurs:"<<candidate_heurs<<endl;
 
-    vector<double> h_comb_prunning_nodes(heuristics.size()+lmcut_heuristic.size(),0);
+    vector<double> h_comb_prunning_nodes(all_heuristics.size()+lmcut_heuristic.size(),0);
     for (map<boost::dynamic_bitset<>,double>::iterator it_h_values= collector.begin(); it_h_values != collector.end();){
       //cout<<"collector.size:"<<it_h_values->first.size()<<",bc:"<<it_h_values->first<<endl;
       delete_counter=false;
@@ -3211,8 +3472,8 @@ void SSSearch::select_best_heuristics_greedy(){
   cout<<"progressive_greedy_timer:,"<<progressive_greedy_timer<<",level:,"<<best_h_comb.count()<<",Final Overall best h_comb node-wise(no lmcut considered yet):";print_h_comb(best_h_comb);cout<<"line-by-line selected heurs:"<<endl;
   for(size_t j=0;j<best_h_comb.size();j++){
     if(best_h_comb.test(j)){
-      if(j<heuristics.size()){
-	cout<<heuristics[j]->get_heur_call_name();
+      if(j<all_heuristics.size()){
+	cout<<all_heuristics[j]->get_heur_call_name();
       }
       else{
 	cout<<lmcut_heuristic[0]->get_heur_call_name()<<endl;
@@ -3230,8 +3491,8 @@ void SSSearch::select_best_heuristics_greedy(){
   output<<"min([";
   for(size_t j=0;j<best_h_comb.size();j++){
     if(best_h_comb.test(j)){
-      if(j<heuristics.size()){
-	output<<heuristics[j]->get_heur_call_name();
+      if(j<all_heuristics.size()){
+	output<<all_heuristics[j]->get_heur_call_name();
       }
       else{
 	output<<lmcut_heuristic[0]->get_heur_call_name();
@@ -3270,8 +3531,8 @@ void SSSearch::select_best_heuristics_greedy_stocastic(int cardinality){
   
   //double best_current_time=0;
   //long best_initial_nodes=0;
-  boost::dynamic_bitset<> current_h_comb(heuristics.size()+lmcut_heuristic.size());
-  boost::dynamic_bitset<> best_h_comb(heuristics.size()+lmcut_heuristic.size());
+  boost::dynamic_bitset<> current_h_comb(all_heuristics.size()+lmcut_heuristic.size());
+  boost::dynamic_bitset<> best_h_comb(all_heuristics.size()+lmcut_heuristic.size());
   //double last_best_h_comb_time=0;
   
   //First Greedy selection
@@ -3288,20 +3549,20 @@ void SSSearch::select_best_heuristics_greedy_stocastic(int cardinality){
   cout<<"finding greedily best h_comb, starting degree:"<<best_h_comb.count()<<endl;
   double best_comb_nodes=DBL_MAX;
   cout<<"starting best_comb_nodes="<<best_comb_nodes<<endl;
-  cout<<"lmcut_heuristic.size():"<<lmcut_heuristic.size()<<",heuristics.size:"<<heuristics.size()<<",collector bc size:"<<(collector.begin())->first.size()<<endl;
+  cout<<"lmcut_heuristic.size():"<<lmcut_heuristic.size()<<",all_heuristics.size:"<<all_heuristics.size()<<",collector bc size:"<<(collector.begin())->first.size()<<endl;
   
 	  
 
-  vector<double> initial_heur_sizes(heuristics.size()+lmcut_heuristic.size());
-  vector<double> initial_heur_times(heuristics.size()+lmcut_heuristic.size());
+  vector<double> initial_heur_sizes(all_heuristics.size()+lmcut_heuristic.size());
+  vector<double> initial_heur_times(all_heuristics.size()+lmcut_heuristic.size());
   if(best_h_comb.count()==0){
     for (map<boost::dynamic_bitset<>,double>::const_iterator it_h_values= collector.begin(); it_h_values != collector.end();it_h_values++){
 	//cout<<"it_h_values:"<<it_h_values->first<<endl;
-      for(size_t heur=0;heur<heuristics.size()+lmcut_heuristic.size();heur++){
+      for(size_t heur=0;heur<all_heuristics.size()+lmcut_heuristic.size();heur++){
 	if(it_h_values->first.test(heur)){//if indiv heuristic is active and culling the counter then this counter does not apply to the h_comb
 	  initial_heur_sizes[heur]+=it_h_values->second;
-	  boost::dynamic_bitset<> current_h_comb(heuristics.size());current_h_comb.set(heur);
-	  //initial_heur_times[heur]=double(initial_heur_sizes.at(heur))*heuristics[heur]->get_measured_TPN();
+	  boost::dynamic_bitset<> current_h_comb(all_heuristics.size());current_h_comb.set(heur);
+	  //initial_heur_times[heur]=double(initial_heur_sizes.at(heur))*all_heuristics[heur]->get_measured_TPN();
 	 // cout<<"initial_heur_times("<<heur<<"):"<<initial_heur_times.at(heur)<<endl;
 	  //cout<<"added "<<it_h_values->second<<" to initial_heur_"<<heur<<endl;
 	}
@@ -3315,7 +3576,7 @@ void SSSearch::select_best_heuristics_greedy_stocastic(int cardinality){
     for(size_t heur=0;heur<initial_heur_sizes.size();heur++){
       cout<<"initial_heur_sizes("<<heur<<"):"<<initial_heur_sizes.at(heur)<<endl;
 #ifdef _LMCUT_EARLY_TERM
-	  if((heur==heuristics.size())&&lmcut_heuristic.size()>0){//so we are dealing with lmcut
+	  if((heur==all_heuristics.size())&&lmcut_heuristic.size()>0){//so we are dealing with lmcut
 	    cout<<"skipping lmcut for now, will check later once best ipdb/gapdbs comb is found"<<endl;
 	    continue;
 	  }
@@ -3350,7 +3611,7 @@ void SSSearch::select_best_heuristics_greedy_stocastic(int cardinality){
     cout<<"active_heurs"<<active_heurs<<",remaining candidates:"<<candidate_heurs.size()<<endl;
     //cout<<"candidate_heurs:"<<candidate_heurs<<endl;
 
-    vector<double> h_comb_prunning_nodes(heuristics.size()+lmcut_heuristic.size(),0);
+    vector<double> h_comb_prunning_nodes(all_heuristics.size()+lmcut_heuristic.size(),0);
     for (map<boost::dynamic_bitset<>,double>::iterator it_h_values= collector.begin(); it_h_values != collector.end();){
       //cout<<"collector.size:"<<it_h_values->first.size()<<",bc:"<<it_h_values->first<<endl;
       delete_counter=false;
@@ -3437,8 +3698,8 @@ void SSSearch::select_best_heuristics_greedy_stocastic(int cardinality){
   cout<<"progressive_greedy_timer:,"<<progressive_greedy_timer<<",level:,"<<best_h_comb.count()<<",Final Overall best h_comb node-wise(no lmcut considered yet):";print_h_comb(best_h_comb);cout<<"line-by-line selected heurs:"<<endl;
   for(size_t j=0;j<best_h_comb.size();j++){
     if(best_h_comb.test(j)){
-      if(j<heuristics.size()){
-	cout<<heuristics[j]->get_heur_call_name();
+      if(j<all_heuristics.size()){
+	cout<<all_heuristics[j]->get_heur_call_name();
       }
       else{
 	cout<<lmcut_heuristic[0]->get_heur_call_name()<<endl;
@@ -3456,8 +3717,8 @@ void SSSearch::select_best_heuristics_greedy_stocastic(int cardinality){
   output<<"min([";
   for(size_t j=0;j<best_h_comb.size();j++){
     if(best_h_comb.test(j)){
-      if(j<heuristics.size()){
-	output<<heuristics[j]->get_heur_call_name();
+      if(j<all_heuristics.size()){
+	output<<all_heuristics[j]->get_heur_call_name();
       }
       else{
 	output<<lmcut_heuristic[0]->get_heur_call_name();
@@ -3587,10 +3848,10 @@ fflush(NULL);
 			}
 #endif
 			if (r1.second) {
-				for (size_t i = 0; i < heuristics.size(); i++) {
-                                	heuristics[i]->evaluate(child);
-					if (!heuristics[i]->is_dead_end()) {
-						hmin_value = min(hmin_value, heuristics[i]->get_heuristic());
+				for (size_t i = 0; i < all_heuristics.size(); i++) {
+                                	all_heuristics[i]->evaluate(child);
+					if (!all_heuristics[i]->is_dead_end()) {
+						hmin_value = min(hmin_value, all_heuristics[i]->get_heuristic());
 					} else {
 						hmin_value = INT_MAX/2;
 						break;
