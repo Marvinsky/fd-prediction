@@ -1367,13 +1367,12 @@ void SSSearch::runReportsBwtProbes() {
 	//get the heuristic information
 	Heuristic* heur_to_delete = all_heuristics.at(index_heur_to_delete);
 
-
 	all_heuristics.erase(std::remove(all_heuristics.begin(), all_heuristics.end(), heur_to_delete), all_heuristics.end());
 	
 	n_heuristics_global = all_heuristics.size();
 	int collector_size = collector.size();
 	cout<<"\t\tcollector_size="<<collector_size<<"\n";
-	cout<<"\t\tn_heuristics_global="<<n_heuristics_global<<"\n";
+	cout<<"\t\tn_heuristics_global="<<n_heuristics_global<<"\n\n";
 	
 	std::pair<std::map<boost::dynamic_bitset<>, double>::iterator, bool> ret5; 
         std::map<boost::dynamic_bitset<>, double>::iterator it5;
@@ -1382,22 +1381,28 @@ void SSSearch::runReportsBwtProbes() {
 	for (map<boost::dynamic_bitset<>, double>::iterator iter = collector.begin(); iter != collector.end(); iter++) {
                 boost::dynamic_bitset<> b_node_v = iter->first;
 		double d_node_v = iter->second;
-		cout<<"\t\t\tb_node_v.size()="<<b_node_v.size()<<",b_node_v="<<b_node_v<<"\n";
+
+		cout<<"\tb_node_v.size()="<<b_node_v.size()<<",b_node_v="<<b_node_v<<"\n";
 		//remove the heuristic number index_heur
 		boost::dynamic_bitset<> new_b_node_v(n_heuristics_global);
 		new_b_node_v.reset();
+
 		for (int r = 0; r < (int)b_node_v.size(); r++) {
 			if (r == index_heur_to_delete) {
-				//cout<<"r==index_heur_to_delete==TRUE\n";
-				//delete bit
-			} else {
-				new_b_node_v.set(b_node_v.test(r));
-				//if (b_node_v.test(r) == 1) {
-				//	new_b_node_v.set(r);
-				//}
+				break;
+			}
+			if (b_node_v.test(r) == 1) {
+				new_b_node_v.set(r);
 			}
 		}
-		cout<<"\t\t\tnew_b_node_v.size()="<<new_b_node_v.size()<<",new_b_node_v="<<new_b_node_v<<"\n";
+
+		for (int r = index_heur_to_delete+1; r < (int)b_node_v.size(); r++) {	
+			if (b_node_v.test(r) == 1) {
+				new_b_node_v.set(r-1);
+			}
+		}	
+
+		cout<<"\tnew_b_node_v.size()="<<new_b_node_v.size()<<",new_b_node_v="<<new_b_node_v<<"\n";
 
 		ret5 = new_collector.insert(std::pair<boost::dynamic_bitset<>, double>(new_b_node_v, d_node_v));
              	it5 = ret5.first;
