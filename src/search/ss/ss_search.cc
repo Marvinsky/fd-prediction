@@ -67,6 +67,7 @@ if(f_boundary!=0){
 	    heuristics_active++;
 	  }
 	}
+        cout<<"line_70:all_heuristics.size()="<<all_heuristics.size()<<"\n";	
 	assert(all_heuristics.size() == 1);
 
 	int min_h = INT_MAX/2;
@@ -524,7 +525,16 @@ void SSSearch::predict(int probes) {
 	    } 
 
             probe();
-	    //runReportsBwtProbes();
+	    cout<<"all_heuristics.size()="<<all_heuristics.size()<<"\n";
+	    cout<<"n_heuristics_global="<<n_heuristics_global<<"\n";
+	    cout<<"default_low="<<5<<"\n";
+	    if (n_heuristics_global > 5) {
+		cout<<"\tREMOVING HEURISTICS THAT GENERATE HIGH SEARCH TREE SIZE\n";
+	    	runReportsBwtProbes();
+	    } else {
+		cout<<"\t5 HEURISTICS TO BE SELECTED BY SSCC\n";
+	    }
+
             double p = getProbingResult();
 	    double mean = getMeanHeurResult();
             totalPrediction = totalPrediction + (p - totalPrediction)/(i + 1);
@@ -1223,6 +1233,7 @@ string SSSearch::getRealHeuristicName(string s_hn) {
 }
 
 void SSSearch::runReportsBwtProbes() {
+	cout<<"\t-----------------RUNNING_BETWEEN_PROBES\n";
 	int** harray_probes;
         double** ccarray_probes;
 	int count_line_probes = collector.size();
@@ -1236,6 +1247,7 @@ void SSSearch::runReportsBwtProbes() {
 	int counter_line = 0;	
 	for (map<boost::dynamic_bitset<>, double>::iterator iter = collector.begin(); iter != collector.end(); iter++) {
                 boost::dynamic_bitset<> b_node_v = iter->first;
+		//cout<<"\tb_node_v="<<b_node_v<<"\n";
                 double cc = iter->second;
                 for (size_t i = 0; i < b_node_v.size(); i++) {
 			harray_probes[counter_line][i] = b_node_v.test(i);
@@ -1324,18 +1336,24 @@ void SSSearch::runReportsBwtProbes() {
 		full_heur_value.push_back(pair<string, double>(name, sum_ones));
         }
 
-	//double getSumSizeTree();
         map<string, double>::iterator iter_test;
+	//Looking the heuristics that generate the maximum search tree size
 	double max_expanded =  0;
         string max_heuristic;
         for (iter_test = add_line_map_heuristic.begin(); iter_test != add_line_map_heuristic.end(); iter_test++) {
                 string s = iter_test->first;
                 double d = iter_test->second;
                 cout<<s<<", "<<d<<"\n";
-                if (max_expanded < d) {
-                        max_expanded = d;
-                        max_heuristic = s;
-                }
+		size_t t = s.find("_");
+		string new_s = s.substr(0, t);
+		if (new_s == "lmcut" || new_s == "ipdb" || new_s == "merge_and_shrink") {
+			//Not remove lmcut, ipdb and m&s
+		} else {
+			if (max_expanded < d) {
+                        	max_expanded = d;
+                        	max_heuristic = s;
+                	}
+		}
         }
         cout<<"in_each_probe:max_expanded:"<<max_expanded<<"\tmax_number_h:"<<max_heuristic<<"\n";
 
@@ -1343,18 +1361,56 @@ void SSSearch::runReportsBwtProbes() {
 	string s_extract = max_heuristic;
 	size_t f_extract = s_extract.find("_");
 	string s_extracted = s_extract.substr(f_extract + 1, s_extract.length());	
-        int index_heur = atoi(s_extracted.c_str());
+        int index_heur_to_delete = atoi(s_extracted.c_str());
+	cout<<"index_heur_to_delete="<<index_heur_to_delete<<"\n";
 
 	//get the heuristic information
-	//Heuristic* heur_to_delete = all_heuristics.at(index_heur);
+	Heuristic* heur_to_delete = all_heuristics.at(index_heur_to_delete);
 
 
-	//all_heuristics.erase(std::remove(all_heuristics.begin(), all_heuristics.end(), heur_to_delete), all_heuristics.end());
+	all_heuristics.erase(std::remove(all_heuristics.begin(), all_heuristics.end(), heur_to_delete), all_heuristics.end());
 	
-	//n_heuristics_global = all_heuristics.size();
-	//cout<<"n_heuristics_global_1355="<<n_heuristics_global<<"\n";
-
+	n_heuristics_global = all_heuristics.size();
+	int collector_size = collector.size();
+	cout<<"\t\tcollector_size="<<collector_size<<"\n";
+	cout<<"\t\tn_heuristics_global="<<n_heuristics_global<<"\n";
 	
+	std::pair<std::map<boost::dynamic_bitset<>, double>::iterator, bool> ret5; 
+        std::map<boost::dynamic_bitset<>, double>::iterator it5;
+
+	map<boost::dynamic_bitset<>,  double> new_collector;
+	for (map<boost::dynamic_bitset<>, double>::iterator iter = collector.begin(); iter != collector.end(); iter++) {
+                boost::dynamic_bitset<> b_node_v = iter->first;
+		double d_node_v = iter->second;
+		cout<<"\t\t\tb_node_v.size()="<<b_node_v.size()<<",b_node_v="<<b_node_v<<"\n";
+		//remove the heuristic number index_heur
+		boost::dynamic_bitset<> new_b_node_v(n_heuristics_global);
+		new_b_node_v.reset();
+		for (int r = 0; r < (int)b_node_v.size(); r++) {
+			if (r == index_heur_to_delete) {
+				//cout<<"r==index_heur_to_delete==TRUE\n";
+				//delete bit
+			} else {
+				new_b_node_v.set(b_node_v.test(r));
+				//if (b_node_v.test(r) == 1) {
+				//	new_b_node_v.set(r);
+				//}
+			}
+		}
+		cout<<"\t\t\tnew_b_node_v.size()="<<new_b_node_v.size()<<",new_b_node_v="<<new_b_node_v<<"\n";
+
+		ret5 = new_collector.insert(std::pair<boost::dynamic_bitset<>, double>(new_b_node_v, d_node_v));
+             	it5 = ret5.first;
+		//predict the number of nodes expanded in the search tree.
+             	if (ret5.second) {
+			//cout<<"raiz bc new is added"<<endl;
+             	} else {
+                	//cout<<"raiz bc old is being updated"<<endl; 
+                	it5->second += d_node_v;
+             	}
+        }
+	collector = new_collector;
+	cout<<"\t-----------------ENDING_BETWEEN_PROBES\n\n";
 	add_line_map_heuristic.clear();
 
 	delete harray_probes; //freed memory
@@ -1527,12 +1583,11 @@ void SSSearch::updateSSCC() {
         output.open(outputFile.c_str());
 
 	//print the name of the all_heuristics just to be analyzed later
-        for (size_t i = 0; i < all_heuristics.size(); i++) {
+        for (int i = 0; i < n_heuristics_global; i++) {
             string heur_name = all_heuristics[i]->get_heur_name();
             output<<"h(,"<<i<<"):,"<<heur_name<<"\n";
         }
 
-	n_heuristics_global = all_heuristics.size();
 	count_line_sscc = collector.size();
 
 	//get the combintation 1/0/1/0..../1/1
@@ -1660,7 +1715,7 @@ void SSSearch::generateSSCCReport(bool termination) {
                 	string s = iter_test->first;
                 	double d = iter_test->second;
 			number_gapdb_heurs.push_back(s);
-                	//cout<<s<<", "<<d<<"\n";
+                	cout<<s<<", "<<d<<"\n";
                 	if (min_number_expanded > d) {
                         	min_number_expanded = d;
                         	min_number_heuristic = s;
@@ -1669,7 +1724,7 @@ void SSSearch::generateSSCCReport(bool termination) {
         	cout<<"min_number_expanded = "<<min_number_expanded<<"\tmin_number_heuristic = "<<min_number_heuristic<<"\n";
 		//Implement the evaluation time selection for the meta-reasoning
 
-
+		exit(0);
 		double min_eval_time = std::numeric_limits<double>::max();
 		int index_min_eval_time=0;
 		boost::dynamic_bitset<> b_comb(n_heuristics_global + lmcut_heuristic.size());
@@ -2533,7 +2588,7 @@ void SSSearch::select_random_greedy(bool termination) {
 		vector<pair<string, double> > Z_cut_vector;	
 		bool call_first_time = true;
 		while ((int)Z_subset.size() < N_default) {
-			if (N_default < (int)all_heuristics.size()) {
+			if (N_default < n_heuristics_global) {
 				
 				map<string, double> Z_full_map = heuristicCombinator(call_first_time, Z_subset, Z_full_vector_combiner);
 				call_first_time = false;
@@ -2744,7 +2799,7 @@ void SSSearch::updateGRHS() {
         output.open(outputFile.c_str());
 	
 	//print the name of the all_heuristics just to be analyzed later
-        for (size_t i = 0; i < all_heuristics.size(); i++) {
+        for (int i = 0; i < n_heuristics_global; i++) {
             	string heur_name = all_heuristics[i]->get_heur_name();
             	output<<"h(,"<<i<<"):,"<<heur_name<<"\n";
         }
@@ -3039,128 +3094,6 @@ map<string, double> SSSearch::heuristicCombinator(bool call_first_time, vector<p
 	}	
 	return Z_full_map;
 }
-
-/*
-double SSSearch::getSumSizeTree(vector<pair<string, double> > Z_subset) {
-	bool use_sum_of_the_max = true;
-	double sum_combination_heur = 0, sum_max_combination_heur = 0;
-	map<int, vector<int> > map_max;
-	map<int, double> map_cc;
-	typedef std::vector<std::pair<std::string, double> > vector_type;
-	for (vector_type::const_iterator posinner = Z_subset.begin();
-	posinner != Z_subset.end(); ++posinner) {
-		string s_inner = posinner->first;
-		string new_s_inner = s_inner;
-		size_t f_s_inner = new_s_inner.find("_");
-		string key_string = new_s_inner.substr(f_s_inner + 1, new_s_inner.length());
-		int key = std::atoi(key_string.c_str());
-		string delimiter = ",";
-		//cout<<"key = "<<key<<"\n";
-		//cout<<"heuristic-information\n";
-		for (int i = 0; i < n_heuristics_global; i++) {
-			if (key == i) {
-                		string s =  all_heuristics[i]->get_heur_name();
-                		string pot[6];//six is the max string allowed for heuristic string
-                		size_t pos = 0;
-                		string token;
-                		int index = 0;
-                		while ((pos = s.find(delimiter)) != std::string::npos) {
-                			token = s.substr(0, pos);
-					//cout<<"token="<<token<<"\n";
-                        		pot[index] = token;
-                        		s.erase(0, pos + delimiter.length());
-                        		index++;
-                		}
-                		pot[index] = s;
-
-           			string heuristic_name_created = pot[0],
-	    			number_h = std::to_string(i), //consider this order because SS commands	
-				name;
-
-				if (false) {
-	    				if (heuristic_name_created == "ipdb") {
-            					name = number_h + "_ipdb";
-            				} else if (heuristic_name_created == "lmcut") {
-            					name = number_h + "_lmcut";
-            				} else if (heuristic_name_created == "merge_and_shrink") {
-            					name = number_h + "_mands";
-            				} else {
-            					name = number_h + "_gapdb";
-            				}
-				} else {
-					if (heuristic_name_created == "ipdb") {
-            					name = "ipdb_" + number_h;
-            				} else if (heuristic_name_created == "lmcut") {
-            					name = "lmcut_" + number_h;
-            				} else if (heuristic_name_created == "merge_and_shrink") {
-            					name = "mands_" + number_h;
-            				} else {
-            					name = "gapdb_" + number_h;
-            				}
-				}
-
-				//cout<<"name="<<name<<"\n";
-				//number of heuristics values in the search tree.
-				double sum_heur_values = 0;
-				if (use_sum_of_the_max) {
-					for (int j = 0; j < count_line_grhs; j++) {
-						map<int, vector<int> >::iterator itmap = map_max.find(j);
-						if (itmap != map_max.end()) {
-							//int bring_c = itmap->first;
-							vector<int> bring_v = itmap->second;
-							bring_v.push_back(harray_grhs[j][i]);
-							itmap->second = bring_v;
-							//cout<<"count_line_repeated\n";
-						} else {
-							//cout<<"count_line="<<j<<"\n";
-							vector<int> add_max_heuristic_values;
-							add_max_heuristic_values.push_back(harray_grhs[j][i]);
-							map_max.insert(pair<int, vector<int> >(j, add_max_heuristic_values));	
-						}
-
-						map<int, double>::iterator itmap2 = map_cc.find(j);
-						if (itmap2 != map_cc.end()) {
-							//DO NOTHING
-						} else {
-							map_cc.insert(pair<int, double>(j, ccarray_grhs[j][0]));
-						}
-					}
-				} else { 
-					for (int j = 0; j < count_line_grhs; j++) {
-						sum_heur_values += harray_grhs[j][i]*ccarray_grhs[j][0];
-					}
-					//cout<<"i="<<i<<", sum_heur_values="<<sum_heur_values<<"\n";
-					sum_combination_heur += sum_heur_values;
-				}	
-			} // key comparator
-        	}//end n_heuristics loop
-		//cout<<"count_line="<<count_line<<"\n";
-		//cout<<"map_max.size()="<<map_max.size()<<"\n";
-		if (use_sum_of_the_max) {
-			for (map<int, vector<int> >::iterator it = map_max.begin(); it != map_max.end(); it++) {
-				int row = it->first;
-				vector<int> v = it->second;
-				int max_heuristic = getMaxHeur(v);
-				//cout<<"max_heuristic="<<max_heuristic<<"\n";
-				map<int, double>::iterator it_inner = map_cc.find(row);
-				double cc = it_inner->second;
-				//cout<<"cc="<<cc<<"\n";
-				sum_max_combination_heur += max_heuristic*cc;
-				//cout<<"max_heuristic="<<max_heuristic<<", cc="<<cc<<"\n";
-			}	
-			//cout<<"sum_max_combination_heur="<<sum_max_combination_heur<<"\n";
-		}
-	}//end Z_subset
-
-	if (use_sum_of_the_max) {
-		//cout<<"returning the max.\n";
-		return sum_max_combination_heur;
-	} else {
-		//cout<<"returning no max.\n";
-		return sum_combination_heur;
-	}
-}
-*/
 
 double SSSearch::getSumSubset(vector<pair<string, double> > Z_subset) {
 	bool use_sum_of_the_max = true;
@@ -3762,6 +3695,12 @@ void SSSearch::initialize() {
 	cout<<"*run_min_heuristic="<<(run_min_heuristic?"true":"false")<<"          \n";
 	cout<<"*run_min_eval_time_approach="<<(run_min_eval_time_approach?"true":"false")<<"      \n";
 	cout<<"*N_default="<<N_default<<"        \n";
+	if (ss_probes != 0) {
+		cout<<"*ss_probes="<<ss_probes<<"       \n";
+	}
+	if (run_n_heuristics != 0) {
+		cout<<"*run_n_heuristics="<<run_n_heuristics<<"        \n";
+	}
 	cout<<"**********************************\n";
 
 	if (gen_to_eval_ratio == 0) {

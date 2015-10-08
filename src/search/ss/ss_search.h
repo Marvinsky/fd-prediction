@@ -211,6 +211,4 @@ public:
 	string getRealHeuristicName(string h_name);
 	//drop heuristics
 	void runReportsBwtProbes();
-	//double getSumSizeTree(vector<pair<string, double> > Z_subset);
-
 };
