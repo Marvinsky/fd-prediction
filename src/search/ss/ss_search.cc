@@ -1726,83 +1726,87 @@ void SSSearch::generateSSCCReport(bool termination) {
 	
 		string min_eval_time_heur;
 		int INDEX_LMCUT = -1;
-		bool exceed_four_gb = false;	
-		int index_min_eval_time=0;	
+		bool exceed_four_gb = false;
+		int index_min_eval_time=0;
+		int total_gapdb_heuristics = 0;	
 		double min_eval_time = std::numeric_limits<double>::max();
-
-        	map<string, double>::iterator iter_test;
         	double min_number_expanded =  std::numeric_limits<double>::max();
         	string min_number_heuristic;
 		vector<string> number_gapdb_heurs;
-        	for (iter_test = add_line_map_heuristic.begin(); iter_test != add_line_map_heuristic.end(); iter_test++) {
-                	string s = iter_test->first;
-                	double d = iter_test->second;
-			number_gapdb_heurs.push_back(s);
-                	//cout<<s<<", "<<d<<"\n";
-                	if (min_number_expanded > d) {
-                        	min_number_expanded = d;
-                        	min_number_heuristic = s;
-                	}
+		if (!run_min_eval_time_approach) {	
+        		map<string, double>::iterator iter_test;
+        		for (iter_test = add_line_map_heuristic.begin(); iter_test != add_line_map_heuristic.end(); iter_test++) {
+                		string s = iter_test->first;
+                		double d = iter_test->second;
+				number_gapdb_heurs.push_back(s);
+                		//cout<<s<<", "<<d<<"\n";
+                		if (min_number_expanded > d) {
+                        		min_number_expanded = d;
+                        		min_number_heuristic = s;
+                		}
 
-			if((double(get_peak_memory_in_kb())/1024)>4000){
-        			cout<<"Exceed the capacity of memory, Peak memory above 4 GB max"<<endl;
-				
-				string alvo_heur = getHeuristicInfo(0, INDEX_LMCUT);
-				cout<<"alvo_heur="<<alvo_heur<<"\n";
-				string number_h = std::to_string(INDEX_LMCUT);
-				min_eval_time_heur = "lmcut_"+number_h;
-				index_min_eval_time = INDEX_LMCUT;
-				min_eval_time = -1;
-				exceed_four_gb = true;
-        			break;
-      			}
-        	}
-        	//cout<<"min_number_expanded= "<<min_number_expanded<<"\tmin_number_heuristic= "<<min_number_heuristic<<"\n";
-		//Implement the evaluation time selection for the meta-reasoning
+				if((double(get_peak_memory_in_kb())/1024)>4000){
+        				cout<<"Exceed the capacity of memory, Peak memory above 4 GB max"<<endl;
+					string alvo_heur = getHeuristicInfo(0, INDEX_LMCUT);
+					cout<<"alvo_heur="<<alvo_heur<<"\n";
+					string number_h = std::to_string(INDEX_LMCUT);
+					min_eval_time_heur = "lmcut_"+number_h;
+					index_min_eval_time = INDEX_LMCUT;
+					min_eval_time = -1;
+					exceed_four_gb = true;
+        				break;
+      				}
+        		}
+        		cout<<"min_number_expanded= "<<min_number_expanded<<"\tmin_number_heuristic= "<<min_number_heuristic<<"\n";
+			total_gapdb_heuristics = getTotalGAHeurs(number_gapdb_heurs);
+		} else {
+			//Implement the evaluation time selection for the meta-reasoning
+			boost::dynamic_bitset<> b_comb(n_heuristics_global + lmcut_heuristic.size());
+			for (int i = 0; i < n_heuristics_global; i++) {
+				b_comb.reset();
+				b_comb.set(i);
+				string find_minheur = getHeuristicInfo(i, INDEX_LMCUT);
+				map<string, double>::iterator iter = add_line_map_heuristic.find(find_minheur);
+				if (iter != add_line_map_heuristic.end()) {
+					string found_heur = iter->first;
+					double search_tree_prediction = iter->second;
+					double cost_heur = search_tree_prediction*calculate_time_costs_specific(b_comb);
+					//cout<<"heuristic="<<found_heur<<"prediction="<<search_tree_prediction<<",b_comb.size()="<<b_comb.size()<<"\t"<<b_comb<<"\tcost_heur="<<cost_heur<<"\n";
+					if (min_eval_time > cost_heur) {
+						min_eval_time = cost_heur;
+						index_min_eval_time = i;
+					}	
+				}
 
-		boost::dynamic_bitset<> b_comb(n_heuristics_global + lmcut_heuristic.size());
-		for (int i = 0; i < n_heuristics_global; i++) {
-			b_comb.reset();
-			b_comb.set(i);
-			string find_minheur = getHeuristicInfo(i, INDEX_LMCUT);
-			map<string, double>::iterator iter = add_line_map_heuristic.find(find_minheur);
-			if (iter != add_line_map_heuristic.end()) {
-				string found_heur = iter->first;
-				double search_tree_prediction = iter->second;
-				double cost_heur = search_tree_prediction*calculate_time_costs_specific(b_comb);
-				//cout<<"heuristic="<<found_heur<<"prediction="<<search_tree_prediction<<",b_comb.size()="<<b_comb.size()<<"\t"<<b_comb<<"\tcost_heur="<<cost_heur<<"\n";
-				if (min_eval_time > cost_heur) {
-					min_eval_time = cost_heur;
-					index_min_eval_time = i;
-				}	
+				if((double(get_peak_memory_in_kb())/1024)>4000){
+        				cout<<"Exceed the capacity of memory, Peak memory above 4 GB max"<<endl;
+					string number_h = std::to_string(INDEX_LMCUT);
+					min_eval_time_heur = "lmcut_"+number_h;
+					index_min_eval_time = INDEX_LMCUT;
+					min_eval_time = -1;
+					exceed_four_gb = true;
+        				break;
+      				}
 			}
-
-			if((double(get_peak_memory_in_kb())/1024)>4000){
-        			cout<<"Exceed the capacity of memory, Peak memory above 4 GB max"<<endl;
-				string number_h = std::to_string(INDEX_LMCUT);
-				min_eval_time_heur = "lmcut_"+number_h;
-				index_min_eval_time = INDEX_LMCUT;
-				min_eval_time = -1;
-				exceed_four_gb = true;
-        			break;
-      			}
 		}
 
 		if (exceed_four_gb) {
 			//lmcut_#number was set
 			cout<<"LMCUT was set by default 4gb exceeded\n";
 		} else {
-			min_eval_time_heur = getHeuristicInfo(index_min_eval_time, INDEX_LMCUT);
+			if (!run_min_eval_time_approach) {
+				min_eval_time_heur = min_number_heuristic;
+				min_eval_time = min_number_expanded;
+			} else {
+				min_eval_time_heur = getHeuristicInfo(index_min_eval_time, INDEX_LMCUT);
+			}
 		}
 
 		cout<<"min_eval_time="<<min_eval_time<<",min_eval_time_index="<<index_min_eval_time<<",heuristic_name="<<min_eval_time_heur<<",INDEX_LMCUT="<<INDEX_LMCUT<<"\n";
 		//end evaluation time for meta-reasoning
-
         	vector<string> v_gapdb_string;
 		string heuristic_good = "gapdb_good";
-
 		int counter_just_ga_heur = 0;
-		int total_gapdb_heuristics = getTotalGAHeurs(number_gapdb_heurs);
         	map<string, vector<string> >::iterator iter;
         	for (iter = map_info_heur.begin(); iter != map_info_heur.end(); iter++) {
                 	string gapdb_string; //the name of each heuristic, just remember that the fd only support gapdb and do not gapdb_deep or gapdb_good => both need to be changed to gapdb
@@ -1817,11 +1821,11 @@ void SSSearch::generateSSCCReport(bool termination) {
 				}// s == min_eval_time_heur
 			} else {
 				if (run_min_heuristic) {
-                			if (s == min_number_heuristic) {
+                			if (s == min_eval_time_heur) {
                 				gapdb_string = processHeuristicProperties(s, info, heuristic_good);
                                 		v_gapdb_string.push_back(gapdb_string);		
                         			//cout<<"gapdb_string = "<<gapdb_string<<"\n";
-                			}// s == min_number_heuristic
+                			}// s == min_eval_time_heur
 				} else { //end run_min_heuristic
 					if (isGAPDB(s)) {
 						string all_heur_gapdb_good = "gapdb";	
