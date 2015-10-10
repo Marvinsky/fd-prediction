@@ -38,14 +38,14 @@ void Heuristic::set_preferred(OperatorProxy op) {
 void Heuristic::set_stop_using(bool status) {
        stop_using = status;
        heuristic = 0;
-       if (get_heur_name().find("blind") == string::npos) {
-               //cout<<get_heur_name()<<",set_stop_using=";
+       /*if (get_heur_name().find("blind") == string::npos) {
+               cout<<get_heur_name()<<",set_stop_using=";
                if (status) {
                        cout<<"true"<<endl;
                } else {
                        cout<<"false"<<endl;
                }
-       }
+       }*/
 }
 
 void Heuristic::evaluate(const GlobalState &state) {
