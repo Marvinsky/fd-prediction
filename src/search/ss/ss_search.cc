@@ -1723,9 +1723,13 @@ void SSSearch::generateSSCCReport(bool termination) {
                 	}
                 	add_line_map_heuristic.insert(pair<string, double>(name, sum_ones));
         	}
-		//cout<<"\n\n";
+	
+		string min_eval_time_heur;
+		int INDEX_LMCUT = -1;
+		bool exceed_four_gb = false;	
+		int index_min_eval_time=0;	
+		double min_eval_time = std::numeric_limits<double>::max();
 
-		//cout<<"printing m:\n";
         	map<string, double>::iterator iter_test;
         	double min_number_expanded =  std::numeric_limits<double>::max();
         	string min_number_heuristic;
@@ -1739,17 +1743,28 @@ void SSSearch::generateSSCCReport(bool termination) {
                         	min_number_expanded = d;
                         	min_number_heuristic = s;
                 	}
+
+			if((double(get_peak_memory_in_kb())/1024)>4000){
+        			cout<<"Exceed the capacity of memory, Peak memory above 4 GB max"<<endl;
+				
+				string alvo_heur = getHeuristicInfo(0, INDEX_LMCUT);
+				cout<<"alvo_heur="<<alvo_heur<<"\n";
+				string number_h = std::to_string(INDEX_LMCUT);
+				min_eval_time_heur = "lmcut_"+number_h;
+				index_min_eval_time = INDEX_LMCUT;
+				min_eval_time = -1;
+				exceed_four_gb = true;
+        			break;
+      			}
         	}
         	//cout<<"min_number_expanded= "<<min_number_expanded<<"\tmin_number_heuristic= "<<min_number_heuristic<<"\n";
 		//Implement the evaluation time selection for the meta-reasoning
 
-		double min_eval_time = std::numeric_limits<double>::max();
-		int index_min_eval_time=0;
 		boost::dynamic_bitset<> b_comb(n_heuristics_global + lmcut_heuristic.size());
 		for (int i = 0; i < n_heuristics_global; i++) {
 			b_comb.reset();
 			b_comb.set(i);
-			string find_minheur = getHeuristicInfo(i);	
+			string find_minheur = getHeuristicInfo(i, INDEX_LMCUT);
 			map<string, double>::iterator iter = add_line_map_heuristic.find(find_minheur);
 			if (iter != add_line_map_heuristic.end()) {
 				string found_heur = iter->first;
@@ -1761,9 +1776,26 @@ void SSSearch::generateSSCCReport(bool termination) {
 					index_min_eval_time = i;
 				}	
 			}
+
+			if((double(get_peak_memory_in_kb())/1024)>4000){
+        			cout<<"Exceed the capacity of memory, Peak memory above 4 GB max"<<endl;
+				string number_h = std::to_string(INDEX_LMCUT);
+				min_eval_time_heur = "lmcut_"+number_h;
+				index_min_eval_time = INDEX_LMCUT;
+				min_eval_time = -1;
+				exceed_four_gb = true;
+        			break;
+      			}
 		}
-		string min_eval_time_heur = getHeuristicInfo(index_min_eval_time);
-		cout<<"min_eval_time="<<min_eval_time<<",min_eval_time_index="<<index_min_eval_time<<"\theuristic_name="<<min_eval_time_heur<<"\n";
+
+		if (exceed_four_gb) {
+			//lmcut_#number was set
+			cout<<"LMCUT was set by default 4gb exceeded\n";
+		} else {
+			min_eval_time_heur = getHeuristicInfo(index_min_eval_time, INDEX_LMCUT);
+		}
+
+		cout<<"min_eval_time="<<min_eval_time<<",min_eval_time_index="<<index_min_eval_time<<",heuristic_name="<<min_eval_time_heur<<",INDEX_LMCUT="<<INDEX_LMCUT<<"\n";
 		//end evaluation time for meta-reasoning
 
         	vector<string> v_gapdb_string;
@@ -1958,8 +1990,7 @@ void SSSearch::generateSSCCReport(bool termination) {
 	ccarray_sscc = NULL;
 }
 
-
-string SSSearch::getHeuristicInfo(int index) {
+string SSSearch::getHeuristicInfo(int index, int &INDEX_LMCUT) {
 	map<int, string> map_heuristic_name;
 	string delimiter = ",";
 	for (int i = 0; i < n_heuristics_global; i++) {
@@ -1993,6 +2024,7 @@ string SSSearch::getHeuristicInfo(int index) {
             			name = number_h + "_ipdb";
             		} else if (heuristic_name_created == "lmcut") {
             			name = number_h + "_lmcut";
+				INDEX_LMCUT = i;
             		} else if (heuristic_name_created == "merge_and_shrink") {
             			name = number_h + "_mands";
             		} else {
@@ -2002,9 +2034,10 @@ string SSSearch::getHeuristicInfo(int index) {
 			if (heuristic_name_created == "ipdb") {
             			name = "ipdb_" + number_h;
             		} else if (heuristic_name_created == "lmcut") {
-            			name = "lmcut_" + number_h;
+            			name = "lmcut_" + number_h;	
+				INDEX_LMCUT = i;
             		} else if (heuristic_name_created == "merge_and_shrink") {
-            			name = "mands_" + number_h;
+            			name = "mands_" + number_h;	
             		} else {
             			name = "gapdb_" + number_h;
             		}
@@ -3748,7 +3781,7 @@ void SSSearch::initialize() {
 
 	if (gen_to_eval_ratio == 0) {
         	gen_to_eval_ratio=1;
-		cout<<"gen_to_eval_ratio="<<gen_to_eval_ratio<<"\n";
+		//cout<<"gen_to_eval_ratio="<<gen_to_eval_ratio<<"\n";
 	}
 
         //ss+cc santiago code
