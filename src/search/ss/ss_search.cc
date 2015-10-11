@@ -32,6 +32,7 @@ string _FD_INFO = "/fd";
 //sscc configuration
 bool run_min_heuristic = false;//true=select from all the heuristics/false=select just gapdb
 bool run_min_eval_time_approach = true;//true run min_eval_time in order to use time to apply meta-reasoning
+bool is_in_cluster = false;
 
 //#define _SS_DEBUG
 //#define _LMCUT_EARLY_TERM
@@ -2286,10 +2287,11 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 	//cout<<"pasta = "<<dominio_global<<"\n\n;
 	outfile<<"FD_SYMBA_HIBRIDS="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/FD_problems_SYMBA_HYBRID\n\n";
 	outfile<<"FD_ROOT="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"\n\n";
-        outfile<<"TEMP="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/temp\n\n";
-        outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";	
+        //outfile<<"TEMP="<<_HOME_INFO<<"/marvin"<<_FD_INFO<<"/temp\n\n";
+        //outfile<<"DIR=$(mktemp  --tmpdir=${TEMP})\n\n";	
         outfile<<"RESULTS="<<_HOME_INFO<<"/marvin/marvin/astar/"<<heuristic_good<<"/" + PROB_GOOD  +  "/"<<dominio_global<<"/resultado\n\n";
-	outfile<<"cd ${DIR}\n\n";
+	//outfile<<"cd ${DIR}\n\n";
+	outfile<<"cd ${FD_ROOT}\n\n";
         //outfile<<"python3 ${FD_ROOT}/src/translate/translate.py ${FD_ROOT}/benchmarks/"<<dominio_global<<"/"<<domain_pddl_global<<" ${FD_ROOT}/benchmarks/"<<dominio_global<<"/"<<tarefa_global<<"\n\n";
 
         //outfile<<"${FD_ROOT}/src/preprocess/preprocess < output.sas"<<"\n\n"; 
@@ -2299,18 +2301,17 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 	//cout<<"outputSA="<<outputSA<<"\n";
 
 	if (apply_max) {
-		outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<" --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		outfile<<"./timeout -t "<<good_timer<<" ${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<" --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 	} else {
-	 	outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<"  --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+	 	outfile<<"./timeout -t "<<good_timer<<" ${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<"  --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 	}
 
-	outfile<<"\n\nrm ${DIR}\n\n";
+	//outfile<<"\n\nrm ${DIR}\n\n";
         outfile<<"\n\nmv sas_plan ${FD_ROOT}"<<plan_dir_file<<"\n\n";
 
         outfile.close();
 
 	string executeFile;
-	bool is_in_cluster = false;
 
         if (is_in_cluster) {
 		executeFile = "qsub -l nodes=1:ppn=1,mem=4000mb "+arquivo;
@@ -2327,7 +2328,8 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 			cout<<"adding permition...\n";
 		}
 
-		executeFile = "timeout "+ good_timer +" sh "+arquivo; //setting the limit time	
+		//executeFile = "timeout "+ good_timer +" sh "+arquivo; //setting the limit time	
+		executeFile = " sh "+arquivo; //setting the limit time	
                 //cout<<executeFile<<"\n\n";
                 if(system(executeFile.c_str())) {
 			cout<<"running in the local...\n";
