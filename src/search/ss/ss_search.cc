@@ -2301,9 +2301,9 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 	//cout<<"outputSA="<<outputSA<<"\n";
 
 	if (apply_max) {
-		outfile<<"./timeout -t "<<good_timer<<" ${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<" --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		outfile<<"./timeout -t "<<good_timer<<" ${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<" --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  >& ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 	} else {
-	 	outfile<<"./timeout -t "<<good_timer<<" ${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<"  --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+	 	outfile<<"./timeout -t "<<good_timer<<" ${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<"  --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  >& ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
 	}
 
 	//outfile<<"\n\nrm ${DIR}\n\n";
@@ -2329,7 +2329,7 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 		}
 
 		//executeFile = "timeout "+ good_timer +" sh "+arquivo; //setting the limit time	
-		executeFile = " sh "+arquivo; //setting the limit time	
+		executeFile = arquivo; //setting the limit time	
                 //cout<<executeFile<<"\n\n";
                 if(system(executeFile.c_str())) {
 			cout<<"running in the local...\n";
