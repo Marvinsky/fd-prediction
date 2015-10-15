@@ -536,11 +536,8 @@ void SSSearch::predict(int probes) {
 	    double mean = getMeanHeurResult();
             totalPrediction = totalPrediction + (p - totalPrediction)/(i + 1);
 	    totalPredictionMean = totalPredictionMean + (mean - totalPredictionMean)/(i + 1);
-            //cout<<"**********"<<endl;
-            //cout<<"p = "<<p<<endl;
-            //cout<<"prePre_"<<(i+1)<<" = "<<totalPrediction<<endl;
-	    //cout<<"mean = "<<mean<<endl;
-            //cout<<"preMean_"<<(i+1)<<" = "<<totalPredictionMean<<endl;
+            //cout<<"\n**********"<<endl;
+	    //cout<<"p="<<p<<",prePre_"<<(i+1)<<"="<<totalPrediction<<",mean="<<mean<<",preMean_"<<(i+1)<<"="<<totalPredictionMean<<"\n";
             //cout<<"**********"<<endl;
 	    last_probe=i;
 	    last_n_expanded=p;
@@ -548,8 +545,7 @@ void SSSearch::predict(int probes) {
 	//cout<<"\tnext_f_bound:"<<next_f_bound<<"\n";
 	ss_timer_value = ss_timer();
         //cout<<"\ttotalPrediction : "<<totalPrediction<<"\n";
-	cout<<"\tss_timer: "<<ss_timer_value<<"\n";
-	cout<<"\tprobes: "<<probes<<"\n";
+	cout<<"\tall probes="<<probes<<",ss_timer: "<<ss_timer_value<<"\n";
 
 	runReports(false);
 	//generateGeneratedReport();
@@ -693,17 +689,22 @@ void SSSearch::probe()
         int nraiz = 0;
   
 	long queue_counter=0;
+	//cout<<",queue_counter initialized = 0";
 	while( !queue.empty() )
 	{
+	  //cout<<",queue_counter="<<queue_counter<<"\n";
 	  queue_counter++;
 	  if(queue_counter%1000==0){
+	    //cout<<",queue_counter%1000==true";
+	    //cout<<",queue.size:"<<queue.size()<<",search_time:"<<search_time<<endl;
 	    if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
 	      cout<<"Search_timer past maximum sampling_time"<<endl;
 	      cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
 	      runReports(true); 
 	      exit(0);
 	    }
-	  }
+	  } 
+
 #ifdef _SS_DEBUG
 	  cout<<"queue.size:"<<queue.size()<<",search_time:"<<search_time<<endl;
 #endif
@@ -3815,7 +3816,22 @@ void SSSearch::BFS(SSNode root, Type type) {
 	GlobalState global_state_2 = g_state_registry->lookup_state(BFS_RootNode.get_id());
         global_state_2.dump_pddl();
 #endif
+	long queue_counter_bfs=0;
+	//cout<<"\tqueue_counter_bfs initialized = 0";
         while (!D.empty()) {
+		queue_counter_bfs++;
+		if (queue_counter_bfs%1000==0) {
+	  		//cout<<",queue_counter_bfs="<<queue_counter_bfs;
+			//cout<<",queue_counter_bfs%1000==true";
+	    		//cout<<",D.size:"<<D.size()<<",search_time:"<<search_time<<endl;
+	    		if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
+	      			cout<<"\tSearch_timer past maximum sampling_time into the BFS"<<endl;
+	      			cout<<"\tselecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
+	      			runReports(true); 
+	      			exit(0);
+	    		}
+		}
+
 		SSQueue sq = D.front();
                 SSNode nodecp = sq.getNode();
 		Type t = sq.getT();
