@@ -33,6 +33,7 @@ string _FD_INFO = "/fd";
 bool run_min_heuristic = false;//true=select from all the heuristics/false=select just gapdb
 bool run_min_eval_time_approach = true;//true run min_eval_time in order to use time to apply meta-reasoning
 bool is_in_cluster = false;
+bool run_entropy = true;
 
 //#define _SS_DEBUG
 //#define _LMCUT_EARLY_TERM
@@ -508,7 +509,7 @@ void SSSearch::predict(int probes) {
         for (int i = 0; i < probes; i++) {
 	  //cout<<"#probe:"<<i<<",g_timer:"<<g_timer()<<",search_time:"<<search_time()<<endl;
 	  if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
-	    cout<<"Search_timer past maximum sampling_time"<<endl;
+	    cout<<"Search_timer past maximum sampling_time: loop of probes."<<endl;
 	    cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
 	    runReports(true); 
 	    exit(0);
@@ -2300,11 +2301,19 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 
 	string outputSA = translator(dominio_global, tarefa_global);
 	//cout<<"outputSA="<<outputSA<<"\n";
-
+	
 	if (apply_max) {
-		outfile<<"./timeout -t "<<good_timer<<" ${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<" --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  >& ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		if (run_entropy) {
+			outfile<<"./timeout -t "<<good_timer<<" ${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<" --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  >& ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		} else {
+			outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<" --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original(max(["<<parameter<<"]))\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		}
 	} else {
-	 	outfile<<"./timeout -t "<<good_timer<<" ${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<"  --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  >& ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		if (run_entropy) {
+	 		outfile<<"./timeout -t "<<good_timer<<" ${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<"  --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  >& ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		} else {
+			outfile<<"${FD_ROOT}/src/search/downward-release --use_saved_pdbs --run_n_heuristics "<<num_htc<<"  --global_probes "<<ss_probes<<"  --domain_name "<<dominio_global<<" --problem_name "<<tarefa_global<<" --heuristic_name "<<heuristic_good<<" --problem_name_gapdb "<<prob_name_gapdb<<" --deep_F_boundary "<<deep_F_boundary<<"  --dir_creation "<<method<<"  --search \"astar_original("<<parameter<<")\" <  ${FD_SYMBA_HIBRIDS}/"<<outputSA<<"  > ${RESULTS}/"<<prob_name_gapdb<<"\n\n";
+		}
 	}
 
 	//outfile<<"\n\nrm ${DIR}\n\n";
@@ -2314,15 +2323,31 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
 
 	string executeFile;
 
-        if (is_in_cluster) {
-		executeFile = "qsub -l nodes=1:ppn=1,mem=4000mb "+arquivo;
-        	//executeFile = "qsub -l select=1:ncpus=1:mem=6GB "+arquivo;
-        	//cout<<executeFile<<"\n\n";
-		if(system(executeFile.c_str())) {
-			cout<<"running in the cluster...\n";
+
+	if (!run_entropy) {
+        	if (is_in_cluster) {
+			executeFile = "qsub -l nodes=1:ppn=1,mem=4000mb "+arquivo;
+        		//executeFile = "qsub -l select=1:ncpus=1:mem=6GB "+arquivo;
+        		//cout<<executeFile<<"\n\n";
+			if(system(executeFile.c_str())) {
+				cout<<"running in the cluster...\n";
+			}
+		} else {
+        		string allow;
+                	allow = "chmod +x "+arquivo;
+                	//cout<<allow<<"\n";
+                	if(system(allow.c_str())) {
+				cout<<"adding permition...\n";
+			}
+
+			executeFile = "timeout "+ good_timer +" sh "+arquivo; //setting the limit time	
+                	cout<<executeFile<<"\n\n";
+                	if(system(executeFile.c_str())) {
+				cout<<"running in the local...\n";
+			}
 		}
 	} else {
-        	string allow;
+		string allow;
                 allow = "chmod +x "+arquivo;
                 //cout<<allow<<"\n";
                 if(system(allow.c_str())) {
@@ -2334,7 +2359,7 @@ void SSSearch::executeQsub(string arquivo, string final_real_heur, string heuris
                 //cout<<executeFile<<"\n\n";
                 if(system(executeFile.c_str())) {
 			cout<<"running in the local...\n";
-		}
+		}	
 	}
 }
 
