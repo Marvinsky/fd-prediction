@@ -508,6 +508,7 @@ void SSSearch::predict(int probes) {
 	last_n_expanded=0;
         for (int i = 0; i < probes; i++) {
 	  //cout<<"#probe:"<<i<<",g_timer:"<<g_timer()<<",search_time:"<<search_time()<<endl;
+	  //cout<<"0.001.-"<<g_timer<<"\n";
 	  if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
 	    cout<<"Search_timer past maximum sampling_time: loop of probes."<<endl;
 	    cout<<"selecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
@@ -518,6 +519,7 @@ void SSSearch::predict(int probes) {
 	    cout<<"Search_time:"<<search_time()<<",returning for domination_check"<<endl;
 	    return;
 	  }
+	    //cout<<"0.0.-g_timer="<<g_timer<<"\n";
             vweight.clear();
 	    vmeanheur.clear();
 	    //Validate that the number of probes do not exceed the order of 150
@@ -525,7 +527,7 @@ void SSSearch::predict(int probes) {
 		runReports(true);	
 		exit(0);
 	    } 
-
+	    //cout<<"0.-g_timer="<<g_timer<<"\n";
             probe();
 	    if (false) {
 	    	if (n_heuristics_global > 5) {
@@ -555,12 +557,14 @@ void SSSearch::predict(int probes) {
 
 void SSSearch::probe()
 {
+  //cout<<"0.1.-g_timer="<<g_timer<<"\n";
   static int call_number=0;
+  //cout<<"0.2.-g_timer="<<g_timer<<"\n";
   call_number++;
 	/*
 	 * Probing is done based on the types of the children of the root state
 	 */
-
+	//cout<<"1.-g_timer="<<g_timer<<"\n";
         queue.clear();
 	// evaluating the initial state
 	boost::dynamic_bitset<> b_initial_v(all_heuristics.size()+lmcut_heuristic.size()); 
@@ -580,7 +584,7 @@ void SSSearch::probe()
 	    h_initial_v.push_back(all_heuristics[i]->get_heuristic());            	
 	  }
         }
-
+	//cout<<"2.-g_timer="<<g_timer<<"\n";
 #ifdef _LMCUT_EARLY_TERM
         if(lmcut_heuristic.size()>0){
 	  lmcut_heuristic[0]->evaluate(g_initial_state());
@@ -596,7 +600,7 @@ void SSSearch::probe()
 	  }
         }
 #endif 
-
+	//cout<<"3.-g_timer="<<g_timer<<"\n";
 	//initial_value = min_h;
 	initial_value = max_h;
 	//cout<<"probe:"<<call_number<<",search_time:"<<search_time()<<",initial min_h;"<<min_h<<",initial max_h:"<<max_h<<",max_h:"<<max_h<<endl;
@@ -631,6 +635,7 @@ void SSSearch::probe()
                 max_h_initial_value = a;
             }
         }
+	//cout<<"4.-g_timer="<<g_timer<<"\n";
 	//cout<<"max_h_initial_value:"<<max_h_initial_value<<endl;
         
         //cout<<"\tthreshold: "<<threshold<<endl;
@@ -645,25 +650,29 @@ void SSSearch::probe()
                b_initial_v.set(i);
             }
         }
+	//cout<<"5.-g_timer="<<g_timer<<"\n";
 	//cout<<"b_initial_v,size()"<<b_initial_v.size()<<endl;fflush(NULL);
          
         std::vector<const GlobalOperator*> applicable_ops0;
-        GlobalState global_state0 = g_state_registry->lookup_state(g_initial_state().get_id()); 
+	//cout<<"6.-g_timer="<<g_timer<<"\n";
+        GlobalState global_state0 = g_state_registry->lookup_state(g_initial_state().get_id());
+	//cout<<"7.-g_timer="<<g_timer<<"\n";
         g_successor_generator->generate_applicable_ops(global_state0, applicable_ops0);
-
+	//cout<<"8.-g_timer="<<g_timer<<"\n";
         //count nodes generated
         double amount_initial = (double)applicable_ops0.size();
-
+	//cout<<"9.-g_timer="<<g_timer<<"\n";
 
 	collector.insert(std::pair<boost::dynamic_bitset<>, double>(b_initial_v, 1 + amount_initial));
-	
+	//cout<<"10.-g_timer="<<g_timer<<"\n";
 	collector_heur.insert(std::pair<std::vector<int>, double>(h_initial_v, 1 + amount_initial));
 	//collector_heur.insert(std::pair<std::vector<int>, double>(h_initial_v, sum_all_h_initial_values));
         //cout<<"\n";
-        
-        const GlobalState &initial_state2 = g_initial_state();
-        StateID initial_state_id = initial_state2.get_id();
-	
+	//cout<<"11.-g_timer="<<g_timer<<"\n";
+        const GlobalState &initial_state2 = g_initial_state();	
+	//cout<<"12.-g_timer="<<g_timer<<"\n";
+        StateID initial_state_id = initial_state2.get_id();	
+	//cout<<"13.-g_timer="<<g_timer<<"\n";
 	SSNode node;
 #ifdef _LMCUT_EARLY_TERM
         if(lmcut_heuristic.size()>0){
@@ -679,14 +688,14 @@ void SSSearch::probe()
 	 * Seeding the prediction with the children of the start state
 	 *
 	 */
-
+	//cout<<"14.-g_timer="<<g_timer<<"\n";
 	//Only evaluating those heuristics which still have not pruned the current path
-	Type type = sampler->getType(node.get_id(), initial_value, 1);
-
+	Type type = sampler->getType(node.get_id(), initial_value, 1);	
+	//cout<<"15.-g_timer="<<g_timer<<"\n";
 	type.setLevel( 0 ); // level where the node is located
 
-	queue.insert( pair<Type, SSNode>( type, node ) );
-
+	queue.insert( pair<Type, SSNode>( type, node ) );	
+	//cout<<"16.-g_timer="<<g_timer<<"\n";
         int nraiz = 0;
   
 	long queue_counter=0;
@@ -909,6 +918,7 @@ void SSSearch::probe()
 #endif
 
 #ifdef _SS_DEBUG
+	  int prev_f_bound=next_f_bound;
 	  if(next_f_bound!=prev_f_bound){
 	    cout<<"prev_f_bound:"<<prev_f_bound<<",next_f_bound:"<<next_f_bound<<endl;
 	  }
@@ -3834,13 +3844,13 @@ void SSSearch::BFS(SSNode root, Type type) {
 	
 	//double weight = root.getWeight();
 	//int counter = 0;
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
                 
 	SSNode BFS_RootNode = D.front().getNode();
         cout<<"Starting BFS,D.size:  "<<D.size()<<",state_id="<<BFS_RootNode.get_id()<<endl;fflush(stdout);
 	GlobalState global_state_2 = g_state_registry->lookup_state(BFS_RootNode.get_id());
         global_state_2.dump_pddl();
-#endif
+//#endif
 	long queue_counter_bfs=0;
 	//cout<<"\tqueue_counter_bfs initialized = 0";
         while (!D.empty()) {
@@ -3865,31 +3875,31 @@ void SSSearch::BFS(SSNode root, Type type) {
                 StateID state_id = nodecp.get_id();
 		double w = nodecp.getWeight();
                 double level = t.getLevel();
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
                 cout<<"\n\t\t\tBFS: Node expanded: h = "<<t.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<t.getH() + nodecp.getGreal()<<", level = "<<level<<", w = "<<w<<", stateID,:"<<state_id<<"\n";
 fflush(NULL);
-#endif
+//#endif
 
                 //counter++;
 		D.pop_front();
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
 		cout<<"D.size:"<<D.size()<<endl;
-#endif
+//#endif
 
                 std::vector<const GlobalOperator *> applicable_ops;
                 //Recover the global_state
                 GlobalState global_state = g_state_registry->lookup_state(state_id);
                 g_successor_generator->generate_applicable_ops(global_state, applicable_ops);
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
                 cout<<"\t\t\tBFS:,retrieved state_id:"<<state_id<<","<<"applicable_ops.size() = "<<applicable_ops.size()<<endl;fflush(NULL);
                 cout<<"\t\t\t--------------childs-------------\n";fflush(NULL);
-#endif
+//#endif
 		for (size_t i = 0; i < applicable_ops.size(); i++) {
 
                         const GlobalOperator *op = applicable_ops[i];
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
 			cout<<"op["<<i<<"]:";op->dump();
-#endif
+//#endif
                         GlobalState child =  g_state_registry->get_successor_state(global_state, *op);
 
                         int hmin_value = INT_MAX/2;
@@ -3897,18 +3907,18 @@ fflush(NULL);
 			SSNode succ_node(child.get_id(), w, g_real + cost_op);
 
 			std::pair<std::set<SSNode, classcomp2>::iterator, bool> r1;
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
 			cout<<"\t\t\tBefore check insert\n";fflush(NULL);
 			cout<<"\t\t\tsucc_node id:";cout<<child.get_id()<<endl;fflush(NULL);
 			GlobalState global_state_3 = g_state_registry->lookup_state(succ_node.get_id());
 			global_state_3.dump_pddl();
-#endif
+//#endif
 			r1 = check.insert(succ_node);
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
 			if(r1.second){
 			  cout<<"\t\t\tsucc_node id:";cout<<child.get_id()<<"is new in check"<<endl;fflush(NULL);
 			}
-#endif
+//#endif
 			if (r1.second) {
 				for (size_t i = 0; i < all_heuristics.size(); i++) {
                                 	all_heuristics[i]->evaluate(child);
@@ -3931,40 +3941,40 @@ fflush(NULL);
 				//cout<<"\t\t\tChild_"<<(i+1)<<" : h = "<<succ_h<<", g_real = "<<succ_node.getGreal()<<", f = "<<succ_h + succ_node.getGreal()<<", level = "<<object.getLevel()<<", w = "<<w<<", stateID,:"<<child.get_id()<<"\n";
 				if (succ_h + succ_node.getGreal() <= threshold) {
 					if (cost_op == 0) {
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
 						cout<<"\t\t\tcost = 0, then is inserted to the D.\n";
-#endif
+//#endif
 						D.push_back(s3);			
 					} else {
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
 						cout<<"\t\t\tcost != 0, then is inserted to the L.\n";
-#endif
+//#endif
 						L.insert(s3);
 					}
 				}
 				else{
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
 				  int prev_next_f_bound=next_f_bound;
-#endif
+//#endif
 				  next_f_bound=min(next_f_bound,int(succ_h + succ_node.getGreal()));
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
 				  if(next_f_bound!=prev_next_f_bound){
 				    cout<<"BFS updates next_f_bound to:"<<next_f_bound<<endl;
 				  }
-#endif
+//#endif
 				}
 			} else {
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
 				cout<<"\t\t\tSSQueue with id = "<<child.get_id()<<" already exists.\n";
-#endif
+//#endif
 			}
                 }//end for
                 //cout<<"\t\t\t-------------End childs------------\n";
 	//fflush(NULL);
         }
-#ifdef _SS_DEBUG
+//#ifdef _SS_DEBUG
 	cout<<"BFS finished, L size:"<<L.size()<<endl;
-#endif
+//#endif
 	/*double result = counter*weight;
 	root.setWeight(result);
 	vweight.push_back(root);
