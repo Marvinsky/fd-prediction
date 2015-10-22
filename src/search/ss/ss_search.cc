@@ -20,7 +20,7 @@ bool ss_debug=false;
 int next_f_bound=INT_MAX/2;
 bool domination_check=false;
 set<vector<int> > F_culprits;
-double sampling_time_limit=150;
+double sampling_time_limit=50;
 double overall_time_limit=1400;
 int N_default = 8;
 //run experiments
@@ -3844,13 +3844,13 @@ void SSSearch::BFS(SSNode root, Type type) {
 	
 	//double weight = root.getWeight();
 	//int counter = 0;
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
                 
 	SSNode BFS_RootNode = D.front().getNode();
         cout<<"Starting BFS,D.size:  "<<D.size()<<",state_id="<<BFS_RootNode.get_id()<<endl;fflush(stdout);
 	GlobalState global_state_2 = g_state_registry->lookup_state(BFS_RootNode.get_id());
         global_state_2.dump_pddl();
-//#endif
+#endif
 	long queue_counter_bfs=0;
 	//cout<<"\tqueue_counter_bfs initialized = 0";
         while (!D.empty()) {
@@ -3862,6 +3862,7 @@ void SSSearch::BFS(SSNode root, Type type) {
 	    		if(search_time()>sampling_time_limit||g_timer()>overall_time_limit){
 	      			cout<<"\tSearch_timer past maximum sampling_time into the BFS"<<endl;
 	      			cout<<"\tselecting best heuristic after search_time: "<<search_time()<<", seconds,g_timer:"<<g_timer()<<endl;
+				fflush(NULL);
 	      			runReports(true); 
 	      			exit(0);
 	    		}
@@ -3875,31 +3876,31 @@ void SSSearch::BFS(SSNode root, Type type) {
                 StateID state_id = nodecp.get_id();
 		double w = nodecp.getWeight();
                 double level = t.getLevel();
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
                 cout<<"\n\t\t\tBFS: Node expanded: h = "<<t.getH()<<", g_real = "<<nodecp.getGreal()<<", f = "<<t.getH() + nodecp.getGreal()<<", level = "<<level<<", w = "<<w<<", stateID,:"<<state_id<<"\n";
 fflush(NULL);
-//#endif
+#endif
 
                 //counter++;
 		D.pop_front();
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
 		cout<<"D.size:"<<D.size()<<endl;
-//#endif
+#endif
 
                 std::vector<const GlobalOperator *> applicable_ops;
                 //Recover the global_state
                 GlobalState global_state = g_state_registry->lookup_state(state_id);
                 g_successor_generator->generate_applicable_ops(global_state, applicable_ops);
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
                 cout<<"\t\t\tBFS:,retrieved state_id:"<<state_id<<","<<"applicable_ops.size() = "<<applicable_ops.size()<<endl;fflush(NULL);
                 cout<<"\t\t\t--------------childs-------------\n";fflush(NULL);
-//#endif
+#endif
 		for (size_t i = 0; i < applicable_ops.size(); i++) {
 
                         const GlobalOperator *op = applicable_ops[i];
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
 			cout<<"op["<<i<<"]:";op->dump();
-//#endif
+#endif
                         GlobalState child =  g_state_registry->get_successor_state(global_state, *op);
 
                         int hmin_value = INT_MAX/2;
@@ -3907,18 +3908,18 @@ fflush(NULL);
 			SSNode succ_node(child.get_id(), w, g_real + cost_op);
 
 			std::pair<std::set<SSNode, classcomp2>::iterator, bool> r1;
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
 			cout<<"\t\t\tBefore check insert\n";fflush(NULL);
 			cout<<"\t\t\tsucc_node id:";cout<<child.get_id()<<endl;fflush(NULL);
 			GlobalState global_state_3 = g_state_registry->lookup_state(succ_node.get_id());
 			global_state_3.dump_pddl();
-//#endif
+#endif
 			r1 = check.insert(succ_node);
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
 			if(r1.second){
 			  cout<<"\t\t\tsucc_node id:";cout<<child.get_id()<<"is new in check"<<endl;fflush(NULL);
 			}
-//#endif
+#endif
 			if (r1.second) {
 				for (size_t i = 0; i < all_heuristics.size(); i++) {
                                 	all_heuristics[i]->evaluate(child);
@@ -3946,35 +3947,35 @@ fflush(NULL);
 //#endif
 						D.push_back(s3);			
 					} else {
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
 						cout<<"\t\t\tcost != 0, then is inserted to the L.\n";
-//#endif
+#endif
 						L.insert(s3);
 					}
 				}
 				else{
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
 				  int prev_next_f_bound=next_f_bound;
-//#endif
+#endif
 				  next_f_bound=min(next_f_bound,int(succ_h + succ_node.getGreal()));
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
 				  if(next_f_bound!=prev_next_f_bound){
 				    cout<<"BFS updates next_f_bound to:"<<next_f_bound<<endl;
 				  }
-//#endif
+#endif
 				}
 			} else {
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
 				cout<<"\t\t\tSSQueue with id = "<<child.get_id()<<" already exists.\n";
-//#endif
+#endif
 			}
                 }//end for
                 //cout<<"\t\t\t-------------End childs------------\n";
 	//fflush(NULL);
         }
-//#ifdef _SS_DEBUG
+#ifdef _SS_DEBUG
 	cout<<"BFS finished, L size:"<<L.size()<<endl;
-//#endif
+#endif
 	/*double result = counter*weight;
 	root.setWeight(result);
 	vweight.push_back(root);
